@@ -31,52 +31,46 @@ class CatatanController extends Controller
 
     public function store(Request $request)
     {
-        $apiUrPemasukan = env('API_URL').'/pemasukans';
+        // dd($request);
+
+        // $res = Parent::getDataLogin($request);
+
+        // dd($res['user']['user_id']);
+        $apiUrlPemasukan = env('API_URL').'/pemasukans';
         $apiUrlPengeluaran = env('API_URL').'/pengeluarans';
-        $apiKey = env('API_KEY');
-
-        $sks = [1, 2, 3, 4];
-        $semester = [1, 2, 3, 4, 5, 6, 7, 8];
+        $apiKey = env('API_KEY');        
         $res = Parent::getDataLogin($request);
-        return view('matakuliah.tambah-matakuliah', [
-            'user' => $res['user'],
-            'keterangan' => $res['keterangan'],
-            'sks' => $sks,
-            'semester' => $semester,
-            'selected_menu' => 'matakuliah',
-        ]);
 
-        $katpemasukan = Http::withHeaders([
-            'Accept' => 'application/json',
-            'x-api-key' => env('API_KEY'),
-            'Authorization' => 'Bearer ' . request()->cookie('token')
-        ])->get(env('API_URL')."/kategori_pemasukans");
-        $kat_pemasukan = collect($katpemasukan['data']);
-        
+        if($request->jenis == 1) {
+            $jenis = 'id_kategori_pemasukan';
+            $jenisapi = $apiUrlPemasukan;
+        }else if ($request->jenis == 2){
+            $jenis = 'id_kategori_pengeluaran';
+            $jenisapi = $apiUrlPengeluaran;
+        }
 
-
-        $kat_pemasukan;
-        $kat_pengeluaran;
-        $res = Parent::getDataLogin($request);
-        dd($res);
         $input = array(
-            'user_id' => $request->user_id,
+            'user_id' => $res['user']['user_id'],
             'tanggal' => $request->tanggal,
             'jumlah' => $request->jumlah,
             'catatan' => $request->catatan,
-            'id_kategori_pemasukan' => $request->id_kategori_pemasukan,
+            $jenis => $request->kategori,
         );
+        
+        // dd($input);
+
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'x-api-key' => env('API_KEY'),
             'Authorization' => 'Bearer ' . request()->cookie('token')
-        ])->post(env('API_URL')."/pemasukans", $input);
+        ])->post($jenisapi, $input);
+
         if($response->status() == 200){
-            return redirect()->route('catatan')->with('success','Logout Berhasil');
+            return redirect()->route('loginPage')->with('success',$response["message"]);
         }else if(!empty($response["errors"])){
-            return back()->with(["toast" => ["type" => "error", "message" => $response["message"]]])->withErrors($response["errors"])->withInput($input);
+            return back()->with('success',$response["message"]);
         }else{
-            return back()->with(["toast" => ["type" => "error", "message" => $response["message"]]])->withInput($input);
+            return back()->with('success',$response["message"]);
         }
     }
 

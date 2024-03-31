@@ -27,25 +27,9 @@
 </head>
 
 <body>
-	<script>
-		@if (Session::has('success'))
-			toastr.options = {
-				"closeButton" : true,
-				"progressBar" : true,
-			}
-			toastr.success("{{ Session::get('success') }}");
-		@endif
-		@if (Session::has('error'))
-			toastr.options = {
-				"closeButton" : true,
-				"progressBar" : true,
-			}
-			toastr.error("{{ Session::get('error') }}",);
-		@endif
-    </script>
+	
     <script src="{{ asset('js/demo-theme.min.js?1684106062') }}"></script>
 	<div class="page">
-	<!-- Navbar -->
 		<div class="sticky-top">
 			<header class="navbar navbar-expand-md sticky-top d-print-none" >
           		<div class="container-xl">
@@ -96,327 +80,265 @@
                           						<div class="row align-items-center">
                             						<div class="col-auto"><span class="status-dot d-block"></span></div>
                             						<div class="col text-truncate">
-                              					<a href="#" class="text-body d-block">Example 2</a>
-                              <div class="d-block text-muted text-truncate mt-n1">
-                                justify-content:between ⇒ justify-content:space-between (#29734)
-                              </div>
-                            </div>
-                            <div class="col-auto">
-                              <a href="#" class="list-group-item-actions show">
-                                <!-- Download SVG icon from http://tabler-icons.io/i/star -->
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon text-yellow" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" /></svg>
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="list-group-item">
-                          <div class="row align-items-center">
-                            <div class="col-auto"><span class="status-dot d-block"></span></div>
-                            <div class="col text-truncate">
-                              <a href="#" class="text-body d-block">Example 3</a>
-                              <div class="d-block text-muted text-truncate mt-n1">
-                                Update change-version.js (#29736)
-                              </div>
-                            </div>
-                            <div class="col-auto">
-                              <a href="#" class="list-group-item-actions">
-                                <!-- Download SVG icon from http://tabler-icons.io/i/star -->
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" /></svg>
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="list-group-item">
-                          <div class="row align-items-center">
-                            <div class="col-auto"><span class="status-dot status-dot-animated bg-green d-block"></span></div>
-                            <div class="col text-truncate">
-                              <a href="#" class="text-body d-block">Example 4</a>
-                              <div class="d-block text-muted text-truncate mt-n1">
-                                Regenerate package-lock.json (#29730)
-                              </div>
-                            </div>
-                            <div class="col-auto">
-                              <a href="#" class="list-group-item-actions">
-                                <!-- Download SVG icon from http://tabler-icons.io/i/star -->
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" /></svg>
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="nav-item dropdown">
-                <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-                  <span class="avatar avatar-sm" style="background-image: url(./static/avatars/000m.jpg)"></span>
-                  <div class="d-none d-xl-block ps-2">
-                    <div>Paweł Kuna</div>
-                    <div class="mt-1 small text-muted">imaderiansuputra@gmail.com</div>
-                  </div>
-                </a>
-                <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-
-				
-
-				<a class="dropdown-item" href="#sidebar-error" >
-                              <!-- Download SVG icon from http://tabler-icons.io/i/file-minus -->
-							  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path><path d="M12 9h.01"></path><path d="M11 12h1v4h1"></path></svg>
-                              Tentang
-                            </a>
-							<a class="dropdown-item" href="{{ url('/profil') }}" >
-                              <!-- Download SVG icon from http://tabler-icons.io/i/file-minus -->
-							  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"></path><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"></path></svg>
-                              Pengaturan
-                            </a>
-
-							<form id="logoutForm" action="{{ route('logout') }}" method="POST">
-    @csrf
-    @method('POST')
-    <button type="submit" class="dropdown-item">
-        <!-- Download SVG icon from http://tabler-icons.io/i/file-minus -->
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-            <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2"></path>
-            <path d="M9 12h12l-3 -3"></path>
-            <path d="M18 15l3 -3"></path>
-        </svg>
-        Keluar
-    </button>
-</form>
-
-
-							
-
-					
-                </div>
-              </div>
-            </div>
-            <div class="collapse navbar-collapse" id="navbar-menu">
-            <div class="d-flex flex-column flex-md-row flex-fill align-items-stretch align-items-md-center">
-            <ul class="navbar-nav">
-                  <li class="nav-item {{ url()->current() == url('/dashboard') ? 'active' : '' }}" >
-                    <a class="nav-link" href="{{ url('/dashboard') }}" >
-                      <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l-2 0l9 -9l9 9l-2 0" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
-                      </span>
-                      <span class="nav-link-title">
-                        Dashboard
-                      </span>
-                    </a>
-                  </li>
-                  <li class="nav-item {{ url()->current() == url('/catatan') ? 'active' : '' }}" >
-                    <a class="nav-link" href="{{ url('./catatan') }}">
-					<span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-						<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M5 3m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z"></path><path d="M9 7l6 0"></path><path d="M9 11l6 0"></path><path d="M9 15l4 0"></path></svg>
-					</span>
-                      <span class="nav-link-title">
-                        Catatan
-                      </span>
-                    </a>
-                  </li>
-                  <li class="nav-item {{ url()->current() == url('/statistik') ? 'active' : '' }}" >
-                    <a class="nav-link" href="{{ url('./statistik') }}" >
-                      <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
-					  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M3 12m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"></path><path d="M9 8m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"></path><path d="M15 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"></path><path d="M4 20l14 0"></path></svg>
-                      </span>
-                      <span class="nav-link-title">
-                        Statistik
-                      </span>
-                    </a>
-                  </li>
-                  <li class="nav-item {{ url()->current() == url('/anggaran') ? 'active' : '' }}" >
-                    <a class="nav-link" href="/anggaran">
-                      <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
-					  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M16 6m-5 0a5 3 0 1 0 10 0a5 3 0 1 0 -10 0"></path><path d="M11 6v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4"></path><path d="M11 10v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4"></path><path d="M11 14v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4"></path><path d="M7 9h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5"></path><path d="M5 15v1m0 -8v1"></path></svg>
-                      </span>
-                      <span class="nav-link-title">
-                        Anggaran
-                      </span>
-                    </a>
-                    
-                  </li>
-                  <li class="nav-item dropdown {{ url()->current() == url('/investasi') ? 'active' : '' }}" >
-                    <a class="nav-link dropdown-toggle" href="#navbar-layout" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
-                      <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/layout-2 -->
-					  	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M3 3v18h18"></path><path d="M20 18v3"></path><path d="M16 16v5"></path><path d="M12 13v8"></path><path d="M8 16v5"></path><path d="M3 11c6 0 5 -5 9 -5s3 5 9 5"></path></svg>
-                      </span>
-                      <span class="nav-link-title">
-                        Investasi
-                      </span>
-                    </a>
-                    <div class="dropdown-menu">
-                        <div class="dropend">
-                            <a class="dropdown-item" href="#sidebar-error" >
-                              <!-- Download SVG icon from http://tabler-icons.io/i/file-minus -->
-                              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline-me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M4 19l12 0"></path><path d="M4 15l4 -6l4 2l4 -5l4"></path></svg>
-                              Investasi
-                            </a>
-							<a class="dropdown-item" href="#sidebar-error" >
-                              <!-- Download SVG icon from http://tabler-icons.io/i/file-minus -->
-							  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9.5 3h5a1.5 1.5 0 0 1 1.5 1.5a3.5 3.5 0 0 1 -3.5 3.5h-1a3.5 3.5 0 0 1 -3.5 -3.5a1.5 1.5 0 0 1 1.5 -1.5z"></path><path d="M4 17v-1a8 8 0 1 1 16 0v1a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z"></path></svg>
-                              Pinjaman
-                            </a>
-							<a class="dropdown-item" href="#sidebar-error" >
-                              <!-- Download SVG icon from http://tabler-icons.io/i/file-minus -->
-                              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M9 14l6 0" /></svg>
-                              Portofolio Saham
-                            </a>
-                            
-                          </div>
-                    </div>
-                  </li>
-                  
-                </ul>
-            </div>
-          </div>
-          </div>
-        </header>
-        
-      </div>
-      <div class="page-wrapper">
-        <!-- Page header -->
-        <div class="page-header d-print-none">
-          <div class="container-xl">
-            <div class="row g-2 align-items-center">
-              @yield('page-title')
-            </div>
-          </div>
-        </div>
-        <!-- Page body -->
-        <div class="page-body">
-          @yield('content')
-        </div>
-
-		
-        <!-- <footer class="footer footer-transparent d-print-none">
-          <div class="container-xl">
-            <div class="row text-center align-items-center flex-row-reverse">
-              <div class="col-lg-auto ms-lg-auto">
-                <ul class="list-inline list-inline-dots mb-0">
-                  <li class="list-inline-item"><a href="https://tabler.io/docs" target="_blank" class="link-secondary" rel="noopener">Documentation</a></li>
-                  <li class="list-inline-item">
-                    <a href="https://github.com/sponsors/codecalm" target="_blank" class="link-secondary" rel="noopener">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon text-pink icon-filled icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" /></svg>
-                      Sponsor
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <div class="col-12 col-lg-auto mt-3 mt-lg-0">
-                <ul class="list-inline list-inline-dots mb-0">
-                  <li class="list-inline-item">
-                    Copyright &copy; 2024
-                    <a href="." class="link-secondary">Simankeu</a>                    
-                  </li>
-                  <li class="list-inline-item">
-                    <a href="./changelog.html" class="link-secondary" rel="noopener">
-                      v1.0.0-beta19
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </footer> -->
-
-
-
-      </div>
+                              							<a href="#" class="text-body d-block">Example 2</a>
+                              							<div class="d-block text-muted text-truncate mt-n1">
+                                							justify-content:between ⇒ justify-content:space-between (#29734)
+                              							</div>
+                            						</div>
+                            						<div class="col-auto">
+                              							<a href="#" class="list-group-item-actions show">
+                                							<svg xmlns="http://www.w3.org/2000/svg" class="icon text-yellow" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" /></svg>
+                              							</a>
+                            						</div>
+                          						</div>
+                        					</div>
+                        					<div class="list-group-item">
+                          						<div class="row align-items-center">
+                            						<div class="col-auto"><span class="status-dot d-block"></span></div>
+                            						<div class="col text-truncate">
+                              							<a href="#" class="text-body d-block">Example 3</a>
+                              							<div class="d-block text-muted text-truncate mt-n1">
+                                							Update change-version.js (#29736)
+                              							</div>
+                            						</div>
+                            						<div class="col-auto">
+                              							<a href="#" class="list-group-item-actions">
+                                							<svg xmlns="http://www.w3.org/2000/svg" class="icon text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" /></svg>
+                              							</a>
+                            						</div>
+                          						</div>
+                        					</div>
+                        					<div class="list-group-item">
+                          						<div class="row align-items-center">
+                            						<div class="col-auto"><span class="status-dot status-dot-animated bg-green d-block"></span></div>
+                            						<div class="col text-truncate">
+                              							<a href="#" class="text-body d-block">Example 4</a>
+														<div class="d-block text-muted text-truncate mt-n1">
+                                							Regenerate package-lock.json (#29730)
+                              							</div>
+                            						</div>
+                            						<div class="col-auto">
+                              							<a href="#" class="list-group-item-actions">
+                                							<svg xmlns="http://www.w3.org/2000/svg" class="icon text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" /></svg>
+                              							</a>
+                            						</div>
+                          						</div>
+											</div>
+										</div>
+                    				</div>
+                  				</div>
+							</div>
+              			</div>
+              			<div class="nav-item dropdown">
+                			<a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
+                  				<span class="avatar avatar-sm" style="background-image: url(./static/avatars/000m.jpg)"></span>
+                  				<div class="d-none d-xl-block ps-2">
+                    				<div>Paweł Kuna</div>
+                    				<div class="mt-1 small text-muted">imaderiansuputra@gmail.com</div>
+                  				</div>
+                			</a>
+                			<div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+								<a class="dropdown-item" href="#sidebar-error" >
+									<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path><path d="M12 9h.01"></path><path d="M11 12h1v4h1"></path></svg>
+                              		Tentang
+                            	</a>
+								<a class="dropdown-item" href="{{ url('/profil') }}" >
+							  		<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"></path><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"></path></svg>
+                              		Pengaturan
+                            	</a>
+								<form id="logoutForm" action="{{ route('logout') }}" method="POST">
+    								@csrf
+    								@method('POST')
+    								<button type="submit" class="dropdown-item">
+        								<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            								<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            								<path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2"></path>
+            								<path d="M9 12h12l-3 -3"></path>
+            								<path d="M18 15l3 -3"></path>
+        								</svg>
+										Keluar
+    								</button>
+								</form>
+                			</div>
+              			</div>
+            		</div>
+            		<div class="collapse navbar-collapse" id="navbar-menu">
+            			<div class="d-flex flex-column flex-md-row flex-fill align-items-stretch align-items-md-center">
+            				<ul class="navbar-nav">
+                  				<li class="nav-item {{ url()->current() == url('/dashboard') ? 'active' : '' }}" >
+                    				<a class="nav-link" href="{{ url('/dashboard') }}" >
+                      					<span class="nav-link-icon d-md-none d-lg-inline-block">
+                        					<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l-2 0l9 -9l9 9l-2 0" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
+										</span>
+                      					<span class="nav-link-title">
+                        					Dashboard
+                      					</span>
+									</a>
+                  				</li>
+                  				<li class="nav-item {{ url()->current() == url('/catatan') ? 'active' : '' }}" >
+                    				<a class="nav-link" href="{{ url('./catatan') }}">
+										<span class="nav-link-icon d-md-none d-lg-inline-block">
+											<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M5 3m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z"></path><path d="M9 7l6 0"></path><path d="M9 11l6 0"></path><path d="M9 15l4 0"></path></svg>
+										</span>
+                      					<span class="nav-link-title">
+                        					Catatan
+                      					</span>
+                    				</a>
+                  				</li>
+								<li class="nav-item {{ url()->current() == url('/statistik') ? 'active' : '' }}" >
+                    				<a class="nav-link" href="{{ url('./statistik') }}" >
+                      					<span class="nav-link-icon d-md-none d-lg-inline-block">
+					  						<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M3 12m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"></path><path d="M9 8m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"></path><path d="M15 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"></path><path d="M4 20l14 0"></path></svg>
+                      					</span>
+                      					<span class="nav-link-title">
+                        					Statistik
+                      					</span>
+                    				</a>
+                  				</li>
+                  				<li class="nav-item {{ url()->current() == url('/anggaran') ? 'active' : '' }}" >
+                    				<a class="nav-link" href="/anggaran">
+                      					<span class="nav-link-icon d-md-none d-lg-inline-block">
+					  						<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M16 6m-5 0a5 3 0 1 0 10 0a5 3 0 1 0 -10 0"></path><path d="M11 6v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4"></path><path d="M11 10v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4"></path><path d="M11 14v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4"></path><path d="M7 9h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5"></path><path d="M5 15v1m0 -8v1"></path></svg>
+                      					</span>
+                      					<span class="nav-link-title">
+                        					Anggaran
+                      					</span>
+									</a>
+                  				</li>
+                  				<li class="nav-item dropdown {{ url()->current() == url('/investasi') ? 'active' : '' }}" >
+                    				<a class="nav-link dropdown-toggle" href="#navbar-layout" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
+                      					<span class="nav-link-icon d-md-none d-lg-inline-block">
+					  						<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M3 3v18h18"></path><path d="M20 18v3"></path><path d="M16 16v5"></path><path d="M12 13v8"></path><path d="M8 16v5"></path><path d="M3 11c6 0 5 -5 9 -5s3 5 9 5"></path></svg>
+                      					</span>
+                      					<span class="nav-link-title">
+                        					Investasi
+                      					</span>
+                    				</a>
+                    				<div class="dropdown-menu">
+                        				<div class="dropend">
+                            				<a class="dropdown-item" href="#sidebar-error" >
+                              					<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline-me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M4 19l12 0"></path><path d="M4 15l4 -6l4 2l4 -5l4"></path></svg>
+                              					Investasi
+                            				</a>
+											<a class="dropdown-item" href="#sidebar-error" >
+							  					<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9.5 3h5a1.5 1.5 0 0 1 1.5 1.5a3.5 3.5 0 0 1 -3.5 3.5h-1a3.5 3.5 0 0 1 -3.5 -3.5a1.5 1.5 0 0 1 1.5 -1.5z"></path><path d="M4 17v-1a8 8 0 1 1 16 0v1a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z"></path></svg>
+                              					Pinjaman
+                            				</a>
+											<a class="dropdown-item" href="#sidebar-error" >
+                              					<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M9 14l6 0" /></svg>
+                              					Portofolio Saham
+                            				</a>
+                          				</div>
+                    				</div>
+                  				</li>
+	                		</ul>
+            			</div>
+          			</div>
+          		</div>
+        	</header>
+      	</div>
+      	<div class="page-wrapper">
+        	<div class="page-header d-print-none">
+          		<div class="container-xl">
+            		<div class="row g-2 align-items-center">
+              			@yield('page-title')
+            		</div>
+          		</div>
+			</div>
+			<div class="page-body">
+          		@yield('content')
+			</div>        
+      	</div>
     </div>
+
+	<!-- Modal Tambah Catatan -->
     <div class="modal modal-blur fade" id="modal-report" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Tambah Catatan</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-		  <form action="{{ route('catatan') }}" method="post" autocomplete="off">
-			@csrf
-          <div class="modal-body">
-            
-            <label class="form-label">Pilih Jenis :</label>
-            <div class="form-selectgroup-boxes row mb-3">
-              <div class="col-lg-6">
-                <label class="form-selectgroup-item">
-                  <input type="radio" id="pemasukan" name="pemasukan" value="1" class="form-selectgroup-input">
-                  <span class="form-selectgroup-label d-flex align-items-center p-2">
-                    <span class="me-3">
-                      <span class="form-selectgroup-check"></span>
-                    </span>
-                    <span class="form-selectgroup-label-content">
-                      <span class="form-selectgroup-title mb-1">Pemasukan</span>
-                    </span>
-                  </span>
-                </label>
-              </div>
-              <div class="col-lg-6">
-                <label class="form-selectgroup-item">
-                  <input type="radio" id="pengeluaran" name="pengeluaran" value="2" class="form-selectgroup-input">
-                  <span class="form-selectgroup-label d-flex align-items-center p-2">
-                    <span class="me-3">
-                      <span class="form-selectgroup-check"></span>
-                    </span>
-                    <span class="form-selectgroup-label-content">
-                      <span class="form-selectgroup-title mb-1">Pengeluaran</span>
-                    </span>
-                  </span>
-                </label>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-lg-4">
-                <div class="mb-3">
-                  <label class="form-label">Jumlah : </label>
-				  <div class="input-group">
-                              <span class="input-group-text">
-                                Rp.
-                              </span>
-                              <input type="text" id="jumlah" name="catatan" class="form-control" autocomplete="off">
-                            </div>
-                  
-                </div>
-              </div>
-              <div class="col-lg-4">
-                <div class="mb-3">
-                  <label class="form-label">Kategori :</label>
-                  <select class="form-select">
-                    <option value="1" selected>Private</option>
-                    <option value="2">Public</option>
-                    <option value="3">Hidden</option>
-                  </select>
-                </div>
-              </div>
-			  <div class="col-lg-4">
-                <div class="mb-3">
-                  <label class="form-label">Tanggal :</label>
-                  <input type="date" id="tanggal" name="tanggal" class="form-control" value="{{ now()->format('Y-m-d') }}">
-                </div>
-              </div>
-			  <div class="col-lg-12">
-                <div class="mb-2">
-                  <label class="form-label">Catatan :</label>
-                  <textarea id="catatan" name="catatan" class="form-control" rows="3"></textarea>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="modal-footer">
-            <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
-              Batal
-            </a>
-            <a href="#" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
-              <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-              Tambah Catatan
-            </a>
-          </div>
-		</form>
-        </div>
-      </div>
+    	<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        	<div class="modal-content">
+          		<div class="modal-header">
+            		<h5 class="modal-title">Tambah Catatan</h5>
+            		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          		</div>
+		  		<form action="{{ route('catatan') }}" method="post" autocomplete="off">
+					@csrf
+          			<div class="modal-body">
+            			<label class="form-label">Pilih Jenis :</label>
+            			<div class="form-selectgroup-boxes row mb-3">
+							<div class="col-lg-6">
+								<label class="form-selectgroup-item">
+									<input type="radio" id="pemasukan" name="jenis" value="1" class="form-selectgroup-input" onchange="updateSelectOptions()">
+									<span class="form-selectgroup-label d-flex align-items-center p-2">
+										<span class="me-3">
+											<span class="form-selectgroup-check"></span>
+										</span>
+										<span class="form-selectgroup-label-content">
+											<span class="form-selectgroup-title mb-1">Pemasukan</span>
+										</span>
+									</span>
+								</label>
+							</div>		
+							<div class="col-lg-6">
+								<label class="form-selectgroup-item">
+									<input type="radio" id="pengeluaran" name="jenis" value="2" class="form-selectgroup-input" onchange="updateSelectOptions()">
+									<span class="form-selectgroup-label d-flex align-items-center p-2">
+										<span class="me-3">
+											<span class="form-selectgroup-check"></span>
+										</span>
+										<span class="form-selectgroup-label-content">
+											<span class="form-selectgroup-title mb-1">Pengeluaran</span>
+										</span>
+									</span>
+								</label>
+							</div>
+            			</div>
+            			<div class="row">
+              				<div class="col-lg-4">
+                				<div class="mb-3">
+                  					<label class="form-label">Jumlah : </label>
+				  					<div class="input-group">
+                              			<span class="input-group-text">
+                                			Rp.
+                              			</span>
+                              			<input type="text" id="jumlah" name="jumlah" class="form-control" autocomplete="off">
+                            		</div>
+                				</div>
+              				</div>
+              				<div class="col-lg-4">
+                				<div class="mb-3">
+                  					<label class="form-label">Kategori :</label>
+                  					<select id="kategori" name="kategori" class="form-select">
+                    					
+                  					</select>
+                				</div>
+              				</div>
+			  				<div class="col-lg-4">
+                				<div class="mb-3">
+                  					<label class="form-label">Tanggal :</label>
+                  					<input type="date" id="tanggal" name="tanggal" class="form-control" value="{{ now()->format('Y-m-d') }}">
+                				</div>
+              				</div>
+							<div class="col-lg-12">
+                				<div class="mb-2">
+                  					<label class="form-label">Catatan :</label>
+                  					<textarea id="catatan" name="catatan" class="form-control" rows="3"></textarea>
+                				</div>
+              				</div>
+            			</div>
+          			</div>
+          			<div class="modal-footer">
+	            		<a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+              				Batal
+            			</a>
+						<button type="submit" class="btn btn-primary ms-auto">
+              				<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+              				Tambah Catatan
+						</button>
+          			</div>
+				</form>	
+        	</div>
+      	</div>
     </div>
+	<!-- End of Modal Tambah Catatan -->
     <!-- Libs JS -->
     <script src="{{ asset('libs/apexcharts/dist/apexcharts.min.js?1684106062') }}" defer></script>
     <script src="{{ asset('libs/jsvectormap/dist/js/jsvectormap.min.js?1684106062') }}" defer></script>
@@ -426,7 +348,44 @@
     <!-- Tabler Core -->
     <script src="{{ ('js/tabler.min.js?1684106062') }}" defer></script>
     <script src="{{ ('js/demo.min.js?1684106062') }}" defer></script>
-	
+	<script>
+		@if (Session::has('success'))
+			toastr.options = {
+				"closeButton" : true,
+				"progressBar" : true,
+			}
+			toastr.success("{{ Session::get('success') }}");
+		@endif
+		@if (Session::has('error'))
+			toastr.options = {
+				"closeButton" : true,
+				"progressBar" : true,
+			}
+			toastr.error("{{ Session::get('error') }}",);
+		@endif
+    </script>
+	<script>
+		function updateSelectOptions() {
+			var pemasukanRadio = document.getElementById('pemasukan');
+			var pengeluaranRadio = document.getElementById('pengeluaran');
+			var selectElement = document.getElementById('kategori');
+
+			if (pemasukanRadio.checked) {
+				// If "Pemasukan" radio button is checked
+				selectElement.innerHTML = ''; // Clear existing options
+				selectElement.innerHTML += '<option value="1">Private</option>';
+				selectElement.innerHTML += '<option value="2">Public</option>';
+				selectElement.innerHTML += '<option value="3">Hidden</option>';
+			} else if (pengeluaranRadio.checked) {
+				// If "Pengeluaran" radio button is checked
+				selectElement.innerHTML = ''; // Clear existing options
+				selectElement.innerHTML += '<option value="4">Option 4</option>';
+				selectElement.innerHTML += '<option value="5">Option 5</option>';
+				selectElement.innerHTML += '<option value="6">Option 6</option>';
+			}
+		}
+
+	</script>
     <script>
       // @formatter:off
       document.addEventListener("DOMContentLoaded", function () {
