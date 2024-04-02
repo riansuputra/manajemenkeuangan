@@ -133,8 +133,8 @@
                 			<a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
                   				<span class="avatar avatar-sm" style="background-image: url(./static/avatars/000m.jpg)"></span>
                   				<div class="d-none d-xl-block ps-2">
-                    				<div>Paweł Kuna</div>
-                    				<div class="mt-1 small text-muted">imaderiansuputra@gmail.com</div>
+                    				<div>{{$user['name']}}</div>
+                    				<div class="mt-1 small text-muted">{{$user['email']}}</div>
                   				</div>
                 			</a>
                 			<div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -217,15 +217,12 @@
                     				<div class="dropdown-menu">
                         				<div class="dropend">
                             				<a class="dropdown-item" href="#sidebar-error" >
-                              					<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline-me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M4 19l12 0"></path><path d="M4 15l4 -6l4 2l4 -5l4"></path></svg>
                               					Investasi
                             				</a>
 											<a class="dropdown-item" href="#sidebar-error" >
-							  					<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9.5 3h5a1.5 1.5 0 0 1 1.5 1.5a3.5 3.5 0 0 1 -3.5 3.5h-1a3.5 3.5 0 0 1 -3.5 -3.5a1.5 1.5 0 0 1 1.5 -1.5z"></path><path d="M4 17v-1a8 8 0 1 1 16 0v1a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z"></path></svg>
                               					Pinjaman
                             				</a>
 											<a class="dropdown-item" href="#sidebar-error" >
-                              					<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M9 14l6 0" /></svg>
                               					Portofolio Saham
                             				</a>
                           				</div>

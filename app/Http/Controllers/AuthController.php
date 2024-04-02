@@ -61,8 +61,13 @@ class AuthController extends Controller
         }
     }    
 
-    public function dashboardPage(){
-        return view('dashboard.index');
+    public function dashboardPage(Request $request){
+        $res = Parent::getDataLogin($request);
+        dd($res);
+
+        return view('dashboard.index', [
+            'user' => $res['user'],
+        ]);
     }
 
     public function logout(){
@@ -86,18 +91,7 @@ class AuthController extends Controller
         }
     }
 
-    public function getDataLogin($request){
-        $ket ='';
-        $user ='';
-        if($request->admin){
-            $ket ='admin';
-            $user = $request->admin;
-        }else if($request->user){
-            $ket ='user';
-            $user = $request->user;
-        }
-        return ['keterangan' => $ket, 'user' => $user];
-    }
+    
     
 
 }

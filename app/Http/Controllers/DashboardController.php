@@ -9,9 +9,14 @@ class DashboardController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-       return view('dashboard.index');
+        $res = Parent::getDataLogin($request);
+        // dd($res);
+
+        return view('dashboard.index', [
+            'user' => $res['user'],
+        ]);
     }
 
     /**
