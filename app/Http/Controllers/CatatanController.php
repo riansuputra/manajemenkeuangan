@@ -62,10 +62,11 @@ class CatatanController extends Controller
         $alldata = $combinedData->sortByDesc('tanggal');
 
         
-        $perPage = 5; // Number of items per page
+        $perPage = 99999; // Number of items per page
 
         // Paginate the sorted collection
         $finaldata = new Paginator($alldata->forPage(Paginator::resolveCurrentPage(), $perPage), $perPage);
+        // $finaldata = $alldata;
 
         // dd($combinedData);
 

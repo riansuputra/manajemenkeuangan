@@ -34,6 +34,9 @@ Route::middleware([])->group(function(){
         // Route::get('/catatan',[CatatanController::class,'index'])->name('catatan');
         Route::get('/anggaran', function () {return view('anggaran.index');})->name('anggaran');
         // Route::get('/catatan', function () {return view('catatan.index');})->name('catatan');
+        Route::get('/investasi', function () {return view('investasi.index');});
+        Route::get('/profil', function () {return view('profil.index');});
+        Route::get('/statistik', function () {return view('statistik.index');});
         
     });
 

@@ -370,15 +370,19 @@
 			if (pemasukanRadio.checked) {
 				// If "Pemasukan" radio button is checked
 				selectElement.innerHTML = ''; // Clear existing options
-				selectElement.innerHTML += '<option value="1">Private</option>';
-				selectElement.innerHTML += '<option value="2">Public</option>';
-				selectElement.innerHTML += '<option value="3">Hidden</option>';
+				selectElement.innerHTML += '<option value="1">Uang Saku</option>';
+				selectElement.innerHTML += '<option value="2">Upah</option>';
+				selectElement.innerHTML += '<option value="3">Bonus</option>';
+				selectElement.innerHTML += '<option value="3">Lainnya</option>';
 			} else if (pengeluaranRadio.checked) {
 				// If "Pengeluaran" radio button is checked
 				selectElement.innerHTML = ''; // Clear existing options
-				selectElement.innerHTML += '<option value="4">Option 4</option>';
-				selectElement.innerHTML += '<option value="5">Option 5</option>';
-				selectElement.innerHTML += '<option value="6">Option 6</option>';
+				selectElement.innerHTML += '<option value="1">Makanan</option>';
+				selectElement.innerHTML += '<option value="2">Minuman</option>';
+				selectElement.innerHTML += '<option value="3">Tagihan</option>';
+				selectElement.innerHTML += '<option value="4">Shopping</option>';
+				selectElement.innerHTML += '<option value="5>Kesehatan & Olahraga</option>';
+				selectElement.innerHTML += '<option value="6">Lainnya</option>';
 			}
 		}
 
