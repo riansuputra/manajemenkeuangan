@@ -304,6 +304,7 @@
                 				<div class="mb-3">
                   					<label class="form-label">Kategori :</label>
                   					<select id="kategori" name="kategori" class="form-select">
+									  <option value="" disabled selected>Pilih Kategori</option>
                     					
                   					</select>
                 				</div>
@@ -367,6 +368,11 @@
 			var pengeluaranRadio = document.getElementById('pengeluaran');
 			var selectElement = document.getElementById('kategori');
 
+			var defaultOption = selectElement.querySelector('option[value=""]');
+        if (defaultOption) {
+            selectElement.removeChild(defaultOption);
+        }
+
 			if (pemasukanRadio.checked) {
 				// If "Pemasukan" radio button is checked
 				selectElement.innerHTML = ''; // Clear existing options
@@ -383,8 +389,15 @@
 				selectElement.innerHTML += '<option value="4">Shopping</option>';
 				selectElement.innerHTML += '<option value="5>Kesehatan & Olahraga</option>';
 				selectElement.innerHTML += '<option value="6">Lainnya</option>';
-			}
+			
+		} else {
+            // If neither radio button is checked, show "Pilih jenis" option
+            selectElement.innerHTML += '<option value="" disabled selected>Pilih Kategori</option>';
+        }
+
+			selectElement.disabled = false;
 		}
+		updateSelectOptions();
 
 	</script>
     <script>

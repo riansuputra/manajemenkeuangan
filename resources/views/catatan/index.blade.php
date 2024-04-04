@@ -57,25 +57,119 @@
                 				</div>
               				</div>
 						</div>
-						
 
+						<div class="card" id="loadingIndicator">
+                      <ul class="list-group list-group-flush placeholder-glow">
+                        <li class="list-group-item">
+                          <div class="row align-items-center">
+                            <div class="col-auto">
+                              <div class="avatar avatar-rounded placeholder"></div>
+                            </div>
+                            <div class="col-7">
+                              <div class="placeholder placeholder-xs col-9"></div>
+                              <div class="placeholder placeholder-xs col-7"></div>
+                            </div>
+                            <div class="col-2 ms-auto text-end">
+                              <div class="placeholder placeholder-xs col-8"></div>
+                              <div class="placeholder placeholder-xs col-10"></div>
+                            </div>
+                          </div>
+                        </li>
+                        <li class="list-group-item">
+                          <div class="row align-items-center">
+                            <div class="col-auto">
+                              <div class="avatar avatar-rounded placeholder"></div>
+                            </div>
+                            <div class="col-7">
+                              <div class="placeholder placeholder-xs col-9"></div>
+                              <div class="placeholder placeholder-xs col-7"></div>
+                            </div>
+                            <div class="col-2 ms-auto text-end">
+                              <div class="placeholder placeholder-xs col-8"></div>
+                              <div class="placeholder placeholder-xs col-10"></div>
+                            </div>
+                          </div>
+                        </li>
+                        <li class="list-group-item">
+                          <div class="row align-items-center">
+                            <div class="col-auto">
+                              <div class="avatar avatar-rounded placeholder"></div>
+                            </div>
+                            <div class="col-7">
+                              <div class="placeholder placeholder-xs col-9"></div>
+                              <div class="placeholder placeholder-xs col-7"></div>
+                            </div>
+                            <div class="col-2 ms-auto text-end">
+                              <div class="placeholder placeholder-xs col-8"></div>
+                              <div class="placeholder placeholder-xs col-10"></div>
+                            </div>
+                          </div>
+                        </li>
+                        <li class="list-group-item">
+                          <div class="row align-items-center">
+                            <div class="col-auto">
+                              <div class="avatar avatar-rounded placeholder"></div>
+                            </div>
+                            <div class="col-7">
+                              <div class="placeholder placeholder-xs col-9"></div>
+                              <div class="placeholder placeholder-xs col-7"></div>
+                            </div>
+                            <div class="col-2 ms-auto text-end">
+                              <div class="placeholder placeholder-xs col-8"></div>
+                              <div class="placeholder placeholder-xs col-10"></div>
+                            </div>
+                          </div>
+                        </li>
+						<li class="list-group-item">
+                          <div class="row align-items-center">
+                            <div class="col-auto">
+                              <div class="avatar avatar-rounded placeholder"></div>
+                            </div>
+                            <div class="col-7">
+                              <div class="placeholder placeholder-xs col-9"></div>
+                              <div class="placeholder placeholder-xs col-7"></div>
+                            </div>
+                            <div class="col-2 ms-auto text-end">
+                              <div class="placeholder placeholder-xs col-8"></div>
+                              <div class="placeholder placeholder-xs col-10"></div>
+                            </div>
+                          </div>
+                        </li>
+						<li class="list-group-item">
+                          <div class="row align-items-center">
+                            <div class="col-auto">
+                              <div class="avatar avatar-rounded placeholder"></div>
+                            </div>
+                            <div class="col-7">
+                              <div class="placeholder placeholder-xs col-9"></div>
+                              <div class="placeholder placeholder-xs col-7"></div>
+                            </div>
+                            <div class="col-2 ms-auto text-end">
+                              <div class="placeholder placeholder-xs col-8"></div>
+                              <div class="placeholder placeholder-xs col-10"></div>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+					
 				  		<div class="table-responsive">
-                    		<table id="table-harian" class="table card-table table-vcenter text-nowrap datatable">
+                    		<table id="table-harian" class="table card-table table-vcenter text-nowrap datatable" style="display: none;">
                       			<thead>
                         			<tr>
-                          				<th class="w-1">No.</th>
-                          				<th class="text-center">Kategori</th>
-                          				<th class="text-center">Jumlah</th>
-                          				<th class="text-center">Tanggal</th>
-                          				<th class="text-end">Action</th>
+                          				<th class="text-center" style="width:5%">No.</th>
+                          				<th class="text-center" style="width:40%">Kategori</th>
+                          				<th class="text-center" style="width:20%">Jumlah</th>
+                          				<th class="text-center" style="width:20%">Tanggal</th>
+                          				<th class="text-center" style="width:15%">Action</th>
                         			</tr>
                       			</thead>
                       			<tbody>
-									@foreach($finaldata as $data)
+									@foreach($alldata as $data)
                         			<tr>
-                          				<td>{{$loop->iteration}}.</td>
+                          				<td style="width:5%">{{$loop->iteration}}.</td>
 										@if (isset($data['id_pemasukan']))
-											<td data-label="Kategori">
+											<td style="width:40%" data-label="Kategori">
                             					<div class="text-green">{{$data['kategori_pemasukan']['nama_kategori_pemasukan']}}</div>
                             					<div>{{$data['catatan']}}</div>
                           					</td>
@@ -84,7 +178,7 @@
 												<span class="text-end text-green">{{ number_format(floatval($data['jumlah']), 0, ',', '.')}}</span>
 											</td>
 										@else
-											<td data-label="Kategori">
+											<td style="width:40% data-label="Kategori">
 												<div class="text-red">{{$data['kategori_pengeluaran']['nama_kategori_pengeluaran']}}</div>
 												<div>{{$data['catatan']}}</div>
 											</td>
@@ -93,8 +187,8 @@
 												<span class="text-end text-red">{{$data['jumlah']}}</span>
 											</td>
 										@endif										
-                          				<td class="text-center">{{ date('d F Y', strtotime($data['tanggal'])) }}</td>
-                          				<td class="text-end">
+                          				<td style="width:20%" class="text-center">{{ date('d F Y', strtotime($data['tanggal'])) }}</td>
+                          				<td style="width:15%" class="text-end">
                             				<a href="#" class="btn">
 	                                			Edit
                               				</a>
@@ -104,12 +198,24 @@
                           				</td>
                         			</tr>
 									@endforeach
-									{{ $finaldata->links() }}
+									
                       			</tbody>
                     		</table>
                   		</div>
 				  		
 					</div>
+
+					<!-- <div id="loadingIndicator" class="card placeholder-glow">
+                      <div class="ratio ratio-21x9 card-img-top placeholder"></div>
+                      <div class="card-body">
+                        <div class="placeholder col-9 mb-3"></div>
+                        <div class="placeholder placeholder-xs col-10"></div>
+                        <div class="placeholder placeholder-xs col-11"></div>
+                        <div class="mt-3">
+                          <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-4" aria-hidden="true"></a>
+                        </div>
+                      </div>
+                    </div> -->
 
 
 					<div class="tab-pane" id="tabs-mingguan" role="tabpanel">
@@ -128,7 +234,7 @@
 						
 
 				  		<div class="table-responsive">
-                    		<table id="table-mingguan" class="table card-table table-vcenter text-nowrap datatable">
+                    		<!-- <table id="table-mingguan" class="table card-table table-vcenter text-nowrap datatable">
 								<thead>
                         			<tr>
                           				<th class="w-1">No.</th>
@@ -139,7 +245,7 @@
                         			</tr>
                       			</thead>
                       			<tbody>
-									@foreach($finaldata as $data)
+									@foreach($alldata as $data)
                         			<tr>
                           				<td>{{$loop->iteration}}.</td>
 										@if (isset($data['id_pemasukan']))
@@ -172,9 +278,9 @@
                           				</td>
                         			</tr>
 									@endforeach
-									{{ $finaldata->links() }}
+									
                       			</tbody>
-                    		</table>
+                    		</table> -->
                   		</div>
 				  		
 					</div>
@@ -363,9 +469,19 @@
 <script>
 	$(document).ready(function() {
     // Initialize DataTable
+	$('#loadingIndicator').show();
     var table = $('#table-harian').DataTable({
+		// deferRender: true,
+		// "paging": true,
+        // "pageLength": 5,
         // DataTable options...
-		"lengthMenu": [ [5, 10, 25, 50, 100], [5, 10, 25, 50, 100] ]
+		"lengthMenu": [ [5, 10, 25, 50, 100], [5, 10, 25, 50, 100] ],
+
+		initComplete: function(settings, json) {
+            // Hide loading indicator once DataTables has finished initializing
+            $('#loadingIndicator').hide();
+            $('#table-harian').css('display', 'table');
+        }
 		
     });
 	$('#dateInput').on('change', function() {

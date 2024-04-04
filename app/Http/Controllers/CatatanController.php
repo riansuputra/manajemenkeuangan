@@ -14,12 +14,60 @@ class CatatanController extends Controller
     public function index(Request $request) {
         $res = Parent::getDataLogin($request);
 
-        $pemasukanRes = Http::withHeaders([
-            'Accept' => 'application/json',
-            'x-api-key' => env('API_KEY'),
-            'Authorization' => 'Bearer ' . request()->cookie('token')
-        ])->get(env('API_URL')."/pemasukans");
-        $pemasukanData = collect($pemasukanRes['data'])->where('user_id', $res['user']['user_id']);
+        $pemasukanData = collect();
+        $pengeluaranData = collect();
+
+        // Start from the first page
+        $currentPagePemasukan = 1;
+        $currentPagePengeluaran = 1;
+        
+        do {
+            // Make a request to the API endpoint with the current page number
+            $pemasukanRes = Http::withHeaders([
+                'Accept' => 'application/json',
+                'x-api-key' => env('API_KEY'),
+                'Authorization' => 'Bearer ' . request()->cookie('token')
+            ])->get(env('API_URL')."/pemasukans?page=$currentPagePemasukan");
+        
+            // Extract the JSON data from the response
+            $dataPemasukan = $pemasukanRes->json();
+        
+            // Append the data from the current page to the overall data array
+            $pemasukanData = $pemasukanData->concat($dataPemasukan['data']);
+
+        
+            // Increment the current page number
+            $currentPagePemasukan++;
+        
+            // Check if there is a next page
+        } while ($currentPagePemasukan <= $dataPemasukan['last_page']);
+
+        do {
+            // Make a request to the API endpoint with the current page number
+            $pengeluaranRes = Http::withHeaders([
+                'Accept' => 'application/json',
+                'x-api-key' => env('API_KEY'),
+                'Authorization' => 'Bearer ' . request()->cookie('token')
+            ])->get(env('API_URL')."/pengeluarans?page=$currentPagePengeluaran");
+        
+            // Extract the JSON data from the response
+            $dataPengeluaran = $pengeluaranRes->json();
+        // dd($dataPengeluaran);
+
+        
+            // Append the data from the current page to the overall data array
+            $pengeluaranData = $pengeluaranData->concat($dataPengeluaran['data']);
+
+        
+            // Increment the current page number
+            $currentPagePengeluaran++;
+        
+            // Check if there is a next page
+        } while ($currentPagePengeluaran <= $dataPengeluaran['last_page']);
+        
+        // Now $pemasukanData contains data from all pages
+        // dd($pemasukanData);
+        // dd($pengeluaranData);
 
         $kategoriPemasukanId = $pemasukanData->pluck('id_kategori_pemasukan')->unique()->toArray();
         $kategoriPemasukanRes = Http::withHeaders([
@@ -36,12 +84,7 @@ class CatatanController extends Controller
             return $pemasukanItem;
         });
 
-        $pengeluaranRes = Http::withHeaders([
-            'Accept' => 'application/json',
-            'x-api-key' => env('API_KEY'),
-            'Authorization' => 'Bearer ' . request()->cookie('token')
-        ])->get(env('API_URL')."/pengeluarans");
-        $pengeluaranData = collect($pengeluaranRes['data'])->where('user_id', $res['user']['user_id']);
+        
         
         $kategoriPengeluaranId = $pengeluaranData->pluck('id_kategori_pengeluaran')->unique()->toArray();
         $kategoriPengeluaranRes = Http::withHeaders([
@@ -62,19 +105,19 @@ class CatatanController extends Controller
         $alldata = $combinedData->sortByDesc('tanggal');
 
         
-        $perPage = 99999; // Number of items per page
+        // $perPage = 999; // Number of items per page
 
         // Paginate the sorted collection
-        $finaldata = new Paginator($alldata->forPage(Paginator::resolveCurrentPage(), $perPage), $perPage);
+        // $finaldata = new Paginator($alldata->forPage(Paginator::resolveCurrentPage(), $perPage), $perPage);
         // $finaldata = $alldata;
 
-        // dd($combinedData);
+        // dd($alldata);
 
         return view('catatan.index', [
             'user' => $res['user'],
             'pemasukan' => $pemasukanData,
             'pengeluaran' => $pengeluaranData,
-            'finaldata' => $finaldata,
+            'alldata' => $alldata,
             'combineDataPemasukan' => $combinedDataPemasukan,
             'combineDataPengeluaran' => $combinedDataPengeluaran,
         ]);
