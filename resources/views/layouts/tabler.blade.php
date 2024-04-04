@@ -296,7 +296,7 @@
                               			<span class="input-group-text">
                                 			Rp.
                               			</span>
-                              			<input type="text" id="jumlah" name="jumlah" class="form-control" autocomplete="off">
+                              			<input type="text" id="jumlah" name="jumlah" class="form-control text-end" autocomplete="off">
                             		</div>
                 				</div>
               				</div>
@@ -362,6 +362,24 @@
 			toastr.error("{{ Session::get('error') }}",);
 		@endif
     </script>
+
+<script>
+// Function to format the number with thousands separator
+function formatNumber(num) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
+// Function to update the value of the input field with formatted number
+function updateFormattedNumber() {
+    var inputElement = document.getElementById('jumlah');
+    var rawValue = inputElement.value.replace(/\D/g, ''); // Remove non-numeric characters
+    var formattedValue = formatNumber(rawValue); // Format the number
+    inputElement.value = formattedValue; // Update the input field with formatted value
+}
+
+// Attach event listener to the input field to trigger formatting as the user types
+document.getElementById('jumlah').addEventListener('input', updateFormattedNumber);
+</script>
 	<script>
 		function updateSelectOptions() {
 			var pemasukanRadio = document.getElementById('pemasukan');

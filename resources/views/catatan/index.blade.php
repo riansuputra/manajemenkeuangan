@@ -186,8 +186,8 @@
 												<span class="text-start text-red">-Rp.</span>
 												<span class="text-end text-red">{{$data['jumlah']}}</span>
 											</td>
-										@endif										
-                          				<td style="width:20%" class="text-center">{{ date('d F Y', strtotime($data['tanggal'])) }}</td>
+										@endif		
+										<td style="width:20%" class="text-center">{{ date('d - m - Y', strtotime($data['tanggal'])) }}</td>								
                           				<td style="width:15%" class="text-end">
                             				<a href="#" class="btn">
 	                                			Edit
@@ -485,15 +485,26 @@
 		
     });
 	$('#dateInput').on('change', function() {
-        var selectedDate = $(this).val();
-        if (selectedDate) {
-            // Filter DataTable based on selected date (column index 3)
-            table.column(3).search(moment(selectedDate).format('DD MMMM YYYY')).draw();
-        } else {
-            // If no date is selected, clear the DataTable filter
-            table.column(3).search('').draw();
-        }
-    });
+    var selectedDate = $(this).val();
+    console.log("Selected Date:", selectedDate);
+    
+    if (selectedDate) {
+        // Filter DataTable based on selected date
+        var formattedDate = moment(selectedDate, 'YYYY-MM-DD').format('DD - MM - YYYY');
+        console.log("Formatted Date:", formattedDate);
+
+        // Clear any previous search
+        table.column(3).search('').draw();
+
+        // Perform a new search for the selected date in the specified column
+        table.column(3).search('^' + formattedDate + '$', true, false).draw();
+    } else {
+        // If no date is selected, show all rows
+        table.column(3).search('').draw();
+    }
+});
+
+
 
 	$('.dataTables_length select').addClass('form-select form-select-sm mx-2 d-inline-block');
 	$('.dataTables_filter input').addClass('form-control form-control-sm ms-2 d-inline-block');
@@ -552,7 +563,7 @@
 
 
     // Create wrapper div for card-body
-    var cardFooterWrapper = $('<div class="card-footer d-flex align-items-center"></div>');
+    var cardFooterWrapper = $('<div class="card-body d-flex align-items-center"></div>');
 
     // Create wrapper div for d-flex
     var dFlexWrapper = $('<div class="d-flex"></div>');
