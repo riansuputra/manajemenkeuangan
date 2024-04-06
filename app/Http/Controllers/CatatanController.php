@@ -16,59 +16,31 @@ class CatatanController extends Controller
 
         $pemasukanData = collect();
         $pengeluaranData = collect();
-
-        // Start from the first page
         $currentPagePemasukan = 1;
         $currentPagePengeluaran = 1;
         
         do {
-            // Make a request to the API endpoint with the current page number
             $pemasukanRes = Http::withHeaders([
                 'Accept' => 'application/json',
                 'x-api-key' => env('API_KEY'),
                 'Authorization' => 'Bearer ' . request()->cookie('token')
             ])->get(env('API_URL')."/pemasukans?page=$currentPagePemasukan");
-        
-            // Extract the JSON data from the response
             $dataPemasukan = $pemasukanRes->json();
-        
-            // Append the data from the current page to the overall data array
             $pemasukanData = $pemasukanData->concat($dataPemasukan['data']);
-
-        
-            // Increment the current page number
             $currentPagePemasukan++;
-        
-            // Check if there is a next page
         } while ($currentPagePemasukan <= $dataPemasukan['last_page']);
 
         do {
-            // Make a request to the API endpoint with the current page number
             $pengeluaranRes = Http::withHeaders([
                 'Accept' => 'application/json',
                 'x-api-key' => env('API_KEY'),
                 'Authorization' => 'Bearer ' . request()->cookie('token')
             ])->get(env('API_URL')."/pengeluarans?page=$currentPagePengeluaran");
-        
-            // Extract the JSON data from the response
             $dataPengeluaran = $pengeluaranRes->json();
-        // dd($dataPengeluaran);
-
-        
-            // Append the data from the current page to the overall data array
             $pengeluaranData = $pengeluaranData->concat($dataPengeluaran['data']);
-
-        
-            // Increment the current page number
             $currentPagePengeluaran++;
-        
-            // Check if there is a next page
         } while ($currentPagePengeluaran <= $dataPengeluaran['last_page']);
         
-        // Now $pemasukanData contains data from all pages
-        // dd($pemasukanData);
-        // dd($pengeluaranData);
-
         $kategoriPemasukanId = $pemasukanData->pluck('id_kategori_pemasukan')->unique()->toArray();
         $kategoriPemasukanRes = Http::withHeaders([
             'Accept' => 'application/json',
@@ -83,8 +55,6 @@ class CatatanController extends Controller
             $pemasukanItem['kategori_pemasukan'] = $relatedKategori;
             return $pemasukanItem;
         });
-
-        
         
         $kategoriPengeluaranId = $pengeluaranData->pluck('id_kategori_pengeluaran')->unique()->toArray();
         $kategoriPengeluaranRes = Http::withHeaders([
@@ -101,27 +71,66 @@ class CatatanController extends Controller
             return $pengeluaranItem;
         });
 
-        $combinedData = $combinedDataPemasukan->merge($combinedDataPengeluaran);
-        $alldata = $combinedData->sortByDesc('tanggal');
-
         
-        // $perPage = 999; // Number of items per page
+        $filterPemasukan = [];
+        
+        foreach ($pemasukanData as $item) {
+            $filterPemasukan[] = [
+                'tanggal' => $item['tanggal'],
+                'jumlah' => $item['jumlah']
+            ];
+        }
 
-        // Paginate the sorted collection
-        // $finaldata = new Paginator($alldata->forPage(Paginator::resolveCurrentPage(), $perPage), $perPage);
-        // $finaldata = $alldata;
+        $filterPengeluaran = [];
+        
+        foreach ($pengeluaranData as $item) {
+            $filterPengeluaran[] = [
+                'tanggal' => $item['tanggal'],
+                'jumlah' => $item['jumlah']
+            ];
+        }
+        
+        // dd($filterPengeluaran);
 
-        // dd($alldata);
+        $combinedData = $combinedDataPemasukan->merge($combinedDataPengeluaran);
+        $alldata = $combinedData->sortByDesc('created_at');
 
         return view('catatan.index', [
             'user' => $res['user'],
             'pemasukan' => $pemasukanData,
             'pengeluaran' => $pengeluaranData,
             'alldata' => $alldata,
-            'combineDataPemasukan' => $combinedDataPemasukan,
-            'combineDataPengeluaran' => $combinedDataPengeluaran,
+            'combinedDataPemasukan' => $combinedDataPemasukan,
+            'combinedDataPengeluaran' => $combinedDataPengeluaran,
+            'filterPemasukan' => $filterPemasukan,
+            'filterPengeluaran' => $filterPengeluaran,
+
         ]);
     }
+
+    public function getTotalJumlah(Request $request)
+{
+    // Get the selected date from the request
+    $selectedDate = $request->input('selectedDate');
+
+    // Filter the data to include only entries with the selected date
+    $filterPemasukan = [];
+
+    foreach ($pemasukanData as $item) {
+        if ($item['tanggal'] == $selectedDate) {
+            $filterPemasukan[] = [
+                'tanggal' => $item['tanggal'],
+                'jumlah' => $item['jumlah']
+            ];
+        }
+    }
+
+    // Sum the "jumlah" values from the filtered data
+    $totalJumlah = array_sum(array_column($filterPemasukan, 'jumlah'));
+
+    // Return the total jumlah
+    return $totalJumlah;
+}
 
     /**
      * Show the form for creating a new resource.
@@ -151,15 +160,18 @@ class CatatanController extends Controller
             $jenisapi = $apiUrlPengeluaran;
         }
 
+        // $unformattednum = $request->jumlah2;
+        // dd($unformattednum);
+
         $input = array(
             'user_id' => $res['user']['user_id'],
             'tanggal' => $request->tanggal,
-            'jumlah' => $request->jumlah,
+            'jumlah' => $request->jumlah1,
             'catatan' => $request->catatan,
             $jenis => $request->kategori,
         );
         
-        // dd($input);
+        // dd($request);
 
         $response = Http::withHeaders([
             'Accept' => 'application/json',

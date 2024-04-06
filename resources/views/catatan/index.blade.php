@@ -47,8 +47,8 @@
 					<div class="tab-pane active show" id="tabs-harian" role="tabpanel">
 						<div class="row">
 							<div class="col-lg-8">
-								<h4>Catatan Harian</h4>
-								<div>Berikut ini merupakan daftar catatan keuangan harian yang dapat difilter berdasarkan tanggal yang dipilih.</div>
+								<h4 class="text-muted" id="totalpemasukan">Total Pemasukan&nbsp&nbsp    : <span class="text-green">+Rp.</span> </h4>
+								<h4 class="text-muted" id="totalpengeluaran">Total Pengeluaran :&nbsp<span class="text-red">- Rp.</span> </h4>
 							</div>	
 							<div class="col-lg-4">
                 				<div class="mb-3">
@@ -184,10 +184,11 @@
 											</td>
 											<td class="d-flex justify-content-between" style="padding: 1.4rem;">
 												<span class="text-start text-red">-Rp.</span>
-												<span class="text-end text-red">{{$data['jumlah']}}</span>
+												<span class="text-end text-red">{{ number_format(floatval($data['jumlah']), 0, ',', '.')}}</span>
 											</td>
 										@endif		
-										<td style="width:20%" class="text-center">{{ date('d - m - Y', strtotime($data['tanggal'])) }}</td>								
+										<!-- <td style="width:20%" class="text-center">{{ date('d - m - Y', strtotime($data['tanggal'])) }}</td>								 -->
+										<td style="width:20%" class="text-center">{{ date('d F Y', strtotime($data['tanggal'])) }}</td>								
                           				<td style="width:15%" class="text-end">
                             				<a href="#" class="btn">
 	                                			Edit
@@ -486,23 +487,82 @@
     });
 	$('#dateInput').on('change', function() {
     var selectedDate = $(this).val();
-    console.log("Selected Date:", selectedDate);
+    // console.log("Selected Date:", selectedDate);
     
     if (selectedDate) {
-        // Filter DataTable based on selected date
-        var formattedDate = moment(selectedDate, 'YYYY-MM-DD').format('DD - MM - YYYY');
-        console.log("Formatted Date:", formattedDate);
+        // Convert selectedDate string to a JavaScript Date object
+        var date = new Date(selectedDate);
+        
+        // Format the date in the desired format
+        var formattedDate = (date.getDate() < 10 ? '0' : '') + date.getDate() + ' ' +
+                            ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+                            'August', 'September', 'October', 'November', 'December'][date.getMonth()] +
+                            ' ' + date.getFullYear();
+        
+        // Log the formatted date
+        // console.log("Formatted Date:", formattedDate);
 
-        // Clear any previous search
         table.column(3).search('').draw();
 
         // Perform a new search for the selected date in the specified column
         table.column(3).search('^' + formattedDate + '$', true, false).draw();
-    } else {
-        // If no date is selected, show all rows
-        table.column(3).search('').draw();
+        
+        // Initialize variables to store sum of pemasukan and pengeluaran
+        var totalPemasukan = 0;
+        var totalPengeluaran = 0;
+        
+        // Loop through each row in the table
+        // Loop through each row in the table
+$('#table-harian tbody tr').each(function() {
+    var rowDate = $(this).find('td:eq(3)').text().trim(); // Assuming the date is in the fourth column (index 3)
+    var rowAmountText = $(this).find('td:eq(2)').text().trim(); // Assuming the amount is in the third column (index 2)
+    
+    // Split rowAmountText into parts based on dot (.)
+    var amountParts = rowAmountText.split('.');
+    
+    // Parse each part as integer and join them back together
+    var rowAmount = parseFloat(amountParts.map(part => part.replace(/[^\d]/g, '')).join(''));
+    
+    // Log the row amount and its parsed value
+    // console.log("Row Amount Text:", rowAmountText);
+    // console.log("Parsed Row Amount:", rowAmount);
+    
+    // Check if the row date matches the selected date
+    if (rowDate === formattedDate) {
+        // Check if it's pemasukan or pengeluaran and update total accordingly
+        if (rowAmountText.startsWith('+')) {
+            totalPemasukan += rowAmount;
+        } else if (rowAmountText.startsWith('-')) {
+            totalPengeluaran += rowAmount;
+        }
     }
 });
+
+        
+        // Log the total pemasukan and pengeluaran
+        // console.log("Total Pemasukan:", totalPemasukan);
+        // console.log("Total Pengeluaran:", totalPengeluaran);
+        
+        // Update the h4 elements with the total pemasukan and pengeluaran
+        $('#totalpemasukan').html('<h4 id="totalpemasukan">Total Pemasukan&nbsp&nbsp    : <span class="text-green">+Rp. ' + formatNumber(totalPemasukan) + '</span>');
+        $('#totalpengeluaran').html('<h4 id="totalpengeluaran">Total Pengeluaran :<span class="text-red">&nbsp- Rp. ' + formatNumber(totalPengeluaran) + '</span>');
+    } else {
+        table.column(3).search('').draw();
+        // If no date is selected, clear the h4 elements
+        $('#totalpemasukan').html('<h4 id="totalpemasukan">Total Pemasukan&nbsp&nbsp    : <span class="text-green">+Rp.</span> ');
+        $('#totalpengeluaran').html('<h4 id="totalpengeluaran">Total Pengeluaran :<span class="text-red">&nbsp- Rp.</span> ');
+    }
+});
+
+// Function to format number with thousands separator
+function formatNumber(num) {
+    return num.toLocaleString('id-ID-u-nu-latn');
+}
+
+
+
+
+
 
 
 
@@ -760,4 +820,17 @@
       });
       })
     </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
 @endsection

@@ -296,7 +296,8 @@
                               			<span class="input-group-text">
                                 			Rp.
                               			</span>
-                              			<input type="text" id="jumlah" name="jumlah" class="form-control text-end" autocomplete="off">
+                              			<input type="text" id="jumlah" oninput="updateFormattedNumber()" name="jumlah" class="form-control text-end" autocomplete="off">
+                              			<input type="text" id="jumlah1" name="jumlah1" class="form-control text-end" autocomplete="off">
                             		</div>
                 				</div>
               				</div>
@@ -375,11 +376,27 @@ function updateFormattedNumber() {
     var rawValue = inputElement.value.replace(/\D/g, ''); // Remove non-numeric characters
     var formattedValue = formatNumber(rawValue); // Format the number
     inputElement.value = formattedValue; // Update the input field with formatted value
+    inputElement.setAttribute('data-value', rawValue); // Store unformatted value in a data attribute
+    setUnformattedValueToInput(); // Set the unformatted value to the input field jumlah1
+}
+
+function setUnformattedValueToInput() {
+    var unformattedValue = getUnformattedValue(); // Retrieve the unformatted value
+    var inputElement = document.getElementById('jumlah1');
+    inputElement.value = unformattedValue; // Set the unformatted value to the input field jumlah1
+}
+
+// Function to get the unformatted value from the data attribute
+function getUnformattedValue() {
+    var inputElement = document.getElementById('jumlah');
+    var unformattedValue = inputElement.getAttribute('data-value') || ''; // Retrieve unformatted value from data attribute
+    return unformattedValue;
 }
 
 // Attach event listener to the input field to trigger formatting as the user types
 document.getElementById('jumlah').addEventListener('input', updateFormattedNumber);
 </script>
+
 	<script>
 		function updateSelectOptions() {
 			var pemasukanRadio = document.getElementById('pemasukan');
