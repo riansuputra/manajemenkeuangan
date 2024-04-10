@@ -32,6 +32,6 @@ class UserMiddleware
                 return $next($request);
             }
         }
-        return redirect()->back()->with(["toast" => ["type" => "error", "message" => $response["message"]]]);
+        return redirect()->route('loginPage')->with(["toast" => ["type" => "error", "message" => $response["message"]]]);
     }
 }

@@ -28,33 +28,31 @@
 			<div class="card-header">
 				<ul class="nav nav-tabs card-header-tabs nav-fill" data-bs-toggle="tabs" role="tablist">
 					<li class="nav-item" role="presentation">
-						<a href="{{ route('catatanHarian') }}" class="nav-link active" aria-selected="true" role="tab">Harian</a>
+						<a href="{{ route('catatanHarian') }}" class="nav-link" aria-selected="true" role="tab">Harian</a>
 					</li>
 					<li class="nav-item" role="presentation">
 						<a href="{{ route('catatanMingguan') }}" class="nav-link" aria-selected="false" role="tab" tabindex="-1">Mingguan</a>
 					</li>
 					<li class="nav-item" role="presentation">
-						<a href="{{ route('catatanBulanan') }}" class="nav-link" aria-selected="false" role="tab" tabindex="-1">Bulanan</a>
+						<a href="{{ route('catatanBulanan') }}" class="nav-link active" aria-selected="false" role="tab" tabindex="-1">Bulanan</a>
 					</li>
 				</ul>
 			</div>
 			<div class="card-body">
 				<div class="tab-content">
-
-					<div class="tab-pane active show" id="tabs-harian" role="tabpanel">
+					<div class="tab-pane active show" id="tabs-bulanan" role="tabpanel">
 						<div class="row">
 							<div class="col-lg-8">
-								<h4 class="text-muted" id="totalpemasukan">Total Pemasukan&nbsp&nbsp    : <span class="text-green">+Rp.</span> </h4>
-								<h4 class="text-muted" id="totalpengeluaran">Total Pengeluaran :&nbsp<span class="text-red">- Rp.</span> </h4>
+								<h4>Catatan Bulanan</h4>
+								<div>Berikut ini merupakan daftar catatan keuangan bulanan yang dapat difilter berdasarkan bulan yang dipilih.</div>
 							</div>	
 							<div class="col-lg-4">
                 				<div class="mb-3">
-                  					<label class="form-label">Pilih Tanggal :</label>
-                  					<input id="dateInput" type="date" class="form-control">
+                  					<label class="form-label">Pilih Bulan :</label>
+                  					<input id="dateInput" type="month" class="form-control">
                 				</div>
               				</div>
 						</div>
-
 						<div class="card" id="loadingIndicator">
                       		<ul class="list-group list-group-flush placeholder-glow">
                         		<li class="list-group-item">
@@ -150,49 +148,38 @@
                       		</ul>
 						</div>
 				  		<div class="table-responsive">
-                    		<table id="table-harian" class="table card-table table-vcenter text-nowrap datatable" style="display: none;">
-                      			<thead>
+                    		<table id="table-bulanan" class="table card-table table-vcenter text-nowrap datatable" style="display: none;">
+							<thead>
                         			<tr>
                           				<th class="text-center" style="width:5%">No.</th>
-                          				<th class="text-center" style="width:40%">Kategori</th>
-                          				<th class="text-center" style="width:20%">Jumlah</th>
-                          				<th class="text-center" style="width:20%">Tanggal</th>
+                          				<th class="text-center" style="width:40%">Bulan</th>
+                          				<th class="text-center" style="width:20%">Pemasukan</th>
+                          				<th class="text-center" style="width:20%">Pengeluaran</th>
                           				<th class="text-center" style="width:15%">Action</th>
                         			</tr>
                       			</thead>
                       			<tbody>
-									@foreach($alldata as $data)
-                        			<tr>
-                          				<td style="width:5%">{{$loop->iteration}}.</td>
-										@if (isset($data['id_pemasukan']))
-											<td style="width:40%" data-label="Kategori">
-                            					<div class="text-green">{{$data['kategori_pemasukan']['nama_kategori_pemasukan']}}</div>
-                            					<div>{{$data['catatan']}}</div>
-                          					</td>
-											<td class="d-flex justify-content-between" style="padding: 1.4rem;">
-												<span class="text-start text-green">+Rp.</span>
-												<span class="text-end text-green">{{ number_format(floatval($data['jumlah']), 0, ',', '.')}}</span>
-											</td>
-										@else
-											<td style="width:40% data-label="Kategori">
-												<div class="text-red">{{$data['kategori_pengeluaran']['nama_kategori_pengeluaran']}}</div>
-												<div>{{$data['catatan']}}</div>
-											</td>
-											<td class="d-flex justify-content-between" style="padding: 1.4rem;">
-												<span class="text-start text-red">-Rp.</span>
-												<span class="text-end text-red">{{ number_format(floatval($data['jumlah']), 0, ',', '.')}}</span>
-											</td>
-										@endif		
-										<td style="width:20%" class="text-center">{{ date('d F Y', strtotime($data['tanggal'])) }}</td>								
-                          				<td style="width:15%" class="text-end">
-                            				<a href="#" class="btn">
-	                                			Edit
-                              				</a>
-							  				<a href="#" class="btn">
-	                                			Hapus
-                              				</a>
-                          				</td>
-                        			</tr>
+								  	@foreach($sortedData as $data)
+									<tr>
+										<td style="width:5%">{{$loop->iteration}}.</td>
+										<td style="width:40%">{{$data['bulan']}} {{$data['tahun']}}</td>
+										<td class="text-end" style="width:20%">
+											<span class="d-flex justify-content-between">
+												<span class="text-green">Rp.</span>
+												<span class="text-green">{{ number_format(floatval($data['jumlah_pemasukan']), 0, ',', '.') }}</span>
+											</span>
+										</td>
+										<td class="text-end" style="width:20%">
+											<span class="d-flex justify-content-between">
+												<span class="text-red">Rp.</span>
+												<span class="text-red">{{ number_format(floatval($data['jumlah_pengeluaran']), 0, ',', '.') }}</span>
+											</span>
+										</td>
+										<td style="width:15%" class="text-end">
+											<a href="#" class="btn">Edit</a>
+											<a href="#" class="btn">Hapus</a>
+										</td>
+									</tr>
 									@endforeach
                       			</tbody>
                     		</table>
@@ -212,60 +199,32 @@
 	$(document).ready(function() {
 		$('#loadingIndicator').show();
     	
-		var table = $('#table-harian').DataTable({
+		var table = $('#table-bulanan').DataTable({
 			"lengthMenu": [ [5, 10, 25, 50, 100], [5, 10, 25, 50, 100] ],
 			initComplete: function(settings, json) {
             	$('#loadingIndicator').hide();
-            	$('#table-harian').css('display', 'table');
+            	$('#table-bulanan').css('display', 'table');
         	}
     	});
 	
 		$('#dateInput').on('change', function() {
-			var selectedDate = $(this).val();
+			var selectedMonth = $(this).val();
+			console.log(selectedMonth);
 		
-			if (selectedDate) {
-				var date = new Date(selectedDate);
-				var formattedDate = (date.getDate() < 10 ? '0' : '') + date.getDate() + ' ' +
-								['January', 'February', 'March', 'April', 'May', 'June', 'July',
-								'August', 'September', 'October', 'November', 'December'][date.getMonth()] +
-								' ' + date.getFullYear();
-				table.column(3).search('').draw();
-				table.column(3).search('^' + formattedDate + '$', true, false).draw();
+			if (selectedMonth) {
+				// Extract the year and week number from the selected week
+				var year = selectedMonth.split('-')[0]; // Extract year
+        var month = selectedMonth.split('-')[1]; // Extract month
 
-				var totalPemasukan = 0;
-				var totalPengeluaran = 0;
-		
-				$('#table-harian tbody tr').each(function() {
-					var rowDate = $(this).find('td:eq(3)').text().trim(); 
-					var rowAmountText = $(this).find('td:eq(2)').text().trim();
+        var formattedMonth = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][parseInt(month) - 1] + ' ' + year;
+      
 				
-				
-					var amountParts = rowAmountText.split('.');
-				
-					var rowAmount = parseFloat(amountParts.map(part => part.replace(/[^\d]/g, '')).join(''));
-				
-					if (rowDate === formattedDate) {
-						if (rowAmountText.startsWith('+')) {
-							totalPemasukan += rowAmount;
-						} else if (rowAmountText.startsWith('-')) {
-							totalPengeluaran += rowAmount;
-						}
-					}
-				});
-
-			
-				$('#totalpemasukan').html('<h4 id="totalpemasukan">Total Pemasukan&nbsp&nbsp    : <span class="text-green">+Rp. ' + formatNumber(totalPemasukan) + '</span>');
-				$('#totalpengeluaran').html('<h4 id="totalpengeluaran">Total Pengeluaran :<span class="text-red">&nbsp- Rp. ' + formatNumber(totalPengeluaran) + '</span>');
+				table.column(1).search('').draw(); // Assuming the week data is in the second column
+				table.column(1).search('^' + formattedMonth + '$', true, false).draw();
 			} else {
-				table.column(3).search('').draw();
-				$('#totalpemasukan').html('<h4 id="totalpemasukan">Total Pemasukan&nbsp&nbsp    : <span class="text-green">+Rp.</span> ');
-				$('#totalpengeluaran').html('<h4 id="totalpengeluaran">Total Pengeluaran :<span class="text-red">&nbsp- Rp.</span> ');
+				table.column(1).search('').draw(); // Assuming the week data is in the second column
 			}
 		});
-
-		function formatNumber(num) {
-			return num.toLocaleString('id-ID-u-nu-latn');
-		}
 
 		$('.dataTables_length select').addClass('form-select form-select-sm mx-2 d-inline-block');
 		$('.dataTables_filter input').addClass('form-control form-control-sm ms-2 d-inline-block');
@@ -282,7 +241,7 @@
 		dFlexWrapper.append(msAutoTextMutedWrapper);
 		cardBodyWrapper.append(dFlexWrapper);
 
-		$('#table-harian').before(cardBodyWrapper);
+		$('#table-bulanan').before(cardBodyWrapper);
 
 		var paginateContainer = $('#table-harian_paginate');
 
@@ -311,7 +270,7 @@
 		cardFooterWrapper.append(textMutedFooterWrapper);
 		cardFooterWrapper.append(msAutoTextMutedFooterWrapper);
 
-		$('#table-harian').after(cardFooterWrapper);
+		$('#table-bulanan').after(cardFooterWrapper);
 
 		var paginationList = $('<ul class="pagination m-0 ms-auto"></ul>');
 		var paginateContainer = $('div.dataTables_paginate');

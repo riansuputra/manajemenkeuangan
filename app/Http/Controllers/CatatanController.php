@@ -71,27 +71,6 @@ class CatatanController extends Controller
             return $pengeluaranItem;
         });
 
-        
-        $filterPemasukan = [];
-        
-        foreach ($pemasukanData as $item) {
-            $filterPemasukan[] = [
-                'tanggal' => $item['tanggal'],
-                'jumlah' => $item['jumlah']
-            ];
-        }
-
-        $filterPengeluaran = [];
-        
-        foreach ($pengeluaranData as $item) {
-            $filterPengeluaran[] = [
-                'tanggal' => $item['tanggal'],
-                'jumlah' => $item['jumlah']
-            ];
-        }
-        
-        // dd($filterPengeluaran);
-
         $combinedData = $combinedDataPemasukan->merge($combinedDataPengeluaran);
         $alldata = $combinedData->sortByDesc('created_at');
 
@@ -102,36 +81,161 @@ class CatatanController extends Controller
             'alldata' => $alldata,
             'combinedDataPemasukan' => $combinedDataPemasukan,
             'combinedDataPengeluaran' => $combinedDataPengeluaran,
-            'filterPemasukan' => $filterPemasukan,
-            'filterPengeluaran' => $filterPengeluaran,
-
         ]);
     }
 
-    public function getTotalJumlah(Request $request)
-{
-    // Get the selected date from the request
-    $selectedDate = $request->input('selectedDate');
+    public function indexMingguan(Request $request) {
+        $res = Parent::getDataLogin($request);
+    
+        $pemasukanData = collect();
+        $pengeluaranData = collect();
+        $currentPagePemasukan = 1;
+        $currentPagePengeluaran = 1;
+    
+        // Fetch Pemasukan data
+        do {
+            $pemasukanRes = Http::withHeaders([
+                'Accept' => 'application/json',
+                'x-api-key' => env('API_KEY'),
+                'Authorization' => 'Bearer ' . request()->cookie('token')
+            ])->get(env('API_URL')."/pemasukans?page=$currentPagePemasukan");
+            $dataPemasukan = $pemasukanRes->json();
+            $pemasukanData = $pemasukanData->concat($dataPemasukan['data']);
+            $currentPagePemasukan++;
+        } while ($currentPagePemasukan <= $dataPemasukan['last_page']);
+    
+        // Fetch Pengeluaran data
+        do {
+            $pengeluaranRes = Http::withHeaders([
+                'Accept' => 'application/json',
+                'x-api-key' => env('API_KEY'),
+                'Authorization' => 'Bearer ' . request()->cookie('token')
+            ])->get(env('API_URL')."/pengeluarans?page=$currentPagePengeluaran");
+            $dataPengeluaran = $pengeluaranRes->json();
+            $pengeluaranData = $pengeluaranData->concat($dataPengeluaran['data']);
+            $currentPagePengeluaran++;
+        } while ($currentPagePengeluaran <= $dataPengeluaran['last_page']);
+    
+        // Combine Pemasukan and Pengeluaran data
+        $combinedData = $pemasukanData->merge($pengeluaranData);
+    
+        // Group data by month and year and calculate sums
+        // Group data by week and year and calculate sums
+        // Group data by week and year and calculate sums
+$groupedData = $combinedData->groupBy(function ($item) {
+    $carbonDate = Carbon::parse($item['tanggal']);
+    return $carbonDate->year . '-' . $carbonDate->weekOfYear;
+})->map(function ($items) {
+    $pemasukanSum = $items->whereNotNull('id_pemasukan')->sum('jumlah');
+    $pengeluaranSum = $items->whereNotNull('id_pengeluaran')->sum('jumlah');
 
-    // Filter the data to include only entries with the selected date
-    $filterPemasukan = [];
+    // Get start and end dates of the week
+    $weekStartDate = Carbon::parse($items->first()['tanggal'])->startOfWeek();
+    $weekEndDate = Carbon::parse($items->first()['tanggal'])->endOfWeek();
 
-    foreach ($pemasukanData as $item) {
-        if ($item['tanggal'] == $selectedDate) {
-            $filterPemasukan[] = [
-                'tanggal' => $item['tanggal'],
-                'jumlah' => $item['jumlah']
-            ];
-        }
+    // Check if start and end dates belong to the same ISO week
+    $weekNumber = $weekStartDate->weekOfYear;
+    if ($weekStartDate->weekOfYear != $weekEndDate->weekOfYear) {
+        $weekNumber .= ' - ' . $weekEndDate->weekOfYear;
     }
 
-    // Sum the "jumlah" values from the filtered data
-    $totalJumlah = array_sum(array_column($filterPemasukan, 'jumlah'));
+    return [
+        'id_pemasukan' => $items->pluck('id_pemasukan')->toArray(),
+        'id_pengeluaran' => $items->pluck('id_pengeluaran')->toArray(),
+        'minggu' => 'Minggu Ke-' . $weekNumber, // Change "Week" to "Minggu Ke-"
+        'tahun' => $weekStartDate->year,
+        'jumlah_pemasukan' => $pemasukanSum,
+        'jumlah_pengeluaran' => $pengeluaranSum,
+    ];
+});
 
-    // Return the total jumlah
-    return $totalJumlah;
-}
+// Sort grouped data by date descending
+$sortedData = $groupedData->sortByDesc(function ($item) {
+    // Extract the week number from the "minggu" string
+    $weekNumber = explode('-', $item['minggu'])[1]; // Get the second part after '-'
 
+    // Parse the year and week number and return the timestamp
+    return Carbon::parse($item['tahun'] . '-W' . $weekNumber)->timestamp;
+});
+
+
+
+
+        // dd($sortedData);
+    
+        return view('catatan.indexMingguan', [
+            'user' => $res['user'],
+            'sortedData' => $sortedData,
+        ]);
+    }
+    
+
+    public function indexBulanan(Request $request) {
+        $res = Parent::getDataLogin($request);
+    
+        $pemasukanData = collect();
+        $pengeluaranData = collect();
+        $currentPagePemasukan = 1;
+        $currentPagePengeluaran = 1;
+    
+        // Fetch Pemasukan data
+        do {
+            $pemasukanRes = Http::withHeaders([
+                'Accept' => 'application/json',
+                'x-api-key' => env('API_KEY'),
+                'Authorization' => 'Bearer ' . request()->cookie('token')
+            ])->get(env('API_URL')."/pemasukans?page=$currentPagePemasukan");
+            $dataPemasukan = $pemasukanRes->json();
+            $pemasukanData = $pemasukanData->concat($dataPemasukan['data']);
+            $currentPagePemasukan++;
+        } while ($currentPagePemasukan <= $dataPemasukan['last_page']);
+    
+        // Fetch Pengeluaran data
+        do {
+            $pengeluaranRes = Http::withHeaders([
+                'Accept' => 'application/json',
+                'x-api-key' => env('API_KEY'),
+                'Authorization' => 'Bearer ' . request()->cookie('token')
+            ])->get(env('API_URL')."/pengeluarans?page=$currentPagePengeluaran");
+            $dataPengeluaran = $pengeluaranRes->json();
+            $pengeluaranData = $pengeluaranData->concat($dataPengeluaran['data']);
+            $currentPagePengeluaran++;
+        } while ($currentPagePengeluaran <= $dataPengeluaran['last_page']);
+    
+        // Combine Pemasukan and Pengeluaran data
+        $combinedData = $pemasukanData->merge($pengeluaranData);
+    
+        // Group data by month and year and calculate sums
+        $groupedData = $combinedData->groupBy(function ($item) {
+            return Carbon::parse($item['tanggal'])->format('Y-m');
+        })->map(function ($items) {
+            $pemasukanSum = $items->whereNotNull('id_pemasukan')->sum('jumlah');
+            $pengeluaranSum = $items->whereNotNull('id_pengeluaran')->sum('jumlah');
+    
+            return [
+                'id_pemasukan' => $items->pluck('id_pemasukan')->toArray(),
+                'id_pengeluaran' => $items->pluck('id_pengeluaran')->toArray(),
+                'bulan' => Carbon::parse($items->first()['tanggal'])->format('F'),
+                'tahun' => Carbon::parse($items->first()['tanggal'])->year,
+                'jumlah_pemasukan' => $pemasukanSum,
+                'jumlah_pengeluaran' => $pengeluaranSum,
+            ];
+        });
+    
+        // Sort grouped data by date descending
+        $sortedData = $groupedData->sortByDesc(function ($item) {
+            return Carbon::parse($item['tahun'] . '-' . Carbon::parse($item['bulan'])->format('m'));
+        });
+
+        // dd($sortedData);
+    
+        return view('catatan.indexBulanan', [
+            'user' => $res['user'],
+            'sortedData' => $sortedData,
+        ]);
+    }
+
+    
     /**
      * Show the form for creating a new resource.
      */
@@ -144,9 +248,6 @@ class CatatanController extends Controller
     {
         // dd($request);
 
-        // $res = Parent::getDataLogin($request);
-
-        // dd($res['user']['user_id']);
         $apiUrlPemasukan = env('API_URL').'/pemasukans';
         $apiUrlPengeluaran = env('API_URL').'/pengeluarans';
         $apiKey = env('API_KEY');        
@@ -160,9 +261,6 @@ class CatatanController extends Controller
             $jenisapi = $apiUrlPengeluaran;
         }
 
-        // $unformattednum = $request->jumlah2;
-        // dd($unformattednum);
-
         $input = array(
             'user_id' => $res['user']['user_id'],
             'tanggal' => $request->tanggal,
@@ -171,8 +269,6 @@ class CatatanController extends Controller
             $jenis => $request->kategori,
         );
         
-        // dd($request);
-
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'x-api-key' => $apiKey,

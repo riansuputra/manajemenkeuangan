@@ -175,8 +175,8 @@
                       					</span>
 									</a>
                   				</li>
-                  				<li class="nav-item {{ url()->current() == url('/catatan') ? 'active' : '' }}" >
-                    				<a class="nav-link" href="{{ url('./catatan') }}">
+                  				<li class="nav-item {{ url()->current() == url('/catatan-harian') ? 'active' : '' }}" >
+                    				<a class="nav-link" href="{{ url('./catatan-harian') }}">
 										<span class="nav-link-icon d-md-none d-lg-inline-block">
 											<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M5 3m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z"></path><path d="M9 7l6 0"></path><path d="M9 11l6 0"></path><path d="M9 15l4 0"></path></svg>
 										</span>
@@ -297,7 +297,7 @@
                                 			Rp.
                               			</span>
                               			<input type="text" id="jumlah" oninput="updateFormattedNumber()" name="jumlah" class="form-control text-end" autocomplete="off">
-                              			<input type="text" id="jumlah1" name="jumlah1" class="form-control text-end" autocomplete="off">
+                              			<input type="text" id="jumlah1" name="jumlah1" class="form-control text-end" autocomplete="off" hidden>
                             		</div>
                 				</div>
               				</div>
