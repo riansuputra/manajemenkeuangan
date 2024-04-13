@@ -155,7 +155,6 @@
                           				<th class="text-center" style="width:40%">Bulan</th>
                           				<th class="text-center" style="width:20%">Pemasukan</th>
                           				<th class="text-center" style="width:20%">Pengeluaran</th>
-                          				<th class="text-center" style="width:15%">Action</th>
                         			</tr>
                       			</thead>
                       			<tbody>
@@ -174,10 +173,6 @@
 												<span class="text-red">Rp.</span>
 												<span class="text-red">{{ number_format(floatval($data['jumlah_pengeluaran']), 0, ',', '.') }}</span>
 											</span>
-										</td>
-										<td style="width:15%" class="text-end">
-											<a href="#" class="btn">Edit</a>
-											<a href="#" class="btn">Hapus</a>
 										</td>
 									</tr>
 									@endforeach

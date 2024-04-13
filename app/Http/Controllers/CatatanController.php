@@ -72,7 +72,8 @@ class CatatanController extends Controller
         });
 
         $combinedData = $combinedDataPemasukan->merge($combinedDataPengeluaran);
-        $alldata = $combinedData->sortByDesc('created_at');
+        $alldata = $combinedData->sortByDesc('tanggal');
+        
 
         return view('catatan.index', [
             'user' => $res['user'],
@@ -92,7 +93,6 @@ class CatatanController extends Controller
         $currentPagePemasukan = 1;
         $currentPagePengeluaran = 1;
     
-        // Fetch Pemasukan data
         do {
             $pemasukanRes = Http::withHeaders([
                 'Accept' => 'application/json',
@@ -104,7 +104,6 @@ class CatatanController extends Controller
             $currentPagePemasukan++;
         } while ($currentPagePemasukan <= $dataPemasukan['last_page']);
     
-        // Fetch Pengeluaran data
         do {
             $pengeluaranRes = Http::withHeaders([
                 'Accept' => 'application/json',
@@ -116,52 +115,39 @@ class CatatanController extends Controller
             $currentPagePengeluaran++;
         } while ($currentPagePengeluaran <= $dataPengeluaran['last_page']);
     
-        // Combine Pemasukan and Pengeluaran data
         $combinedData = $pemasukanData->merge($pengeluaranData);
     
-        // Group data by month and year and calculate sums
-        // Group data by week and year and calculate sums
-        // Group data by week and year and calculate sums
-$groupedData = $combinedData->groupBy(function ($item) {
-    $carbonDate = Carbon::parse($item['tanggal']);
-    return $carbonDate->year . '-' . $carbonDate->weekOfYear;
-})->map(function ($items) {
-    $pemasukanSum = $items->whereNotNull('id_pemasukan')->sum('jumlah');
-    $pengeluaranSum = $items->whereNotNull('id_pengeluaran')->sum('jumlah');
+        $groupedData = $combinedData->groupBy(function ($item) {
+            $carbonDate = Carbon::parse($item['tanggal']);
+            return $carbonDate->year . '-' . $carbonDate->weekOfYear;
+        })->map(function ($items) {
+            $pemasukanSum = $items->whereNotNull('id_pemasukan')->sum('jumlah');
+            $pengeluaranSum = $items->whereNotNull('id_pengeluaran')->sum('jumlah');
 
-    // Get start and end dates of the week
-    $weekStartDate = Carbon::parse($items->first()['tanggal'])->startOfWeek();
-    $weekEndDate = Carbon::parse($items->first()['tanggal'])->endOfWeek();
+            // Get start and end dates of the week
+            $weekStartDate = Carbon::parse($items->first()['tanggal'])->startOfWeek();
+            $weekEndDate = Carbon::parse($items->first()['tanggal'])->endOfWeek();
 
-    // Check if start and end dates belong to the same ISO week
-    $weekNumber = $weekStartDate->weekOfYear;
-    if ($weekStartDate->weekOfYear != $weekEndDate->weekOfYear) {
-        $weekNumber .= ' - ' . $weekEndDate->weekOfYear;
-    }
+            // Check if start and end dates belong to the same ISO week
+            $weekNumber = $weekStartDate->weekOfYear;
+            if ($weekStartDate->weekOfYear != $weekEndDate->weekOfYear) {
+                $weekNumber .= ' - ' . $weekEndDate->weekOfYear;
+            }
 
-    return [
-        'id_pemasukan' => $items->pluck('id_pemasukan')->toArray(),
-        'id_pengeluaran' => $items->pluck('id_pengeluaran')->toArray(),
-        'minggu' => 'Minggu Ke-' . $weekNumber, // Change "Week" to "Minggu Ke-"
-        'tahun' => $weekStartDate->year,
-        'jumlah_pemasukan' => $pemasukanSum,
-        'jumlah_pengeluaran' => $pengeluaranSum,
-    ];
-});
+            return [
+                'id_pemasukan' => $items->pluck('id_pemasukan')->toArray(),
+                'id_pengeluaran' => $items->pluck('id_pengeluaran')->toArray(),
+                'minggu' => 'Minggu Ke-' . $weekNumber, // Change "Week" to "Minggu Ke-"
+                'tahun' => $weekStartDate->year,
+                'jumlah_pemasukan' => $pemasukanSum,
+                'jumlah_pengeluaran' => $pengeluaranSum,
+            ];
+        });
 
-// Sort grouped data by date descending
-$sortedData = $groupedData->sortByDesc(function ($item) {
-    // Extract the week number from the "minggu" string
-    $weekNumber = explode('-', $item['minggu'])[1]; // Get the second part after '-'
-
-    // Parse the year and week number and return the timestamp
-    return Carbon::parse($item['tahun'] . '-W' . $weekNumber)->timestamp;
-});
-
-
-
-
-        // dd($sortedData);
+        $sortedData = $groupedData->sortByDesc(function ($item) {
+            $weekNumber = explode('-', $item['minggu'])[1]; // Get the second part after '-'
+            return Carbon::parse($item['tahun'] . '-W' . $weekNumber)->timestamp;
+        });
     
         return view('catatan.indexMingguan', [
             'user' => $res['user'],
@@ -178,7 +164,6 @@ $sortedData = $groupedData->sortByDesc(function ($item) {
         $currentPagePemasukan = 1;
         $currentPagePengeluaran = 1;
     
-        // Fetch Pemasukan data
         do {
             $pemasukanRes = Http::withHeaders([
                 'Accept' => 'application/json',
@@ -190,7 +175,6 @@ $sortedData = $groupedData->sortByDesc(function ($item) {
             $currentPagePemasukan++;
         } while ($currentPagePemasukan <= $dataPemasukan['last_page']);
     
-        // Fetch Pengeluaran data
         do {
             $pengeluaranRes = Http::withHeaders([
                 'Accept' => 'application/json',
@@ -202,10 +186,8 @@ $sortedData = $groupedData->sortByDesc(function ($item) {
             $currentPagePengeluaran++;
         } while ($currentPagePengeluaran <= $dataPengeluaran['last_page']);
     
-        // Combine Pemasukan and Pengeluaran data
         $combinedData = $pemasukanData->merge($pengeluaranData);
     
-        // Group data by month and year and calculate sums
         $groupedData = $combinedData->groupBy(function ($item) {
             return Carbon::parse($item['tanggal'])->format('Y-m');
         })->map(function ($items) {
@@ -222,13 +204,10 @@ $sortedData = $groupedData->sortByDesc(function ($item) {
             ];
         });
     
-        // Sort grouped data by date descending
         $sortedData = $groupedData->sortByDesc(function ($item) {
             return Carbon::parse($item['tahun'] . '-' . Carbon::parse($item['bulan'])->format('m'));
         });
 
-        // dd($sortedData);
-    
         return view('catatan.indexBulanan', [
             'user' => $res['user'],
             'sortedData' => $sortedData,
@@ -297,7 +276,7 @@ $sortedData = $groupedData->sortByDesc(function ($item) {
      */
     public function edit(string $id)
     {
-        //
+        
     }
 
     /**
@@ -305,7 +284,42 @@ $sortedData = $groupedData->sortByDesc(function ($item) {
      */
     public function update(Request $request, string $id)
     {
-        //
+        // dd($request);
+
+        $apiUrlPemasukan = env('API_URL').'/pemasukans';
+        $apiUrlPengeluaran = env('API_URL').'/pengeluarans';
+        $apiKey = env('API_KEY');        
+        $res = Parent::getDataLogin($request);
+
+        if($request->jenis == 1) {
+            $jenis = 'id_kategori_pemasukan';
+            $jenisapi = $apiUrlPemasukan;
+        }else if ($request->jenis == 2){
+            $jenis = 'id_kategori_pengeluaran';
+            $jenisapi = $apiUrlPengeluaran;
+        }
+
+        $input = array(
+            'user_id' => $res['user']['user_id'],
+            'tanggal' => $request->tanggal,
+            'jumlah' => $request->jumlah1,
+            'catatan' => $request->catatan,
+            $jenis => $request->kategori,
+        );
+        
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'x-api-key' => $apiKey,
+            'Authorization' => 'Bearer ' . request()->cookie('token')
+        ])->post($jenisapi, $input);
+
+        if($response->status() == 200){
+            return redirect()->route('loginPage')->with('success',$response["message"]);
+        }else if(!empty($response["errors"])){
+            return back()->with('success',$response["message"]);
+        }else{
+            return back()->with('success',$response["message"]);
+        }
     }
 
     /**
