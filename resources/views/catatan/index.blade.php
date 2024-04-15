@@ -190,16 +190,21 @@
 												<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"></path><path d="M16 5l3 3"></path></svg>
 	                                			Edit
                               				</a>
+											<a href="#" class="btn btn-danger delete-btn" data-bs-toggle="modal" data-bs-target="#modal-danger{{$data['id_pemasukan']}}" data-id="{{$data['id_pemasukan']}}" data-jenis="1">
+											  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M4 7l16 0"></path><path d="M10 11l0 6"></path><path d="M14 11l0 6"></path><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path></svg>
+	                                			Hapus
+                              				</a>
 											@else
                             				<a data-bs-toggle="modal" data-bs-target="#modal-edit{{$data['id_pengeluaran']}}" data-id="{{$data['id_pengeluaran']}}" data-jenis="2" data-jumlah="{{$data['jumlah']}}" data-kategori="{{$data['kategori_pengeluaran']['id_kategori_pengeluaran']}}" data-tanggal="{{$data['tanggal']}}" data-catatan="{{$data['catatan']}}" class="btn btn-warning edit-btn">
 												<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"></path><path d="M16 5l3 3"></path></svg>
 	                                			Edit
                               				</a>
-											@endif
-							  				<a href="#" class="btn btn-danger delete-btn">
+											<a href="#" class="btn btn-danger delete-btn" data-bs-toggle="modal" data-bs-target="#modal-danger{{$data['id_pengeluaran']}}" data-id="{{$data['id_pengeluaran']}}" data-jenis="2">
 											  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M4 7l16 0"></path><path d="M10 11l0 6"></path><path d="M14 11l0 6"></path><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path></svg>
 	                                			Hapus
                               				</a>
+											@endif
+							  				
                           				</td>
                         			</tr>
 
@@ -212,11 +217,21 @@
     	<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         	<div class="modal-content">
           		<div class="modal-header">
-            		<h5 class="modal-title">Tambah Catatan</h5>
+            		<h5 class="modal-title">Edit Catatan</h5>
             		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           		</div>
-		  		<form action="" method="post" autocomplete="off">
+				@if (isset($data['id_pemasukan']))
+		  		<form action="{{route('updateCatatan', ['id'=> $data['id_pemasukan']])}}" method="post" autocomplete="off">
 					@csrf
+					<input type="text" id="id" name="id" class="form-control text-end" autocomplete="off" hidden>
+					<input type="text" id="jenisedit" name="jenisedit" class="form-control text-end" autocomplete="off" hidden>
+					@else
+					<form action="{{route('updateCatatan', ['id'=> $data['id_pengeluaran']])}}" method="post" autocomplete="off">
+						@csrf
+					<input type="text" id="id" name="id" class="form-control text-end" autocomplete="off" hidden>
+					<input type="text" id="jenisedit" name="jenisedit" class="form-control text-end" autocomplete="off" hidden>
+
+@endif
           			<div class="modal-body">
             			<label class="form-label">Pilih Jenis :</label>
             			<div class="form-selectgroup-boxes row mb-3">
@@ -300,7 +315,7 @@
             			</a>
 						<button type="submit" class="btn btn-primary ms-auto">
               				<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-              				Tambah Catatan
+              				Edit Catatan
 						</button>
           			</div>
 				</form>	
@@ -311,8 +326,50 @@
 
 
 
+	@if (isset($data['id_pemasukan']))
 
+	<div class="modal modal-blur fade" id="modal-danger{{$data['id_pemasukan']}}" tabindex="-1" role="dialog" aria-hidden="true">
+		@else
+	<div class="modal modal-blur fade" id="modal-danger{{$data['id_pengeluaran']}}" tabindex="-1" role="dialog" aria-hidden="true">
+@endif
+      <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <div class="modal-status bg-danger"></div>
+          <div class="modal-body text-center py-4">
+            <!-- Download SVG icon from http://tabler-icons.io/i/alert-triangle -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.24 3.957l-8.422 14.06a1.989 1.989 0 0 0 1.7 2.983h16.845a1.989 1.989 0 0 0 1.7 -2.983l-8.423 -14.06a1.989 1.989 0 0 0 -3.4 0z" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
+            <h3>Are you sure?</h3>
+            <div class="text-muted">Do you really want to remove 84 files? What you've done cannot be undone.</div>
+          </div>
+          <div class="modal-footer">
+            <div class="w-100">
+              <div class="row">
+                <div class="col"><a href="#" class="btn w-100" data-bs-dismiss="modal">
+                    Cancel
+                  </a></div>
+                <div class="col">
+				@if (isset($data['id_pemasukan']))
+					<form method="POST" action="{{route('hapusCatatan', ['id' => $data['id_pemasukan']] )}}">
+					<input type="text" id="jenishapus" name="jenishapus" class="form-control text-end" autocomplete="off" hidden>
+					@csrf
 
+						@else
+					<form method="POST" action="{{route('hapusCatatan', ['id' => $data['id_pengeluaran']])}}">
+					<input type="text" id="jenishapus" name="jenishapus" class="form-control text-end" autocomplete="off" hidden>
+					@csrf
+
+						@endif
+					<button type="submit" class="btn btn-danger w-100" data-bs-dismiss="modal">
+                    	Delete 84 items
+					</button>
+				</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
 
 
@@ -346,17 +403,20 @@ function updateFormattedNumber1(event) {
         var formattedValue = formatNumber1(rawValue); // Format the number
         inputElement.value = formattedValue; // Update the input field with formatted value
         inputElement.setAttribute('data-value', rawValue); // Store unformatted value in a data attribute
+		setUnformattedValueToInput1(); // Set the unformatted value to the input field jumlah1
     }
 
 const jumlahInputs = document.querySelectorAll('.form-control.text-end');
     jumlahInputs.forEach(input => {
         input.addEventListener('input', updateFormattedNumber1);
+		input.addEventListener('input', setUnformattedValueToInput1);
     });
 
-function setUnformattedValueToInput1() {
-    var unformattedValue = getUnformattedValue1(); // Retrieve the unformatted value
-    var inputElement = document.getElementById('jumlah1edit');
-    inputElement.value = unformattedValue; // Set the unformatted value to the input field jumlah1
+function setUnformattedValueToInput1(event) {
+    var inputElement = event.target;
+    var unformattedValue = inputElement.getAttribute('data-value') || ''; // Retrieve unformatted value from data attribute
+    var jumlah1Input = inputElement.parentElement.querySelector('#jumlah1edit');
+    jumlah1Input.value = unformattedValue; // Set the unformatted value to the input field jumlah1
 }
 
 // Function to get the unformatted value from the data attribute
@@ -369,6 +429,35 @@ function getUnformattedValue1() {
 // Attach event listener to the input field to trigger formatting as the user types
 document.getElementById('jumlahedit').addEventListener('input', updateFormattedNumber1);
 </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const deleteButtons = document.querySelectorAll('.delete-btn');
+
+        deleteButtons.forEach((button) => {
+            button.addEventListener('click', function () {
+                const modal = document.querySelector(button.getAttribute('data-bs-target'));
+                const confirmButton = modal.querySelector('.btn-danger');
+
+                const itemId = button.getAttribute('data-id');
+				const itemType = button.getAttribute('data-jenis');
+				console.log('Item ID:', itemId);
+				console.log('Item type:', itemType);
+				const jenisHapus = modal.querySelector('#jenishapus');
+
+				if (jenisHapus) {
+                	jenisHapus.value = itemType;
+            	}
+
+
+                // Set data-id and data-jenis attributes for the delete confirmation button
+                confirmButton.setAttribute('data-id', itemId);
+				confirmButton.setAttribute('data-jenis', itemType);
+            });
+        });
+    });
+</script>
+
 
 <script>
 	document.addEventListener("DOMContentLoaded", function() {
@@ -396,20 +485,42 @@ document.getElementById('jumlahedit').addEventListener('input', updateFormattedN
             }
 
             // Populate input fields in the modal
+			const idInput = modal.querySelector('#id');
             const jenisRadio = modal.querySelector(`#${jenis === '1' ? 'pemasukanedit' : 'pengeluaranedit'}`);
+			const jenisInput = modal.querySelector('#jenisedit');
 			const jumlahInput = modal.querySelector('#jumlahedit');
+			const jumlah1Input = modal.querySelector('#jumlah1edit');
             const kategoriSelect = modal.querySelector('#kategoriedit');
             const tanggalInput = modal.querySelector('#tanggaledit');
             const catatanTextarea = modal.querySelector('#catatanedit');
+
+			if (idInput) {
+                idInput.value = id;
+            }
+
+			if (jenisInput) {
+                jenisInput.value = jenis;
+            }
 
             if (jenisRadio) {
                 jenisRadio.checked = true;
             }
 
 			if (jumlahInput) {
-    			jumlahInput.value = formatNumber1(jumlah.replace(/\D/g, ''));
-    			jumlahInput.dispatchEvent(new Event('input')); // Trigger input event
-			}
+    const rawValue = jumlah.replace(/\D/g, ''); // Extract only digits
+    console.log('Raw Value:', rawValue); // Debug log
+
+    const formattedValue = formatNumber1(rawValue); // Format the raw value
+    console.log('Formatted Value:', formattedValue); // Debug log
+
+    jumlahInput.value = formattedValue; // Set the formatted value to jumlahInput
+    jumlahInput.dispatchEvent(new Event('input')); // Trigger input event
+
+    if (jumlah1Input) {
+        jumlah1Input.value = rawValue; // Set the raw value to jumlah1Input
+        console.log('jumlah1edit Value:', jumlah1Input.value); // Debug log
+    }
+}
 
 
             if (kategoriSelect) {

@@ -52,8 +52,8 @@ Route::middleware([])->group(function(){
         Route::post('/catatan', [CatatanController::class, 'store'])->name('catatan');
         Route::get('/catatan/{id}', [CatatanController::class, 'show'])->name('detailCatatan');
         Route::get('/catatan/{catatan}', [CatatanController::class, 'edit'])->name('hapus-matakuliah-post');
-        Route::post('/catatan/{id}/update', [CatatanController::class, 'update'])->name('updateCatatan');
-        Route::post('/catatan/{catatan}', [CatatanController::class, 'destroy'])->name('hapus-matakuliah-post');
+        Route::post('/update-catatan/{id}', [CatatanController::class, 'update'])->name('updateCatatan');
+        Route::post('/delete-catatan/{id}', [CatatanController::class, 'destroy'])->name('hapusCatatan');
     });
 
 });

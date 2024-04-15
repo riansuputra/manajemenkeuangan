@@ -145,9 +145,33 @@ class CatatanController extends Controller
         });
 
         $sortedData = $groupedData->sortByDesc(function ($item) {
-            $weekNumber = explode('-', $item['minggu'])[1]; // Get the second part after '-'
-            return Carbon::parse($item['tahun'] . '-W' . $weekNumber)->timestamp;
+            $weekYearString = explode('-', $item['minggu']); // Explode the week-year string
+        
+            // Check if the exploded array has at least two parts
+            if (count($weekYearString) < 2) {
+                return 0; // Return 0 or another default value if the format is incorrect
+            }
+        
+            $weekYear = $weekYearString[0]; // Extract the week-year string
+        
+            // Check if the week-year string contains 'W' to split week and year
+            if (!strpos($weekYear, 'W')) {
+                return 0; // Return 0 or another default value if the format is incorrect
+            }
+        
+            $parts = explode('W', $weekYear);
+        
+            // Check if the exploded array has exactly two parts after 'W'
+            if (count($parts) != 2) {
+                return 0; // Return 0 or another default value if the format is incorrect
+            }
+        
+            $weekNumber = $parts[1]; // Extract the week number
+            $year = $weekYearString[1]; // Extract the year
+        
+            return Carbon::parse($year . '-W' . $weekNumber)->timestamp;
         });
+        
     
         return view('catatan.indexMingguan', [
             'user' => $res['user'],
@@ -284,37 +308,37 @@ class CatatanController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // dd($request);
+        // dd($id);
 
-        $apiUrlPemasukan = env('API_URL').'/pemasukans';
-        $apiUrlPengeluaran = env('API_URL').'/pengeluarans';
+        $apiUrlPemasukan = env('API_URL').'/pemasukans/'.$id;
+        $apiUrlPengeluaran = env('API_URL').'/pengeluarans/'.$id;
         $apiKey = env('API_KEY');        
         $res = Parent::getDataLogin($request);
 
-        if($request->jenis == 1) {
+        if($request->jenisedit == 1) {
             $jenis = 'id_kategori_pemasukan';
             $jenisapi = $apiUrlPemasukan;
-        }else if ($request->jenis == 2){
+        }else if ($request->jenisedit == 2){
             $jenis = 'id_kategori_pengeluaran';
             $jenisapi = $apiUrlPengeluaran;
         }
 
         $input = array(
             'user_id' => $res['user']['user_id'],
-            'tanggal' => $request->tanggal,
-            'jumlah' => $request->jumlah1,
-            'catatan' => $request->catatan,
-            $jenis => $request->kategori,
+            'tanggal' => $request->tanggaledit,
+            'jumlah' => $request->jumlah1edit,
+            'catatan' => $request->catatanedit,
+            $jenis => $request->kategoriedit,
         );
         
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'x-api-key' => $apiKey,
             'Authorization' => 'Bearer ' . request()->cookie('token')
-        ])->post($jenisapi, $input);
+        ])->patch($jenisapi, $input);
 
         if($response->status() == 200){
-            return redirect()->route('loginPage')->with('success',$response["message"]);
+            return redirect()->route('catatanHarian')->with('success',$response["message"]);
         }else if(!empty($response["errors"])){
             return back()->with('success',$response["message"]);
         }else{
@@ -325,8 +349,34 @@ class CatatanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
-        //
+        // dd($request);
+        $apiUrlPemasukan = env('API_URL').'/pemasukans/'.$id;
+        $apiUrlPengeluaran = env('API_URL').'/pengeluarans/'.$id;
+        $apiKey = env('API_KEY');        
+        // $res = Parent::getDataLogin($request);
+
+        if($request->jenishapus == 1) {
+            $jenisapi = $apiUrlPemasukan;
+        }else if ($request->jenishapus == 2){
+            $jenisapi = $apiUrlPengeluaran;
+        }
+        
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'x-api-key' => $apiKey,
+            'Authorization' => 'Bearer ' . request()->cookie('token')
+        ])->delete($jenisapi);
+
+        if($response->status() == 200){
+            return redirect()->route('catatanHarian')->with('success',$response["message"]);
+        }else if(!empty($response["errors"])){
+            return back()->with('success',$response["message"]);
+        }else{
+            return back()->with('success',$response["message"]);
+        }
     }
+
+    
 }
