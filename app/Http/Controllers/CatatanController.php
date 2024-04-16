@@ -308,7 +308,7 @@ class CatatanController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // dd($id);
+        // dd($request);
 
         $apiUrlPemasukan = env('API_URL').'/pemasukans/'.$id;
         $apiUrlPengeluaran = env('API_URL').'/pengeluarans/'.$id;

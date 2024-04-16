@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Pagination\Paginator;
 use Carbon\Carbon;
 
-class AnggaranController extends Controller
+class StatistikController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,6 @@ class AnggaranController extends Controller
     public function index(Request $request)
     {
         $res = Parent::getDataLogin($request);
-
 
         $pemasukanData = collect();
         $pengeluaranData = collect();
@@ -76,23 +75,43 @@ class AnggaranController extends Controller
             return $pengeluaranItem;
         });
 
+        // Grouping and Summing Pemasukan Data
+$groupedPemasukanData = $combinedDataPemasukan->groupBy('kategori_pemasukan.nama_kategori_pemasukan')->map(function ($items) {
+    $totalJumlah = $items->sum('jumlah');
+    return [
+        'kategori' => $items->first()['kategori_pemasukan']['nama_kategori_pemasukan'],
+        'total_jumlah' => $totalJumlah
+    ];
+});
+
+// Grouping and Summing Pengeluaran Data
+$groupedPengeluaranData = $combinedDataPengeluaran->groupBy('kategori_pengeluaran.nama_kategori_pengeluaran')->map(function ($items) {
+    $totalJumlah = $items->sum('jumlah');
+    return [
+        'kategori' => $items->first()['kategori_pengeluaran']['nama_kategori_pengeluaran'],
+        'total_jumlah' => $totalJumlah
+    ];
+});
+
+// Now, $groupedPemasukanData and $groupedPengeluaranData contain the grouped and summed data
+// dd($groupedPemasukanData);
+
         $combinedData = $combinedDataPemasukan->merge($combinedDataPengeluaran);
         $alldata = $combinedData->sortByDesc('tanggal');
+
+        // dd($combinedDataPemasukan);
         
-        $existingAnggaran = json_decode(request()->input('existingAnggaran', '[]'), true);
 
-        // dd($alldata);
-
-        return view('anggaran.index', [
+        return view('statistik.index', [
             'user' => $res['user'],
             'pemasukan' => $pemasukanData,
             'pengeluaran' => $pengeluaranData,
             'alldata' => $alldata,
-            'kategoriPengeluaranData' => $kategoriPengeluaranData,
+            'groupedPemasukanData' => $groupedPemasukanData,
+            'groupedPengeluaranData' => $groupedPengeluaranData,
             'combinedDataPemasukan' => $combinedDataPemasukan,
             'combinedDataPengeluaran' => $combinedDataPengeluaran,
-            'existingAnggaran' => $existingAnggaran,
-        ]);   
+        ]);        
     }
 
     /**

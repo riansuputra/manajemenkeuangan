@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AnggaranController;
 use App\Http\Controllers\CatatanController;
+use App\Http\Controllers\StatistikController;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cookie;
 
@@ -32,18 +34,17 @@ Route::middleware([])->group(function(){
         Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
         Route::post('/logout',[AuthController::class,'logout'])->name('logout');
         // Route::get('/catatan',[CatatanController::class,'index'])->name('catatan');
-        Route::get('/anggaran', function () {return view('layouts.index');})->name('anggaran');
         // Route::get('/catatan', function () {return view('catatan.index');})->name('catatan');
         Route::get('/investasi', function () {return view('investasi.index');});
         Route::get('/profil', function () {return view('profil.index');});
         Route::get('/statistik', function () {return view('statistik.index');});
         
     });
-
+    
     Route::middleware([App\Http\Middleware\AdminMiddleware::class])->group(function(){
         
     });
-
+    
     Route::middleware([App\Http\Middleware\UserMiddleware::class])->group(function(){
         Route::get('/catatan-harian', [CatatanController::class, 'index'])->name('catatanHarian');
         Route::get('/catatan-mingguan', [CatatanController::class, 'indexMingguan'])->name('catatanMingguan');
@@ -54,6 +55,9 @@ Route::middleware([])->group(function(){
         Route::get('/catatan/{catatan}', [CatatanController::class, 'edit'])->name('hapus-matakuliah-post');
         Route::post('/update-catatan/{id}', [CatatanController::class, 'update'])->name('updateCatatan');
         Route::post('/delete-catatan/{id}', [CatatanController::class, 'destroy'])->name('hapusCatatan');
+
+        Route::get('/statistik', [StatistikController::class, 'index'])->name('statistik');
+        Route::get('/anggaran', [AnggaranController::class, 'index'])->name('anggaran');
     });
 
 });
