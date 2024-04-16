@@ -66,8 +66,8 @@
                                 <tr>
                                     <td>{{ $stat['kategori'] }}</td>
                                     <td class="d-flex justify-content-between">
-                                        <span class="text-start text-green">Rp.</span>
-                                        <span class="text-end text-green">{{ number_format(floatval($stat['total_jumlah']), 0, ',', '.')}}</span>
+                                        <span class="text-start text-red">Rp.</span>
+                                        <span class="text-end text-red">{{ number_format(floatval($stat['total_jumlah']), 0, ',', '.')}}</span>
                                     </td> 
                                 </tr>           
                                 @endforeach
@@ -90,7 +90,25 @@
         const pemasukanData = @json($groupedPemasukanData);
         
         if (typeof pemasukanData === 'object' && !Array.isArray(pemasukanData)) {
-            const seriesData = Object.values(pemasukanData).map(stat => parseFloat(stat['total_jumlah']));
+            const seriesData = Object.values(pemasukanData).map((stat, index) => {
+                const value = parseFloat(stat['total_jumlah']);
+                const greenShades = [
+                    "rgb(0, 255, 0)",       // Lime Green
+                    "rgb(50, 205, 50)",     // Lime Green
+                    "rgb(0, 128, 0)",       // Green
+                    "rgb(34, 139, 34)",     // Forest Green
+                    "rgb(0, 100, 0)",       // Dark Green
+                ];
+                const color = greenShades[index % greenShades.length]; // Cycle through shades
+                
+                const rgbaColor = color.replace(')', ', 0.8)').replace('rgb', 'rgba');
+                
+                return {
+                    value: value,
+                    color: rgbaColor
+                };
+            });
+            
             const labelsData = Object.values(pemasukanData).map(stat => stat['kategori']);
             
             console.log("Pemasukan Series Data:", seriesData);
@@ -108,15 +126,12 @@
                         enabled: true
                     },
                 },
-                series: seriesData,
+                series: seriesData.map(data => data.value),
                 labels: labelsData,
                 fill: {
                     opacity: 1,
                 },
-                colors: [
-                    tabler.getColor("green"),
-                    
-                ],
+                colors: seriesData.map(data => data.color), // Use colors with reduced opacity
                 legend: {
                     show: true,
                     position: 'bottom',
@@ -142,67 +157,76 @@
 </script>
 
 <script>
-      // @formatter:off
-      document.addEventListener("DOMContentLoaded", function () {
-      	window.ApexCharts && (new ApexCharts(document.getElementById('chart-demo-pie#2'), {
-            chart: {
-      			type: "donut",
-      			fontFamily: 'inherit',
-      			height: 240,
-      			sparkline: {
-      				enabled: true
-      			},
-      			animations: {
-      				enabled: true
-      			},
-      		},
-      		fill: {
-      			opacity: 1,
-      		},
-      		series: [
-                44,
-                55,
-                12,
-                2
-            ],
-      		labels: [
-                "Direct",
-                "Affilliate",
-                "E-mail",
-                "Other"
-            ],
-      		tooltip: {
-      			theme: 'dark'
-      		},
-      		grid: {
-      			strokeDashArray: 4,
-      		},
-      		colors: [
-                tabler.getColor("red"),
-                tabler.getColor("primary", 0.8),
-                tabler.getColor("primary", 0.6),
-                tabler.getColor("gray-300")
-            ],
-      		legend: {
-      			show: true,
-      			position: 'bottom',
-      			offsetY: 12,
-      			markers: {
-      				width: 10,
-      				height: 10,
-      				radius: 100,
-      			},
-      			itemMargin: {
-      				horizontal: 8,
-      				vertical: 8
-      			},
-      		},
-      		tooltip: {
-      			fillSeriesColor: false
-      		},
-      	})).render();
-      });
-      // @formatter:on
-    </script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const pengeluaranData = @json($groupedPengeluaranData);
+        
+        if (typeof pengeluaranData === 'object' && !Array.isArray(pengeluaranData)) {
+            const seriesData = Object.values(pengeluaranData).map((stat, index) => {
+                const value = parseFloat(stat['total_jumlah']);
+                const redShades = [
+                    "rgb(255, 0, 0)",       // Red
+                    "rgb(220, 20, 60)",     // Crimson
+                    "rgb(178, 34, 34)",     // Firebrick
+                    "rgb(139, 0, 0)",       // Dark Red
+                    "rgb(205, 92, 92)",     // Indian Red
+                ];
+                const color = redShades[index % redShades.length]; // Cycle through shades
+                
+                const rgbaColor = color.replace(')', ', 0.8)').replace('rgb', 'rgba');
+                
+                return {
+                    value: value,
+                    color: rgbaColor
+                };
+            });
+            
+            const labelsData = Object.values(pengeluaranData).map(stat => stat['kategori']);
+            
+            console.log("Pemasukan Series Data:", seriesData);
+            console.log("Pemasukan Labels Data:", labelsData);
+
+            window.ApexCharts && (new ApexCharts(document.getElementById('chart-demo-pie#2'), {
+                chart: {
+                    type: "donut",
+                    fontFamily: 'inherit',
+                    height: 240,
+                    sparkline: {
+                        enabled: true
+                    },
+                    animations: {
+                        enabled: true
+                    },
+                },
+                series: seriesData.map(data => data.value),
+                labels: labelsData,
+                fill: {
+                    opacity: 1,
+                },
+                colors: seriesData.map(data => data.color), // Use colors with reduced opacity
+                legend: {
+                    show: true,
+                    position: 'bottom',
+                    offsetY: 12,
+                    markers: {
+                        width: 10,
+                        height: 10,
+                        radius: 100,
+                    },
+                    itemMargin: {
+                        horizontal: 8,
+                        vertical: 8
+                    },
+                },
+                tooltip: {
+                    fillSeriesColor: false
+                },
+            })).render();
+        } else {
+            console.error("Pemasukan data is not an object:", pengeluaranData);
+        }
+    });
+</script>
+
+
 
 @endsection

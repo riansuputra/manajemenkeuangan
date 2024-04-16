@@ -79,15 +79,27 @@ class AnggaranController extends Controller
         $combinedData = $combinedDataPemasukan->merge($combinedDataPengeluaran);
         $alldata = $combinedData->sortByDesc('tanggal');
         
+        
         $existingAnggaran = json_decode(request()->input('existingAnggaran', '[]'), true);
 
-        // dd($alldata);
+        $groupedPengeluaranData = $combinedDataPengeluaran->groupBy('kategori_pengeluaran.id_kategori_pengeluaran')->map(function ($items) {
+            $totalJumlah = $items->sum('jumlah');
+            return [
+                'id_kategori_pengeluaran' => $items->first()['kategori_pengeluaran']['id_kategori_pengeluaran'],
+                'kategori' => $items->first()['kategori_pengeluaran']['nama_kategori_pengeluaran'],
+                'total_jumlah' => $totalJumlah
+            ];
+        });
+        
+
+        // dd($groupedPengeluaranData);
 
         return view('anggaran.index', [
             'user' => $res['user'],
             'pemasukan' => $pemasukanData,
             'pengeluaran' => $pengeluaranData,
             'alldata' => $alldata,
+            'groupedPengeluaranData' => $groupedPengeluaranData,
             'kategoriPengeluaranData' => $kategoriPengeluaranData,
             'combinedDataPemasukan' => $combinedDataPemasukan,
             'combinedDataPengeluaran' => $combinedDataPengeluaran,
