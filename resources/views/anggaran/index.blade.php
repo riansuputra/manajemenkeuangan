@@ -42,7 +42,7 @@
                                 
                             </div>
                             <div class="progress progress-separated mb-3">
-                                <div class="progress-bar bg-primary" role="progressbar" style="width: 44%" aria-label="Regular"></div>
+                                <div class="progress-bar bg-primary" id="progressbar-{{$data['id_kategori_pengeluaran']}}"role="progressbar" style="width: 44%" aria-label="Regular"></div>
                             </div>
                             <div class="row">
                                 <div class="col-auto d-flex align-items-center">
@@ -93,7 +93,7 @@
                                     Rp.
                                 </span>
                                 <input type="text" class="form-control" id="jumlah" autocomplete="off">
-                                <input type="text" class="form-control" id="jumlah1" autocomplete="off" hidden>
+                                <input type="text" class="form-control" id="jumlah1" autocomplete="off" >
                         </div>
                     </div>		        
                 </div>
@@ -112,7 +112,16 @@
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function() {
+    // Retrieve existing anggaran from local storage
+    let existingAnggaran = JSON.parse(localStorage.getItem('anggaran') || '[]');
+    
+    // Your grouped data from the backend
+    let groupedPengeluaranData = {!! json_encode($groupedPengeluaranData) !!};
+
+    // Update displayed totalJumlah
+    updateTotalJumlah(groupedPengeluaranData, existingAnggaran);
+
     const kategoriButtons = document.querySelectorAll('.btn-kategori');
     const hpsKategoriButtons = document.querySelectorAll('.btn-hps-kategori');
     const modalKategoriInput = document.querySelector('#kategoriang');
@@ -120,71 +129,68 @@
     const modalJumlahInput1 = document.querySelector('#jumlah');
 
     kategoriButtons.forEach(button => {
-        button.addEventListener('click', function(event) {
-            const kategoriId = event.currentTarget.getAttribute('data-kategori-id');
-            
-            console.log('Clicked button with kategoriId:', kategoriId);  // Debug line
+    button.addEventListener('click', function(event) {
+        const kategoriId = event.currentTarget.getAttribute('data-kategori-id');
+        
+        console.log('Clicked button with kategoriId:', kategoriId);  // Debug line
 
-            const kategoriElement = document.querySelector(`[data-kategori-id="${kategoriId}"]`);
-            
-            console.log('Selected kategoriElement:', kategoriElement);  // Debug line
+        const kategoriElement = document.querySelector(`[data-kategori-id="${kategoriId}"]`);
+        
+        console.log('Selected kategoriElement:', kategoriElement);  // Debug line
 
-            if (!kategoriElement) {
-                console.error(`No element found with kategoriId: ${kategoriId}`);  // Error logging
-                return;
-            }
+        if (!kategoriElement) {
+            console.error(`No element found with kategoriId: ${kategoriId}`);  // Error logging
+            return;
+        }
 
-            // Directly use kategoriElement as jumlahElement
-            const jumlah = kategoriElement.textContent.split(' ')[0];
+        // Directly use kategoriElement as jumlahElement
+        const jumlah = kategoriElement.textContent.split(' ')[2];
 
-            console.log('Fetched Jumlah:', jumlah);  // Debug line
+        console.log('Fetched Jumlah:', jumlah);  // Debug line
 
-            modalKategoriInput.value = kategoriId;
-            modalJumlahInput.value = jumlah.replace(/\D/g, '');
-            modalJumlahInput1.value = jumlah;
+        modalKategoriInput.value = kategoriId;
+        modalJumlahInput.value = jumlah.replace(/\D/g, '');
+        modalJumlahInput1.value = jumlah;
 
-            // Update modal title
-            document.querySelector('.modal-title').textContent = `Edit Anggaran ${kategoriId}`;
-        });
-    });
+        // Update modal title
+        document.querySelector('.modal-title').textContent = `Edit Anggaran ${kategoriId}`;
 
-    hpsKategoriButtons.forEach(button => {
-        button.addEventListener('click', function(event) {
-            event.preventDefault(); // Prevent the default behavior of the anchor tag
-            
-            const kategoriId = event.currentTarget.getAttribute('data-kategori-id');
-            
-            console.log('Delete button clicked with kategoriId:', kategoriId);  // Debug line
-
-            // Retrieve existing anggaran from local storage
-            let existingAnggaran = JSON.parse(localStorage.getItem('anggaran') || '[]');
-
-            // Ensure existingAnggaran is an array
-            if (!Array.isArray(existingAnggaran)) {
-                existingAnggaran = [];
-            }
-
-            // Remove the entry with the matching kategori
-            const updatedAnggaran = existingAnggaran.filter(anggaran => anggaran.kategori !== kategoriId);
-
-            // Save updated anggaran array to local storage
-            localStorage.setItem('anggaran', JSON.stringify(updatedAnggaran));
-
-            // Update displayed totalJumlah
-            updateTotalJumlah(updatedAnggaran);
-        });
+        // No need to call updateTotalJumlah here as it will be updated when the modal is saved
     });
 });
 
 
+    hpsKategoriButtons.forEach(button => {
+    button.addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default behavior of the anchor tag
+            
+        const kategoriId = event.currentTarget.getAttribute('data-kategori-id');
+            
+        console.log('Delete button clicked with kategoriId:', kategoriId);  // Debug line
 
+        // Retrieve existing anggaran from local storage
+        let existingAnggaran = JSON.parse(localStorage.getItem('anggaran') || '[]');
 
-</script>
+        // Ensure existingAnggaran is an array
+        if (!Array.isArray(existingAnggaran)) {
+            existingAnggaran = [];
+        }
 
-<script>
-    function saveToLocalStorage() {
-        // Get the selected kategori and jumlah values
-        const selectedKategori = document.querySelector('#kategoriang').value;
+        // Remove the entry with the matching kategori
+        const updatedAnggaran = existingAnggaran.filter(anggaran => anggaran.kategori !== kategoriId);
+
+        // Save updated anggaran array to local storage
+        localStorage.setItem('anggaran', JSON.stringify(updatedAnggaran));
+
+        // Update displayed totalJumlah with updatedAnggaran
+        updateTotalJumlah(groupedPengeluaranData, updatedAnggaran);
+    });
+});
+
+});
+
+function saveToLocalStorage() {
+    const selectedKategori = document.querySelector('#kategoriang').value;
         const jumlah = parseFloat(document.querySelector('#jumlah1').value); // Parse as float
 
         // Validate the inputs
@@ -221,33 +227,65 @@
         }
 
         // Save updated anggaran array to local storage
-        localStorage.setItem('anggaran', JSON.stringify(existingAnggaran));
+        // Save updated anggaran array to local storage
+    localStorage.setItem('anggaran', JSON.stringify(existingAnggaran));
 
-        // Clear modal input fields
-        document.querySelector('#kategoriang').value = ''; // Clear kategoriang
-        document.querySelector('#jumlah1').value = ''; // Clear jumlah1
-        document.querySelector('#jumlah').value = ''; // Clear jumlah1
+// Update displayed totalJumlah
+updateTotalJumlah(groupedPengeluaranData, existingAnggaran);
+
+// Clear modal input fields
+document.querySelector('#kategoriang').value = ''; // Clear kategoriang
+document.querySelector('#jumlah1').value = ''; // Clear jumlah1
+document.querySelector('#jumlah').value = ''; // Clear jumlah1
 
         // Update displayed totalJumlah
-        updateTotalJumlah(existingAnggaran);
 
         // Print saved values to console
-        console.log('Anggaran saved:', anggaran);
-    }
+        console.log('Anggaran saved:', anggaran);// ... (same as your code)
+
+    // Save updated anggaran array to local storage
+    
+}
+
+
+
 
     function updateTotalJumlah(groupedPengeluaranData, existingAnggaran) {
-    const kategoriElements = document.querySelectorAll('.kategori-total');
+    //     if (!groupedPengeluaranData || typeof groupedPengeluaranData !== 'object') {
+    //     console.warn('groupedPengeluaranData is not an object or is undefined');
+    //     return;
+    // }
+        const kategoriElements = document.querySelectorAll('.kategori-total');
 
-    kategoriElements.forEach(element => {
-        const categoryName = element.getAttribute('data-kategori-id');
-        
-        console.log(`Processing categoryName: ${categoryName}`);
+console.log('kategoriElements:', kategoriElements); // Debug line
 
-        // Get total jumlah from groupedPengeluaranData
-        const totalJumlahEntry = groupedPengeluaranData[categoryName];
-        let totalJumlah = totalJumlahEntry ? parseFloat(totalJumlahEntry.total_jumlah) : 0;
+kategoriElements.forEach(element => {
+    const categoryName = element.getAttribute('data-kategori-id');
+    
+    console.log(`Processing categoryName: ${categoryName}`);
 
-        console.log(`Total Jumlah for ${categoryName}:`, totalJumlah);
+    const progressBar = document.getElementById(`progressbar-${categoryName}`);
+
+    // Check if the categoryName exists in groupedPengeluaranData
+    if (!groupedPengeluaranData || typeof groupedPengeluaranData !== 'object') {
+            console.warn('groupedPengeluaranData is not an object or is undefined');
+            return;
+        }
+
+        // Check if the categoryName exists in groupedPengeluaranData
+        if (!groupedPengeluaranData.hasOwnProperty(categoryName)) {
+            console.warn(`No entry found in groupedPengeluaranData for categoryName: ${categoryName}`); // Warning if the key doesn't exist
+            return;
+        }
+
+    // Get total jumlah from groupedPengeluaranData
+    const totalJumlahEntry = groupedPengeluaranData[categoryName];
+    
+    console.log(`totalJumlahEntry for ${categoryName}:`, totalJumlahEntry); // Debug line
+    
+    let totalJumlah = totalJumlahEntry ? parseFloat(totalJumlahEntry.total_jumlah) : 0;
+
+    console.log(`Parsed Total Jumlah for ${categoryName}:`, totalJumlah); // Debug line
 
         // Get existing jumlah from local storage
         const existingAnggaranEntry = existingAnggaran.find(anggaran => anggaran.kategori === categoryName.toString());
@@ -257,31 +295,47 @@
         console.log(`Existing Jumlah for ${categoryName}:`, existingJumlah);
 
         // Calculate percentage
-        const percentage = existingJumlah > 0 ? (( totalJumlah / existingJumlah) * 100).toFixed(2) : 0;
+        const percentage = existingJumlah !== 0 ? ((totalJumlah / existingJumlah) * 100).toFixed(2) : 0;
+
+        
+
 
         // Display as "total jumlah / existing jumlah (percentage%)"
         const displayText = `${formatNumber(totalJumlah)} / ${formatNumber(existingJumlah)} (${percentage}%)`;
         element.textContent = displayText;
+
+        if (percentage > 100) {
+        progressBar.style.width = '100%';
+        progressBar.classList.remove('bg-primary');
+        progressBar.classList.add('bg-danger');
+    } else {
+        progressBar.style.width = `${percentage}%`;
+        progressBar.classList.remove('bg-danger');  // Remove danger class if present
+        progressBar.classList.add('bg-primary');   // Add primary class
+    }
     });
 }
 
 
-
-
+let groupedPengeluaranData;
 
 document.addEventListener("DOMContentLoaded", function() {
     // Retrieve existing anggaran from local storage
     const existingAnggaran = JSON.parse(localStorage.getItem('anggaran') || '[]');
     
     // Your grouped data from the backend
-    const groupedPengeluaranData = {!! json_encode($groupedPengeluaranData) !!};
+    groupedPengeluaranData = {!! json_encode($groupedPengeluaranData) !!};
 
     console.log('Grouped Pengeluaran Data:', groupedPengeluaranData);  // Debug line
     console.log('Existing Anggaran:', existingAnggaran);
 
-    // Update displayed totalJumlah
-    updateTotalJumlah(groupedPengeluaranData, existingAnggaran);
+    // Update displayed totalJumlah if groupedPengeluaranData is initialized
+    if (groupedPengeluaranData) {
+        updateTotalJumlah(groupedPengeluaranData, existingAnggaran);
+    }
 });
+
+
 
 
 </script>
