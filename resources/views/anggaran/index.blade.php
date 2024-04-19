@@ -64,6 +64,12 @@
         <span id="overspend-{{$data['id_kategori_pengeluaran']}}" style="display:none;">Overspend</span>
         
     </div>
+
+    <div class="col-auto d-flex align-items-center ps-2 terpenuhi" >
+        <span class="legend me-2 bg-green" id="terpenuhiDiv-{{$data['id_kategori_pengeluaran']}}" style="display:none;"></span>
+        <span id="terpenuhi-{{$data['id_kategori_pengeluaran']}}" style="display:none;">Terpenuhi</span>
+        
+    </div>
     
     <!-- Buttons at the end -->
     <div class="col d-flex justify-content-end align-items-center">
@@ -208,12 +214,16 @@ function updateTotalJumlah(groupedPengeluaranData, existingAnggaran) {
 
         if (totalJumlah > existingJumlah && existingJumlah !== 0) {
             progressBar.style.width = '100%';
-            progressBar.classList.remove('bg-primary');
+            progressBar.classList.remove('bg-primary', 'bg-green'); // Remove both classes
             progressBar.classList.add('bg-danger');
+        } else if (totalJumlah === existingJumlah) {
+            progressBar.style.width = `${percentage}%`;
+            progressBar.classList.remove('bg-danger', 'bg-primary'); // Remove both classes
+            progressBar.classList.add('bg-green'); // Add bg-green class
         } else {
             progressBar.style.width = `${percentage}%`;
-            progressBar.classList.remove('bg-danger');
-            progressBar.classList.add('bg-primary');
+            progressBar.classList.remove('bg-danger', 'bg-green'); // Remove both classes
+            progressBar.classList.add('bg-primary'); // Add bg-primary class
         }
 
         const dipakaiValue = totalJumlah;
@@ -225,15 +235,22 @@ function updateTotalJumlah(groupedPengeluaranData, existingAnggaran) {
 
         const overspendDiv = document.getElementById(`overspendDiv-${categoryName}`);
         const overspend = document.getElementById(`overspend-${categoryName}`);
+        const terpenuhiDiv = document.getElementById(`terpenuhiDiv-${categoryName}`);
+        const terpenuhi = document.getElementById(`terpenuhi-${categoryName}`);
 
         if (totalJumlah > existingJumlah && existingJumlah !== 0) {
             const overspendValue = totalJumlah - existingJumlah;
             overspendDiv.style.display = 'block';
             overspend.style.display = 'block';
             overspend.innerHTML = `Overspend <span class="text-muted">Rp. ${formatNumber(overspendValue)}</span>`;
+        } else if (totalJumlah === existingJumlah) {
+            terpenuhiDiv.style.display = 'block';
+            terpenuhi.style.display = 'block';
         } else {
             overspendDiv.style.display = 'none';
             overspend.style.display = 'none';
+            terpenuhiDiv.style.display = 'none';
+            terpenuhi.style.display = 'none';
         }
     });
 }

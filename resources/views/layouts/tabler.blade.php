@@ -205,28 +205,35 @@
                       					</span>
 									</a>
                   				</li>
-                  				<li class="nav-item dropdown {{ url()->current() == url('/investasi') ? 'active' : '' }}" >
-                    				<a class="nav-link dropdown-toggle" href="#navbar-layout" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
+								<li class="nav-item {{ url()->current() == url('/investasi-lumpsum') ? 'active' : '' }}" >
+                    				<a class="nav-link" href="/investasi-lumpsum">
                       					<span class="nav-link-icon d-md-none d-lg-inline-block">
-					  						<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M3 3v18h18"></path><path d="M20 18v3"></path><path d="M16 16v5"></path><path d="M12 13v8"></path><path d="M8 16v5"></path><path d="M3 11c6 0 5 -5 9 -5s3 5 9 5"></path></svg>
+										  	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M3 3v18h18"></path><path d="M20 18v3"></path><path d="M16 16v5"></path><path d="M12 13v8"></path><path d="M8 16v5"></path><path d="M3 11c6 0 5 -5 9 -5s3 5 9 5"></path></svg>
                       					</span>
                       					<span class="nav-link-title">
                         					Investasi
                       					</span>
-                    				</a>
-                    				<div class="dropdown-menu">
-                        				<div class="dropend">
-                            				<a class="dropdown-item" href="#sidebar-error" >
-                              					Investasi
-                            				</a>
-											<a class="dropdown-item" href="#sidebar-error" >
-                              					Pinjaman
-                            				</a>
-											<a class="dropdown-item" href="#sidebar-error" >
-                              					Portofolio Saham
-                            				</a>
-                          				</div>
-                    				</div>
+									</a>
+                  				</li>
+								  <li class="nav-item {{ url()->current() == url('/pinjaman') ? 'active' : '' }}" >
+                    				<a class="nav-link" href="/pinjaman">
+                      					<span class="nav-link-icon d-md-none d-lg-inline-block">
+										  	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 9m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z"></path><path d="M14 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path><path d="M17 9v-2a2 2 0 0 0 -2 -2h-10a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h2"></path></svg>
+                      					</span>
+                      					<span class="nav-link-title">
+                        					Pinjaman
+                      					</span>
+									</a>
+                  				</li>
+								  <li class="nav-item {{ url()->current() == url('/saham') ? 'active' : '' }}" >
+                    				<a class="nav-link" href="/saham">
+                      					<span class="nav-link-icon d-md-none d-lg-inline-block">
+										  	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"></path><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"></path><path d="M9 17v-5"></path><path d="M12 17v-1"></path><path d="M15 17v-3"></path></svg>
+                      					</span>
+                      					<span class="nav-link-title">
+                        					Saham
+                      					</span>
+									</a>
                   				</li>
 	                		</ul>
             			</div>

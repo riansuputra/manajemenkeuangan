@@ -7,6 +7,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AnggaranController;
 use App\Http\Controllers\CatatanController;
 use App\Http\Controllers\StatistikController;
+use App\Http\Controllers\PinjamanController;
+use App\Http\Controllers\InvestasiController;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cookie;
 
@@ -35,9 +37,9 @@ Route::middleware([])->group(function(){
         Route::post('/logout',[AuthController::class,'logout'])->name('logout');
         // Route::get('/catatan',[CatatanController::class,'index'])->name('catatan');
         // Route::get('/catatan', function () {return view('catatan.index');})->name('catatan');
-        Route::get('/investasi', function () {return view('investasi.index');});
-        Route::get('/profil', function () {return view('profil.index');});
-        Route::get('/statistik', function () {return view('statistik.index');});
+        // Route::get('/investasi', function () {return view('investasi.index');});
+        // Route::get('/profil', function () {return view('profil.index');});
+        // Route::get('/statistik', function () {return view('statistik.index');});
         
     });
     
@@ -58,6 +60,10 @@ Route::middleware([])->group(function(){
 
         Route::get('/statistik', [StatistikController::class, 'index'])->name('statistik');
         Route::get('/anggaran', [AnggaranController::class, 'index'])->name('anggaran');
+        Route::get('/investasi-lumpsum', [InvestasiController::class, 'lumpsum'])->name('investasi-lumpsum');
+        Route::get('/investasi-bulanan', [InvestasiController::class, 'bulanan'])->name('investasi-bulanan');
+        Route::get('/investasi-target', [InvestasiController::class, 'target'])->name('investasi-target');
+        Route::get('/pinjaman', [PinjamanController::class, 'index'])->name('pinjaman');
     });
 
 });

@@ -16,10 +16,11 @@
     <div class="row row-cards">
         <div class="col-lg-6">
             <div class="card">
+                <div class="card-status-top bg-green"></div>
+                <div class="card-header">
+                    <h3 class="card-title">Pemasukan</h3>
+                </div>
                 <div class="card-body">
-                    <div class="d-flex">
-                        <h3 class="card-title">Pemasukan</h3>
-                    </div>
                     <div id="chart-demo-pie" style="min-height: 201.9px;">
                     </div>
                     <div class="table-responsive mt-3">
@@ -48,10 +49,11 @@
         </div>
         <div class="col-lg-6">
             <div class="card">
+                <div class="card-status-top bg-red"></div>
+                <div class="card-header">
+                    <h3 class="card-title">Pengeluaran</h3>
+                </div>
                 <div class="card-body">
-                    <div class="d-flex">
-                        <h3 class="card-title">Pengeluaran</h3>
-                    </div>
                     <div id="chart-demo-pie#2" style="min-height: 201.9px;"></div>
                     <div class="table-responsive mt-3">
                         <table class="table table-vcenter card-table table-striped">
