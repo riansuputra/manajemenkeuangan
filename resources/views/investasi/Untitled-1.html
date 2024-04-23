@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test html2pdf.js</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+    <div id="content">
+        <h1>Hello, this is a test PDF generated using html2pdf.js!</h1>
+    </div>
+    <button id="testButton">Generate PDF</button>
+
+    <script>
+        document.getElementById('testButton').addEventListener('click', function() {
+            console.log("Button clicked");
+
+            const element = document.getElementById('content');
+            
+            // Generate the PDF
+            html2pdf().from(element).save();
+        });
+    </script>
+</body>
+</html>
