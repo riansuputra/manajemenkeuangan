@@ -5,7 +5,7 @@
 @section('page-title')
 <div class="col">
     <h2 class="page-title">
-        Rancangan Investasi Bulanan
+        Rancangan Pinjaman
     </h2>
 </div>
 @endsection
@@ -15,22 +15,7 @@
 <div class="container-xl">
 	<div class="col">
 		<div class="card">
-			<div class="card-header">
-				<ul class="nav nav-tabs card-header-tabs nav-fill" data-bs-toggle="tabs" role="tablist">
-					<li class="nav-item" role="presentation">
-						<a href="{{ route('investasi-lumpsum') }}" class="nav-link" aria-selected="true" role="tab">Lumpsum</a>
-					</li>
-					<li class="nav-item" role="presentation">
-						<a href="{{ route('investasi-bulanan') }}" class="nav-link active" aria-selected="false" role="tab" tabindex="-1">Bulanan</a>
-					</li>
-					<li class="nav-item" role="presentation">
-						<a href="{{ route('investasi-target') }}" class="nav-link" aria-selected="false" role="tab" tabindex="-1">Target</a>
-					</li>
-				</ul>
-			</div>
 			<div class="card-body">
-				<div class="tab-content">
-                    <div class="tab-pane active show" id="tabs-lumpsum" role="tabpanel">
                         <div class="row row-cards">
                             <div class="col-md-4">
                                 <div class="card">
@@ -155,9 +140,27 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-				</div>
+                   
 			</div>
+            <div class="card-body">
+                        <div class="row row-cards">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6 col-xl-12">
+                                                tet
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+                        </div>
+                   
+			</div>
+            
 		</div>
 	</div>
 </div>

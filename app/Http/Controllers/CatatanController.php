@@ -72,7 +72,14 @@ class CatatanController extends Controller
         });
 
         $combinedData = $combinedDataPemasukan->merge($combinedDataPengeluaran);
-        $alldata = $combinedData->sortByDesc('tanggal');
+        $filteredAlldata = $combinedData->sortByDesc('tanggal');
+        $user_id = $res['user']['user_id']; // Assuming the user ID is in the 'user' array returned from your API call
+
+        $alldata = $filteredAlldata->filter(function ($item) use ($user_id) {
+            return $item['user_id'] == $user_id;
+        }); 
+
+        
         
 
         return view('catatan.index', [
@@ -115,7 +122,13 @@ class CatatanController extends Controller
             $currentPagePengeluaran++;
         } while ($currentPagePengeluaran <= $dataPengeluaran['last_page']);
     
-        $combinedData = $pemasukanData->merge($pengeluaranData);
+        $alldata = $pemasukanData->merge($pengeluaranData);
+
+        $user_id = $res['user']['user_id']; // Assuming the user ID is in the 'user' array returned from your API call
+
+        $combinedData = $alldata->filter(function ($item) use ($user_id) {
+            return $item['user_id'] == $user_id;
+        }); 
     
         $groupedData = $combinedData->groupBy(function ($item) {
             $carbonDate = Carbon::parse($item['tanggal']);
@@ -211,6 +224,15 @@ class CatatanController extends Controller
         } while ($currentPagePengeluaran <= $dataPengeluaran['last_page']);
     
         $combinedData = $pemasukanData->merge($pengeluaranData);
+
+        $alldata = $combinedData->sortByDesc('tanggal');
+        $user_id = $res['user']['user_id']; // Assuming the user ID is in the 'user' array returned from your API call
+
+        $combinedData = $alldata->filter(function ($item) use ($user_id) {
+            return $item['user_id'] == $user_id;
+        }); 
+
+        
     
         $groupedData = $combinedData->groupBy(function ($item) {
             return Carbon::parse($item['tanggal'])->format('Y-m');
