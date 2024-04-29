@@ -281,6 +281,7 @@
 											<span class="form-selectgroup-check"></span>
 										</span>
 										<span class="form-selectgroup-label-content">
+											<div class="card-status-top bg-green"></div>
 											<span class="form-selectgroup-title mb-1">Pemasukan</span>
 										</span>
 									</span>
@@ -294,6 +295,7 @@
 											<span class="form-selectgroup-check"></span>
 										</span>
 										<span class="form-selectgroup-label-content">
+											<div class="card-status-top bg-red"></div>
 											<span class="form-selectgroup-title mb-1">Pengeluaran</span>
 										</span>
 									</span>
@@ -382,8 +384,17 @@
 <script>
 // Function to format the number with thousands separator
 function formatNumber(num) {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    // Convert number to string and split into integer and decimal parts
+    const parts = num.toString().split(".");
+    const integerPart = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    
+    // Check if decimal part exists
+    const decimalPart = parts.length > 1 ? "," + parts[1] : "";
+    
+    // Return formatted number
+    return integerPart + decimalPart;
 }
+
 
 // Function to update the value of the input field with formatted number
 function updateFormattedNumber() {

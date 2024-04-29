@@ -16,250 +16,157 @@
 	<div class="col">
 		<div class="card">
 			<div class="card-body">
-                        <div class="row row-cards">
-                            <div class="col-md-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-md-6 col-xl-12">
-                                                <div class="mb-3">
-                                                    <label class="form-label">Dana Investasi Bulanan : </label>
-                                                    <div class="input-group">
-                                                        <span class="input-group-text">
-                                                            Rp.
-                                                        </span>
-                                                        <input type="text" id="awaldana" name="awaldana" class="form-control text-end" autocomplete="off" hidden>
-                                                        <input type="text" id="awaldana1" name="awaldana1" class="form-control text-end" autocomplete="off">
-                                                    </div>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label">Jangka Waktu Investasi : </label>
-                                                    <div class="input-group">
-                                                        <input type="text" id="jmhtahun" name="jmhtahun" class="form-control text-end" autocomplete="off">
-                                                        <span class="input-group-text">
-                                                            /Tahun
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label">Persentase Bunga :</label>
-                                                    <div class="input-group">
-
-                                                        <input type="text" id="persentasebunga" name="persentasebunga" class="form-control text-end" autocomplete="off">
-                                                        <span class="input-group-text">
-                                                            %
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-3">
-                                                    <div class="col mt-3">
-                                                        <button type="button" class="btn btn-success w-100">
-                                                            Hitung
-                                                        </button>
-                                                    </div>
-                                                    <div class="col mt-3">
-                                                        <button type="button" class="btn btn-secondary w-100">
-                                                            Reset
-                                                        </button>
-                                                    </div>
-                                                    <div class="col mt-3">
-                                                        <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#modal-scrollable">
-                                                            Detail
-                                                        </button>
-                                                    </div>
+                <div class="row row-cards">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6 col-xl-12">
+                                        <div class="mb-3">
+                                            <label class="form-label">Jumlah Pinjaman : </label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    Rp.
+                                                </span>
+                                                <input type="text" id="pinjamandana" name="pinjamandana" class="form-control text-end" autocomplete="off" hidden>
+                                                <input type="text" id="pinjamandana1" name="pinjamandana1" class="form-control text-end" autocomplete="off">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Jangka Waktu : </label>
+                                            <div class="input-group">
+                                                <input type="number" id="jmhtahun" name="jmhtahun" class="form-control text-end" autocomplete="off">
+                                                <span class="input-group-text">
+                                                    Bulan
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col">
+                                                <label class="form-label">Persentase Bunga :</label>
+                                                <div class="input-group">
+    
+                                                    <input type="number" id="persentasebunga" name="persentasebunga" class="form-control text-end" autocomplete="off">
+                                                    <span class="input-group-text">
+                                                        %/Tahun
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-md-6 col-xl-12">
-                                                <div class="mb-3">
-                                                    <h3 class="text-center text-bold">Hasil Perhitungan</h3>
-                                                    <div class="table-responsive">
-                                                        <table class="table table-vcenter card-table">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th></th>
-                                                                    <th></th>
-                                                                    <th></th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr style="height:2.93rem;">
-                                                                    <td style="width:45%;">Total Dana</td>
-                                                                    <td style="width:5%;">:</td>
-                                                                    <td style="width:%" class="text-end" id="awaldana2">Rp. 0</td>
-                                                                </tr>
-                                                                <td style="width:%" class="text-end" id="awaldana3" hidden>0</td>
-                                                                <tr style="height:2.93rem;">
-                                                                    <td style="width:45%;">Jangka Waktu</td>
-                                                                    <td style="width:5%;">:</td>
-                                                                    <td style="width:%" class="text-end" id="jmhtahun2">0 Tahun</td>
-                                                                </tr>
-                                                                <tr style="height:2.93rem;">
-                                                                    <td style="width:45%;">Persentase Bunga</td>
-                                                                    <td style="width:5%;">:</td>
-                                                                    <td style="width:%" class="text-end" id="persentasebunga1">0%</td>
-                                                                </tr>
-                                                                <tr style="height:2.93rem;">
-                                                                    <td style="width:45%;"><strong>Nilai Investasi</strong></td>
-                                                                    <td style="width:5%;">:</td>
-                                                                    <td style="width:%" class="text-end" id="nilai"><strong>Rp. 0</strong></td>
-                                                                </tr>
-                                                                <tr style="height:2.93rem;">
-                                                                    <td style="width:45%;"><strong>Total Nilai</strong></td>
-                                                                    <td style="width:5%;">:</td>
-                                                                    <td style="width:%" class="text-end" id="totalnilai"><strong>Rp. 0</strong></td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
+                                        <div class="row mb-3">
+                                            <div class="col mt-3">
+                                                <button type="button" class="btn btn-success w-100">
+                                                    Hitung
+                                                </button>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-md-6 col-xl-12">
-                                                <div class="mb-3">
-                                                    <h3 class="text-center text-bold">Statistik</h3>
-                                                </div>
-                                                <div id="chart-demo-pie#3" style="min-height: 267px;"></div>
+                                            <div class="col mt-3">
+                                                <button type="button" class="btn btn-secondary w-100">
+                                                    Reset
+                                                </button>
+                                            </div>
+                                            <div class="col mt-3">
+                                                <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#modal-scrollable">
+                                                    Detail
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                   
-			</div>
-            <div class="card-body">
-                        <div class="row row-cards">
-                            <div class="col-md-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-md-6 col-xl-12">
-                                                tet
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6 col-xl-12">
+                                        <div class="mb-3">
+                                            <h3 class="text-center text-bold">Hasil Perhitungan</h3>
+                                            <div class="table-responsive">
+                                                <table class="table table-vcenter card-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th></th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr style="height:2.93rem;">
+                                                            <td style="width:49%;">Jumlah Pinjaman</td>
+                                                            <td style="width:5%;">:</td>
+                                                            <td style="width:%" class="text-end" id="pinjamandana2">Rp. 0</td>
+                                                        </tr>
+                                                        <td style="width:%" class="text-end" id="pinjamandana3" hidden>0</td>
+                                                        <tr style="height:2.93rem;">
+                                                            <td style="width:49%;">Jangka Waktu</td>
+                                                            <td style="width:5%;">:</td>
+                                                            <td style="width:%" class="text-end" id="jmhtahun2">0 Tahun</td>
+                                                        </tr>
+                                                        <tr style="height:2.93rem;">
+                                                            <td style="width:49%;">Bunga per tahun</td>
+                                                            <td style="width:5%;">:</td>
+                                                            <td style="width:%" class="text-end" id="persentasebunga1">0%</td>
+                                                        </tr>
+                                                        <tr style="height:2.93rem;">
+                                                            <td style="width:49%;"><strong>Angsuran per bulan</strong></td>
+                                                            <td style="width:5%;">:</td>
+                                                            <td style="width:%" class="text-end" id="nilai"><strong>Rp. 0</strong></td>
+                                                        </tr>
+                                                        <tr style="height:2.93rem;">
+                                                            <td style="width:49%;"><strong>Total Angsuran</strong></td>
+                                                            <td style="width:5%;">:</td>
+                                                            <td style="width:%" class="text-end" id="totalnilai"><strong>Rp. 0</strong></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            
-                            
                         </div>
-                   
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6 col-xl-12">
+                                        <div class="mb-3">
+                                            <h3 class="text-center text-bold">Statistik</h3>
+                                        </div>
+                                        <div id="chart-demo-pie#3" style="min-height: 267px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 			</div>
-            
 		</div>
 	</div>
 </div>
 
 <!-- Modal Detail -->
 <div class="modal modal-blur fade" id="modal-scrollable" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Detail Investasi Bulanan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-header">
-                <div class="table-responsive">
-                    <table class="table table-vcenter table-borderless card-table">
-                        
-                        <tbody>
-                            <tr >
-                                <td >Dana Bulanan</td>
-                                <td >:</td>
-                            </tr>
-                            <td style="width:%" class="text-end" id="awaldana3" hidden></td>
-                            <tr >
-                                <td >Jangka Waktu</td>
-                                <td >:</td>
-                            </tr>
-                            <tr >
-                                <td >Persentase Bunga</td>
-                                <td >:</td>
-                            </tr>
-							<tr >
-                                <td >Total Dana</td>
-                                <td >:</td>
-                            </tr>
-                            <tr >
-                                <td >Nilai Investasi</td>
-                                <td >:</td>
-                            </tr>
-                            <tr >
-                                <td >Total Nilai</td>
-                                <td >:</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="table-responsive mb-3">
-                    <table class="table table-vcenter table-borderless card-table">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr >
-                                <td ></td>
-                                <td ></td>
-                                <td  class="text-end" id="awaldana4">0</td>
-                            </tr>
-                            <td style="width:%" class="text-end" id="awaldana3" hidden>0</td>
-                            <tr >
-                                <td ></td>
-                                <td ></td>
-                                <td  class="text-end" id="jmhtahun4">0</td>
-                            </tr>
-                            <tr >
-                                <td ></td>
-                                <td ></td>
-                                <td  class="text-end" id="persentasebunga4">0</td>
-                            </tr>
-							<tr >
-                                <td >&nbsp</td>
-                                <td ></td>
-                                <td  class="text-end" id="nilaitotal">0</td>
-                            </tr>
-                            <tr >
-                                <td >&nbsp</td>
-                                <td ></td>
-                                <td  class="text-end" id="nilai1">0</td>
-                            </tr>
-                            <tr >
-                                <td >&nbsp</td>
-                                <td ></td>
-                                <td  class="text-end" id="totalnilai1">0</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            
             <div class="modal-body">
                 <div class="card">
                     <div class="table-responsive">
                         <table class="table table-bordered table-vcenter card-table">
                             <thead>
                                 <tr>
-                                    <th class="text-center">Tahun</th>
-                                    <th class="text-center">Investasi</th>
-                                    <th class="text-center">Nilai Investasi</th>
+                                    <th class="text-center">Bulan</th>
+                                    <th class="text-center">Angsuran Bunga</th>
+                                    <th class="text-center">Angsuran Pokok</th>
+                                    <th class="text-center">Total Angsuran</th>
+                                    <th class="text-center">Sisa Pinjaman</th>
                                 </tr>
                             </thead>
                             <tbody id="modalTableBody">
@@ -281,7 +188,7 @@
 
 <script>
     function updateFormattedNumber3() {
-        var inputElement = document.getElementById('awaldana1');
+        var inputElement = document.getElementById('pinjamandana1');
         var rawValue = inputElement.value.replace(/\D/g, '');
         var formattedValue = formatNumber(rawValue);
         inputElement.value = formattedValue;
@@ -291,17 +198,17 @@
 
     function setUnformattedValueToInput3() {
         var unformattedValue = getUnformattedValue3();
-        var inputElement = document.getElementById('awaldana');
+        var inputElement = document.getElementById('pinjamandana');
         inputElement.value = unformattedValue;
     }
 
     function getUnformattedValue3() {
-        var inputElement = document.getElementById('awaldana1');
+        var inputElement = document.getElementById('pinjamandana1');
         var unformattedValue = inputElement.getAttribute('data-value') || '';
         return unformattedValue;
     }
 
-    document.getElementById('awaldana1').addEventListener('input', updateFormattedNumber3);
+    document.getElementById('pinjamandana1').addEventListener('input', updateFormattedNumber3);
 </script>
 
 <script>
@@ -309,26 +216,23 @@
         let chart = null; 
 
         function createOrUpdateChart() {
-            const awaldana = parseFloat(document.getElementById('awaldana').value);
-            const nilai = parseFloat(calculateNilai());
-            const danaInvestasiAwal = awaldana * 12 * parseFloat(document.getElementById('jmhtahun').value); // Updated calculation
-            const nilaiInvestasi = nilai - danaInvestasiAwal;
+            const pinjamandana = parseFloat(document.getElementById('pinjamandana').value);
+            const nilai = calculateNilai();
+            const monthlyPayment = nilai.monthly_payments[1].monthly_payment;
+            const totalPayment = nilai.total_payment
+            const totalInterest = nilai.total_payment - pinjamandana
+            // console.log(nilai.total_payment);
 
-            document.getElementById('awaldana2').textContent = 'Rp. ' + formatNumber(danaInvestasiAwal);
-            document.getElementById('awaldana3').textContent = awaldana;
-            document.getElementById('jmhtahun2').textContent = document.getElementById('jmhtahun').value + ' Tahun';
+
+            document.getElementById('pinjamandana2').textContent = 'Rp. ' + formatNumber(pinjamandana);
+            document.getElementById('pinjamandana3').textContent = pinjamandana;
+            document.getElementById('jmhtahun2').textContent = document.getElementById('jmhtahun').value + ' Bulan';
             document.getElementById('persentasebunga1').textContent = document.getElementById('persentasebunga').value + '%';
-            document.getElementById('nilai').innerHTML = '<strong>Rp. ' + formatNumber(nilaiInvestasi.toFixed(0)) + '</strong>';
-            document.getElementById('totalnilai').innerHTML = '<strong>Rp. ' + formatNumber(nilai.toFixed(0)) + '</strong>';
+            // document.getElementById('nilai').innerHTML = '<strong>Rp. ' + nilai.toFixed(0) + '</strong>';
+            document.getElementById('nilai').innerHTML = '<strong>Rp. ' + formatNumber(monthlyPayment.toFixed(2)) + '</strong>';
+            document.getElementById('totalnilai').innerHTML = '<strong>Rp. ' + formatNumber(nilai.total_payment.toFixed(2)) + '</strong>';
 
-            document.getElementById('awaldana4').textContent = 'Rp. ' + formatNumber(awaldana);
-            document.getElementById('jmhtahun4').textContent = document.getElementById('jmhtahun').value + ' Tahun';
-            document.getElementById('persentasebunga4').textContent = document.getElementById('persentasebunga').value + '%';
-            document.getElementById('nilai1').textContent = 'Rp. ' + formatNumber(nilaiInvestasi.toFixed(0));
-            document.getElementById('nilaitotal').textContent = 'Rp. ' + formatNumber(danaInvestasiAwal.toFixed(0));
-            document.getElementById('totalnilai1').textContent = 'Rp. ' + formatNumber(nilai.toFixed(0));
-
-            const chartData = [nilaiInvestasi, danaInvestasiAwal]; 
+            const chartData = [totalPayment, totalInterest]; 
 
             if (chart) {
                 chart.destroy();
@@ -352,7 +256,23 @@
                 series: chartData,
                 labels: ["Nilai Investasi", "Dana Investasi Awal"], // Switched the order
                 tooltip: {
-                    theme: 'dark'
+                    theme: 'dark',
+                    y: {
+                        formatter: function(val) {
+                            return 'Rp. ' + formatNumber(val.toFixed(2));
+                        },
+                    },
+                    fillSeriesColor: false
+                },
+                plotOptions: {
+                    pie: {
+                        dataLabels: {
+                            offset: 0,
+                            formatter: function (val) {
+                                return val + "%";
+                            }
+                        }
+                    }
                 },
                 grid: {
                     strokeDashArray: 4,
@@ -372,92 +292,201 @@
                         vertical: 8
                     },
                 },
-                tooltip: {
-                    fillSeriesColor: false
-                },
+                
             });
 
             chart.render(); // Render the chart
 
-            const investasiBulananData = {
-                awaldana: awaldana,
+            const rancanganPinjamanData = {
+                pinjamandana: pinjamandana,
                 jmhtahun: document.getElementById('jmhtahun').value,
                 persentasebunga: document.getElementById('persentasebunga').value,
-                danaInvestasiAwal: danaInvestasiAwal,
-                nilaiInvestasi: nilaiInvestasi
             };
 
-            localStorage.setItem('investasi-bulanan', JSON.stringify(investasiBulananData));
+            localStorage.setItem('rancangan-pinjaman', JSON.stringify(rancanganPinjamanData));
         }
 
         function calculateNilai() {
-            const awaldana = parseFloat(document.getElementById('awaldana').value);
+            const pinjamandana = parseFloat(document.getElementById('pinjamandana').value);
             const jmhtahun = parseFloat(document.getElementById('jmhtahun').value);
             const persentasebunga = parseFloat(document.getElementById('persentasebunga').value);
 
-            if (!isNaN(awaldana) && !isNaN(jmhtahun) && !isNaN(persentasebunga)) {
-				const tingkatBungaPerBulan = persentasebunga / 100 / 12; // Tingkat bunga per bulan
-				const totalSetoran = 12 * jmhtahun;
-                const nilai = awaldana * ((Math.pow((1 + tingkatBungaPerBulan), totalSetoran) - 1) / tingkatBungaPerBulan) * (1 + tingkatBungaPerBulan);
-                return nilai.toFixed(0);
+            if (!isNaN(pinjamandana) && !isNaN(jmhtahun) && !isNaN(persentasebunga)) {
+                const tingkatBungaPerBulan = persentasebunga / 100 / 12; // Tingkat bunga per bulan
+                const totalBulan = jmhtahun; // Total bulan
+
+                const nilai = (pinjamandana * tingkatBungaPerBulan) / (1 - Math.pow((1 + tingkatBungaPerBulan), -totalBulan));
+
+                let remainingLoan = nilai;
+                const monthlyPayments = [];
+
+                for (let i = 1; i <= totalBulan; i++) {
+                    const interestPayment = remainingLoan * tingkatBungaPerBulan;
+                    const principalPayment = nilai - interestPayment;
+                    remainingLoan -= principalPayment;
+
+                    monthlyPayments.push({
+                        'month': i,
+                        'monthly_payment': nilai,
+                        'interest_payment': interestPayment,
+                        'principal_payment': principalPayment,
+                        'remaining_loan': remainingLoan,
+                    });
+                }
+                // console.log(monthlyPayments);
+
+
+                return {
+                    'monthly_payments': monthlyPayments,
+                    
+                    'total_payment': nilai * totalBulan,
+                };
             } else {
                 return 'Invalid input';
             }
         }
 
-        function populateModalTable() {
-            const awaldana = parseFloat(document.getElementById('awaldana').value);
-            const persentasebunga = parseFloat(document.getElementById('persentasebunga').value);
-            
-            document.getElementById('awaldana4').textContent = 'Rp. ' + formatNumber(awaldana);
-            
-            const modalTableBody = document.getElementById('modalTableBody');
-            modalTableBody.innerHTML = '';
 
-            const tahunValues = [5, 8, 10, 12, 15, 18, 20, 22, 25, 28, 30, 35];
-            
-            tahunValues.forEach(tahun => {
-				const totalSetoran = 12 * tahun;
-                const row = document.createElement('tr');
-                
-                const tahunCell = document.createElement('td');
-                tahunCell.textContent = tahun;
-                tahunCell.classList.add('text-center');
-                row.appendChild(tahunCell);
-                
-                const investasiCell = document.createElement('td');
-				const investasiNilai = awaldana * totalSetoran;
-                investasiCell.textContent = formatNumber(investasiNilai);
-                investasiCell.classList.add('text-center');
-                row.appendChild(investasiCell);
-                
-                const nilaiInvestasiCell = document.createElement('td');
-				const tingkatBungaPerBulan = persentasebunga / 100 / 12;
-                const nilaiTahun = awaldana * ((Math.pow((1 + tingkatBungaPerBulan), totalSetoran) - 1) / tingkatBungaPerBulan) * (1 + tingkatBungaPerBulan);
-                nilaiInvestasiCell.textContent = 'Rp. ' + formatNumber(nilaiTahun.toFixed(0));
-                nilaiInvestasiCell.classList.add('text-center');
-                row.appendChild(nilaiInvestasiCell);
-                
-                modalTableBody.appendChild(row);
-            });
-        }
+        function populateModalTable() {
+    const pinjamandana = parseFloat(document.getElementById('pinjamandana').value);
+    const persentasebunga = parseFloat(document.getElementById('persentasebunga').value);
+    const jmhtahun = parseFloat(document.getElementById('jmhtahun').value);
+    
+    const modalTableBody = document.getElementById('modalTableBody');
+    modalTableBody.innerHTML = '';
+
+    const tingkatBungaPerBulan = persentasebunga / 100 / 12; // Tingkat bunga per bulan
+    const totalBulan = jmhtahun; // Total bulan
+
+    let nilai = (pinjamandana * tingkatBungaPerBulan) / (1 - Math.pow((1 + tingkatBungaPerBulan), -totalBulan));
+
+    let remainingLoan = pinjamandana;
+
+    // Create a row for index 0 with sisa pinjaman value from pinjamandana
+    const firstRow = document.createElement('tr');
+    
+    const bulanCellFirstRow = document.createElement('td');
+    bulanCellFirstRow.textContent = 0;
+    bulanCellFirstRow.classList.add('text-center');
+    firstRow.appendChild(bulanCellFirstRow);
+
+    const angsuranBungaFirstRow = document.createElement('td');
+    angsuranBungaFirstRow.textContent = formatNumber((remainingLoan * tingkatBungaPerBulan).toFixed(2));
+    angsuranBungaFirstRow.classList.add('text-center');
+    firstRow.appendChild(angsuranBungaFirstRow);
+
+    const angsuranPokokFirstRow = document.createElement('td');
+    angsuranPokokFirstRow.textContent = formatNumber((nilai - (remainingLoan * tingkatBungaPerBulan)).toFixed(2));
+    angsuranPokokFirstRow.classList.add('text-center');
+    firstRow.appendChild(angsuranPokokFirstRow);
+
+    const totalAngsuranTdFirstRow = document.createElement('td');
+    totalAngsuranTdFirstRow.textContent = formatNumber(nilai.toFixed(2));
+    totalAngsuranTdFirstRow.classList.add('text-center');
+    firstRow.appendChild(totalAngsuranTdFirstRow);
+
+    const sisaPinjamanFirstRow = document.createElement('td');
+    sisaPinjamanFirstRow.textContent = 'Rp. ' + formatNumber(remainingLoan.toFixed(2));
+    sisaPinjamanFirstRow.classList.add('text-center');
+    firstRow.appendChild(sisaPinjamanFirstRow);
+
+    modalTableBody.appendChild(firstRow);
+
+    let totalAngsuranBunga = 0;
+    let totalAngsuranPokok = 0;
+    let totalTotalAngsuran = 0;
+    let totalSisaPinjaman = remainingLoan;
+
+    // Main loop for remaining rows
+    for (let i = 1; i <= jmhtahun; i++) {
+        const interestPayment = remainingLoan * tingkatBungaPerBulan;
+        const principalPayment = nilai - interestPayment;
+        remainingLoan -= principalPayment;
+
+        totalAngsuranBunga += interestPayment;
+        totalAngsuranPokok += principalPayment;
+        totalTotalAngsuran += nilai;
+
+        const row = document.createElement('tr');
+        
+        const bulanCell = document.createElement('td');
+        bulanCell.textContent = i; // Display the number of months
+        bulanCell.classList.add('text-center');
+        row.appendChild(bulanCell);
+        
+        const angsuranBunga = document.createElement('td');
+        angsuranBunga.textContent = formatNumber(interestPayment.toFixed(2));
+        angsuranBunga.classList.add('text-center');
+        row.appendChild(angsuranBunga);
+
+        const angsuranPokok = document.createElement('td');
+        angsuranPokok.textContent = formatNumber(principalPayment.toFixed(2));
+        angsuranPokok.classList.add('text-center');
+        row.appendChild(angsuranPokok);
+
+        const totalAngsuranTd = document.createElement('td');
+        totalAngsuranTd.textContent = formatNumber(nilai.toFixed(2));
+        totalAngsuranTd.classList.add('text-center');
+        row.appendChild(totalAngsuranTd);
+        
+        const sisaPinjaman = document.createElement('td');
+        sisaPinjaman.textContent = 'Rp. ' + formatNumber(remainingLoan.toFixed(2));
+        sisaPinjaman.classList.add('text-center');
+        row.appendChild(sisaPinjaman);
+        
+        modalTableBody.appendChild(row);
+    }
+
+    // Create the last row with totals
+    const lastRow = document.createElement('tr');
+    lastRow.classList.add('font-weight-bold');
+
+    const bulanCellLastRow = document.createElement('td');
+    bulanCellLastRow.textContent = 'Total';
+    bulanCellLastRow.classList.add('text-center');
+    lastRow.appendChild(bulanCellLastRow);
+
+    const totalAngsuranBungaCell = document.createElement('td');
+    totalAngsuranBungaCell.textContent = formatNumber(totalAngsuranBunga.toFixed(2));
+    totalAngsuranBungaCell.classList.add('text-center');
+    lastRow.appendChild(totalAngsuranBungaCell);
+
+    const totalAngsuranPokokCell = document.createElement('td');
+    totalAngsuranPokokCell.textContent = formatNumber(totalAngsuranPokok.toFixed(2));
+    totalAngsuranPokokCell.classList.add('text-center');
+    lastRow.appendChild(totalAngsuranPokokCell);
+
+    const totalTotalAngsuranCell = document.createElement('td');
+    totalTotalAngsuranCell.textContent = formatNumber(totalTotalAngsuran.toFixed(2));
+    totalTotalAngsuranCell.classList.add('text-center');
+    lastRow.appendChild(totalTotalAngsuranCell);
+
+    const totalSisaPinjamanCell = document.createElement('td');
+    totalSisaPinjamanCell.textContent = 'Rp. ' + 0;
+    totalSisaPinjamanCell.classList.add('text-center');
+    lastRow.appendChild(totalSisaPinjamanCell);
+
+    modalTableBody.appendChild(lastRow);
+}
+
+
+
 
         function populateFromLocalStorage() {
-            const investasiBulananData = JSON.parse(localStorage.getItem('investasi-bulanan'));
-            if (investasiBulananData) {
-                document.getElementById('awaldana').value = investasiBulananData.awaldana || '';
-                document.getElementById('awaldana4').textContent = 'Rp. ' + formatNumber(investasiBulananData.awaldana) || '';
-                document.getElementById('awaldana1').value = formatNumber(investasiBulananData.awaldana) || '';
-                document.getElementById('jmhtahun').value = investasiBulananData.jmhtahun || '';
-                document.getElementById('persentasebunga').value = investasiBulananData.persentasebunga || '';
-                document.getElementById('awaldana2').textContent = 'Rp. ' + formatNumber(investasiBulananData.awaldana || '');
+            const rancanganPinjamanData = JSON.parse(localStorage.getItem('rancangan-pinjaman'));
+            if (rancanganPinjamanData) {
+                document.getElementById('pinjamandana').value = rancanganPinjamanData.pinjamandana || '';
+                document.getElementById('pinjamandana1').value = formatNumber(rancanganPinjamanData.pinjamandana) || '';
+                document.getElementById('jmhtahun').value = rancanganPinjamanData.jmhtahun || '';
+                document.getElementById('persentasebunga').value = rancanganPinjamanData.persentasebunga || '';
+                document.getElementById('pinjamandana2').textContent = 'Rp. ' + rancanganPinjamanData.pinjamandana || '';
 
                 createOrUpdateChart();
                 populateModalTable();
             }
         }
 
-        if (localStorage.getItem('investasi-bulanan')) {
+        if (localStorage.getItem('rancangan-pinjaman')) {
             populateFromLocalStorage();
         }
 
@@ -467,18 +496,18 @@
         });
 
         document.querySelector('.btn-secondary').addEventListener('click', function() {
-            localStorage.removeItem('investasi-bulanan');
-            const awaldanaInput = document.getElementById('awaldana');
-            const awaldanaInput1 = document.getElementById('awaldana1');
+            localStorage.removeItem('rancangan-pinjaman');
+            const pinjamandanaInput = document.getElementById('pinjamandana');
+            const pinjamandanaInput1 = document.getElementById('pinjamandana1');
             const jmhtahunInput = document.getElementById('jmhtahun');
             const persentasebungaInput = document.getElementById('persentasebunga');
-            awaldanaInput.value = '';
-            awaldanaInput1.value = '';
+            pinjamandanaInput.value = '';
+            pinjamandanaInput1.value = '';
             jmhtahunInput.value = '';
             persentasebungaInput.value = '';
-            document.getElementById('awaldana2').textContent = 'Rp. 0';
-            document.getElementById('awaldana3').textContent = '';
-            document.getElementById('jmhtahun2').textContent = '0 Tahun';
+            document.getElementById('pinjamandana2').textContent = 'Rp. 0';
+            document.getElementById('pinjamandana3').textContent = '';
+            document.getElementById('jmhtahun2').textContent = '0 Bulan';
             document.getElementById('persentasebunga1').textContent = '0%';
             document.getElementById('nilai').textContent = 'Rp. 0';
             document.getElementById('totalnilai').textContent = 'Rp. 0';
@@ -491,16 +520,15 @@
             resetModalValues();
         });
 
-        function resetModalValues() {
-            document.getElementById('awaldana4').textContent = 'Rp. 0';
-            document.getElementById('jmhtahun4').textContent = '0 Tahun';
-            document.getElementById('persentasebunga4').textContent = '0%';
-            document.getElementById('nilai1').textContent = 'Rp. 0';
-            document.getElementById('totalnilai1').textContent = 'Rp. 0';
+        // function resetModalValues() {
+        //     document.getElementById('pinjamandana4').textContent = 'Rp. 0';
+        //     document.getElementById('jmhtahun4').textContent = '0 Tahun';
+        //     document.getElementById('persentasebunga4').textContent = '0%';
+        //     document.getElementById('totalnilai1').textContent = 'Rp. 0';
 
-            const modalTableBody = document.getElementById('modalTableBody');
-            modalTableBody.innerHTML = '';
-        }
+        //     const modalTableBody = document.getElementById('modalTableBody');
+        //     modalTableBody.innerHTML = '';
+        // }
 
         document.getElementById('printModalToPdf').addEventListener('click', function() {
             console.log("Button clicked");
@@ -515,7 +543,7 @@
                     ]
                 };
 
-                pdfMake.createPdf(docDefinition).download('investasi-bulanan.pdf');
+                pdfMake.createPdf(docDefinition).download('rancangan-pinjaman.pdf');
             });
 
         createOrUpdateChart();
