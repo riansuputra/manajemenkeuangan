@@ -339,7 +339,13 @@
                 series: chartData,
                 labels: ["Nilai Investasi", "Total Investasi"], // Switched the order
                 tooltip: {
-                    theme: 'dark'
+                    theme: 'dark',
+                    y: {
+                        formatter: function(val) {
+                            return 'Rp. ' + formatNumber(val.toFixed(2));
+                        },
+                    },
+                    fillSeriesColor: false
                 },
                 grid: {
                     strokeDashArray: 4,
@@ -358,9 +364,6 @@
                         horizontal: 8,
                         vertical: 8
                     },
-                },
-                tooltip: {
-                    fillSeriesColor: false
                 },
             });
 

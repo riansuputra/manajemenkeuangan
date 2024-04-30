@@ -459,6 +459,17 @@ document.getElementById('jumlahedit').addEventListener('input', updateFormattedN
 
 <script>
 	document.addEventListener("DOMContentLoaded", function() {
+
+		const spinner = document.getElementById("spinner");
+    const pageContent = document.getElementById("page-content");
+    const pageTitle = document.getElementById("page-title");
+
+    // Hide spinner and show page content when fully loaded
+    window.addEventListener("load", function() {
+        spinner.style.display = "none";
+        pageContent.style.display = "block";
+        pageTitle.style.display = "block";
+    });
     const editButtons = document.querySelectorAll('.edit-btn');
 
     editButtons.forEach(button => {

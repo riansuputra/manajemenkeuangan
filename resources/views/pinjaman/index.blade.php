@@ -232,7 +232,7 @@
             document.getElementById('nilai').innerHTML = '<strong>Rp. ' + formatNumber(monthlyPayment.toFixed(2)) + '</strong>';
             document.getElementById('totalnilai').innerHTML = '<strong>Rp. ' + formatNumber(nilai.total_payment.toFixed(2)) + '</strong>';
 
-            const chartData = [totalPayment, totalInterest]; 
+            const chartData = [pinjamandana, totalInterest]; 
 
             if (chart) {
                 chart.destroy();
@@ -254,7 +254,7 @@
                     opacity: 1,
                 },
                 series: chartData,
-                labels: ["Nilai Investasi", "Dana Investasi Awal"], // Switched the order
+                labels: ["Total Angsuran Bunga", "Total Angsuran Pokok"], // Switched the order
                 tooltip: {
                     theme: 'dark',
                     y: {
@@ -371,23 +371,23 @@
     firstRow.appendChild(bulanCellFirstRow);
 
     const angsuranBungaFirstRow = document.createElement('td');
-    angsuranBungaFirstRow.textContent = formatNumber((remainingLoan * tingkatBungaPerBulan).toFixed(2));
-    angsuranBungaFirstRow.classList.add('text-center');
+    angsuranBungaFirstRow.textContent = 'Rp. 0,00';
+    angsuranBungaFirstRow.classList.add('text-end'); // Apply CSS classes
     firstRow.appendChild(angsuranBungaFirstRow);
 
     const angsuranPokokFirstRow = document.createElement('td');
-    angsuranPokokFirstRow.textContent = formatNumber((nilai - (remainingLoan * tingkatBungaPerBulan)).toFixed(2));
-    angsuranPokokFirstRow.classList.add('text-center');
+    angsuranPokokFirstRow.textContent = 'Rp. 0,00';;
+    angsuranPokokFirstRow.classList.add('text-end'); // Apply CSS classes
     firstRow.appendChild(angsuranPokokFirstRow);
 
     const totalAngsuranTdFirstRow = document.createElement('td');
-    totalAngsuranTdFirstRow.textContent = formatNumber(nilai.toFixed(2));
-    totalAngsuranTdFirstRow.classList.add('text-center');
+    totalAngsuranTdFirstRow.textContent = 'Rp. 0,00';;
+    totalAngsuranTdFirstRow.classList.add('text-end'); // Apply CSS classes
     firstRow.appendChild(totalAngsuranTdFirstRow);
 
     const sisaPinjamanFirstRow = document.createElement('td');
     sisaPinjamanFirstRow.textContent = 'Rp. ' + formatNumber(remainingLoan.toFixed(2));
-    sisaPinjamanFirstRow.classList.add('text-center');
+    sisaPinjamanFirstRow.classList.add('text-end'); // Apply CSS classes
     firstRow.appendChild(sisaPinjamanFirstRow);
 
     modalTableBody.appendChild(firstRow);
@@ -415,23 +415,23 @@
         row.appendChild(bulanCell);
         
         const angsuranBunga = document.createElement('td');
-        angsuranBunga.textContent = formatNumber(interestPayment.toFixed(2));
-        angsuranBunga.classList.add('text-center');
+        angsuranBunga.textContent ='Rp. ' +  formatNumber(interestPayment.toFixed(2));
+        angsuranBunga.classList.add('text-end'); // Apply CSS classes
         row.appendChild(angsuranBunga);
 
         const angsuranPokok = document.createElement('td');
-        angsuranPokok.textContent = formatNumber(principalPayment.toFixed(2));
-        angsuranPokok.classList.add('text-center');
+        angsuranPokok.textContent = 'Rp. ' + formatNumber(principalPayment.toFixed(2));
+        angsuranPokok.classList.add('text-end'); // Apply CSS classes
         row.appendChild(angsuranPokok);
 
         const totalAngsuranTd = document.createElement('td');
-        totalAngsuranTd.textContent = formatNumber(nilai.toFixed(2));
-        totalAngsuranTd.classList.add('text-center');
+        totalAngsuranTd.textContent ='Rp. ' +  formatNumber(nilai.toFixed(2));
+        totalAngsuranTd.classList.add('text-end'); // Apply CSS classes
         row.appendChild(totalAngsuranTd);
         
         const sisaPinjaman = document.createElement('td');
         sisaPinjaman.textContent = 'Rp. ' + formatNumber(remainingLoan.toFixed(2));
-        sisaPinjaman.classList.add('text-center');
+        sisaPinjaman.classList.add('text-end'); // Apply CSS classes
         row.appendChild(sisaPinjaman);
         
         modalTableBody.appendChild(row);
@@ -447,27 +447,28 @@
     lastRow.appendChild(bulanCellLastRow);
 
     const totalAngsuranBungaCell = document.createElement('td');
-    totalAngsuranBungaCell.textContent = formatNumber(totalAngsuranBunga.toFixed(2));
-    totalAngsuranBungaCell.classList.add('text-center');
+    totalAngsuranBungaCell.textContent = 'Rp. ' + formatNumber(totalAngsuranBunga.toFixed(2));
+    totalAngsuranBungaCell.classList.add('text-end'); // Apply CSS classes
     lastRow.appendChild(totalAngsuranBungaCell);
 
     const totalAngsuranPokokCell = document.createElement('td');
-    totalAngsuranPokokCell.textContent = formatNumber(totalAngsuranPokok.toFixed(2));
-    totalAngsuranPokokCell.classList.add('text-center');
+    totalAngsuranPokokCell.textContent = 'Rp. ' + formatNumber(totalAngsuranPokok.toFixed(2));
+    totalAngsuranPokokCell.classList.add('text-end'); // Apply CSS classes
     lastRow.appendChild(totalAngsuranPokokCell);
 
     const totalTotalAngsuranCell = document.createElement('td');
-    totalTotalAngsuranCell.textContent = formatNumber(totalTotalAngsuran.toFixed(2));
-    totalTotalAngsuranCell.classList.add('text-center');
+    totalTotalAngsuranCell.textContent ='Rp. ' +  formatNumber(totalTotalAngsuran.toFixed(2));
+    totalTotalAngsuranCell.classList.add('text-end'); // Apply CSS classes
     lastRow.appendChild(totalTotalAngsuranCell);
 
     const totalSisaPinjamanCell = document.createElement('td');
-    totalSisaPinjamanCell.textContent = 'Rp. ' + 0;
-    totalSisaPinjamanCell.classList.add('text-center');
+    totalSisaPinjamanCell.textContent = 'Rp. 0,00';
+    totalSisaPinjamanCell.classList.add('text-end'); // Apply CSS classes
     lastRow.appendChild(totalSisaPinjamanCell);
 
     modalTableBody.appendChild(lastRow);
 }
+
 
 
 

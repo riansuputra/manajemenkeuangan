@@ -32,7 +32,7 @@
 </head>
 
 <body>
-	
+
     <script src="{{ asset('js/demo-theme.min.js?1684106062') }}"></script>
 	<div class="page">
 		<div class="sticky-top">
@@ -246,15 +246,29 @@
           		</div>
         	</header>
       	</div>
+		
       	<div class="page-wrapper">
-        	<div class="page-header d-print-none">
+			
+			<div class="container container-slim my-auto" id="spinner" style="display:block;">
+				<div class="text-center">
+				<div class="mb-3">
+					<a href="." class="navbar-brand navbar-brand-autodark"><img src="./static/logo-small.svg" height="36" alt=""></a>
+				</div>
+				<div class="text-muted mb-3">Preparing application</div>
+				<div class="progress progress-sm">
+					<div class="progress-bar progress-bar-indeterminate"></div>
+				</div>
+				</div>
+			</div>
+
+        	<div class="page-header d-print-none" id="page-title" style="display:none;">
           		<div class="container-xl">
             		<div class="row g-2 align-items-center">
               			@yield('page-title')
             		</div>
           		</div>
 			</div>
-			<div class="page-body">
+			<div class="page-body" id="page-content" style="display:none;">
           		@yield('content')
 			</div>        
       	</div>

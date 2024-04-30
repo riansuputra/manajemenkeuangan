@@ -349,7 +349,13 @@
                 series: chartData,
                 labels: ["Nilai Investasi", "Dana Investasi Awal"], // Switched the order
                 tooltip: {
-                    theme: 'dark'
+                    theme: 'dark',
+                    y: {
+                        formatter: function(val) {
+                            return 'Rp. ' + formatNumber(val.toFixed(2));
+                        },
+                    },
+                    fillSeriesColor: false
                 },
                 grid: {
                     strokeDashArray: 4,
@@ -369,9 +375,7 @@
                         vertical: 8
                     },
                 },
-                tooltip: {
-                    fillSeriesColor: false
-                },
+                
             });
 
             chart.render(); // Render the chart

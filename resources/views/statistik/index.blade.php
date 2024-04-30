@@ -149,6 +149,12 @@
                     },
                 },
                 tooltip: {
+                    theme: 'dark',
+                    y: {
+                        formatter: function(val) {
+                            return 'Rp. ' + formatNumber(val.toFixed(2));
+                        },
+                    },
                     fillSeriesColor: false
                 },
             })).render();
@@ -220,6 +226,12 @@
                     },
                 },
                 tooltip: {
+                    theme: 'dark',
+                    y: {
+                        formatter: function(val) {
+                            return 'Rp. ' + formatNumber(val.toFixed(2));
+                        },
+                    },
                     fillSeriesColor: false
                 },
             })).render();
