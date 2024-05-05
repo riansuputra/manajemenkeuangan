@@ -34,6 +34,7 @@ Route::middleware([])->group(function(){
 
     Route::middleware([App\Http\Middleware\AdminUserMiddleware::class])->group(function(){
         Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
+        Route::post('/dashboard-filter',[DashboardController::class,'filter'])->name('dashboard-filter');
         Route::post('/logout',[AuthController::class,'logout'])->name('logout');
         // Route::get('/catatan',[CatatanController::class,'index'])->name('catatan');
         // Route::get('/catatan', function () {return view('catatan.index');})->name('catatan');

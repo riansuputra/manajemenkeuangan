@@ -152,7 +152,7 @@
     <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Detail Investasi Bulanan</h5>
+                <h5 class="modal-title">Detail Pinjaman</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             
@@ -213,6 +213,16 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        const spinner = document.getElementById("spinner");
+    const pageContent = document.getElementById("page-content");
+    const pageTitle = document.getElementById("page-title");
+
+    // Hide spinner and show page content when fully loaded
+    window.addEventListener("load", function() {
+        spinner.style.display = "none";
+        pageContent.style.display = "block";
+        pageTitle.style.display = "block";
+    });
         let chart = null; 
 
         function createOrUpdateChart() {
