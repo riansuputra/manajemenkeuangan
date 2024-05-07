@@ -36,7 +36,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-md-6 col-xl-12">
+                                            <div class="col-xl-12">
                                                 <div class="mb-3">
                                                     <label class="form-label">Target Dana Investasi : </label>
                                                     <div class="input-group">
@@ -92,7 +92,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-md-6 col-xl-12">
+                                            <div class="col-xl-12">
                                                 <div class="mb-3">
                                                     <h3 class="text-center text-bold">Hasil Perhitungan</h3>
                                                     <div class="table-responsive">
@@ -144,7 +144,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-md-6 col-xl-12">
+                                            <div class="col-xl-12">
                                                 <div class="mb-3">
                                                     <h3 class="text-center text-bold">Statistik</h3>
                                                 </div>
@@ -303,12 +303,26 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        const spinner = document.getElementById("spinner");
+    const pageContent = document.getElementById("page-content");
+    const pageTitle = document.getElementById("page-title");
+
+    // Hide spinner and show page content when fully loaded
+    window.addEventListener("load", function() {
+        spinner.style.display = "none";
+        pageContent.style.display = "block";
+        pageTitle.style.display = "block";
+    });
+
         let chart = null; 
 
         function createOrUpdateChart() {
-            const awaldana = parseFloat(document.getElementById('awaldana').value);
-			const jmhtahun = parseFloat(document.getElementById('jmhtahun').value);
+            let awaldana = parseFloat(document.getElementById('awaldana').value);
+			const jmhtahun = !isNaN(parseFloat(document.getElementById('jmhtahun').value)) ? parseFloat(document.getElementById('jmhtahun').value) : 0;
             const nilai = parseFloat(calculateNilai());
+            awaldana = isNaN(awaldana) ? 0 : awaldana;
+
+            
 			const months = jmhtahun * 12;
             const danaInvestasiAwal = awaldana;
             const nilaiInvestasi = nilai;
@@ -385,7 +399,7 @@
             chart.render(); // Render the chart
 
             const investasiTargetData = {
-                awaldana: awaldana,
+                awaldana: awaldana || '',
                 jmhtahun: document.getElementById('jmhtahun').value,
                 persentasebunga: document.getElementById('persentasebunga').value,
                 danaInvestasiAwal: danaInvestasiAwal,
@@ -415,7 +429,7 @@
 				const nilai = awaldana / ((((totalMultiplier - 1) / monthlyInterestRate)) * (1 + monthlyInterestRate));
 				return nilai.toFixed(0); // Mengembalikan nilai dengan format tanpa desimal
 			} else {
-				return 'Invalid input';
+				return 0;
 			}
 
 			const totalInvestment = nilai * months;

@@ -60,6 +60,7 @@ Route::middleware([])->group(function(){
         Route::post('/delete-catatan/{id}', [CatatanController::class, 'destroy'])->name('hapusCatatan');
 
         Route::get('/statistik', [StatistikController::class, 'index'])->name('statistik');
+        Route::post('/statistik-filter', [StatistikController::class, 'filter'])->name('statistik-filter');
         Route::get('/anggaran', [AnggaranController::class, 'index'])->name('anggaran');
         Route::get('/investasi-lumpsum', [InvestasiController::class, 'lumpsum'])->name('investasi-lumpsum');
         Route::get('/investasi-bulanan', [InvestasiController::class, 'bulanan'])->name('investasi-bulanan');

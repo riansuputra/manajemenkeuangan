@@ -36,7 +36,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-md-6 col-xl-12">
+                                            <div class="col-xl-12">
                                                 <div class="mb-3">
                                                     <label class="form-label">Dana Investasi Awal : </label>
                                                     <div class="input-group">
@@ -92,7 +92,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-md-6 col-xl-12">
+                                            <div class="col-xl-12">
                                                 <div class="mb-3">
                                                     <h3 class="text-center text-bold">Hasil Perhitungan</h3>
                                                     <div class="table-responsive">
@@ -114,7 +114,7 @@
                                                                 <tr style="height:2.93rem;">
                                                                     <td style="width:45%;">Jangka Waktu</td>
                                                                     <td style="width:5%;">:</td>
-                                                                    <td style="width:%" class="text-end" id="jmhtahun2">0 Tahun</td>
+                                                                    <td style="width:%" class="text-end" id="jmhtahun2">0 Bulan</td>
                                                                 </tr>
                                                                 <tr style="height:2.93rem;">
                                                                     <td style="width:45%;">Persentase Bunga</td>
@@ -144,7 +144,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-md-6 col-xl-12">
+                                            <div class="col-xl-12">
                                                 <div class="mb-3">
                                                     <h3 class="text-center text-bold">Statistik</h3>
                                                 </div>
@@ -294,13 +294,29 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        const spinner = document.getElementById("spinner");
+    const pageContent = document.getElementById("page-content");
+    const pageTitle = document.getElementById("page-title");
+
+    // Hide spinner and show page content when fully loaded
+    window.addEventListener("load", function() {
+        spinner.style.display = "none";
+        pageContent.style.display = "block";
+        pageTitle.style.display = "block";
+    });
+
         let chart = null; 
 
         function createOrUpdateChart() {
-            const awaldana = parseFloat(document.getElementById('awaldana').value);
+            let awaldana = parseFloat(document.getElementById('awaldana').value);
             const nilai = parseFloat(calculateNilai());
+            awaldana = isNaN(awaldana) ? 0 : awaldana;
             const danaInvestasiAwal = awaldana;
             const nilaiInvestasi = nilai - awaldana;
+
+                        // Calculate nilaiInvestasi
+
+            // Convert to 0 if NaN
 
             document.getElementById('awaldana2').textContent = 'Rp. ' + formatNumber(awaldana);
             document.getElementById('awaldana3').textContent = awaldana;
@@ -370,7 +386,7 @@
             chart.render(); // Render the chart
 
             const investasiLumpsumData = {
-                awaldana: awaldana,
+                awaldana: awaldana || '',
                 jmhtahun: document.getElementById('jmhtahun').value,
                 persentasebunga: document.getElementById('persentasebunga').value,
                 danaInvestasiAwal: danaInvestasiAwal,
@@ -389,7 +405,7 @@
                 const nilai = awaldana * Math.pow((1 + persentasebunga / 100), jmhtahun);
                 return nilai.toFixed(0);
             } else {
-                return 'Invalid input';
+                return 0;
             }
         }
 

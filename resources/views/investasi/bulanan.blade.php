@@ -36,7 +36,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-md-6 col-xl-12">
+                                            <div class="col-xl-12">
                                                 <div class="mb-3">
                                                     <label class="form-label">Dana Investasi Bulanan : </label>
                                                     <div class="input-group">
@@ -50,9 +50,9 @@
                                                 <div class="mb-3">
                                                     <label class="form-label">Jangka Waktu Investasi : </label>
                                                     <div class="input-group">
-                                                        <input type="text" id="jmhtahun" name="jmhtahun" class="form-control text-end" autocomplete="off">
+                                                        <input type="number" id="jmhtahun" name="jmhtahun" class="form-control text-end" autocomplete="off">
                                                         <span class="input-group-text">
-                                                            /Tahun
+                                                            Tahun
                                                         </span>
                                                     </div>
                                                 </div>
@@ -60,7 +60,7 @@
                                                     <label class="form-label">Persentase Bunga :</label>
                                                     <div class="input-group">
 
-                                                        <input type="text" id="persentasebunga" name="persentasebunga" class="form-control text-end" autocomplete="off">
+                                                        <input type="number" id="persentasebunga" name="persentasebunga" class="form-control text-end" autocomplete="off">
                                                         <span class="input-group-text">
                                                             %
                                                         </span>
@@ -92,7 +92,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-md-6 col-xl-12">
+                                            <div class="col-xl-12">
                                                 <div class="mb-3">
                                                     <h3 class="text-center text-bold">Hasil Perhitungan</h3>
                                                     <div class="table-responsive">
@@ -144,7 +144,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-md-6 col-xl-12">
+                                            <div class="col-xl-12">
                                                 <div class="mb-3">
                                                     <h3 class="text-center text-bold">Statistik</h3>
                                                 </div>
@@ -303,13 +303,31 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        const spinner = document.getElementById("spinner");
+    const pageContent = document.getElementById("page-content");
+    const pageTitle = document.getElementById("page-title");
+
+    // Hide spinner and show page content when fully loaded
+    window.addEventListener("load", function() {
+        spinner.style.display = "none";
+        pageContent.style.display = "block";
+        pageTitle.style.display = "block";
+    });
+
+        
         let chart = null; 
 
         function createOrUpdateChart() {
-            const awaldana = parseFloat(document.getElementById('awaldana').value);
+            let awaldana = parseFloat(document.getElementById('awaldana').value);
             const nilai = parseFloat(calculateNilai());
-            const danaInvestasiAwal = awaldana * 12 * parseFloat(document.getElementById('jmhtahun').value); // Updated calculation
-            const nilaiInvestasi = nilai - danaInvestasiAwal;
+            const danaInvestasiAwal = !isNaN(awaldana) && !isNaN(parseFloat(document.getElementById('jmhtahun').value)) ? awaldana * 12 * parseFloat(document.getElementById('jmhtahun').value) : 0;
+
+            // Calculate nilaiInvestasi
+            const nilaiInvestasi = !isNaN(nilai) && !isNaN(danaInvestasiAwal) ? nilai - danaInvestasiAwal : 0;
+
+            // Convert to 0 if NaN
+            awaldana = isNaN(awaldana) ? 0 : awaldana;
+
 
             document.getElementById('awaldana2').textContent = 'Rp. ' + formatNumber(danaInvestasiAwal);
             document.getElementById('awaldana3').textContent = awaldana;
@@ -381,7 +399,7 @@
             chart.render(); // Render the chart
 
             const investasiBulananData = {
-                awaldana: awaldana,
+                awaldana: awaldana || '',
                 jmhtahun: document.getElementById('jmhtahun').value,
                 persentasebunga: document.getElementById('persentasebunga').value,
                 danaInvestasiAwal: danaInvestasiAwal,
@@ -402,7 +420,7 @@
                 const nilai = awaldana * ((Math.pow((1 + tingkatBungaPerBulan), totalSetoran) - 1) / tingkatBungaPerBulan) * (1 + tingkatBungaPerBulan);
                 return nilai.toFixed(0);
             } else {
-                return 'Invalid input';
+                return 0;
             }
         }
 
@@ -517,7 +535,7 @@
                 };
 
                 pdfMake.createPdf(docDefinition).download('investasi-bulanan.pdf');
-            });
+        });
 
         createOrUpdateChart();
     });

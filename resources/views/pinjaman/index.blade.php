@@ -21,7 +21,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-6 col-xl-12">
+                                    <div class="col-xl-12">
                                         <div class="mb-3">
                                             <label class="form-label">Jumlah Pinjaman : </label>
                                             <div class="input-group">
@@ -79,7 +79,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-6 col-xl-12">
+                                    <div class="col-xl-12">
                                         <div class="mb-3">
                                             <h3 class="text-center text-bold">Hasil Perhitungan</h3>
                                             <div class="table-responsive">
@@ -101,7 +101,7 @@
                                                         <tr style="height:2.93rem;">
                                                             <td style="width:49%;">Jangka Waktu</td>
                                                             <td style="width:5%;">:</td>
-                                                            <td style="width:%" class="text-end" id="jmhtahun2">0 Tahun</td>
+                                                            <td style="width:%" class="text-end" id="jmhtahun2">0 Bulan</td>
                                                         </tr>
                                                         <tr style="height:2.93rem;">
                                                             <td style="width:49%;">Bunga per tahun</td>
@@ -131,7 +131,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-6 col-xl-12">
+                                    <div class="col-xl-12">
                                         <div class="mb-3">
                                             <h3 class="text-center text-bold">Statistik</h3>
                                         </div>
@@ -228,21 +228,24 @@
         function createOrUpdateChart() {
             const pinjamandana = parseFloat(document.getElementById('pinjamandana').value);
             const nilai = calculateNilai();
-            const monthlyPayment = nilai.monthly_payments[1].monthly_payment;
-            const totalPayment = nilai.total_payment
-            const totalInterest = nilai.total_payment - pinjamandana
-            // console.log(nilai.total_payment);
+            const totalPayment = nilai.total_payment;
+            const totalInterest = nilai.total_payment - pinjamandana;
 
+            if (nilai && nilai.monthly_payments && nilai.monthly_payments.length && nilai.total_payment !== null) { // Check if nilai is not null
+        const monthlyPayment = nilai.monthly_payments[1].monthly_payment;
 
-            document.getElementById('pinjamandana2').textContent = 'Rp. ' + formatNumber(pinjamandana);
+        document.getElementById('pinjamandana2').textContent = 'Rp. ' + formatNumber(pinjamandana);
             document.getElementById('pinjamandana3').textContent = pinjamandana;
             document.getElementById('jmhtahun2').textContent = document.getElementById('jmhtahun').value + ' Bulan';
             document.getElementById('persentasebunga1').textContent = document.getElementById('persentasebunga').value + '%';
             // document.getElementById('nilai').innerHTML = '<strong>Rp. ' + nilai.toFixed(0) + '</strong>';
             document.getElementById('nilai').innerHTML = '<strong>Rp. ' + formatNumber(monthlyPayment.toFixed(2)) + '</strong>';
             document.getElementById('totalnilai').innerHTML = '<strong>Rp. ' + formatNumber(nilai.total_payment.toFixed(2)) + '</strong>';
+        
+        // Proceed with chart creation or update
+        const chartData = [pinjamandana, totalInterest]; 
+            
 
-            const chartData = [pinjamandana, totalInterest]; 
 
             if (chart) {
                 chart.destroy();
@@ -308,12 +311,24 @@
             chart.render(); // Render the chart
 
             const rancanganPinjamanData = {
-                pinjamandana: pinjamandana,
+                pinjamandana: pinjamandana || '',
                 jmhtahun: document.getElementById('jmhtahun').value,
                 persentasebunga: document.getElementById('persentasebunga').value,
             };
 
             localStorage.setItem('rancangan-pinjaman', JSON.stringify(rancanganPinjamanData));
+    } else {
+        console.error("Error calculating nilai.");
+        // Handle the case where nilai is null
+    }
+            
+            // const monthlyPayment = nilai.monthly_payments[1].monthly_payment;
+            // const totalPayment = nilai.total_payment
+            // const totalInterest = nilai.total_payment - pinjamandana
+            // console.log(nilai.total_payment);
+
+
+            
         }
 
         function calculateNilai() {
@@ -531,15 +546,12 @@
             resetModalValues();
         });
 
-        // function resetModalValues() {
-        //     document.getElementById('pinjamandana4').textContent = 'Rp. 0';
-        //     document.getElementById('jmhtahun4').textContent = '0 Tahun';
-        //     document.getElementById('persentasebunga4').textContent = '0%';
-        //     document.getElementById('totalnilai1').textContent = 'Rp. 0';
+        function resetModalValues() {
+            
 
-        //     const modalTableBody = document.getElementById('modalTableBody');
-        //     modalTableBody.innerHTML = '';
-        // }
+            const modalTableBody = document.getElementById('modalTableBody');
+            modalTableBody.innerHTML = '';
+        }
 
         document.getElementById('printModalToPdf').addEventListener('click', function() {
             console.log("Button clicked");

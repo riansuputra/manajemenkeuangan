@@ -118,7 +118,7 @@
 					<div class="d-flex align-items-center mb-2">
 						<div class="subheader">Saldo</div>
 					</div>
-					<div class="h1">Rp. {{ number_format(floatval($saldo), 2, ',', '.')}}</div>
+					<div class="h1 text-muted">Rp. {{ number_format(floatval($saldo), 2, ',', '.')}}</div>
 				</div>
 			</div>
 		</div>
@@ -145,21 +145,27 @@
 		
 		<div class="col-lg-6">
 			<div class="card">
+				<div class="card-header">
+
+					<h3 class="card-title text-muted">Tren Saldo</h3>
+				</div>
 				<div class="card-body">
-					<h3 class="card-title subheader">Tren Saldo</h3>
 					<div id="chart-completion-tasks-3" class="chart-lg" style="min-height: 240px;"></div>
 				</div>
 			</div>
 		</div>
 		<div class="col-lg-6">
 			<div class="card">
-				<h3 class="card-title subheader mt-3 ms-4">Catatan Terakhir</h3>
+				<div class="card-header">
+
+					<h3 class="card-title text-muted">Catatan Terakhir</h3>
+				</div>
 				<div class="card-table table-responsive">
                     <table class="table table-vcenter">
                       	<tbody>
 							@foreach ($catatanTerakhir as $catatan)
 							@if (isset($catatan['id_pemasukan']))
-							<tr>
+							<tr style="height:70px">
 								<td class="w-1">
 									<span class="bg-green text-white avatar">
 										<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M14.8 9a2 2 0 0 0 -1.8 -1h-2a2 2 0 1 0 0 4h2a2 2 0 1 1 0 4h-2a2 2 0 0 1 -1.8 -1"></path><path d="M12 7v10"></path></svg>
@@ -187,7 +193,7 @@
 								</td>
 							</tr>
 							@else
-							<tr>
+							<tr style="height:70px">
 								<td class="w-1">
 									<span class="bg-red text-white avatar">
 										<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart-dollar"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 19a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M13 17h-7v-14h-2" /><path d="M6 5l14 1l-.575 4.022m-4.925 2.978h-8.5" /><path d="M21 15h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" /><path d="M19 21v1m0 -8v1" /></svg>
@@ -340,84 +346,91 @@ function handleSubmit(event) {
 		const initialEvent = new Event("change");
 		jenisSelect.dispatchEvent(initialEvent);
 	});
+
+	
 </script>
 
 <script>
-      // @formatter:off
-      document.addEventListener("DOMContentLoaded", function () {
-      	window.ApexCharts && (new ApexCharts(document.getElementById('chart-completion-tasks-3'), {
-      		chart: {
-      			type: "area",
-      			fontFamily: 'inherit',
-      			height: 240,
-      			parentHeightOffset: 0,
-      			toolbar: {
-      				show: false,
-      			},
-      			animations: {
-      				enabled: false
-      			},
-      		},
-          plotOptions: {
-      			bar: {
-      				columnWidth: '50%',
-      			}
-      		},
-      		dataLabels: {
-      			enabled: false,
-      		},
-      		fill: {
-      			opacity: .16,
-      			type: 'solid'
-      		},
-      		stroke: {
-      			width: 2,
-      			lineCap: "round",
-      			curve: "smooth",
-      		},
-      		series: [{
-      			name: "Tasks completion",
-      			data: [155, 65, 465, 265, 225, 325, 80]
-      		}],
-      		tooltip: {
-      			theme: 'dark'
-      		},
-      		grid: {
-      			padding: {
-      				top: -20,
-      				right: 0,
-      				left: -4,
-      				bottom: -4
-      			},
-      			strokeDashArray: 4,
-      		},
-      		xaxis: {
-      			labels: {
-      				padding: 0,
-      			},
-      			tooltip: {
-      				enabled: false
-      			},
-      			axisBorder: {
-      				show: false,
-      			},
-      			type: 'datetime',
-      		},
-      		yaxis: {
-      			labels: {
-      				padding: 4
-      			},
-      		},
-      		labels: [
-      			'2020-06-20', '2020-06-21', '2020-06-22', '2020-06-23', '2020-06-24', '2020-06-25', '2020-06-26'
-      		],
-      		colors: [tabler.getColor("primary")],
-      		legend: {
-      			show: false,
-      		},
-      	})).render();
-      });
-      // @formatter:on
-    </script>
+    // @formatter:off
+    document.addEventListener("DOMContentLoaded", function () {
+        // Extracting dates and balances from PHP variable
+        var dates = {!! json_encode(array_keys($saldoHarian)) !!};
+        var balances = {!! json_encode(array_values($cumulativeSaldoHarian)) !!};
+
+        // Chart creation
+        window.ApexCharts && (new ApexCharts(document.getElementById('chart-completion-tasks-3'), {
+            chart: {
+                type: "area",
+                fontFamily: 'inherit',
+                height: 240,
+                parentHeightOffset: 0,
+                toolbar: {
+                    show: false,
+                },
+                animations: {
+                    enabled: false
+                }
+            },
+            plotOptions: {
+                bar: {
+                    columnWidth: '50%',
+                }
+            },
+            dataLabels: {
+                enabled: false,
+            },
+            fill: {
+                opacity: .16,
+                type: 'solid'
+            },
+            stroke: {
+                width: 2,
+                lineCap: "round",
+                curve: "smooth",
+            },
+            series: [{
+                name: "Tasks completion",
+                data: balances
+            }],
+            tooltip: {
+                theme: 'dark'
+            },
+            grid: {
+                padding: {
+                    top: -20,
+                    right: 0,
+                    left: -4,
+                    bottom: -4
+                },
+                strokeDashArray: 4,
+            },
+            xaxis: {
+                labels: {
+                    padding: 0,
+                },
+                tooltip: {
+                    enabled: false
+                },
+                axisBorder: {
+                    show: false,
+                },
+                type: 'datetime',
+                categories: dates
+            },
+            yaxis: {
+                labels: {
+                    padding: 4
+                },
+            },
+            labels: dates,
+            colors: [tabler.getColor("primary")],
+            legend: {
+                show: false,
+            },
+        })).render();
+    });
+    // @formatter:on
+</script>
+
 
 @endsection

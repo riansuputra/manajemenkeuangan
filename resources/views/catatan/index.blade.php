@@ -165,18 +165,26 @@
                         			<tr>
                           				<td style="width:5%">{{$loop->iteration}}.</td>
 										@if (isset($data['id_pemasukan']))
-											<td style="width:40%" data-label="Kategori">
+											<td class="td-truncate"style="width:40%" data-label="Kategori">
                             					<div class="text-green">{{$data['kategori_pemasukan']['nama_kategori_pemasukan']}}</div>
-                            					<div>{{$data['catatan']}}</div>
+                            					@if (isset($data['catatan']))
+												<div class="text-truncate">{{$data['catatan']}}</div>
+												@else
+												<div class="text-truncate">-</div>
+												@endif
                           					</td>
 											<td class="d-flex justify-content-between" style="padding: 1.4rem;">
 												<span class="text-start text-green">+Rp.</span>
 												<span class="text-end text-green">{{ number_format(floatval($data['jumlah']), 0, ',', '.')}}</span>
 											</td>
 										@else
-											<td style="width:40%" data-label="Kategori">
+											<td class="td-truncate"style="width:40%" data-label="Kategori">
 												<div class="text-red">{{$data['kategori_pengeluaran']['nama_kategori_pengeluaran']}}</div>
-												<div>{{$data['catatan']}}</div>
+												@if (isset($data['catatan']))
+												<div class="text-truncate">{{$data['catatan']}}</div>
+												@else
+												<div class="text-truncate">-</div>
+												@endif
 											</td>
 											<td class="d-flex justify-content-between" style="padding: 1.4rem;">
 												<span class="text-start text-red">-Rp.</span>
@@ -337,7 +345,7 @@
           <div class="modal-body text-center py-4">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.24 3.957l-8.422 14.06a1.989 1.989 0 0 0 1.7 2.983h16.845a1.989 1.989 0 0 0 1.7 -2.983l-8.423 -14.06a1.989 1.989 0 0 0 -3.4 0z" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
             <h3>Apakah anda yakin?</h3>
-            <div class="text-muted">Apakah anda yakin akan menghapus catatan ini?.</div>
+            <div class="text-muted">Apakah anda yakin menghapus catatan ini?</div>
           </div>
           <div class="modal-footer">
             <div class="w-100">
@@ -430,6 +438,18 @@ document.getElementById('jumlahedit').addEventListener('input', updateFormattedN
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+
+		const spinner = document.getElementById("spinner");
+    const pageContent = document.getElementById("page-content");
+    const pageTitle = document.getElementById("page-title");
+
+    // Hide spinner and show page content when fully loaded
+    window.addEventListener("load", function() {
+        spinner.style.display = "none";
+        pageContent.style.display = "block";
+        pageTitle.style.display = "block";
+    });
+
         const deleteButtons = document.querySelectorAll('.delete-btn');
 
         deleteButtons.forEach((button) => {
@@ -460,16 +480,7 @@ document.getElementById('jumlahedit').addEventListener('input', updateFormattedN
 <script>
 	document.addEventListener("DOMContentLoaded", function() {
 
-		const spinner = document.getElementById("spinner");
-    const pageContent = document.getElementById("page-content");
-    const pageTitle = document.getElementById("page-title");
-
-    // Hide spinner and show page content when fully loaded
-    window.addEventListener("load", function() {
-        spinner.style.display = "none";
-        pageContent.style.display = "block";
-        pageTitle.style.display = "block";
-    });
+		
     const editButtons = document.querySelectorAll('.edit-btn');
 
     editButtons.forEach(button => {

@@ -22,6 +22,7 @@ $jenisFilter = session('jenisFilter', 'Kisaran');
 // Retrieve filterValue from session, defaulting to 'semuaHari' if not set and jenisFilter is 'Kisaran'
 $filterValue = session('filterValue', ($jenisFilter == 'Kisaran') ? 'semuaHari' : null);
 
+// dd($filterValue);
 
         $pemasukanData = collect();
         $pengeluaranData = collect();
@@ -130,10 +131,55 @@ $filter30Hari = $alldata->whereBetween('tanggal', [$currentDateFor30Hari->subDay
 $filter90Hari = $alldata->whereBetween('tanggal', [$currentDateFor90Hari->subDays(90)->toDateString(), $currentDate->toDateString()]);
 $filter12Bulan = $alldata->whereBetween('tanggal', [$currentDateFor12Bulan->subMonths(12)->toDateString(), $currentDate->toDateString()]);
 
+// Define the filter type (Mingguan, Bulanan, Tahunan)
+$filterType = $jenisFilter;
+
+// Initialize variables to hold start and end dates
+$startDate = null;
+$endDate = null;
+
+// Initialize variables to hold filtered results
+$filterMingguan = null;
+$filterBulanan = null;
+$filterTahunan = null;
+
+// Check the filter type and extract the start and end dates accordingly
+if ($filterType === "Mingguan") {
+    // Extract year and week number from "2024-W19"
+    list($year, $week) = explode('-W', $filterValue);
+
+    // Set start and end dates for the given week
+    $startDate = Carbon::now()->setISODate($year, $week)->startOfWeek();
+    $endDate = Carbon::now()->setISODate($year, $week)->endOfWeek();
+
+    // Filter alldata by the calculated start and end dates for Mingguan
+    $filterMingguan = $alldata->whereBetween('tanggal', [$startDate->toDateString(), $endDate->toDateString()]);
+} elseif ($filterType === "Bulanan") {
+    // Extract year and month from "2024-05"
+    list($year, $month) = explode('-', $filterValue);
+
+    // Set start and end dates for the given month
+    $startDate = Carbon::createFromDate($year, $month, 1)->startOfMonth();
+    $endDate = Carbon::createFromDate($year, $month, 1)->endOfMonth();
+
+    // Filter alldata by the calculated start and end dates for Bulanan
+    $filterBulanan = $alldata->whereBetween('tanggal', [$startDate->toDateString(), $endDate->toDateString()]);
+} elseif ($filterType === "Tahunan") {
+    // Extract year from "2024"
+    $year = $filterValue;
+
+    // Set start and end dates for the given year
+    $startDate = Carbon::createFromDate($year, 1, 1)->startOfYear();
+    $endDate = Carbon::createFromDate($year, 12, 31)->endOfYear();
+
+    // Filter alldata by the calculated start and end dates for Tahunan
+    $filterTahunan = $alldata->whereBetween('tanggal', [$startDate->toDateString(), $endDate->toDateString()]);
+}
+
 
 
         
-        // dd($filter7Hari);
+        // dd($filterTahunan);
 
         $totalPemasukan = 0;
 $totalPengeluaran = 0;
@@ -143,116 +189,404 @@ $catPengeluaran = 0;
         
         
         if ($jenisFilter == "Mingguan") {
+            $saldoHarian = [];
+
+
+            $catatanTerakhir = $filterMingguan->take(4)->values();
+                foreach ($filterMingguan as $item) {
+                    if (isset($item['id_pemasukan'])) { // Check if it's an income item
+                        $totalPemasukan += $item['jumlah'];
+                        $catPemasukan++;
+                        $tanggal = $item['tanggal'];
+                        $saldoHarian[$tanggal] = ($saldoHarian[$tanggal] ?? 0) + $item['jumlah'];
+                    } elseif (isset($item['id_pengeluaran'])) { // Check if it's an expenditure item
+                        $totalPengeluaran += abs($item['jumlah']);
+                        $catPengeluaran++;
+                        $tanggal = $item['tanggal'];
+                        $saldoHarian[$tanggal] = ($saldoHarian[$tanggal] ?? 0) - abs($item['jumlah']);
+                    }
+                }
+
+                // Calculate saldo
+                $catTotal = $catPemasukan + $catPengeluaran;
+                $saldo = $totalPemasukan - $totalPengeluaran;
+
+                // Sort the saldo harian array by date in ascending order
+                ksort($saldoHarian);
+
+                // Initialize variables
+                $cumulativeBalance = null;
+                $cumulativeSaldoHarian = [];
+
+                // Iterate over saldo harian array
+                foreach ($saldoHarian as $date => $balance) {
+                    if ($cumulativeBalance === null) {
+                        // If this is the first iteration, set cumulative balance to the balance of the oldest date
+                        $cumulativeBalance = $balance;
+                    } else {
+                        // Add the current balance to the cumulative balance
+                        $cumulativeBalance += $balance;
+                    }
+
+                    // Store the cumulative balance for each date
+                    $cumulativeSaldoHarian[$date] = $cumulativeBalance;
+                }
             
         } else if ($jenisFilter == "Bulanan") {
+            $saldoHarian = [];
+
+
+            $catatanTerakhir = $filterBulanan->take(4)->values();
+                foreach ($filterBulanan as $item) {
+                    if (isset($item['id_pemasukan'])) { // Check if it's an income item
+                        $totalPemasukan += $item['jumlah'];
+                        $catPemasukan++;
+                        $tanggal = $item['tanggal'];
+                        $saldoHarian[$tanggal] = ($saldoHarian[$tanggal] ?? 0) + $item['jumlah'];
+                    } elseif (isset($item['id_pengeluaran'])) { // Check if it's an expenditure item
+                        $totalPengeluaran += abs($item['jumlah']);
+                        $catPengeluaran++;
+                        $tanggal = $item['tanggal'];
+                        $saldoHarian[$tanggal] = ($saldoHarian[$tanggal] ?? 0) - abs($item['jumlah']);
+                    }
+                }
+
+                // Calculate saldo
+                $catTotal = $catPemasukan + $catPengeluaran;
+                $saldo = $totalPemasukan - $totalPengeluaran;
+
+                // Sort the saldo harian array by date in ascending order
+                ksort($saldoHarian);
+
+                // Initialize variables
+                $cumulativeBalance = null;
+                $cumulativeSaldoHarian = [];
+
+                // Iterate over saldo harian array
+                foreach ($saldoHarian as $date => $balance) {
+                    if ($cumulativeBalance === null) {
+                        // If this is the first iteration, set cumulative balance to the balance of the oldest date
+                        $cumulativeBalance = $balance;
+                    } else {
+                        // Add the current balance to the cumulative balance
+                        $cumulativeBalance += $balance;
+                    }
+
+                    // Store the cumulative balance for each date
+                    $cumulativeSaldoHarian[$date] = $cumulativeBalance;
+                }
             
         } else if ($jenisFilter == "Tahunan") {
+            $saldoHarian = [];
+            
+            $catatanTerakhir = $filterTahunan->take(4)->values();
+                foreach ($filterTahunan as $item) {
+                    if (isset($item['id_pemasukan'])) { // Check if it's an income item
+                        $totalPemasukan += $item['jumlah'];
+                        $catPemasukan++;
+                        $tanggal = $item['tanggal'];
+                        $saldoHarian[$tanggal] = ($saldoHarian[$tanggal] ?? 0) + $item['jumlah'];
+                    } elseif (isset($item['id_pengeluaran'])) { // Check if it's an expenditure item
+                        $totalPengeluaran += abs($item['jumlah']);
+                        $catPengeluaran++;
+                        $tanggal = $item['tanggal'];
+                        $saldoHarian[$tanggal] = ($saldoHarian[$tanggal] ?? 0) - abs($item['jumlah']);
+                    }
+                }
+
+                // Calculate saldo
+                $catTotal = $catPemasukan + $catPengeluaran;
+                $saldo = $totalPemasukan - $totalPengeluaran;
+
+                // Sort the saldo harian array by date in ascending order
+                ksort($saldoHarian);
+
+                // Initialize variables
+                $cumulativeBalance = null;
+                $cumulativeSaldoHarian = [];
+
+                // Iterate over saldo harian array
+                foreach ($saldoHarian as $date => $balance) {
+                    if ($cumulativeBalance === null) {
+                        // If this is the first iteration, set cumulative balance to the balance of the oldest date
+                        $cumulativeBalance = $balance;
+                    } else {
+                        // Add the current balance to the cumulative balance
+                        $cumulativeBalance += $balance;
+                    }
+
+                    // Store the cumulative balance for each date
+                    $cumulativeSaldoHarian[$date] = $cumulativeBalance;
+                }
             
         } else if ($jenisFilter == "Kisaran") {
+            // Initialize variables
+            $saldoHarian = [];
+
             if ($filterValue == "semuaHari") {
-                
                 $catatanTerakhir = $filterSemua->take(4)->values();
                 foreach ($filterSemua as $item) {
                     if (isset($item['id_pemasukan'])) { // Check if it's an income item
-        $totalPemasukan += $item['jumlah'];
-        $catPemasukan++;
-    } elseif (isset($item['id_pengeluaran'])) { // Check if it's an expenditure item
-        $totalPengeluaran += abs($item['jumlah']);
-        $catPengeluaran++;
-    }
+                        $totalPemasukan += $item['jumlah'];
+                        $catPemasukan++;
+                        $tanggal = $item['tanggal'];
+                        $saldoHarian[$tanggal] = ($saldoHarian[$tanggal] ?? 0) + $item['jumlah'];
+                    } elseif (isset($item['id_pengeluaran'])) { // Check if it's an expenditure item
+                        $totalPengeluaran += abs($item['jumlah']);
+                        $catPengeluaran++;
+                        $tanggal = $item['tanggal'];
+                        $saldoHarian[$tanggal] = ($saldoHarian[$tanggal] ?? 0) - abs($item['jumlah']);
+                    }
                 }
 
-                
                 // Calculate saldo
                 $catTotal = $catPemasukan + $catPengeluaran;
                 $saldo = $totalPemasukan - $totalPengeluaran;
+
+                // Sort the saldo harian array by date in ascending order
+                ksort($saldoHarian);
+
+                // Initialize variables
+                $cumulativeBalance = null;
+                $cumulativeSaldoHarian = [];
+
+                // Iterate over saldo harian array
+                foreach ($saldoHarian as $date => $balance) {
+                    if ($cumulativeBalance === null) {
+                        // If this is the first iteration, set cumulative balance to the balance of the oldest date
+                        $cumulativeBalance = $balance;
+                    } else {
+                        // Add the current balance to the cumulative balance
+                        $cumulativeBalance += $balance;
+                    }
+
+                    // Store the cumulative balance for each date
+                    $cumulativeSaldoHarian[$date] = $cumulativeBalance;
+                }
+
+                // dd($cumulativeSaldoHarian);
             } else if ($filterValue == "iniHari") {
+            $saldoHarian = [];
+
                 $catatanTerakhir = $filterHariIni->take(4)->values();
                 foreach ($filterHariIni as $item) {
                     if (isset($item['id_pemasukan'])) { // Check if it's an income item
-        $totalPemasukan += $item['jumlah'];
-        $catPemasukan++;
-    } elseif (isset($item['id_pengeluaran'])) { // Check if it's an expenditure item
-        $totalPengeluaran += abs($item['jumlah']);
-        $catPengeluaran++;
-    }
+                        $totalPemasukan += $item['jumlah'];
+                        $catPemasukan++;
+                        $tanggal = $item['tanggal'];
+                        $saldoHarian[$tanggal] = ($saldoHarian[$tanggal] ?? 0) + $item['jumlah'];
+                    } elseif (isset($item['id_pengeluaran'])) { // Check if it's an expenditure item
+                        $totalPengeluaran += abs($item['jumlah']);
+                        $catPengeluaran++;
+                        $tanggal = $item['tanggal'];
+                        $saldoHarian[$tanggal] = ($saldoHarian[$tanggal] ?? 0) - abs($item['jumlah']);
+                    }
                 }
-                
+
                 // Calculate saldo
                 $catTotal = $catPemasukan + $catPengeluaran;
-
                 $saldo = $totalPemasukan - $totalPengeluaran;
-                
+
+                // Sort the saldo harian array by date in ascending order
+                ksort($saldoHarian);
+
+                // Initialize variables
+                $cumulativeBalance = null;
+                $cumulativeSaldoHarian = [];
+
+                // Iterate over saldo harian array
+                foreach ($saldoHarian as $date => $balance) {
+                    if ($cumulativeBalance === null) {
+                        // If this is the first iteration, set cumulative balance to the balance of the oldest date
+                        $cumulativeBalance = $balance;
+                    } else {
+                        // Add the current balance to the cumulative balance
+                        $cumulativeBalance += $balance;
+                    }
+
+                    // Store the cumulative balance for each date
+                    $cumulativeSaldoHarian[$date] = $cumulativeBalance;
+                }
+
+                // dd($cumulativeSaldoHarian);
             } else if ($filterValue == "7Hari") {
+            $saldoHarian = [];
+
                 $catatanTerakhir = $filter7Hari->take(4)->values();
                 foreach ($filter7Hari as $item) {
                     if (isset($item['id_pemasukan'])) { // Check if it's an income item
-        $totalPemasukan += $item['jumlah'];
-        $catPemasukan++;
-    } elseif (isset($item['id_pengeluaran'])) { // Check if it's an expenditure item
-        $totalPengeluaran += abs($item['jumlah']);
-        $catPengeluaran++;
-    }
+                        $totalPemasukan += $item['jumlah'];
+                        $catPemasukan++;
+                        $tanggal = $item['tanggal'];
+                        $saldoHarian[$tanggal] = ($saldoHarian[$tanggal] ?? 0) + $item['jumlah'];
+                    } elseif (isset($item['id_pengeluaran'])) { // Check if it's an expenditure item
+                        $totalPengeluaran += abs($item['jumlah']);
+                        $catPengeluaran++;
+                        $tanggal = $item['tanggal'];
+                        $saldoHarian[$tanggal] = ($saldoHarian[$tanggal] ?? 0) - abs($item['jumlah']);
+                    }
                 }
-                
+
                 // Calculate saldo
                 $catTotal = $catPemasukan + $catPengeluaran;
-
                 $saldo = $totalPemasukan - $totalPengeluaran;
-                // dd($catPemasukan);
 
-                
+                // Sort the saldo harian array by date in ascending order
+                ksort($saldoHarian);
+
+                // Initialize variables
+                $cumulativeBalance = null;
+                $cumulativeSaldoHarian = [];
+
+                // Iterate over saldo harian array
+                foreach ($saldoHarian as $date => $balance) {
+                    if ($cumulativeBalance === null) {
+                        // If this is the first iteration, set cumulative balance to the balance of the oldest date
+                        $cumulativeBalance = $balance;
+                    } else {
+                        // Add the current balance to the cumulative balance
+                        $cumulativeBalance += $balance;
+                    }
+
+                    // Store the cumulative balance for each date
+                    $cumulativeSaldoHarian[$date] = $cumulativeBalance;
+                }
+
+                // dd($cumulativeSaldoHarian);
             } else if ($filterValue == "30Hari") {
+            $saldoHarian = [];
+
                 $catatanTerakhir = $filter30Hari->take(4)->values();
                 foreach ($filter30Hari as $item) {
                     if (isset($item['id_pemasukan'])) { // Check if it's an income item
-        $totalPemasukan += $item['jumlah'];
-        $catPemasukan++;
-    } elseif (isset($item['id_pengeluaran'])) { // Check if it's an expenditure item
-        $totalPengeluaran += abs($item['jumlah']);
-        $catPengeluaran++;
-    }
+                        $totalPemasukan += $item['jumlah'];
+                        $catPemasukan++;
+                        $tanggal = $item['tanggal'];
+                        $saldoHarian[$tanggal] = ($saldoHarian[$tanggal] ?? 0) + $item['jumlah'];
+                    } elseif (isset($item['id_pengeluaran'])) { // Check if it's an expenditure item
+                        $totalPengeluaran += abs($item['jumlah']);
+                        $catPengeluaran++;
+                        $tanggal = $item['tanggal'];
+                        $saldoHarian[$tanggal] = ($saldoHarian[$tanggal] ?? 0) - abs($item['jumlah']);
+                    }
                 }
-                
+
                 // Calculate saldo
                 $catTotal = $catPemasukan + $catPengeluaran;
-
                 $saldo = $totalPemasukan - $totalPengeluaran;
+
+                // Sort the saldo harian array by date in ascending order
+                ksort($saldoHarian);
+
+                // Initialize variables
+                $cumulativeBalance = null;
+                $cumulativeSaldoHarian = [];
+
+                // Iterate over saldo harian array
+                foreach ($saldoHarian as $date => $balance) {
+                    if ($cumulativeBalance === null) {
+                        // If this is the first iteration, set cumulative balance to the balance of the oldest date
+                        $cumulativeBalance = $balance;
+                    } else {
+                        // Add the current balance to the cumulative balance
+                        $cumulativeBalance += $balance;
+                    }
+
+                    // Store the cumulative balance for each date
+                    $cumulativeSaldoHarian[$date] = $cumulativeBalance;
+                }
+
+                // dd($cumulativeSaldoHarian);
                 
             } else if ($filterValue == "90Hari") {
+            $saldoHarian = [];
+
                 $catatanTerakhir = $filter90Hari->take(4)->values();
                 foreach ($filter90Hari as $item) {
                     if (isset($item['id_pemasukan'])) { // Check if it's an income item
-        $totalPemasukan += $item['jumlah'];
-        $catPemasukan++;
-    } elseif (isset($item['id_pengeluaran'])) { // Check if it's an expenditure item
-        $totalPengeluaran += abs($item['jumlah']);
-        $catPengeluaran++;
-    }
+                        $totalPemasukan += $item['jumlah'];
+                        $catPemasukan++;
+                        $tanggal = $item['tanggal'];
+                        $saldoHarian[$tanggal] = ($saldoHarian[$tanggal] ?? 0) + $item['jumlah'];
+                    } elseif (isset($item['id_pengeluaran'])) { // Check if it's an expenditure item
+                        $totalPengeluaran += abs($item['jumlah']);
+                        $catPengeluaran++;
+                        $tanggal = $item['tanggal'];
+                        $saldoHarian[$tanggal] = ($saldoHarian[$tanggal] ?? 0) - abs($item['jumlah']);
+                    }
                 }
-                
+
                 // Calculate saldo
                 $catTotal = $catPemasukan + $catPengeluaran;
-
                 $saldo = $totalPemasukan - $totalPengeluaran;
+
+                // Sort the saldo harian array by date in ascending order
+                ksort($saldoHarian);
+
+                // Initialize variables
+                $cumulativeBalance = null;
+                $cumulativeSaldoHarian = [];
+
+                // Iterate over saldo harian array
+                foreach ($saldoHarian as $date => $balance) {
+                    if ($cumulativeBalance === null) {
+                        // If this is the first iteration, set cumulative balance to the balance of the oldest date
+                        $cumulativeBalance = $balance;
+                    } else {
+                        // Add the current balance to the cumulative balance
+                        $cumulativeBalance += $balance;
+                    }
+
+                    // Store the cumulative balance for each date
+                    $cumulativeSaldoHarian[$date] = $cumulativeBalance;
+                }
+
+                // dd($cumulativeSaldoHarian);
                 
             } else if ($filterValue == "12Bulan") {
+            $saldoHarian = [];
+
                 $catatanTerakhir = $filter12Bulan->take(4)->values();
                 foreach ($filter12Bulan as $item) {
                     if (isset($item['id_pemasukan'])) { // Check if it's an income item
-        $totalPemasukan += $item['jumlah'];
-        $catPemasukan++;
-    } elseif (isset($item['id_pengeluaran'])) { // Check if it's an expenditure item
-        $totalPengeluaran += abs($item['jumlah']);
-        $catPengeluaran++;
-    }
+                        $totalPemasukan += $item['jumlah'];
+                        $catPemasukan++;
+                        $tanggal = $item['tanggal'];
+                        $saldoHarian[$tanggal] = ($saldoHarian[$tanggal] ?? 0) + $item['jumlah'];
+                    } elseif (isset($item['id_pengeluaran'])) { // Check if it's an expenditure item
+                        $totalPengeluaran += abs($item['jumlah']);
+                        $catPengeluaran++;
+                        $tanggal = $item['tanggal'];
+                        $saldoHarian[$tanggal] = ($saldoHarian[$tanggal] ?? 0) - abs($item['jumlah']);
+                    }
                 }
-                
-                $catTotal = $catPemasukan + $catPengeluaran;
 
                 // Calculate saldo
+                $catTotal = $catPemasukan + $catPengeluaran;
                 $saldo = $totalPemasukan - $totalPengeluaran;
-                
+
+                // Sort the saldo harian array by date in ascending order
+                ksort($saldoHarian);
+
+                // Initialize variables
+                $cumulativeBalance = null;
+                $cumulativeSaldoHarian = [];
+
+                // Iterate over saldo harian array
+                foreach ($saldoHarian as $date => $balance) {
+                    if ($cumulativeBalance === null) {
+                        // If this is the first iteration, set cumulative balance to the balance of the oldest date
+                        $cumulativeBalance = $balance;
+                    } else {
+                        // Add the current balance to the cumulative balance
+                        $cumulativeBalance += $balance;
+                    }
+
+                    // Store the cumulative balance for each date
+                    $cumulativeSaldoHarian[$date] = $cumulativeBalance;
+                }
+
+                // dd($cumulativeSaldoHarian);
             }
             
         }
@@ -273,6 +607,8 @@ $catPengeluaran = 0;
             'catPengeluaran' => $catPengeluaran,
             'catTotal' => $catTotal,
             'saldo' => $saldo,
+            'cumulativeSaldoHarian' => $cumulativeSaldoHarian,
+            'saldoHarian' => $saldoHarian,
             'jenisFilter' => $jenisFilter,
             'filterValue' => $filterValue,
             'catatanTerakhir' => $catatanTerakhir,
