@@ -1,6 +1,6 @@
 @extends('layouts.tabler')
 
-@section('title', 'Catatan')
+@section('title', 'Catatan Mingguan')
 
 @section('page-title')
 <div class="col">

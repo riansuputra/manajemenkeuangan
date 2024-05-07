@@ -5,13 +5,14 @@
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <title>Registrasi Akun - SIMANKEU</title>
+    <title>Registrasi Akun - Smart Finance</title>
     <!-- CSS files -->
 	<link href="{{ asset('css/tabler.min.css?1684106062') }}" rel="stylesheet"/>
     <link href="{{ asset('css/tabler-flags.min.css?1684106062') }}" rel="stylesheet"/>
     <link href="{{ asset('css/tabler-payments.min.css?1684106062') }}" rel="stylesheet"/>
     <link href="{{ asset('css/tabler-vendors.min.css?1684106062') }}" rel="stylesheet"/>
     <link href="{{ asset('css/demo.min.css?1684106062') }}" rel="stylesheet"/>
+	<link rel="icon" type="image/png" href="{{ asset('img\logo_new.png') }}">
     <style>
     	@import url('https://rsms.me/inter/inter.css');
       		:root {
@@ -33,9 +34,7 @@
 			<div class="row align-items-center g-4">
           		<div class="col-lg">
             		<div class="container-tight">
-              			<div class="text-center mb-4">
-                			<a href="." class="navbar-brand navbar-brand-autodark"><img src="./static/logo.svg" height="36" alt=""></a>
-              			</div>
+              			
               			<div class="card card-md">
                 			<div class="card-body">
                   				<h2 class="h2 text-center mb-4">Registrasi Akun</h2>
@@ -71,12 +70,12 @@
                 			</div>
               			</div>
               			<div class="text-center text-muted mt-3">
-                			Sudah punya akun? <a href="./sign-up.html" tabindex="-1">Masuk</a>
+                			Sudah punya akun? <a href="{{ url('login') }}" tabindex="-1">Masuk</a>
               			</div>
             		</div>
           		</div>
-          		<div class="col-lg d-none d-lg-block">
-            		<img src="./static/illustrations/undraw_secure_login_pdn4.svg" height="300" class="d-block mx-auto" alt="">
+          		<div class="col-lg d-none d-lg-block mb-6">
+					<img src="{{ asset('img\logo_new.png') }}" height="400" class="d-block mx-auto" alt="">
           		</div>
         	</div>
       	</div>

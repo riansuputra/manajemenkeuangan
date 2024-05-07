@@ -1,6 +1,6 @@
 @extends('layouts.tabler')
 
-@section('title', 'Catatan')
+@section('title', 'Catatan Bulanan')
 
 @section('page-title')
 <div class="col">
@@ -203,7 +203,7 @@
         pageContent.style.display = "block";
         pageTitle.style.display = "block";
     });
-	
+
 		$('#loadingIndicator').show();
     	
 		var table = $('#table-bulanan').DataTable({

@@ -1,6 +1,6 @@
 @extends('layouts.tabler')
 
-@section('title', 'Investasi')
+@section('title', 'Investasi Target')
 
 @section('page-title')
 <div class="col">
@@ -50,7 +50,7 @@
                                                 <div class="mb-3">
                                                     <label class="form-label">Jangka Waktu Investasi : </label>
                                                     <div class="input-group">
-                                                        <input type="text" id="jmhtahun" name="jmhtahun" class="form-control text-end" autocomplete="off">
+                                                        <input type="number" id="jmhtahun" name="jmhtahun" class="form-control text-end" autocomplete="off">
                                                         <span class="input-group-text">
                                                             /Tahun
                                                         </span>
@@ -60,7 +60,7 @@
                                                     <label class="form-label">Persentase Bunga :</label>
                                                     <div class="input-group">
 
-                                                        <input type="text" id="persentasebunga" name="persentasebunga" class="form-control text-end" autocomplete="off">
+                                                        <input type="number" id="persentasebunga" name="persentasebunga" class="form-control text-end" autocomplete="off">
                                                         <span class="input-group-text">
                                                             %
                                                         </span>
