@@ -52,7 +52,7 @@
                                                     <div class="input-group">
                                                         <input type="number" id="jmhtahun" name="jmhtahun" class="form-control text-end" autocomplete="off">
                                                         <span class="input-group-text">
-                                                            /Tahun
+                                                            Tahun
                                                         </span>
                                                     </div>
                                                 </div>

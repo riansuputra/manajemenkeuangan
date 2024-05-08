@@ -255,9 +255,9 @@
 			<div class="container container-slim my-auto" id="spinner" style="display:block;">
 				<div class="text-center">
 				<div class="mb-3">
-					<a href="." class="navbar-brand navbar-brand-autodark"><img src="./static/logo-small.svg" height="36" alt=""></a>
+					<a href="." class="navbar-brand navbar-brand-autodark"><img src="{{ asset('img\logo_new.png') }}" height="100" alt=""></a>
 				</div>
-				<div class="text-muted mb-3">Preparing application</div>
+				<div class="text-muted mb-3">Loading . . . . . </div>
 				<div class="progress progress-sm">
 					<div class="progress-bar progress-bar-indeterminate"></div>
 				</div>

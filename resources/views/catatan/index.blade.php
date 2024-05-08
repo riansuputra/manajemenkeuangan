@@ -249,6 +249,8 @@
 																					<span class="form-selectgroup-check"></span>
 																				</span>
 																				<span class="form-selectgroup-label-content">
+											<div class="card-status-top bg-green"></div>
+
 																					<span class="form-selectgroup-title mb-1">Pemasukan</span>
 																				</span>
 																			</span>
@@ -262,6 +264,8 @@
 																		<span class="form-selectgroup-check"></span>
 																	</span>
 																	<span class="form-selectgroup-label-content">
+																		<div class="card-status-top bg-red"></div>
+
 																		<span class="form-selectgroup-title mb-1">Pengeluaran</span>
 																	</span>
 																</span>
