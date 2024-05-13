@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Pagination\Paginator;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cookie;
 
 class DashboardController extends Controller
 {
@@ -15,78 +16,22 @@ class DashboardController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request) {
-        $res = Parent::getDataLogin($request);
-        // Retrieve jenisFilter from session, defaulting to 'Kisaran' if not set
-$jenisFilter = session('jenisFilter', 'Kisaran');
-
-// Retrieve filterValue from session, defaulting to 'semuaHari' if not set and jenisFilter is 'Kisaran'
-$filterValue = session('filterValue', ($jenisFilter == 'Kisaran') ? 'semuaHari' : null);
-
-// dd($filterValue);
-
-        $pemasukanData = collect();
-        $pengeluaranData = collect();
-        $currentPagePemasukan = 1;
-        $currentPagePengeluaran = 1;
-        
-        do {
-            $pemasukanRes = Http::withHeaders([
-                'Accept' => 'application/json',
-                'x-api-key' => env('API_KEY'),
-                'Authorization' => 'Bearer ' . request()->cookie('token')
-            ])->get(env('API_URL')."/pemasukans?page=$currentPagePemasukan");
-            $dataPemasukan = $pemasukanRes->json();
-            $pemasukanData = $pemasukanData->concat($dataPemasukan['data']);
-            $currentPagePemasukan++;
-        } while ($currentPagePemasukan <= $dataPemasukan['last_page']);
-
-
-        do {
-            $pengeluaranRes = Http::withHeaders([
-                'Accept' => 'application/json',
-                'x-api-key' => env('API_KEY'),
-                'Authorization' => 'Bearer ' . request()->cookie('token')
-            ])->get(env('API_URL')."/pengeluarans?page=$currentPagePengeluaran");
-            $dataPengeluaran = $pengeluaranRes->json();
-            $pengeluaranData = $pengeluaranData->concat($dataPengeluaran['data']);
-            $currentPagePengeluaran++;
-        } while ($currentPagePengeluaran <= $dataPengeluaran['last_page']);
-        
-        $kategoriPemasukanId = $pemasukanData->pluck('id_kategori_pemasukan')->unique()->toArray();
-        $kategoriPemasukanRes = Http::withHeaders([
-            'Accept' => 'application/json',
-            'x-api-key' => env('API_KEY'),
-            'Authorization' => 'Bearer ' . request()->cookie('token')
-        ])->get(env('API_URL')."/kategori_pemasukans", [
-            'id_kategori_pemasukan' => implode(',', $kategoriPemasukanId)
-        ]);
-        $kategoriPemasukanData = collect($kategoriPemasukanRes['data']);
-        $combinedDataPemasukan = $pemasukanData->map(function ($pemasukanItem) use ($kategoriPemasukanData) {
-            $relatedKategori = $kategoriPemasukanData->firstWhere('id_kategori_pemasukan', $pemasukanItem['id_kategori_pemasukan']);
-            $pemasukanItem['kategori_pemasukan'] = $relatedKategori;
-            return $pemasukanItem;
-        });
-
-
-        
-        $kategoriPengeluaranId = $pengeluaranData->pluck('id_kategori_pengeluaran')->unique()->toArray();
-        $kategoriPengeluaranRes = Http::withHeaders([
-            'Accept' => 'application/json',
-            'x-api-key' => env('API_KEY'),
-            'Authorization' => 'Bearer ' . request()->cookie('token')
-        ])->get(env('API_URL')."/kategori_pengeluarans", [
-            'id_kategori_pengeluaran' => implode(',', $kategoriPengeluaranId)
-        ]);
-        $kategoriPengeluaranData = collect($kategoriPengeluaranRes['data']);
-        $combinedDataPengeluaran = $pengeluaranData->map(function ($pengeluaranItem) use ($kategoriPengeluaranData) {
-            $relatedKategori = $kategoriPengeluaranData->firstWhere('id_kategori_pengeluaran', $pengeluaranItem['id_kategori_pengeluaran']);
-            $pengeluaranItem['kategori_pengeluaran'] = $relatedKategori;
-            return $pengeluaranItem;
-        });
-        $combinedDataPengeluaran = $combinedDataPengeluaran->sortByDesc('id_pengeluaran');
-        $combinedDataPemasukan = $combinedDataPemasukan->sortByDesc('id_pemasukan');
-
-        $combinedData = $combinedDataPemasukan->merge($combinedDataPengeluaran);
+        // Retrieve filter preferences from session or set defaults
+        $jenisFilter = session('jenisFilter', 'Kisaran');
+        $filterValue = session('filterValue', ($jenisFilter == 'Kisaran') ? 'semuaHari' : null);
+    
+        // Fetch and combine income data
+        $pemasukanData = $this->fetchData($request, 'pemasukans');
+    
+        // Fetch and combine expense data
+        $pengeluaranData = $this->fetchData($request, 'pengeluarans');
+    
+        // Get category details for income and expense items
+        $kategoriPemasukanData = $this->fetchCategories($request, $pemasukanData, 'id_kategori_pemasukan');
+        $kategoriPengeluaranData = $this->fetchCategories($request, $pengeluaranData, 'id_kategori_pengeluaran');
+    
+        // Merge and sort combined income and expense data
+        $combinedData = $pemasukanData->merge($pengeluaranData)->sortByDesc('id');
 
         $combinedData = $combinedData->sort(function ($a, $b) {
             // Get the most recent timestamp for $a
@@ -104,518 +49,205 @@ $filterValue = session('filterValue', ($jenisFilter == 'Kisaran') ? 'semuaHari' 
             // Compare the timestamps
             return $bTimestamp - $aTimestamp; // Sort in descending order
         });
-        
-        $filteredAlldata = $combinedData->sortByDesc('tanggal');
-
-
-        $user_id = $res['user']['user_id']; // Assuming the user ID is in the 'user' array returned from your API call
-
-        $alldata = $filteredAlldata->filter(function ($item) use ($user_id) {
-            return $item['user_id'] == $user_id;
-        }); 
-
-        // Assuming $filteredAlldata contains the combined and sorted data
-        $currentDate = now();
-$filterSemua = $alldata;
-
-// Clone $currentDate before applying subDays() or subMonths() methods
-$currentDateForHariIni = clone $currentDate;
-$currentDateFor7Hari = clone $currentDate;
-$currentDateFor30Hari = clone $currentDate;
-$currentDateFor90Hari = clone $currentDate;
-$currentDateFor12Bulan = clone $currentDate;
-
-$filterHariIni = $alldata->where('tanggal', $currentDateForHariIni->toDateString());
-$filter7Hari = $alldata->whereBetween('tanggal', [$currentDateFor7Hari->subDays(7)->toDateString(), $currentDate->toDateString()]);
-$filter30Hari = $alldata->whereBetween('tanggal', [$currentDateFor30Hari->subDays(30)->toDateString(), $currentDate->toDateString()]);
-$filter90Hari = $alldata->whereBetween('tanggal', [$currentDateFor90Hari->subDays(90)->toDateString(), $currentDate->toDateString()]);
-$filter12Bulan = $alldata->whereBetween('tanggal', [$currentDateFor12Bulan->subMonths(12)->toDateString(), $currentDate->toDateString()]);
-
-// Define the filter type (Mingguan, Bulanan, Tahunan)
-$filterType = $jenisFilter;
-
-// Initialize variables to hold start and end dates
-$startDate = null;
-$endDate = null;
-
-// Initialize variables to hold filtered results
-$filterMingguan = null;
-$filterBulanan = null;
-$filterTahunan = null;
-
-// Check the filter type and extract the start and end dates accordingly
-if ($filterType === "Mingguan") {
-    // Extract year and week number from "2024-W19"
-    list($year, $week) = explode('-W', $filterValue);
-
-    // Set start and end dates for the given week
-    $startDate = Carbon::now()->setISODate($year, $week)->startOfWeek();
-    $endDate = Carbon::now()->setISODate($year, $week)->endOfWeek();
-
-    // Filter alldata by the calculated start and end dates for Mingguan
-    $filterMingguan = $alldata->whereBetween('tanggal', [$startDate->toDateString(), $endDate->toDateString()]);
-} elseif ($filterType === "Bulanan") {
-    // Extract year and month from "2024-05"
-    list($year, $month) = explode('-', $filterValue);
-
-    // Set start and end dates for the given month
-    $startDate = Carbon::createFromDate($year, $month, 1)->startOfMonth();
-    $endDate = Carbon::createFromDate($year, $month, 1)->endOfMonth();
-
-    // Filter alldata by the calculated start and end dates for Bulanan
-    $filterBulanan = $alldata->whereBetween('tanggal', [$startDate->toDateString(), $endDate->toDateString()]);
-} elseif ($filterType === "Tahunan") {
-    // Extract year from "2024"
-    $year = $filterValue;
-
-    // Set start and end dates for the given year
-    $startDate = Carbon::createFromDate($year, 1, 1)->startOfYear();
-    $endDate = Carbon::createFromDate($year, 12, 31)->endOfYear();
-
-    // Filter alldata by the calculated start and end dates for Tahunan
-    $filterTahunan = $alldata->whereBetween('tanggal', [$startDate->toDateString(), $endDate->toDateString()]);
-}
-
-
-
-        
-        // dd($filterTahunan);
-
-        $totalPemasukan = 0;
-$totalPengeluaran = 0;
-$catPemasukan = 0;
-$catPengeluaran = 0;
-        
-        
-        
-        if ($jenisFilter == "Mingguan") {
-            $saldoHarian = [];
-
-
-            $catatanTerakhir = $filterMingguan->take(4)->values();
-                foreach ($filterMingguan as $item) {
-                    if (isset($item['id_pemasukan'])) { // Check if it's an income item
-                        $totalPemasukan += $item['jumlah'];
-                        $catPemasukan++;
-                        $tanggal = $item['tanggal'];
-                        $saldoHarian[$tanggal] = ($saldoHarian[$tanggal] ?? 0) + $item['jumlah'];
-                    } elseif (isset($item['id_pengeluaran'])) { // Check if it's an expenditure item
-                        $totalPengeluaran += abs($item['jumlah']);
-                        $catPengeluaran++;
-                        $tanggal = $item['tanggal'];
-                        $saldoHarian[$tanggal] = ($saldoHarian[$tanggal] ?? 0) - abs($item['jumlah']);
-                    }
-                }
-
-                // Calculate saldo
-                $catTotal = $catPemasukan + $catPengeluaran;
-                $saldo = $totalPemasukan - $totalPengeluaran;
-
-                // Sort the saldo harian array by date in ascending order
-                ksort($saldoHarian);
-
-                // Initialize variables
-                $cumulativeBalance = null;
-                $cumulativeSaldoHarian = [];
-
-                // Iterate over saldo harian array
-                foreach ($saldoHarian as $date => $balance) {
-                    if ($cumulativeBalance === null) {
-                        // If this is the first iteration, set cumulative balance to the balance of the oldest date
-                        $cumulativeBalance = $balance;
-                    } else {
-                        // Add the current balance to the cumulative balance
-                        $cumulativeBalance += $balance;
-                    }
-
-                    // Store the cumulative balance for each date
-                    $cumulativeSaldoHarian[$date] = $cumulativeBalance;
-                }
-            
-        } else if ($jenisFilter == "Bulanan") {
-            $saldoHarian = [];
-
-
-            $catatanTerakhir = $filterBulanan->take(4)->values();
-                foreach ($filterBulanan as $item) {
-                    if (isset($item['id_pemasukan'])) { // Check if it's an income item
-                        $totalPemasukan += $item['jumlah'];
-                        $catPemasukan++;
-                        $tanggal = $item['tanggal'];
-                        $saldoHarian[$tanggal] = ($saldoHarian[$tanggal] ?? 0) + $item['jumlah'];
-                    } elseif (isset($item['id_pengeluaran'])) { // Check if it's an expenditure item
-                        $totalPengeluaran += abs($item['jumlah']);
-                        $catPengeluaran++;
-                        $tanggal = $item['tanggal'];
-                        $saldoHarian[$tanggal] = ($saldoHarian[$tanggal] ?? 0) - abs($item['jumlah']);
-                    }
-                }
-
-                // Calculate saldo
-                $catTotal = $catPemasukan + $catPengeluaran;
-                $saldo = $totalPemasukan - $totalPengeluaran;
-
-                // Sort the saldo harian array by date in ascending order
-                ksort($saldoHarian);
-
-                // Initialize variables
-                $cumulativeBalance = null;
-                $cumulativeSaldoHarian = [];
-
-                // Iterate over saldo harian array
-                foreach ($saldoHarian as $date => $balance) {
-                    if ($cumulativeBalance === null) {
-                        // If this is the first iteration, set cumulative balance to the balance of the oldest date
-                        $cumulativeBalance = $balance;
-                    } else {
-                        // Add the current balance to the cumulative balance
-                        $cumulativeBalance += $balance;
-                    }
-
-                    // Store the cumulative balance for each date
-                    $cumulativeSaldoHarian[$date] = $cumulativeBalance;
-                }
-            
-        } else if ($jenisFilter == "Tahunan") {
-            $saldoHarian = [];
-            
-            $catatanTerakhir = $filterTahunan->take(4)->values();
-                foreach ($filterTahunan as $item) {
-                    if (isset($item['id_pemasukan'])) { // Check if it's an income item
-                        $totalPemasukan += $item['jumlah'];
-                        $catPemasukan++;
-                        $tanggal = $item['tanggal'];
-                        $saldoHarian[$tanggal] = ($saldoHarian[$tanggal] ?? 0) + $item['jumlah'];
-                    } elseif (isset($item['id_pengeluaran'])) { // Check if it's an expenditure item
-                        $totalPengeluaran += abs($item['jumlah']);
-                        $catPengeluaran++;
-                        $tanggal = $item['tanggal'];
-                        $saldoHarian[$tanggal] = ($saldoHarian[$tanggal] ?? 0) - abs($item['jumlah']);
-                    }
-                }
-
-                // Calculate saldo
-                $catTotal = $catPemasukan + $catPengeluaran;
-                $saldo = $totalPemasukan - $totalPengeluaran;
-
-                // Sort the saldo harian array by date in ascending order
-                ksort($saldoHarian);
-
-                // Initialize variables
-                $cumulativeBalance = null;
-                $cumulativeSaldoHarian = [];
-
-                // Iterate over saldo harian array
-                foreach ($saldoHarian as $date => $balance) {
-                    if ($cumulativeBalance === null) {
-                        // If this is the first iteration, set cumulative balance to the balance of the oldest date
-                        $cumulativeBalance = $balance;
-                    } else {
-                        // Add the current balance to the cumulative balance
-                        $cumulativeBalance += $balance;
-                    }
-
-                    // Store the cumulative balance for each date
-                    $cumulativeSaldoHarian[$date] = $cumulativeBalance;
-                }
-            
-        } else if ($jenisFilter == "Kisaran") {
-            // Initialize variables
-            $saldoHarian = [];
-
-            if ($filterValue == "semuaHari") {
-                $catatanTerakhir = $filterSemua->take(4)->values();
-                foreach ($filterSemua as $item) {
-                    if (isset($item['id_pemasukan'])) { // Check if it's an income item
-                        $totalPemasukan += $item['jumlah'];
-                        $catPemasukan++;
-                        $tanggal = $item['tanggal'];
-                        $saldoHarian[$tanggal] = ($saldoHarian[$tanggal] ?? 0) + $item['jumlah'];
-                    } elseif (isset($item['id_pengeluaran'])) { // Check if it's an expenditure item
-                        $totalPengeluaran += abs($item['jumlah']);
-                        $catPengeluaran++;
-                        $tanggal = $item['tanggal'];
-                        $saldoHarian[$tanggal] = ($saldoHarian[$tanggal] ?? 0) - abs($item['jumlah']);
-                    }
-                }
-
-                // Calculate saldo
-                $catTotal = $catPemasukan + $catPengeluaran;
-                $saldo = $totalPemasukan - $totalPengeluaran;
-
-                // Sort the saldo harian array by date in ascending order
-                ksort($saldoHarian);
-
-                // Initialize variables
-                $cumulativeBalance = null;
-                $cumulativeSaldoHarian = [];
-
-                // Iterate over saldo harian array
-                foreach ($saldoHarian as $date => $balance) {
-                    if ($cumulativeBalance === null) {
-                        // If this is the first iteration, set cumulative balance to the balance of the oldest date
-                        $cumulativeBalance = $balance;
-                    } else {
-                        // Add the current balance to the cumulative balance
-                        $cumulativeBalance += $balance;
-                    }
-
-                    // Store the cumulative balance for each date
-                    $cumulativeSaldoHarian[$date] = $cumulativeBalance;
-                }
-
-                // dd($cumulativeSaldoHarian);
-            } else if ($filterValue == "iniHari") {
-            $saldoHarian = [];
-
-                $catatanTerakhir = $filterHariIni->take(4)->values();
-                foreach ($filterHariIni as $item) {
-                    if (isset($item['id_pemasukan'])) { // Check if it's an income item
-                        $totalPemasukan += $item['jumlah'];
-                        $catPemasukan++;
-                        $tanggal = $item['tanggal'];
-                        $saldoHarian[$tanggal] = ($saldoHarian[$tanggal] ?? 0) + $item['jumlah'];
-                    } elseif (isset($item['id_pengeluaran'])) { // Check if it's an expenditure item
-                        $totalPengeluaran += abs($item['jumlah']);
-                        $catPengeluaran++;
-                        $tanggal = $item['tanggal'];
-                        $saldoHarian[$tanggal] = ($saldoHarian[$tanggal] ?? 0) - abs($item['jumlah']);
-                    }
-                }
-
-                // Calculate saldo
-                $catTotal = $catPemasukan + $catPengeluaran;
-                $saldo = $totalPemasukan - $totalPengeluaran;
-
-                // Sort the saldo harian array by date in ascending order
-                ksort($saldoHarian);
-
-                // Initialize variables
-                $cumulativeBalance = null;
-                $cumulativeSaldoHarian = [];
-
-                // Iterate over saldo harian array
-                foreach ($saldoHarian as $date => $balance) {
-                    if ($cumulativeBalance === null) {
-                        // If this is the first iteration, set cumulative balance to the balance of the oldest date
-                        $cumulativeBalance = $balance;
-                    } else {
-                        // Add the current balance to the cumulative balance
-                        $cumulativeBalance += $balance;
-                    }
-
-                    // Store the cumulative balance for each date
-                    $cumulativeSaldoHarian[$date] = $cumulativeBalance;
-                }
-
-                // dd($cumulativeSaldoHarian);
-            } else if ($filterValue == "7Hari") {
-            $saldoHarian = [];
-
-                $catatanTerakhir = $filter7Hari->take(4)->values();
-                foreach ($filter7Hari as $item) {
-                    if (isset($item['id_pemasukan'])) { // Check if it's an income item
-                        $totalPemasukan += $item['jumlah'];
-                        $catPemasukan++;
-                        $tanggal = $item['tanggal'];
-                        $saldoHarian[$tanggal] = ($saldoHarian[$tanggal] ?? 0) + $item['jumlah'];
-                    } elseif (isset($item['id_pengeluaran'])) { // Check if it's an expenditure item
-                        $totalPengeluaran += abs($item['jumlah']);
-                        $catPengeluaran++;
-                        $tanggal = $item['tanggal'];
-                        $saldoHarian[$tanggal] = ($saldoHarian[$tanggal] ?? 0) - abs($item['jumlah']);
-                    }
-                }
-
-                // Calculate saldo
-                $catTotal = $catPemasukan + $catPengeluaran;
-                $saldo = $totalPemasukan - $totalPengeluaran;
-
-                // Sort the saldo harian array by date in ascending order
-                ksort($saldoHarian);
-
-                // Initialize variables
-                $cumulativeBalance = null;
-                $cumulativeSaldoHarian = [];
-
-                // Iterate over saldo harian array
-                foreach ($saldoHarian as $date => $balance) {
-                    if ($cumulativeBalance === null) {
-                        // If this is the first iteration, set cumulative balance to the balance of the oldest date
-                        $cumulativeBalance = $balance;
-                    } else {
-                        // Add the current balance to the cumulative balance
-                        $cumulativeBalance += $balance;
-                    }
-
-                    // Store the cumulative balance for each date
-                    $cumulativeSaldoHarian[$date] = $cumulativeBalance;
-                }
-
-                // dd($cumulativeSaldoHarian);
-            } else if ($filterValue == "30Hari") {
-            $saldoHarian = [];
-
-                $catatanTerakhir = $filter30Hari->take(4)->values();
-                foreach ($filter30Hari as $item) {
-                    if (isset($item['id_pemasukan'])) { // Check if it's an income item
-                        $totalPemasukan += $item['jumlah'];
-                        $catPemasukan++;
-                        $tanggal = $item['tanggal'];
-                        $saldoHarian[$tanggal] = ($saldoHarian[$tanggal] ?? 0) + $item['jumlah'];
-                    } elseif (isset($item['id_pengeluaran'])) { // Check if it's an expenditure item
-                        $totalPengeluaran += abs($item['jumlah']);
-                        $catPengeluaran++;
-                        $tanggal = $item['tanggal'];
-                        $saldoHarian[$tanggal] = ($saldoHarian[$tanggal] ?? 0) - abs($item['jumlah']);
-                    }
-                }
-
-                // Calculate saldo
-                $catTotal = $catPemasukan + $catPengeluaran;
-                $saldo = $totalPemasukan - $totalPengeluaran;
-
-                // Sort the saldo harian array by date in ascending order
-                ksort($saldoHarian);
-
-                // Initialize variables
-                $cumulativeBalance = null;
-                $cumulativeSaldoHarian = [];
-
-                // Iterate over saldo harian array
-                foreach ($saldoHarian as $date => $balance) {
-                    if ($cumulativeBalance === null) {
-                        // If this is the first iteration, set cumulative balance to the balance of the oldest date
-                        $cumulativeBalance = $balance;
-                    } else {
-                        // Add the current balance to the cumulative balance
-                        $cumulativeBalance += $balance;
-                    }
-
-                    // Store the cumulative balance for each date
-                    $cumulativeSaldoHarian[$date] = $cumulativeBalance;
-                }
-
-                // dd($cumulativeSaldoHarian);
-                
-            } else if ($filterValue == "90Hari") {
-            $saldoHarian = [];
-
-                $catatanTerakhir = $filter90Hari->take(4)->values();
-                foreach ($filter90Hari as $item) {
-                    if (isset($item['id_pemasukan'])) { // Check if it's an income item
-                        $totalPemasukan += $item['jumlah'];
-                        $catPemasukan++;
-                        $tanggal = $item['tanggal'];
-                        $saldoHarian[$tanggal] = ($saldoHarian[$tanggal] ?? 0) + $item['jumlah'];
-                    } elseif (isset($item['id_pengeluaran'])) { // Check if it's an expenditure item
-                        $totalPengeluaran += abs($item['jumlah']);
-                        $catPengeluaran++;
-                        $tanggal = $item['tanggal'];
-                        $saldoHarian[$tanggal] = ($saldoHarian[$tanggal] ?? 0) - abs($item['jumlah']);
-                    }
-                }
-
-                // Calculate saldo
-                $catTotal = $catPemasukan + $catPengeluaran;
-                $saldo = $totalPemasukan - $totalPengeluaran;
-
-                // Sort the saldo harian array by date in ascending order
-                ksort($saldoHarian);
-
-                // Initialize variables
-                $cumulativeBalance = null;
-                $cumulativeSaldoHarian = [];
-
-                // Iterate over saldo harian array
-                foreach ($saldoHarian as $date => $balance) {
-                    if ($cumulativeBalance === null) {
-                        // If this is the first iteration, set cumulative balance to the balance of the oldest date
-                        $cumulativeBalance = $balance;
-                    } else {
-                        // Add the current balance to the cumulative balance
-                        $cumulativeBalance += $balance;
-                    }
-
-                    // Store the cumulative balance for each date
-                    $cumulativeSaldoHarian[$date] = $cumulativeBalance;
-                }
-
-                // dd($cumulativeSaldoHarian);
-                
-            } else if ($filterValue == "12Bulan") {
-            $saldoHarian = [];
-
-                $catatanTerakhir = $filter12Bulan->take(4)->values();
-                foreach ($filter12Bulan as $item) {
-                    if (isset($item['id_pemasukan'])) { // Check if it's an income item
-                        $totalPemasukan += $item['jumlah'];
-                        $catPemasukan++;
-                        $tanggal = $item['tanggal'];
-                        $saldoHarian[$tanggal] = ($saldoHarian[$tanggal] ?? 0) + $item['jumlah'];
-                    } elseif (isset($item['id_pengeluaran'])) { // Check if it's an expenditure item
-                        $totalPengeluaran += abs($item['jumlah']);
-                        $catPengeluaran++;
-                        $tanggal = $item['tanggal'];
-                        $saldoHarian[$tanggal] = ($saldoHarian[$tanggal] ?? 0) - abs($item['jumlah']);
-                    }
-                }
-
-                // Calculate saldo
-                $catTotal = $catPemasukan + $catPengeluaran;
-                $saldo = $totalPemasukan - $totalPengeluaran;
-
-                // Sort the saldo harian array by date in ascending order
-                ksort($saldoHarian);
-
-                // Initialize variables
-                $cumulativeBalance = null;
-                $cumulativeSaldoHarian = [];
-
-                // Iterate over saldo harian array
-                foreach ($saldoHarian as $date => $balance) {
-                    if ($cumulativeBalance === null) {
-                        // If this is the first iteration, set cumulative balance to the balance of the oldest date
-                        $cumulativeBalance = $balance;
-                    } else {
-                        // Add the current balance to the cumulative balance
-                        $cumulativeBalance += $balance;
-                    }
-
-                    // Store the cumulative balance for each date
-                    $cumulativeSaldoHarian[$date] = $cumulativeBalance;
-                }
-
-                // dd($cumulativeSaldoHarian);
-            }
-            
-        }
-
-
-        // dd($filterValue, $jenisFilter);
-        
+    
+        // Filter data based on user ID
+        $filteredData = $combinedData->where('user_id', $request->auth['user']['user_id']);
         
 
+        // Apply date-based filters
+        $filteredData = $this->applyDateFilters($filteredData, $jenisFilter, $filterValue);
+
+        $alldata = $this->attachCategoryInfo($filteredData, $kategoriPemasukanData, $kategoriPengeluaranData);
+        // dd($alldata);
+    
+        // Calculate financial summaries
+        $summary = $this->calculateSummary($alldata);
+
+        // dd($summary);
+    
+        // Prepare data for view
         return view('dashboard.index', [
-            'user' => $res['user'],
-            'pemasukan' => $pemasukanData,
-            'pengeluaran' => $pengeluaranData,
             'alldata' => $alldata,
-            'totalPemasukan' => $totalPemasukan,
-            'totalPengeluaran' => $totalPengeluaran,
-            'catPemasukan' => $catPemasukan,
-            'catPengeluaran' => $catPengeluaran,
-            'catTotal' => $catTotal,
-            'saldo' => $saldo,
-            'cumulativeSaldoHarian' => $cumulativeSaldoHarian,
-            'saldoHarian' => $saldoHarian,
             'jenisFilter' => $jenisFilter,
             'filterValue' => $filterValue,
-            'catatanTerakhir' => $catatanTerakhir,
-            'combinedDataPemasukan' => $combinedDataPemasukan,
-            'combinedDataPengeluaran' => $combinedDataPengeluaran,
+            'summary' => $summary
         ]);
     }
+
+    private function fetchData(Request $request, $endpoint) {
+        $data = collect();
+        $currentPage = 1;
+    
+        do {
+            $response = Http::withHeaders([
+                'Accept' => 'application/json',
+                'x-api-key' => env('API_KEY'),
+                'Authorization' => 'Bearer ' . $request->auth['token'],
+                'user-type' => $request->auth['user_type'],
+            ])->get(env('API_URL') . "/$endpoint?page=$currentPage");
+    
+            $responseData = $response->json();
+            $data = $data->concat($responseData['data']);
+            $currentPage++;
+        } while ($currentPage <= $responseData['last_page']);
+    
+        return $data;
+    }
+
+    
+
+    private function fetchCategories(Request $request, $items, $categoryIdKey) {
+        $categoryIds = $items->pluck($categoryIdKey)->unique()->toArray();
+    
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'x-api-key' => env('API_KEY'),
+            'Authorization' => 'Bearer ' . $request->auth['token'],
+            'user-type' => $request->auth['user_type'],
+        ])->get(env('API_URL') . "/" . str_replace('id_', '', $categoryIdKey) . "s", [
+            $categoryIdKey => implode(',', $categoryIds)
+        ]);
+
+        // dd($response);
+    
+        return collect($response['data']);
+    }
+
+    private function attachCategoryInfo($filteredData, $kategoriPemasukanData, $kategoriPengeluaranData) {
+        return $filteredData->map(function ($item) use ($kategoriPemasukanData, $kategoriPengeluaranData) {
+            if (isset($item['id_pemasukan'])) {
+                $item['kategori_pemasukan'] = $kategoriPemasukanData->firstWhere('id_kategori_pemasukan', $item['id_kategori_pemasukan']);
+            } elseif (isset($item['id_pengeluaran'])) {
+                $item['kategori_pengeluaran'] = $kategoriPengeluaranData->firstWhere('id_kategori_pengeluaran', $item['id_kategori_pengeluaran']);
+            }
+            return $item;
+        });
+    }
+    
+    
+    private function applyDateFilters($data, $jenisFilter, $filterValue) {
+        switch ($jenisFilter) {
+            case 'Mingguan':
+                // Apply weekly date filter
+                $data = $data->whereBetween('tanggal', [
+                    Carbon::now()->startOfWeek()->toDateString(),
+                    Carbon::now()->endOfWeek()->toDateString()
+                ]);
+                break;
+            case 'Bulanan':
+                // Apply monthly date filter
+                list($year, $month) = explode('-', $filterValue);
+                $startDate = Carbon::createFromDate($year, $month, 1)->startOfMonth();
+                $endDate = Carbon::createFromDate($year, $month, 1)->endOfMonth();
+                $data = $data->whereBetween('tanggal', [
+                    $startDate->toDateString(),
+                    $endDate->toDateString()
+                ]);
+                break;
+            case 'Tahunan':
+                // Apply yearly date filter
+                $year = $filterValue;
+                $startDate = Carbon::createFromDate($year, 1, 1)->startOfYear();
+                $endDate = Carbon::createFromDate($year, 12, 31)->endOfYear();
+                $data = $data->whereBetween('tanggal', [
+                    $startDate->toDateString(),
+                    $endDate->toDateString()
+                ]);
+                break;
+            case 'Kisaran':
+                // Apply custom date range filter
+                if ($filterValue === 'semuaHari') {
+                    // Filter all data without specific date range
+                    // No additional filtering needed here
+                } elseif ($filterValue === 'iniHari') {
+                    $data = $data->where('tanggal', Carbon::now()->toDateString());
+                } elseif ($filterValue === '7Hari') {
+                    $data = $data->whereBetween('tanggal', [
+                        Carbon::now()->subDays(7)->toDateString(),
+                        Carbon::now()->toDateString()
+                    ]);
+                } elseif ($filterValue === '30Hari') {
+                    $data = $data->whereBetween('tanggal', [
+                        Carbon::now()->subDays(30)->toDateString(),
+                        Carbon::now()->toDateString()
+                    ]);
+                } elseif ($filterValue === '90Hari') {
+                    $data = $data->whereBetween('tanggal', [
+                        Carbon::now()->subDays(90)->toDateString(),
+                        Carbon::now()->toDateString()
+                    ]);
+                } elseif ($filterValue === '12Bulan') {
+                    $data = $data->whereBetween('tanggal', [
+                        Carbon::now()->subMonths(12)->toDateString(),
+                        Carbon::now()->toDateString()
+                    ]);
+                }
+                break;
+        }
+    
+        return $data;
+    }
+    
+
+    private function calculateSummary($data) {
+        $summary = [
+            'totalPemasukan' => 0,
+            'totalPengeluaran' => 0,
+            'catPemasukan' => 0,
+            'catPengeluaran' => 0,
+            'catTotal' => 0,
+            'saldo' => 0,
+            'cumulativeSaldoHarian' => [],
+            'saldoHarian' => []
+        ];
+
+        // dd($data);
+    
+        foreach ($data as $item) {
+            if (isset($item['id_pemasukan'])) {
+                $summary['totalPemasukan'] += $item['jumlah'];
+                $summary['catPemasukan']++;
+            } elseif (isset($item['id_pengeluaran'])) {
+                $summary['totalPengeluaran'] += abs($item['jumlah']);
+                $summary['catPengeluaran']++;
+            }           
+    
+            // Ensure $item['tanggal'] is a Carbon date object
+            $tanggal = Carbon::parse($item['tanggal']);
+    
+            // Calculate daily balances
+            $saldoHarianKey = $tanggal->toDateString();
+            if (!isset($summary['saldoHarian'][$saldoHarianKey])) {
+                $summary['saldoHarian'][$saldoHarianKey] = 0;
+            }
+            $saldoHarian = $summary['saldoHarian'][$saldoHarianKey];
+            if (isset($item['id_pemasukan'])) {
+                $summary['saldoHarian'][$saldoHarianKey] = $saldoHarian + ($item['id_pemasukan'] ? $item['jumlah'] : -$item['jumlah']);
+
+            } elseif (isset($item['id_pengeluaran'])) {
+                $summary['saldoHarian'][$saldoHarianKey] = $saldoHarian + ($item['id_pengeluaran'] ? $item['jumlah'] : -$item['jumlah']);
+            }
+        }
+    
+        $summary['saldo'] = $summary['totalPemasukan'] - $summary['totalPengeluaran'];
+        $summary['catTotal'] = $summary['catPemasukan'] + $summary['catPengeluaran'];
+    
+        // Calculate cumulative balances by date
+        ksort($summary['saldoHarian']);
+        $cumulativeBalance = 0;
+        foreach ($summary['saldoHarian'] as $date => $saldoHarian) {
+            $cumulativeBalance += $saldoHarian;
+            $summary['cumulativeSaldoHarian'][$date] = $cumulativeBalance;
+        }
+        // dd($summary);
+    
+        return $summary;
+    }
+    
+    
+
+
+    
 
     /**
      * Show the form for creating a new resource.
@@ -629,34 +261,35 @@ $catPengeluaran = 0;
      * Store a newly created resource in storage.
      */
     public function filter(Request $request)
-    {
-        // Retrieve data from the submitted form
-        $jenisFilter = $request->input('jenisFilter', 'Kisaran');
+{
+    // Retrieve data from the submitted form
+    $jenisFilter = $request->input('jenisFilter', 'Kisaran');
 
-        $filterValue = null;
-        switch ($jenisFilter) {
-            case 'Mingguan':
-                $filterValue = $request->input('filterMingguan');
-                break;
-            case 'Bulanan':
-                $filterValue = $request->input('filterBulanan');
-                break;
-            case 'Tahunan':
-                $filterValue = $request->input('filterTahunan');
-                break;
-            case 'Kisaran':
-                $filterValue = $request->input('filterKisaran', 'semuaHari');
-                break;
-        }
-
-        // Perform any processing with the form data if needed
-
-        // Redirect back to the index view with the form data
-        return redirect()->route('dashboard')->with([
-            'jenisFilter' => $jenisFilter,
-            'filterValue' => $filterValue,
-        ]);
+    $filterValue = null;
+    switch ($jenisFilter) {
+        case 'Mingguan':
+            $filterValue = $request->input('filterMingguan');
+            break;
+        case 'Bulanan':
+            $filterValue = $request->input('filterBulanan');
+            break;
+        case 'Tahunan':
+            $filterValue = $request->input('filterTahunan');
+            break;
+        case 'Kisaran':
+            $filterValue = $request->input('filterKisaran', 'semuaHari');
+            break;
     }
+
+    // Perform any processing with the form data if needed
+
+    // Redirect back to the index view with the form data stored in session
+    return redirect()->route('dashboard')->with([
+        'jenisFilter' => $jenisFilter,
+        'filterValue' => $filterValue,
+    ]);
+}
+
 
 
     /**

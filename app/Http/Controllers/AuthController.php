@@ -42,15 +42,13 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => $request->password,
         );
-
-        cookie()->queue(cookie()->forget('token'));
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'x-api-key' => env('API_KEY')
         ])->post(env('API_URL')."/login", $input);
 
         if ($response->status() == 200) {
-            Cookie::queue('token',$response["token"]);
+            Cookie::queue('auth', serialize($response['auth']));
             return redirect()->route('dashboard')->with('success', 'Login Berhasil');
         } else if (!empty($response["message"]) && !empty($response["errors"])) {
             return back()->with('error', $response["message"])->withErrors($response["errors"])->withInput($input);
@@ -62,23 +60,23 @@ class AuthController extends Controller
     }    
 
     public function dashboardPage(Request $request){
-        $res = Parent::getDataLogin($request);
-        dd($res);
+        // $res = Parent::getDataLogin($request);
+        // dd($res);
 
         return view('dashboard.index', [
-            'user' => $res['user'],
+            'auth' => $request->auth,
         ]);
     }
 
-    public function logout(){
-        $token = request()->cookie('token');
+    public function logout(Request $request){
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'x-api-key' => env('API_KEY'),
-            'Authorization' => 'Bearer '.$token,
+            'Authorization' => 'Bearer '. $request->auth['token'],
+            'user-type' => $request->auth['user_type'],
         ])->post(env('API_URL')."/logout");
 
-        // cookie()->queue(cookie()->forget('token'));
+        Cookie::expire('auth');
 
         if($response->status() == 200){
             return redirect()->route('loginPage')->with('success','Logout Berhasil');

@@ -66,6 +66,7 @@ Route::middleware([])->group(function(){
         Route::get('/investasi-bulanan', [InvestasiController::class, 'bulanan'])->name('investasi-bulanan');
         Route::get('/investasi-target', [InvestasiController::class, 'target'])->name('investasi-target');
         Route::get('/pinjaman', [PinjamanController::class, 'index'])->name('pinjaman');
+        Route::get('/pengaturan', [PinjamanController::class, 'index'])->name('pinjaman');
     });
 
 });

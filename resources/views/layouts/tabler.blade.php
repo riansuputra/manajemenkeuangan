@@ -8,10 +8,7 @@
     <title>@yield('title') - Smart Finance</title>
     <!-- CSS files -->
     <link href="{{ asset('css/tabler.min.css?1684106062') }}" rel="stylesheet"/>
-    <link href="{{ asset('css/tabler-flags.min.css?1684106062') }}" rel="stylesheet"/>
-    <link href="{{ asset('css/tabler-payments.min.css?1684106062') }}" rel="stylesheet"/>
     <link href="{{ asset('css/tabler-vendors.min.css?1684106062') }}" rel="stylesheet"/>
-    <link href="{{ asset('css/demo.min.css?1684106062') }}" rel="stylesheet"/>
 	<link rel="icon" type="image/png" href="{{ asset('img\logo_new.png') }}">
 
     <style>
@@ -26,16 +23,12 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.js"></script>
 
 	
 </head>
 
 <body>
 
-    <script src="{{ asset('js/demo-theme.min.js?1684106062') }}"></script>
 	<div class="page">
 		<div class="sticky-top">
 			<header class="navbar navbar-expand-md sticky-top d-print-none" >
@@ -141,8 +134,8 @@
                 			<a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
                   				<span class="avatar avatar-sm" style="background-image: url(./static/avatars/000m.jpg)"></span>
                   				<div class="d-none d-xl-block ps-2">
-                    				<div>{{$user['name']}}</div>
-                    				<div class="mt-1 small text-muted">{{$user['email']}}</div>
+                    				<div>test</div>
+                    				<div class="mt-1 small text-muted">test</div>
                   				</div>
                 			</a>
                 			<div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -374,13 +367,8 @@
 	<!-- End of Modal Edit Catatan -->
     <!-- Libs JS -->
     <script src="{{ asset('libs/apexcharts/dist/apexcharts.min.js?1684106062') }}" defer></script>
-    <script src="{{ asset('libs/jsvectormap/dist/js/jsvectormap.min.js?1684106062') }}" defer></script>
-    <script src="{{ asset('libs/jsvectormap/dist/maps/world.js?1684106062') }}" defer></script>
-    <script src="{{ asset('libs/jsvectormap/dist/maps/world-merc.js?1684106062') }}" defer></script>
-	<script src="{{ asset('libs/list.js/dist/list.min.js?1684106062')  }}" defer=""></script>
     <!-- Tabler Core -->
     <script src="{{ ('js/tabler.min.js?1684106062') }}" defer></script>
-    <script src="{{ ('js/demo.min.js?1684106062') }}" defer></script>
 	<script>
 		@if (Session::has('success'))
 			toastr.options = {

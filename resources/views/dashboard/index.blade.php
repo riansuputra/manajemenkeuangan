@@ -60,7 +60,7 @@
                               			Total Catatan
                             		</div>
                             		<div class="text-muted">
-                              			{{$catTotal}} Catatan
+                              			{{$summary['catTotal']}} Catatan
                             		</div>
                           		</div>
                         	</div>
@@ -82,7 +82,7 @@
                               			Pemasukan
                             		</div>
                             		<div class="text-muted">
-                              			{{$catPemasukan}} Catatan
+                              			{{$summary['catPemasukan']}} Catatan
                             		</div>
                           		</div>
                         	</div>
@@ -103,7 +103,7 @@
                               			Pengeluaran
                             		</div>
 									<div class="text-muted">
-                              			{{$catPengeluaran}} Catatan
+                              			{{$summary['catPengeluaran']}} Catatan
                             		</div>
                           		</div>
                         	</div>
@@ -118,7 +118,7 @@
 					<div class="d-flex align-items-center mb-2">
 						<div class="subheader">Saldo</div>
 					</div>
-					<div class="h1 text-muted">Rp. {{ number_format(floatval($saldo), 2, ',', '.')}}</div>
+					<div class="h1 text-muted">Rp. {{ number_format(floatval($summary['saldo']), 2, ',', '.')}}</div>
 				</div>
 			</div>
 		</div>
@@ -128,7 +128,7 @@
 					<div class="d-flex align-items-center mb-2">
 						<div class="subheader">Total Pemasukan</div>
 					</div>
-					<div class="h1 text-green">+Rp. {{ number_format(floatval($totalPemasukan), 2, ',', '.')}}</div>
+					<div class="h1 text-green">+Rp. {{ number_format(floatval($summary['totalPemasukan']), 2, ',', '.')}}</div>
 				</div>
 			</div>
 		</div>
@@ -138,7 +138,7 @@
 					<div class="d-flex align-items-center mb-2">
 						<div class="subheader">Total Pengeluaran</div>
 					</div>
-					<div class="h1 text-red">-Rp. {{ number_format(floatval($totalPengeluaran), 2, ',', '.')}}</div>
+					<div class="h1 text-red">-Rp. {{ number_format(floatval($summary['totalPengeluaran']), 2, ',', '.')}}</div>
 				</div>
 			</div>
 		</div>
@@ -163,7 +163,7 @@
 				<div class="card-table table-responsive">
                     <table class="table table-vcenter">
                       	<tbody>
-							@foreach ($catatanTerakhir as $catatan)
+							@foreach ($alldata->take(4) as $catatan)
 							@if (isset($catatan['id_pemasukan']))
 							<tr style="height:70px">
 								<td class="w-1">
@@ -354,8 +354,8 @@ function handleSubmit(event) {
     // @formatter:off
     document.addEventListener("DOMContentLoaded", function () {
         // Extracting dates and balances from PHP variable
-        var dates = {!! json_encode(array_keys($saldoHarian)) !!};
-        var balances = {!! json_encode(array_values($cumulativeSaldoHarian)) !!};
+        var dates = {!! json_encode(array_keys($summary['saldoHarian'])) !!};
+        var balances = {!! json_encode(array_values($summary['cumulativeSaldoHarian'])) !!};
 
         // Chart creation
         window.ApexCharts && (new ApexCharts(document.getElementById('chart-completion-tasks-3'), {
