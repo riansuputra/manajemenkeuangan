@@ -11,79 +11,100 @@ use Carbon\Carbon;
 
 class CatatanController extends Controller
 {
-    public function index(Request $request) {
-        $res = Parent::getDataLogin($request);
-
-        $pemasukanData = collect();
-        $pengeluaranData = collect();
-        $currentPagePemasukan = 1;
-        $currentPagePengeluaran = 1;
-        
-        do {
-            $pemasukanRes = Http::withHeaders([
-                'Accept' => 'application/json',
-                'x-api-key' => env('API_KEY'),
-                'Authorization' => 'Bearer ' . request()->cookie('token')
-            ])->get(env('API_URL')."/pemasukans?page=$currentPagePemasukan");
-            $dataPemasukan = $pemasukanRes->json();
-            $pemasukanData = $pemasukanData->concat($dataPemasukan['data']);
-            $currentPagePemasukan++;
-        } while ($currentPagePemasukan <= $dataPemasukan['last_page']);
+    private function fetchData(Request $request, $resource)
+    {
+        $currentPage = 1;
+        $data = collect();
 
         do {
-            $pengeluaranRes = Http::withHeaders([
+            $response = Http::withHeaders([
                 'Accept' => 'application/json',
                 'x-api-key' => env('API_KEY'),
-                'Authorization' => 'Bearer ' . request()->cookie('token')
-            ])->get(env('API_URL')."/pengeluarans?page=$currentPagePengeluaran");
-            $dataPengeluaran = $pengeluaranRes->json();
-            $pengeluaranData = $pengeluaranData->concat($dataPengeluaran['data']);
-            $currentPagePengeluaran++;
-        } while ($currentPagePengeluaran <= $dataPengeluaran['last_page']);
-        
-        $kategoriPemasukanId = $pemasukanData->pluck('id_kategori_pemasukan')->unique()->toArray();
-        $kategoriPemasukanRes = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $request->auth['token'],
+                'user-type' => $request->auth['user_type'],
+            ])->get(env('API_URL') . "/$resource?page=$currentPage");
+
+            $jsonData = $response->json();
+            $data = $data->concat($jsonData['data']);
+            $currentPage++;
+        } while ($currentPage <= $jsonData['last_page']);
+
+        return $data;
+    }
+
+    private function fetchCategories(Request $request, $items, $categoryIdKey)
+    {
+        $categoryIds = $items->pluck($categoryIdKey)->unique()->toArray();
+
+        $response = Http::withHeaders([
             'Accept' => 'application/json',
             'x-api-key' => env('API_KEY'),
-            'Authorization' => 'Bearer ' . request()->cookie('token')
-        ])->get(env('API_URL')."/kategori_pemasukans", [
-            'id_kategori_pemasukan' => implode(',', $kategoriPemasukanId)
+            'Authorization' => 'Bearer ' . $request->auth['token'],
+            'user-type' => $request->auth['user_type'],
+        ])->get(env('API_URL') . "/" . str_replace('id_', '', $categoryIdKey) . "s", [
+            $categoryIdKey => implode(',', $categoryIds)
         ]);
-        $kategoriPemasukanData = collect($kategoriPemasukanRes['data']);
-        $combinedDataPemasukan = $pemasukanData->map(function ($pemasukanItem) use ($kategoriPemasukanData) {
-            $relatedKategori = $kategoriPemasukanData->firstWhere('id_kategori_pemasukan', $pemasukanItem['id_kategori_pemasukan']);
-            $pemasukanItem['kategori_pemasukan'] = $relatedKategori;
-            return $pemasukanItem;
+        // dd($response);
+
+        return collect($response['data']);
+    }
+
+    private function filterUserData($data, $userId)
+    {
+        return $data->filter(function ($item) use ($userId) {
+            return $item['user_id'] == $userId;
         });
-        
-        $kategoriPengeluaranId = $pengeluaranData->pluck('id_kategori_pengeluaran')->unique()->toArray();
-        $kategoriPengeluaranRes = Http::withHeaders([
-            'Accept' => 'application/json',
-            'x-api-key' => env('API_KEY'),
-            'Authorization' => 'Bearer ' . request()->cookie('token')
-        ])->get(env('API_URL')."/kategori_pengeluarans", [
-            'id_kategori_pengeluaran' => implode(',', $kategoriPengeluaranId)
-        ]);
-        $kategoriPengeluaranData = collect($kategoriPengeluaranRes['data']);
-        $combinedDataPengeluaran = $pengeluaranData->map(function ($pengeluaranItem) use ($kategoriPengeluaranData) {
-            $relatedKategori = $kategoriPengeluaranData->firstWhere('id_kategori_pengeluaran', $pengeluaranItem['id_kategori_pengeluaran']);
-            $pengeluaranItem['kategori_pengeluaran'] = $relatedKategori;
-            return $pengeluaranItem;
+    }
+
+    private function groupByDate($data, $dateFormat)
+    {
+        return $data->groupBy(function ($item) use ($dateFormat) {
+            return Carbon::parse($item['tanggal'])->format($dateFormat);
+        });
+    }
+
+    public function index(Request $request)
+    {
+        $user_id = $request->auth['user']['user_id'];
+
+        $pemasukanData = $this->fetchData($request, 'pemasukans');
+        $pengeluaranData = $this->fetchData($request, 'pengeluarans');
+
+        $kategoriPemasukanData = $this->fetchCategories($request, $pemasukanData, 'id_kategori_pemasukan');
+        $kategoriPengeluaranData = $this->fetchCategories($request, $pengeluaranData, 'id_kategori_pengeluaran');
+
+        $combinedDataPemasukan = $pemasukanData->map(function ($item) use ($kategoriPemasukanData) {
+            $item['kategori_pemasukan'] = $kategoriPemasukanData->firstWhere('id_kategori_pemasukan', $item['id_kategori_pemasukan']);
+            return $item;
+        });
+
+        $combinedDataPengeluaran = $pengeluaranData->map(function ($item) use ($kategoriPengeluaranData) {
+            $item['kategori_pengeluaran'] = $kategoriPengeluaranData->firstWhere('id_kategori_pengeluaran', $item['id_kategori_pengeluaran']);
+            return $item;
         });
 
         $combinedData = $combinedDataPemasukan->merge($combinedDataPengeluaran);
-        $filteredAlldata = $combinedData->sortByDesc('tanggal');
-        $user_id = $res['user']['user_id']; // Assuming the user ID is in the 'user' array returned from your API call
 
-        $alldata = $filteredAlldata->filter(function ($item) use ($user_id) {
-            return $item['user_id'] == $user_id;
-        }); 
+        $combinedData = $combinedData->sort(function ($a, $b) {
+            // Get the most recent timestamp for $a
+            $aTimestamp = strtotime($a['updated_at'] ?? $a['created_at']);
+            if ($aTimestamp > time()) {
+                $aTimestamp = time();
+            }
+        
+            // Get the most recent timestamp for $b
+            $bTimestamp = strtotime($b['updated_at'] ?? $b['created_at']);
+            if ($bTimestamp > time()) {
+                $bTimestamp = time();
+            }
+        
+            // Compare the timestamps
+            return $bTimestamp - $aTimestamp; // Sort in descending order
+        });
 
-        
-        
+        $alldata = $this->filterUserData($combinedData, $user_id);
 
         return view('catatan.index', [
-            'user' => $res['user'],
             'pemasukan' => $pemasukanData,
             'pengeluaran' => $pengeluaranData,
             'alldata' => $alldata,
@@ -92,173 +113,78 @@ class CatatanController extends Controller
         ]);
     }
 
-    public function indexMingguan(Request $request) {
+
+    public function indexMingguan(Request $request)
+    {
         $res = Parent::getDataLogin($request);
-    
-        $pemasukanData = collect();
-        $pengeluaranData = collect();
-        $currentPagePemasukan = 1;
-        $currentPagePengeluaran = 1;
-    
-        do {
-            $pemasukanRes = Http::withHeaders([
-                'Accept' => 'application/json',
-                'x-api-key' => env('API_KEY'),
-                'Authorization' => 'Bearer ' . request()->cookie('token')
-            ])->get(env('API_URL')."/pemasukans?page=$currentPagePemasukan");
-            $dataPemasukan = $pemasukanRes->json();
-            $pemasukanData = $pemasukanData->concat($dataPemasukan['data']);
-            $currentPagePemasukan++;
-        } while ($currentPagePemasukan <= $dataPemasukan['last_page']);
-    
-        do {
-            $pengeluaranRes = Http::withHeaders([
-                'Accept' => 'application/json',
-                'x-api-key' => env('API_KEY'),
-                'Authorization' => 'Bearer ' . request()->cookie('token')
-            ])->get(env('API_URL')."/pengeluarans?page=$currentPagePengeluaran");
-            $dataPengeluaran = $pengeluaranRes->json();
-            $pengeluaranData = $pengeluaranData->concat($dataPengeluaran['data']);
-            $currentPagePengeluaran++;
-        } while ($currentPagePengeluaran <= $dataPengeluaran['last_page']);
-    
-        $alldata = $pemasukanData->merge($pengeluaranData);
+        $user_id = $request->auth['user']['user_id'];
 
-        $user_id = $res['user']['user_id']; // Assuming the user ID is in the 'user' array returned from your API call
+        $alldata = $this->fetchData($request, 'pemasukans')->merge($this->fetchData($request, 'pengeluarans'));
+        $alldata = $this->filterUserData($alldata, $user_id);
 
-        $combinedData = $alldata->filter(function ($item) use ($user_id) {
-            return $item['user_id'] == $user_id;
-        }); 
-    
-        $groupedData = $combinedData->groupBy(function ($item) {
-            $carbonDate = Carbon::parse($item['tanggal']);
-            return $carbonDate->year . '-' . $carbonDate->weekOfYear;
-        })->map(function ($items) {
+        $groupedData = $this->groupByDate($alldata, 'Y-\WW');
+
+        $sortedData = $groupedData->map(function ($items, $weekYear) {
+            list($year, $week) = explode('-', $weekYear);
+            $weekNumber = str_replace('W', '', $week);
+
+            $startDate = Carbon::now()->setISODate($year, $weekNumber)->startOfWeek();
+            $endDate = Carbon::now()->setISODate($year, $weekNumber)->endOfWeek();
+
             $pemasukanSum = $items->whereNotNull('id_pemasukan')->sum('jumlah');
             $pengeluaranSum = $items->whereNotNull('id_pengeluaran')->sum('jumlah');
 
-            // Get start and end dates of the week
-            $weekStartDate = Carbon::parse($items->first()['tanggal'])->startOfWeek();
-            $weekEndDate = Carbon::parse($items->first()['tanggal'])->endOfWeek();
-
-            // Check if start and end dates belong to the same ISO week
-            $weekNumber = $weekStartDate->weekOfYear;
-            if ($weekStartDate->weekOfYear != $weekEndDate->weekOfYear) {
-                $weekNumber .= ' - ' . $weekEndDate->weekOfYear;
-            }
-
             return [
-                'id_pemasukan' => $items->pluck('id_pemasukan')->toArray(),
-                'id_pengeluaran' => $items->pluck('id_pengeluaran')->toArray(),
-                'minggu' => 'Minggu Ke-' . $weekNumber, // Change "Week" to "Minggu Ke-"
-                'tahun' => $weekStartDate->year,
+                'minggu' => 'Minggu Ke-' . $weekNumber,
+                'tahun' => $year,
                 'jumlah_pemasukan' => $pemasukanSum,
                 'jumlah_pengeluaran' => $pengeluaranSum,
+                'start_date' => $startDate->format('d/m/Y'),
+                'end_date' => $endDate->format('d/m/Y'),
             ];
         });
 
-        $sortedData = $groupedData->sortByDesc(function ($item) {
-            $weekYearString = explode('-', $item['minggu']); // Explode the week-year string
-        
-            // Check if the exploded array has at least two parts
-            if (count($weekYearString) < 2) {
-                return 0; // Return 0 or another default value if the format is incorrect
-            }
-        
-            $weekYear = $weekYearString[0]; // Extract the week-year string
-        
-            // Check if the week-year string contains 'W' to split week and year
-            if (!strpos($weekYear, 'W')) {
-                return 0; // Return 0 or another default value if the format is incorrect
-            }
-        
-            $parts = explode('W', $weekYear);
-        
-            // Check if the exploded array has exactly two parts after 'W'
-            if (count($parts) != 2) {
-                return 0; // Return 0 or another default value if the format is incorrect
-            }
-        
-            $weekNumber = $parts[1]; // Extract the week number
-            $year = $weekYearString[1]; // Extract the year
-        
-            return Carbon::parse($year . '-W' . $weekNumber)->timestamp;
-        });
-        
-    
         return view('catatan.indexMingguan', [
-            'user' => $res['user'],
             'sortedData' => $sortedData,
         ]);
     }
-    
 
-    public function indexBulanan(Request $request) {
+    public function indexBulanan(Request $request)
+    {
         $res = Parent::getDataLogin($request);
-    
-        $pemasukanData = collect();
-        $pengeluaranData = collect();
-        $currentPagePemasukan = 1;
-        $currentPagePengeluaran = 1;
-    
-        do {
-            $pemasukanRes = Http::withHeaders([
-                'Accept' => 'application/json',
-                'x-api-key' => env('API_KEY'),
-                'Authorization' => 'Bearer ' . request()->cookie('token')
-            ])->get(env('API_URL')."/pemasukans?page=$currentPagePemasukan");
-            $dataPemasukan = $pemasukanRes->json();
-            $pemasukanData = $pemasukanData->concat($dataPemasukan['data']);
-            $currentPagePemasukan++;
-        } while ($currentPagePemasukan <= $dataPemasukan['last_page']);
-    
-        do {
-            $pengeluaranRes = Http::withHeaders([
-                'Accept' => 'application/json',
-                'x-api-key' => env('API_KEY'),
-                'Authorization' => 'Bearer ' . request()->cookie('token')
-            ])->get(env('API_URL')."/pengeluarans?page=$currentPagePengeluaran");
-            $dataPengeluaran = $pengeluaranRes->json();
-            $pengeluaranData = $pengeluaranData->concat($dataPengeluaran['data']);
-            $currentPagePengeluaran++;
-        } while ($currentPagePengeluaran <= $dataPengeluaran['last_page']);
-    
-        $combinedData = $pemasukanData->merge($pengeluaranData);
+        $user_id = $request->auth['user']['user_id'];
 
-        $alldata = $combinedData->sortByDesc('tanggal');
-        $user_id = $res['user']['user_id']; // Assuming the user ID is in the 'user' array returned from your API call
+        $alldata = $this->fetchData($request, 'pemasukans')->merge($this->fetchData($request, 'pengeluarans'));
+        $alldata = $this->filterUserData($alldata, $user_id);
 
-        $combinedData = $alldata->filter(function ($item) use ($user_id) {
-            return $item['user_id'] == $user_id;
-        }); 
+        $groupedData = $this->groupByDate($alldata, 'Y-m');
 
-        
-    
-        $groupedData = $combinedData->groupBy(function ($item) {
-            return Carbon::parse($item['tanggal'])->format('Y-m');
-        })->map(function ($items) {
+        $sortedData = $groupedData->map(function ($items, $monthYear) {
+            list($year, $month) = explode('-', $monthYear);
+
             $pemasukanSum = $items->whereNotNull('id_pemasukan')->sum('jumlah');
             $pengeluaranSum = $items->whereNotNull('id_pengeluaran')->sum('jumlah');
-    
+
+            // Create a Carbon instance for the first day of the month
+            $startDate = Carbon::create($year, $month, 1)->startOfMonth();
+            // Create a Carbon instance for the last day of the month
+            $endDate = Carbon::create($year, $month, 1)->endOfMonth();
+
             return [
-                'id_pemasukan' => $items->pluck('id_pemasukan')->toArray(),
-                'id_pengeluaran' => $items->pluck('id_pengeluaran')->toArray(),
-                'bulan' => Carbon::parse($items->first()['tanggal'])->format('F'),
-                'tahun' => Carbon::parse($items->first()['tanggal'])->year,
+                'bulan' => Carbon::create($year, $month, 1)->translatedFormat('F Y'),
+                'tahun' => $year,
                 'jumlah_pemasukan' => $pemasukanSum,
                 'jumlah_pengeluaran' => $pengeluaranSum,
+                'start_date' => $startDate->format('d/m/Y'),
+                'end_date' => $endDate->format('d/m/Y'),
             ];
-        });
-    
-        $sortedData = $groupedData->sortByDesc(function ($item) {
-            return Carbon::parse($item['tahun'] . '-' . Carbon::parse($item['bulan'])->format('m'));
         });
 
         return view('catatan.indexBulanan', [
-            'user' => $res['user'],
             'sortedData' => $sortedData,
         ]);
     }
+
 
     
     /**
@@ -287,7 +213,7 @@ class CatatanController extends Controller
         }
 
         $input = array(
-            'user_id' => $res['user']['user_id'],
+            'user_id' => $request->auth['user']['user_id'],
             'tanggal' => $request->tanggal,
             'jumlah' => $request->jumlah1,
             'catatan' => $request->catatan,
@@ -297,10 +223,12 @@ class CatatanController extends Controller
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'x-api-key' => $apiKey,
-            'Authorization' => 'Bearer ' . request()->cookie('token')
+            'Authorization' => 'Bearer ' . $request->auth['token'],
+            'user-type' => $request->auth['user_type'],
         ])->post($jenisapi, $input);
 
         if($response->status() == 200){
+            
             return redirect()->route('loginPage')->with('success',$response["message"]);
         }else if(!empty($response["errors"])){
             return back()->with('success',$response["message"]);
@@ -346,7 +274,7 @@ class CatatanController extends Controller
         }
 
         $input = array(
-            'user_id' => $res['user']['user_id'],
+            'user_id' => $request->auth['user']['user_id'],
             'tanggal' => $request->tanggaledit,
             'jumlah' => $request->jumlah1edit,
             'catatan' => $request->catatanedit,
@@ -356,10 +284,12 @@ class CatatanController extends Controller
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'x-api-key' => $apiKey,
-            'Authorization' => 'Bearer ' . request()->cookie('token')
+            'Authorization' => 'Bearer ' . $request->auth['token'],
+            'user-type' => $request->auth['user_type'],
         ])->patch($jenisapi, $input);
 
         if($response->status() == 200){
+            
             return redirect()->route('catatanHarian')->with('success',$response["message"]);
         }else if(!empty($response["errors"])){
             return back()->with('success',$response["message"]);
@@ -388,10 +318,12 @@ class CatatanController extends Controller
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'x-api-key' => $apiKey,
-            'Authorization' => 'Bearer ' . request()->cookie('token')
+            'Authorization' => 'Bearer ' . $request->auth['token'],
+            'user-type' => $request->auth['user_type'],
         ])->delete($jenisapi);
 
         if($response->status() == 200){
+            
             return redirect()->route('catatanHarian')->with('success',$response["message"]);
         }else if(!empty($response["errors"])){
             return back()->with('success',$response["message"]);

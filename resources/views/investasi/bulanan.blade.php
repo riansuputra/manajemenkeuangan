@@ -4,8 +4,11 @@
 
 @section('page-title')
 <div class="col">
+    <div class="page-pretitle">
+        Simulasi
+    </div>
     <h2 class="page-title">
-        Rancangan Investasi Bulanan
+        Investasi Bulanan
     </h2>
 </div>
 @endsection

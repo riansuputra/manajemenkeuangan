@@ -16,72 +16,29 @@ class AnggaranController extends Controller
      */
     public function index(Request $request)
     {
-        $res = Parent::getDataLogin($request);
+        $user_id = $request->auth['user']['user_id'];
 
+        // Fetch all pemasukan and pengeluaran data
+        $pemasukanData = $this->fetchAllData('pemasukans', $request);
+        $pengeluaranData = $this->fetchAllData('pengeluarans', $request);
 
-        $pemasukanData = collect();
-        $pengeluaranData = collect();
-        $currentPagePemasukan = 1;
-        $currentPagePengeluaran = 1;
-        
-        do {
-            $pemasukanRes = Http::withHeaders([
-                'Accept' => 'application/json',
-                'x-api-key' => env('API_KEY'),
-                'Authorization' => 'Bearer ' . request()->cookie('token')
-            ])->get(env('API_URL')."/pemasukans?page=$currentPagePemasukan");
-            $dataPemasukan = $pemasukanRes->json();
-            $pemasukanData = $pemasukanData->concat($dataPemasukan['data']);
-            $currentPagePemasukan++;
-        } while ($currentPagePemasukan <= $dataPemasukan['last_page']);
+        // Fetch kategori data for pemasukan and pengeluaran
+        $kategoriPemasukanData = $this->fetchKategoriDataForItems($pemasukanData, 'id_kategori_pemasukan', 'kategori_pemasukans', $request);
+        $kategoriPengeluaranData = $this->fetchKategoriDataForItems($pengeluaranData, 'id_kategori_pengeluaran', 'kategori_pengeluarans', $request);
 
-        do {
-            $pengeluaranRes = Http::withHeaders([
-                'Accept' => 'application/json',
-                'x-api-key' => env('API_KEY'),
-                'Authorization' => 'Bearer ' . request()->cookie('token')
-            ])->get(env('API_URL')."/pengeluarans?page=$currentPagePengeluaran");
-            $dataPengeluaran = $pengeluaranRes->json();
-            $pengeluaranData = $pengeluaranData->concat($dataPengeluaran['data']);
-            $currentPagePengeluaran++;
-        } while ($currentPagePengeluaran <= $dataPengeluaran['last_page']);
-        
-        $kategoriPemasukanId = $pemasukanData->pluck('id_kategori_pemasukan')->unique()->toArray();
-        $kategoriPemasukanRes = Http::withHeaders([
-            'Accept' => 'application/json',
-            'x-api-key' => env('API_KEY'),
-            'Authorization' => 'Bearer ' . request()->cookie('token')
-        ])->get(env('API_URL')."/kategori_pemasukans", [
-            'id_kategori_pemasukan' => implode(',', $kategoriPemasukanId)
-        ]);
-        $kategoriPemasukanData = collect($kategoriPemasukanRes['data']);
-        $combinedDataPemasukan = $pemasukanData->map(function ($pemasukanItem) use ($kategoriPemasukanData) {
-            $relatedKategori = $kategoriPemasukanData->firstWhere('id_kategori_pemasukan', $pemasukanItem['id_kategori_pemasukan']);
-            $pemasukanItem['kategori_pemasukan'] = $relatedKategori;
-            return $pemasukanItem;
-        });
-        
-        $kategoriPengeluaranId = $pengeluaranData->pluck('id_kategori_pengeluaran')->unique()->toArray();
-        $kategoriPengeluaranRes = Http::withHeaders([
-            'Accept' => 'application/json',
-            'x-api-key' => env('API_KEY'),
-            'Authorization' => 'Bearer ' . request()->cookie('token')
-        ])->get(env('API_URL')."/kategori_pengeluarans", [
-            'id_kategori_pengeluaran' => implode(',', $kategoriPengeluaranId)
-        ]);
-        $kategoriPengeluaranData = collect($kategoriPengeluaranRes['data']);
-        $combinedDataPengeluaran = $pengeluaranData->map(function ($pengeluaranItem) use ($kategoriPengeluaranData) {
-            $relatedKategori = $kategoriPengeluaranData->firstWhere('id_kategori_pengeluaran', $pengeluaranItem['id_kategori_pengeluaran']);
-            $pengeluaranItem['kategori_pengeluaran'] = $relatedKategori;
-            return $pengeluaranItem;
-        });
+        // Merge kategori data into pemasukan and pengeluaran data
+        $combinedDataPemasukan = $this->mergeKategoriData($pemasukanData, $kategoriPemasukanData, 'id_kategori_pemasukan', 'kategori_pemasukan');
+        $combinedDataPengeluaran = $this->mergeKategoriData($pengeluaranData, $kategoriPengeluaranData, 'id_kategori_pengeluaran', 'kategori_pengeluaran');
 
+        // Merge filtered pemasukan and pengeluaran data
         $combinedData = $combinedDataPemasukan->merge($combinedDataPengeluaran);
-        $alldata = $combinedData->sortByDesc('tanggal');
-        
-        
-        $existingAnggaran = json_decode(request()->input('existingAnggaran', '[]'), true);
 
+        // Filter combined data by user_id
+        $alldata = $combinedData->filter(function ($item) use ($user_id) {
+            return $item['user_id'] == $user_id;
+        });
+
+        // Group and summarize pengeluaran data
         $groupedPengeluaranData = $combinedDataPengeluaran->groupBy('kategori_pengeluaran.id_kategori_pengeluaran')->map(function ($items) {
             $totalJumlah = $items->sum('jumlah');
             return [
@@ -90,12 +47,11 @@ class AnggaranController extends Controller
                 'total_jumlah' => $totalJumlah
             ];
         });
-        
 
-        // dd($groupedPengeluaranData);
+        // Other data you might need
+        $existingAnggaran = json_decode(request()->input('existingAnggaran', '[]'), true);
 
         return view('anggaran.index', [
-            'user' => $res['user'],
             'pemasukan' => $pemasukanData,
             'pengeluaran' => $pengeluaranData,
             'alldata' => $alldata,
@@ -104,8 +60,58 @@ class AnggaranController extends Controller
             'combinedDataPemasukan' => $combinedDataPemasukan,
             'combinedDataPengeluaran' => $combinedDataPengeluaran,
             'existingAnggaran' => $existingAnggaran,
-        ]);   
+        ]);
     }
+
+// Helper method to fetch data from API and concatenate pages
+    private function fetchAllData($endpoint, $request)
+    {
+        $data = collect();
+        $currentPage = 1;
+
+        do {
+            $response = Http::withHeaders([
+                'Accept' => 'application/json',
+                'x-api-key' => env('API_KEY'),
+                'Authorization' => 'Bearer ' . $request->auth['token'],
+                'user-type' => $request->auth['user_type'],
+            ])->get(env('API_URL') . "/$endpoint?page=$currentPage");
+
+            $responseData = $response->json();
+            $data = $data->concat($responseData['data']);
+            $currentPage++;
+        } while ($currentPage <= $responseData['last_page']);
+
+        return $data;
+    }
+
+// Helper method to fetch kategori data for items
+    private function fetchKategoriDataForItems($items, $idKey, $kategoriEndpoint, $request)
+    {
+        $kategoriIds = $items->pluck($idKey)->unique()->toArray();
+
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'x-api-key' => env('API_KEY'),
+            'Authorization' => 'Bearer ' . $request->auth['token'],
+            'user-type' => $request->auth['user_type'],
+        ])->get(env('API_URL') . "/$kategoriEndpoint", [
+            $idKey => implode(',', $kategoriIds)
+        ]);
+
+        return collect($response->json()['data']);
+    }
+
+// Helper method to merge kategori data into items
+    private function mergeKategoriData($items, $kategoriData, $idKey, $kategoriKey)
+    {
+        return $items->map(function ($item) use ($kategoriData, $idKey, $kategoriKey) {
+            $relatedKategori = $kategoriData->firstWhere($idKey, $item[$idKey]);
+            $item[$kategoriKey] = $relatedKategori;
+            return $item;
+        });
+    }
+
 
     /**
      * Show the form for creating a new resource.

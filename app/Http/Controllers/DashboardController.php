@@ -85,12 +85,11 @@ class DashboardController extends Controller
                 'Authorization' => 'Bearer ' . $request->auth['token'],
                 'user-type' => $request->auth['user_type'],
             ])->get(env('API_URL') . "/$endpoint?page=$currentPage");
-    
             $responseData = $response->json();
             $data = $data->concat($responseData['data']);
             $currentPage++;
         } while ($currentPage <= $responseData['last_page']);
-    
+        
         return $data;
     }
 
@@ -261,34 +260,35 @@ class DashboardController extends Controller
      * Store a newly created resource in storage.
      */
     public function filter(Request $request)
-{
-    // Retrieve data from the submitted form
-    $jenisFilter = $request->input('jenisFilter', 'Kisaran');
+    {
+        // Retrieve data from the submitted form
+        $jenisFilter = $request->input('jenisFilter', 'Kisaran');
 
-    $filterValue = null;
-    switch ($jenisFilter) {
-        case 'Mingguan':
-            $filterValue = $request->input('filterMingguan');
-            break;
-        case 'Bulanan':
-            $filterValue = $request->input('filterBulanan');
-            break;
-        case 'Tahunan':
-            $filterValue = $request->input('filterTahunan');
-            break;
-        case 'Kisaran':
-            $filterValue = $request->input('filterKisaran', 'semuaHari');
-            break;
+        $filterValue = null;
+        switch ($jenisFilter) {
+            case 'Mingguan':
+                $filterValue = $request->input('filterMingguan');
+                break;
+            case 'Bulanan':
+                $filterValue = $request->input('filterBulanan');
+                break;
+            case 'Tahunan':
+                $filterValue = $request->input('filterTahunan');
+                break;
+            case 'Kisaran':
+                $filterValue = $request->input('filterKisaran', 'semuaHari');
+                break;
+        }
+
+        // Perform any processing with the form data if needed
+
+        // Redirect back to the index view with the form data stored in session
+        return redirect()->route('dashboard')->with([
+            'auth' => $response['auth'],
+            'jenisFilter' => $jenisFilter,
+            'filterValue' => $filterValue,
+        ]);
     }
-
-    // Perform any processing with the form data if needed
-
-    // Redirect back to the index view with the form data stored in session
-    return redirect()->route('dashboard')->with([
-        'jenisFilter' => $jenisFilter,
-        'filterValue' => $filterValue,
-    ]);
-}
 
 
 

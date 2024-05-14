@@ -3,12 +3,13 @@
 @section('title', 'Pinjaman')
 
 @section('page-title')
+
 <div class="col">
     <div class="page-pretitle">
         Simulasi
     </div>
     <h2 class="page-title">
-        Pinjaman Bunga Anuitas
+        Pinjaman Bunga Floating
     </h2>
 </div>
 @endsection

@@ -16,22 +16,13 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $token = request()->cookie('token');
-        $response = Http::withHeaders([
-            'Accept' => 'application/json',
-            'x-api-key' => env('API_KEY'),
-            'Authorization' => 'Bearer '. $token,
-            // 'Authorization' => 'Bearer ' . $request->cookie('token')
-        ])->post(env('API_URL')."/auth");
-        if($response->status() == 200){
-            if(isset($response['data']['admin'])){
-                $request->merge(['admin' => $response['data']['admin']]);
-                if(isset($request->user)){
-                    unset($request->user);
-                }
+        if($request->hasCookie('auth')){
+            $auth = unserialize($request->cookie('auth'));
+            if($auth['user_type'] == 'admin'){
+                $request->merge(['auth' => $auth]);
                 return $next($request);
             }
         }
-        return redirect()->back()->with(["toast" => ["type" => "error", "message" => $response["message"]]]);
+        return redirect()->back();
     }
 }

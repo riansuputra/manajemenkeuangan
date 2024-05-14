@@ -9,6 +9,7 @@ use App\Http\Controllers\CatatanController;
 use App\Http\Controllers\StatistikController;
 use App\Http\Controllers\PinjamanController;
 use App\Http\Controllers\InvestasiController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cookie;
 
@@ -45,10 +46,10 @@ Route::middleware([])->group(function(){
     });
     
     Route::middleware([App\Http\Middleware\AdminMiddleware::class])->group(function(){
-        
     });
     
     Route::middleware([App\Http\Middleware\UserMiddleware::class])->group(function(){
+        Route::get('/admin', [AdminController::class, 'index'])->name('admin-layout');
         Route::get('/catatan-harian', [CatatanController::class, 'index'])->name('catatanHarian');
         Route::get('/catatan-mingguan', [CatatanController::class, 'indexMingguan'])->name('catatanMingguan');
         Route::get('/catatan-bulanan', [CatatanController::class, 'indexBulanan'])->name('catatanBulanan');
@@ -66,6 +67,9 @@ Route::middleware([])->group(function(){
         Route::get('/investasi-bulanan', [InvestasiController::class, 'bulanan'])->name('investasi-bulanan');
         Route::get('/investasi-target', [InvestasiController::class, 'target'])->name('investasi-target');
         Route::get('/pinjaman', [PinjamanController::class, 'index'])->name('pinjaman');
+        Route::get('/pinjaman-bunga-tetap', [PinjamanController::class, 'bungaTetap'])->name('bungaTetap');
+        Route::get('/pinjaman-bunga-floating', [PinjamanController::class, 'bungaFloating'])->name('bungaFloating');
+        Route::get('/pinjaman-bunga-efektif', [PinjamanController::class, 'bungaEfektif'])->name('bungaEfektif');
         Route::get('/pengaturan', [PinjamanController::class, 'index'])->name('pinjaman');
     });
 

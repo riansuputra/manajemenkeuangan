@@ -8,7 +8,7 @@
         Simulasi
     </div>
     <h2 class="page-title">
-        Pinjaman Bunga Anuitas
+        Pinjaman Bunga Tetap
     </h2>
 </div>
 @endsection

@@ -4,41 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class PinjamanController extends Controller
+class AdminController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $res = Parent::getDataLogin($request);
-        return view('pinjaman.index', [
-            'user' => $res['user'],
-        ]);  
-    }
-
-    public function bungaTetap(Request $request)
-    {
-        $res = Parent::getDataLogin($request);
-        return view('pinjaman.bungaTetap', [
-            'user' => $res['user'],
-        ]);  
-    }
-
-    public function bungaFloating(Request $request)
-    {
-        $res = Parent::getDataLogin($request);
-        return view('pinjaman.bungaFloating', [
-            'user' => $res['user'],
-        ]);  
-    }
-
-    public function bungaEfektif(Request $request)
-    {
-        $res = Parent::getDataLogin($request);
-        return view('pinjaman.bungaEfektif', [
-            'user' => $res['user'],
-        ]);  
+        return view('layouts.admin');
     }
 
     /**
