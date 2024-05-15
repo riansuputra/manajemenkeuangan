@@ -26,8 +26,8 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-xl-12">
-                                        <div class="mb-3">
-                                            <label class="form-label">Jumlah Pinjaman : </label>
+                                        <div class="mb-3" style="height:5rem;">
+                                            <label class="form-label"><strong>Jumlah Pinjaman :</strong></label>
                                             <div class="input-group">
                                                 <span class="input-group-text">
                                                     Rp.
@@ -36,25 +36,13 @@
                                                 <input type="text" id="pinjamandana1" name="pinjamandana1" class="form-control text-end" autocomplete="off">
                                             </div>
                                         </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Jangka Waktu : </label>
+                                        <div class="mb-3" style="height:6rem;">
+                                            <label class="form-label"><strong>Jangka Waktu : </strong></label>
                                             <div class="input-group">
                                                 <input type="number" id="jmhtahun" name="jmhtahun" class="form-control text-end" autocomplete="off">
                                                 <span class="input-group-text">
                                                     Bulan
                                                 </span>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col">
-                                                <label class="form-label">Persentase Bunga :</label>
-                                                <div class="input-group">
-    
-                                                    <input type="number" id="persentasebunga" name="persentasebunga" class="form-control text-end" autocomplete="off">
-                                                    <span class="input-group-text">
-                                                        %/Tahun
-                                                    </span>
-                                                </div>
                                             </div>
                                         </div>
                                         <div class="row mb-3">
@@ -74,7 +62,82 @@
                                                 </button>
                                             </div>
                                         </div>
+                                        
                                     </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card" style="height: 19.4rem">
+                            <div class="card-header" style="height: 1rem">
+                                <strong>Persentase Bunga</strong>
+                            </div>
+                            <div class="card-body card-body-scrollable card-body-scrollable-shadow">
+                                <div class="divide-y">
+                                    
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="input-group">
+                                                        <input type="number" id="persentasebunga" name="persentasebunga" class="form-control text-end" autocomplete="off">
+                                                        <span class="input-group-text">
+                                                            %/Tahun
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="input-group">
+                                                        <input type="number" id="persentasebunga" name="persentasebunga" class="form-control text-end" autocomplete="off">
+                                                        <span class="input-group-text">
+                                                            %/Tahun
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="input-group">
+                                                        <input type="number" id="persentasebunga" name="persentasebunga" class="form-control text-end" autocomplete="off">
+                                                        <span class="input-group-text">
+                                                            %/Tahun
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="input-group">
+                                                        <input type="number" id="persentasebunga" name="persentasebunga" class="form-control text-end" autocomplete="off">
+                                                        <span class="input-group-text">
+                                                            %/Tahun
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="input-group">
+                                                        <input type="number" id="persentasebunga" name="persentasebunga" class="form-control text-end" autocomplete="off">
+                                                        <span class="input-group-text">
+                                                            %/Tahun
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="input-group">
+                                                        <input type="number" id="persentasebunga" name="persentasebunga" class="form-control text-end" autocomplete="off">
+                                                        <span class="input-group-text">
+                                                            %/Tahun
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                  
                                 </div>
                             </div>
                         </div>
@@ -84,15 +147,13 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-xl-12">
-                                        <div class="mb-3">
+                                        <div class="">
                                             <h3 class="text-center text-bold">Hasil Perhitungan</h3>
                                             <div class="table-responsive">
-                                                <table class="table table-vcenter card-table">
+                                                <table class="table table-vcenter table-borderless card-table">
                                                     <thead>
                                                         <tr>
-                                                            <th></th>
-                                                            <th></th>
-                                                            <th></th>
+                                                            
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -131,23 +192,19 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-xl-12">
-                                        <div class="mb-3">
-                                            <h3 class="text-center text-bold">Statistik</h3>
-                                        </div>
-                                        <div id="chart-demo-pie#3" style="min-height: 267px;"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 			</div>
 		</div>
+
+
+
+
+        
+
+
+
+
+
 	</div>
 </div>
 
@@ -314,13 +371,13 @@
 
             chart.render(); // Render the chart
 
-            const rancanganPinjamanData = {
+            const rancanganPinjamanBungaFloatingData = {
                 pinjamandana: pinjamandana || '',
                 jmhtahun: document.getElementById('jmhtahun').value,
                 persentasebunga: document.getElementById('persentasebunga').value,
             };
 
-            localStorage.setItem('rancangan-pinjaman', JSON.stringify(rancanganPinjamanData));
+            localStorage.setItem('rancangan-pinjaman-bunga-floating', JSON.stringify(rancanganPinjamanBungaFloatingData));
     } else {
         console.error("Error calculating nilai.");
         // Handle the case where nilai is null
@@ -503,20 +560,20 @@
 
 
         function populateFromLocalStorage() {
-            const rancanganPinjamanData = JSON.parse(localStorage.getItem('rancangan-pinjaman'));
-            if (rancanganPinjamanData) {
-                document.getElementById('pinjamandana').value = rancanganPinjamanData.pinjamandana || '';
-                document.getElementById('pinjamandana1').value = formatNumber(rancanganPinjamanData.pinjamandana) || '';
-                document.getElementById('jmhtahun').value = rancanganPinjamanData.jmhtahun || '';
-                document.getElementById('persentasebunga').value = rancanganPinjamanData.persentasebunga || '';
-                document.getElementById('pinjamandana2').textContent = 'Rp. ' + rancanganPinjamanData.pinjamandana || '';
+            const rancanganPinjamanBungaFloatingData = JSON.parse(localStorage.getItem('rancangan-pinjaman-bunga-floating'));
+            if (rancanganPinjamanBungaFloatingData) {
+                document.getElementById('pinjamandana').value = rancanganPinjamanBungaFloatingData.pinjamandana || '';
+                document.getElementById('pinjamandana1').value = formatNumber(rancanganPinjamanBungaFloatingData.pinjamandana) || '';
+                document.getElementById('jmhtahun').value = rancanganPinjamanBungaFloatingData.jmhtahun || '';
+                document.getElementById('persentasebunga').value = rancanganPinjamanBungaFloatingData.persentasebunga || '';
+                document.getElementById('pinjamandana2').textContent = 'Rp. ' + rancanganPinjamanBungaFloatingData.pinjamandana || '';
 
                 createOrUpdateChart();
                 populateModalTable();
             }
         }
 
-        if (localStorage.getItem('rancangan-pinjaman')) {
+        if (localStorage.getItem('rancangan-pinjaman-bunga-floating')) {
             populateFromLocalStorage();
         }
 
@@ -526,7 +583,7 @@
         });
 
         document.querySelector('.btn-secondary').addEventListener('click', function() {
-            localStorage.removeItem('rancangan-pinjaman');
+            localStorage.removeItem('rancangan-pinjaman-bunga-floating');
             const pinjamandanaInput = document.getElementById('pinjamandana');
             const pinjamandanaInput1 = document.getElementById('pinjamandana1');
             const jmhtahunInput = document.getElementById('jmhtahun');
@@ -570,7 +627,7 @@
                     ]
                 };
 
-                pdfMake.createPdf(docDefinition).download('rancangan-pinjaman.pdf');
+                pdfMake.createPdf(docDefinition).download('rancangan-pinjaman-bunga-floating.pdf');
             });
 
         createOrUpdateChart();

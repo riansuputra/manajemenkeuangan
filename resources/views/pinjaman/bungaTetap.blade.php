@@ -246,7 +246,7 @@
             document.getElementById('totalnilai').innerHTML = '<strong>Rp. ' + formatNumber(nilai.total_payment.toFixed(2)) + '</strong>';
         
         // Proceed with chart creation or update
-        const chartData = [pinjamandana, totalInterest]; 
+        const chartData = [totalInterest, pinjamandana]; 
             
 
 
@@ -313,13 +313,13 @@
 
             chart.render(); // Render the chart
 
-            const rancanganPinjamanData = {
+            const rancanganPinjamanTetapData = {
                 pinjamandana: pinjamandana || '',
                 jmhtahun: document.getElementById('jmhtahun').value,
                 persentasebunga: document.getElementById('persentasebunga').value,
             };
 
-            localStorage.setItem('rancangan-pinjaman', JSON.stringify(rancanganPinjamanData));
+            localStorage.setItem('rancangan-pinjaman-bunga-tetap', JSON.stringify(rancanganPinjamanTetapData));
     } else {
         console.error("Error calculating nilai.");
         // Handle the case where nilai is null
@@ -343,7 +343,7 @@
                 const tingkatBungaPerBulan = persentasebunga / 100 / 12; // Tingkat bunga per bulan
                 const totalBulan = jmhtahun; // Total bulan
 
-                const nilai = (pinjamandana * tingkatBungaPerBulan) / (1 - Math.pow((1 + tingkatBungaPerBulan), -totalBulan));
+                const nilai = (pinjamandana / totalBulan) + (pinjamandana * tingkatBungaPerBulan);
 
                 let remainingLoan = nilai;
                 const monthlyPayments = [];
@@ -386,7 +386,7 @@
     const tingkatBungaPerBulan = persentasebunga / 100 / 12; // Tingkat bunga per bulan
     const totalBulan = jmhtahun; // Total bulan
 
-    let nilai = (pinjamandana * tingkatBungaPerBulan) / (1 - Math.pow((1 + tingkatBungaPerBulan), -totalBulan));
+    let nilai = (pinjamandana / totalBulan) + (pinjamandana * tingkatBungaPerBulan);
 
     let remainingLoan = pinjamandana;
 
@@ -425,9 +425,9 @@
     let totalTotalAngsuran = 0;
     let totalSisaPinjaman = remainingLoan;
 
+    const interestPayment = remainingLoan * tingkatBungaPerBulan;
     // Main loop for remaining rows
     for (let i = 1; i <= jmhtahun; i++) {
-        const interestPayment = remainingLoan * tingkatBungaPerBulan;
         const principalPayment = nilai - interestPayment;
         remainingLoan -= principalPayment;
 
@@ -502,20 +502,20 @@
 
 
         function populateFromLocalStorage() {
-            const rancanganPinjamanData = JSON.parse(localStorage.getItem('rancangan-pinjaman'));
-            if (rancanganPinjamanData) {
-                document.getElementById('pinjamandana').value = rancanganPinjamanData.pinjamandana || '';
-                document.getElementById('pinjamandana1').value = formatNumber(rancanganPinjamanData.pinjamandana) || '';
-                document.getElementById('jmhtahun').value = rancanganPinjamanData.jmhtahun || '';
-                document.getElementById('persentasebunga').value = rancanganPinjamanData.persentasebunga || '';
-                document.getElementById('pinjamandana2').textContent = 'Rp. ' + rancanganPinjamanData.pinjamandana || '';
+            const rancanganPinjamanTetapData = JSON.parse(localStorage.getItem('rancangan-pinjaman-bunga-tetap'));
+            if (rancanganPinjamanTetapData) {
+                document.getElementById('pinjamandana').value = rancanganPinjamanTetapData.pinjamandana || '';
+                document.getElementById('pinjamandana1').value = formatNumber(rancanganPinjamanTetapData.pinjamandana) || '';
+                document.getElementById('jmhtahun').value = rancanganPinjamanTetapData.jmhtahun || '';
+                document.getElementById('persentasebunga').value = rancanganPinjamanTetapData.persentasebunga || '';
+                document.getElementById('pinjamandana2').textContent = 'Rp. ' + rancanganPinjamanTetapData.pinjamandana || '';
 
                 createOrUpdateChart();
                 populateModalTable();
             }
         }
 
-        if (localStorage.getItem('rancangan-pinjaman')) {
+        if (localStorage.getItem('rancangan-pinjaman-bunga-tetap')) {
             populateFromLocalStorage();
         }
 
@@ -525,7 +525,7 @@
         });
 
         document.querySelector('.btn-secondary').addEventListener('click', function() {
-            localStorage.removeItem('rancangan-pinjaman');
+            localStorage.removeItem('rancangan-pinjaman-bunga-tetap');
             const pinjamandanaInput = document.getElementById('pinjamandana');
             const pinjamandanaInput1 = document.getElementById('pinjamandana1');
             const jmhtahunInput = document.getElementById('jmhtahun');
@@ -569,7 +569,7 @@
                     ]
                 };
 
-                pdfMake.createPdf(docDefinition).download('rancangan-pinjaman.pdf');
+                pdfMake.createPdf(docDefinition).download('rancangan-pinjaman-bunga-tetap.pdf');
             });
 
         createOrUpdateChart();

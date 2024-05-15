@@ -80,6 +80,12 @@
                     </div>
                     <div class="col-md-4">
                         <div class="card">
+                        <div class="card-status-bottom bg-grey"></div>
+                            <div class="card-body">
+                                test
+                            </div>
+                        </div>
+                        <div class="card">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-xl-12">
@@ -112,7 +118,7 @@
                                                             <td style="width:%" class="text-end" id="persentasebunga1">0%</td>
                                                         </tr>
                                                         <tr style="height:2.93rem;">
-                                                            <td style="width:49%;"><strong>Angsuran per bulan</strong></td>
+                                                            <td style="width:49%;"><strong>Total Bunga</strong></td>
                                                             <td style="width:5%;">:</td>
                                                             <td style="width:%" class="text-end" id="nilai"><strong>Rp. 0</strong></td>
                                                         </tr>
@@ -235,7 +241,7 @@
             const totalInterest = nilai.total_payment - pinjamandana;
 
             if (nilai && nilai.monthly_payments && nilai.monthly_payments.length && nilai.total_payment !== null) { // Check if nilai is not null
-        const monthlyPayment = nilai.monthly_payments[1].monthly_payment;
+        const monthlyPayment = totalPayment - pinjamandana;
 
         document.getElementById('pinjamandana2').textContent = 'Rp. ' + formatNumber(pinjamandana);
             document.getElementById('pinjamandana3').textContent = pinjamandana;
@@ -246,7 +252,7 @@
             document.getElementById('totalnilai').innerHTML = '<strong>Rp. ' + formatNumber(nilai.total_payment.toFixed(2)) + '</strong>';
         
         // Proceed with chart creation or update
-        const chartData = [pinjamandana, totalInterest]; 
+        const chartData = [totalInterest, pinjamandana]; 
             
 
 
@@ -313,13 +319,13 @@
 
             chart.render(); // Render the chart
 
-            const rancanganPinjamanData = {
+            const rancanganPinjamanBungaEfektifData = {
                 pinjamandana: pinjamandana || '',
                 jmhtahun: document.getElementById('jmhtahun').value,
                 persentasebunga: document.getElementById('persentasebunga').value,
             };
 
-            localStorage.setItem('rancangan-pinjaman', JSON.stringify(rancanganPinjamanData));
+            localStorage.setItem('rancangan-pinjaman-bunga-efektif', JSON.stringify(rancanganPinjamanBungaEfektifData));
     } else {
         console.error("Error calculating nilai.");
         // Handle the case where nilai is null
@@ -335,44 +341,41 @@
         }
 
         function calculateNilai() {
-            const pinjamandana = parseFloat(document.getElementById('pinjamandana').value);
-            const jmhtahun = parseFloat(document.getElementById('jmhtahun').value);
-            const persentasebunga = parseFloat(document.getElementById('persentasebunga').value);
+    const pinjamandana = parseFloat(document.getElementById('pinjamandana').value);
+    const jmhtahun = parseFloat(document.getElementById('jmhtahun').value);
+    const persentasebunga = parseFloat(document.getElementById('persentasebunga').value);
 
-            if (!isNaN(pinjamandana) && !isNaN(jmhtahun) && !isNaN(persentasebunga)) {
-                const tingkatBungaPerBulan = persentasebunga / 100 / 12; // Tingkat bunga per bulan
-                const totalBulan = jmhtahun; // Total bulan
+    if (!isNaN(pinjamandana) && !isNaN(jmhtahun) && !isNaN(persentasebunga)) {
+        const tingkatBungaPerBulan = persentasebunga / 100 / 12; // Tingkat bunga per bulan
+        let remainingLoan = pinjamandana;
+        const monthlyPayments = [];
+        let totalPayment = 0;
 
-                const nilai = (pinjamandana * tingkatBungaPerBulan) / (1 - Math.pow((1 + tingkatBungaPerBulan), -totalBulan));
+        for (let i = 1; i <= jmhtahun; i++) {
+            const interestPayment = remainingLoan * tingkatBungaPerBulan;
+            const principalPayment = (pinjamandana / jmhtahun);
+            const monthlyPayment = interestPayment + principalPayment;
+            remainingLoan -= principalPayment;
+            totalPayment += monthlyPayment;
 
-                let remainingLoan = nilai;
-                const monthlyPayments = [];
-
-                for (let i = 1; i <= totalBulan; i++) {
-                    const interestPayment = remainingLoan * tingkatBungaPerBulan;
-                    const principalPayment = nilai - interestPayment;
-                    remainingLoan -= principalPayment;
-
-                    monthlyPayments.push({
-                        'month': i,
-                        'monthly_payment': nilai,
-                        'interest_payment': interestPayment,
-                        'principal_payment': principalPayment,
-                        'remaining_loan': remainingLoan,
-                    });
-                }
-                // console.log(monthlyPayments);
-
-
-                return {
-                    'monthly_payments': monthlyPayments,
-                    
-                    'total_payment': nilai * totalBulan,
-                };
-            } else {
-                return 'Invalid input';
-            }
+            monthlyPayments.push({
+                'month': i,
+                'monthly_payment': monthlyPayment,
+                'interest_payment': interestPayment,
+                'principal_payment': principalPayment,
+                'remaining_loan': remainingLoan,
+            });
         }
+
+        return {
+            'monthly_payments': monthlyPayments,
+            'total_payment': totalPayment,
+        };
+    } else {
+        return 'Invalid input';
+    }
+}
+
 
 
         function populateModalTable() {
@@ -384,11 +387,10 @@
     modalTableBody.innerHTML = '';
 
     const tingkatBungaPerBulan = persentasebunga / 100 / 12; // Tingkat bunga per bulan
+    let remainingLoan = pinjamandana;
     const totalBulan = jmhtahun; // Total bulan
 
-    let nilai = (pinjamandana * tingkatBungaPerBulan) / (1 - Math.pow((1 + tingkatBungaPerBulan), -totalBulan));
 
-    let remainingLoan = pinjamandana;
 
     // Create a row for index 0 with sisa pinjaman value from pinjamandana
     const firstRow = document.createElement('tr');
@@ -428,7 +430,9 @@
     // Main loop for remaining rows
     for (let i = 1; i <= jmhtahun; i++) {
         const interestPayment = remainingLoan * tingkatBungaPerBulan;
-        const principalPayment = nilai - interestPayment;
+        const principalPayment = (pinjamandana / jmhtahun);
+        const nilai = interestPayment + principalPayment;
+
         remainingLoan -= principalPayment;
 
         totalAngsuranBunga += interestPayment;
@@ -502,20 +506,20 @@
 
 
         function populateFromLocalStorage() {
-            const rancanganPinjamanData = JSON.parse(localStorage.getItem('rancangan-pinjaman'));
-            if (rancanganPinjamanData) {
-                document.getElementById('pinjamandana').value = rancanganPinjamanData.pinjamandana || '';
-                document.getElementById('pinjamandana1').value = formatNumber(rancanganPinjamanData.pinjamandana) || '';
-                document.getElementById('jmhtahun').value = rancanganPinjamanData.jmhtahun || '';
-                document.getElementById('persentasebunga').value = rancanganPinjamanData.persentasebunga || '';
-                document.getElementById('pinjamandana2').textContent = 'Rp. ' + rancanganPinjamanData.pinjamandana || '';
+            const rancanganPinjamanBungaEfektifData = JSON.parse(localStorage.getItem('rancangan-pinjaman-bunga-efektif'));
+            if (rancanganPinjamanBungaEfektifData) {
+                document.getElementById('pinjamandana').value = rancanganPinjamanBungaEfektifData.pinjamandana || '';
+                document.getElementById('pinjamandana1').value = formatNumber(rancanganPinjamanBungaEfektifData.pinjamandana) || '';
+                document.getElementById('jmhtahun').value = rancanganPinjamanBungaEfektifData.jmhtahun || '';
+                document.getElementById('persentasebunga').value = rancanganPinjamanBungaEfektifData.persentasebunga || '';
+                document.getElementById('pinjamandana2').textContent = 'Rp. ' + rancanganPinjamanBungaEfektifData.pinjamandana || '';
 
                 createOrUpdateChart();
                 populateModalTable();
             }
         }
 
-        if (localStorage.getItem('rancangan-pinjaman')) {
+        if (localStorage.getItem('rancangan-pinjaman-bunga-efektif')) {
             populateFromLocalStorage();
         }
 
@@ -525,7 +529,7 @@
         });
 
         document.querySelector('.btn-secondary').addEventListener('click', function() {
-            localStorage.removeItem('rancangan-pinjaman');
+            localStorage.removeItem('rancangan-pinjaman-bunga-efektif');
             const pinjamandanaInput = document.getElementById('pinjamandana');
             const pinjamandanaInput1 = document.getElementById('pinjamandana1');
             const jmhtahunInput = document.getElementById('jmhtahun');
@@ -569,7 +573,7 @@
                     ]
                 };
 
-                pdfMake.createPdf(docDefinition).download('rancangan-pinjaman.pdf');
+                pdfMake.createPdf(docDefinition).download('rancangan-pinjaman-bunga-efektif.pdf');
             });
 
         createOrUpdateChart();

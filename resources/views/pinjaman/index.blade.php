@@ -246,7 +246,7 @@
             document.getElementById('totalnilai').innerHTML = '<strong>Rp. ' + formatNumber(nilai.total_payment.toFixed(2)) + '</strong>';
         
         // Proceed with chart creation or update
-        const chartData = [pinjamandana, totalInterest]; 
+        const chartData = [totalInterest, pinjamandana]; 
             
 
 

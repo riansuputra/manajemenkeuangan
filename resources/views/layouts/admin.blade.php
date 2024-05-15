@@ -33,7 +33,7 @@
     <script src="{{asset('js/demo-theme.min.js?1684106062')}}"></script>
     <div class="page">
       <!-- Sidebar -->
-      <aside class="navbar navbar-vertical navbar-expand-lg" data-bs-theme="dark">
+      <aside class="navbar navbar-vertical navbar-expand-lg sticky-top" data-bs-theme="dark">
         <div class="container-fluid">
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-menu" aria-controls="sidebar-menu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -570,7 +570,7 @@
         </div>
       </aside>
       <!-- Navbar -->
-      <header class="navbar navbar-expand-md d-none d-lg-flex d-print-none" >
+      <header class="navbar navbar-expand-md d-none d-lg-flex d-print-none sticky-top" >
         <div class="container-xl">
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
