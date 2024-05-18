@@ -211,6 +211,16 @@
                       					</span>
 									</a>
                   				</li>
+								  <li class="nav-item {{ url()->current() == url('/anggarannew') ? 'active' : '' }}" >
+                    				<a class="nav-link" href="/anggarannew">
+                      					<span class="nav-link-icon d-md-none d-lg-inline-block">
+					  						<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M16 6m-5 0a5 3 0 1 0 10 0a5 3 0 1 0 -10 0"></path><path d="M11 6v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4"></path><path d="M11 10v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4"></path><path d="M11 14v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4"></path><path d="M7 9h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5"></path><path d="M5 15v1m0 -8v1"></path></svg>
+                      					</span>
+                      					<span class="nav-link-title">
+                        					Anggaranew
+                      					</span>
+									</a>
+                  				</li>
 								  <li class="nav-item {{ url()->current() == url('/statistik') ? 'active' : '' }}" >
                     				<a class="nav-link" href="{{ url('./statistik') }}" >
                       					<span class="nav-link-icon d-md-none d-lg-inline-block">

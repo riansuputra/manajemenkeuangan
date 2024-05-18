@@ -5,6 +5,7 @@ use Illuminate\Support\Str;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AnggaranController;
+use App\Http\Controllers\AnggaranControllertest;
 use App\Http\Controllers\CatatanController;
 use App\Http\Controllers\StatistikController;
 use App\Http\Controllers\PinjamanController;
@@ -63,6 +64,8 @@ Route::middleware([])->group(function(){
         Route::get('/statistik', [StatistikController::class, 'index'])->name('statistik');
         Route::post('/statistik-filter', [StatistikController::class, 'filter'])->name('statistik-filter');
         Route::get('/anggaran', [AnggaranController::class, 'index'])->name('anggaran');
+        Route::get('/anggarannew', [AnggaranControllertest::class, 'index'])->name('anggaranew');
+        Route::post('/anggaran-store', [AnggaranControllertest::class, 'store'])->name('anggaranstore');
         Route::get('/investasi-lumpsum', [InvestasiController::class, 'lumpsum'])->name('investasi-lumpsum');
         Route::get('/investasi-bulanan', [InvestasiController::class, 'bulanan'])->name('investasi-bulanan');
         Route::get('/investasi-target', [InvestasiController::class, 'target'])->name('investasi-target');

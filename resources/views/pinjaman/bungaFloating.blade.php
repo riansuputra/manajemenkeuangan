@@ -41,7 +41,7 @@
                                             <div class="input-group">
                                                 <input type="number" id="jmhtahun" name="jmhtahun" class="form-control text-end" autocomplete="off">
                                                 <span class="input-group-text">
-                                                    Bulan
+                                                    Tahun
                                                 </span>
                                             </div>
                                         </div>
@@ -72,71 +72,13 @@
                     <div class="col-md-4">
                         <div class="card" style="height: 19.4rem">
                             <div class="card-header" style="height: 1rem">
-                                <strong>Persentase Bunga</strong>
+                                <strong>Persentase Bunga Tahun Per Tahun</strong>
                             </div>
                             <div class="card-body card-body-scrollable card-body-scrollable-shadow">
                                 <div class="divide-y">
                                     
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="input-group">
-                                                        <input type="number" id="persentasebunga" name="persentasebunga" class="form-control text-end" autocomplete="off">
-                                                        <span class="input-group-text">
-                                                            %/Tahun
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="input-group">
-                                                        <input type="number" id="persentasebunga" name="persentasebunga" class="form-control text-end" autocomplete="off">
-                                                        <span class="input-group-text">
-                                                            %/Tahun
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="input-group">
-                                                        <input type="number" id="persentasebunga" name="persentasebunga" class="form-control text-end" autocomplete="off">
-                                                        <span class="input-group-text">
-                                                            %/Tahun
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="input-group">
-                                                        <input type="number" id="persentasebunga" name="persentasebunga" class="form-control text-end" autocomplete="off">
-                                                        <span class="input-group-text">
-                                                            %/Tahun
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="input-group">
-                                                        <input type="number" id="persentasebunga" name="persentasebunga" class="form-control text-end" autocomplete="off">
-                                                        <span class="input-group-text">
-                                                            %/Tahun
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="input-group">
-                                                        <input type="number" id="persentasebunga" name="persentasebunga" class="form-control text-end" autocomplete="off">
-                                                        <span class="input-group-text">
-                                                            %/Tahun
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            
+                                            
                                   
                                 </div>
                             </div>
@@ -631,6 +573,70 @@
             });
 
         createOrUpdateChart();
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const inputField = document.getElementById('jmhtahun');
+        const container = document.querySelector('.divide-y');
+
+        inputField.addEventListener('input', function() {
+            // Clear the container first
+            container.innerHTML = '';
+
+            // Get the number of years entered by the user
+            const numberOfYears = parseInt(inputField.value, 10);
+
+            if (!isNaN(numberOfYears) && numberOfYears > 0) {
+                for (let i = 1; i <= numberOfYears; i++) {
+                    // Create a new row
+                    const row = document.createElement('div');
+                    row.className = 'row';
+
+                    // Create a new column
+                    const col = document.createElement('div');
+                    col.className = 'col';
+
+                    // Create a new input group
+                    const inputGroup = document.createElement('div');
+                    inputGroup.className = 'input-group';
+
+                    // Create the span for the year number
+                    const spanYear = document.createElement('span');
+                    spanYear.className = 'input-group-text';
+                    spanYear.id = `tahunke-${i}`;
+                    spanYear.textContent = i;
+
+                    // Create the input for the percentage
+                    const inputPercentage = document.createElement('input');
+                    inputPercentage.type = 'number';
+                    inputPercentage.id = `persentasebunga-${i}`;
+                    inputPercentage.name = `persentasebunga-${i}`;
+                    inputPercentage.className = 'form-control text-end';
+                    inputPercentage.autocomplete = 'off';
+
+                    // Create the span for the percentage sign
+                    const spanPercentage = document.createElement('span');
+                    spanPercentage.className = 'input-group-text';
+                    spanPercentage.textContent = '%';
+
+                    // Append elements to the input group
+                    inputGroup.appendChild(spanYear);
+                    inputGroup.appendChild(inputPercentage);
+                    inputGroup.appendChild(spanPercentage);
+
+                    // Append input group to the column
+                    col.appendChild(inputGroup);
+
+                    // Append column to the row
+                    row.appendChild(col);
+
+                    // Append row to the container
+                    container.appendChild(row);
+                }
+            }
+        });
     });
 </script>
 
