@@ -119,20 +119,20 @@
                                                     <div class="row mb-2">
                                                         <div class="col-lg-4">
                                                             <div class="form-floating mb-3">
-                                                                <input type="text" id="jumlah_anggaran_{{$data['id_anggaran']}}" name="jumlahanggaran" class="form-control text-strong text-primary border-primary mt-2" autocomplete="off" readonly>
-                                                                <label for="jumlah_anggaran_{{$data['id_anggaran']}}" class="form-label">Used :</label>
+                                                                <input type="text" id="jumlah_anggaran_{{$data['id_anggaran']}}" name="jumlahanggaran" class="form-control text-strong text-warning border-warning mt-2" autocomplete="off" readonly>
+                                                                <label for="jumlah_anggaran_{{$data['id_anggaran']}}" class="form-label text-black">Used :</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-4">
                                                             <div class="form-floating mb-3">
-                                                                <input type="text" id="jumlah_tersisa_{{$data['id_anggaran']}}" name="jumlahtersisa" class="form-control text-strong text-warning border-warning mt-2" autocomplete="off" readonly>
-                                                                <label for="jumlah_tersisa_{{$data['id_anggaran']}}" class="form-label">Remaining :</label>
+                                                                <input type="text" id="jumlah_tersisa_{{$data['id_anggaran']}}" name="jumlahtersisa" class="form-control text-strong text-success border-success mt-2" autocomplete="off" readonly>
+                                                                <label for="jumlah_tersisa_{{$data['id_anggaran']}}" class="form-label text-black">Remaining :</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-4">
                                                             <div class="form-floating mb-3">
                                                                 <input type="text" id="jumlah_overspend_{{$data['id_anggaran']}}" name="jumlahoverspend" class="form-control text-strong text-danger border-danger mt-2" autocomplete="off" readonly>
-                                                                <label for="jumlah_overspend_{{$data['id_anggaran']}}" class="form-label">Overspend :</label>
+                                                                <label for="jumlah_overspend_{{$data['id_anggaran']}}" class="form-label text-black">Overspend :</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -140,7 +140,7 @@
                                                         <div class="col-lg-4">
                                                             <input type="text" id="id_{{$data['id_anggaran']}}" name="id" value="{{$data['id_anggaran']}}" class="form-control text-end" autocomplete="off" hidden>
                                                             <div class="mb-3">
-                                                                <label class="form-label text-muted">Kategori Pengeluaran:</label>
+                                                                <label class="form-label">Kategori Pengeluaran:</label>
                                                                 <select id="id_kategori_pengeluaran_edit_{{$data['id_anggaran']}}" name="id_kategori_pengeluaran_edit" class="form-select">
                                                                     <option value="" selected>Pilih Kategori</option>
                                                                     @foreach($kategoriData as $kategori)
@@ -151,7 +151,7 @@
                                                         </div>
                                                         <div class="col-lg-4">
                                                             <div class="mb-3">
-                                                                <label class="form-label text-muted">Jumlah : </label>
+                                                                <label class="form-label">Jumlah : </label>
                                                                 <div class="input-group">
                                                                     <span class="input-group-text">Rp.</span>
                                                                     <input type="text" id="jumlah_edit_{{$data['id_anggaran']}}" oninput="updateFormattedNumberAnggaran({{$data['id_anggaran']}})" name="jumlahedit" class="form-control text-end" autocomplete="off" required>
@@ -161,7 +161,7 @@
                                                         </div>
                                                         <div class="col-lg-4">
                                                             <div class="mb-3">
-                                                                <label class="form-label text-muted">Periode :</label>
+                                                                <label class="form-label">Periode :</label>
                                                                 <select id="periodeedit_{{$data['id_anggaran']}}" name="periodeedit" class="form-select">
                                                                     <option value="" selected>Pilih Periode</option>
                                                                     <option value="Mingguan">Mingguan</option>
@@ -254,7 +254,7 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="mb-3">
-                                <label class="form-label text-muted">Kategori Pengeluaran:</label>
+                                <label class="form-label">Kategori Pengeluaran:</label>
                                 <select id="id_kategori_pengeluaran" name="id_kategori_pengeluaran" class="form-select">
                                     <option value="" selected>Pilih Kategori</option>
                                     @foreach($kategoriData as $kategori)
@@ -265,7 +265,7 @@
                         </div>
                             <div class="col-lg-4">
                             <div class="mb-3">
-                                <label class="form-label text-muted">Jumlah : </label>
+                                <label class="form-label">Jumlah : </label>
                                 <div class="input-group">
                                     <span class="input-group-text">
                                         Rp.
@@ -277,7 +277,7 @@
                         </div>
                         <div class="col-lg-4">
                             <div class="mb-3">
-                                <label class="form-label text-muted">Periode :</label>
+                                <label class="form-label">Periode :</label>
                                 <select id="periode" name="periode" class="form-select">
                                     <option value="" selected>Pilih Periode</option>
                                     <option value="Mingguan" >Mingguan</option>

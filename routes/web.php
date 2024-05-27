@@ -63,17 +63,22 @@ Route::middleware([])->group(function(){
 
         Route::get('/statistik', [StatistikController::class, 'index'])->name('statistik');
         Route::post('/statistik-filter', [StatistikController::class, 'filter'])->name('statistik-filter');
+
         Route::get('/anggarannew', [AnggaranControllertes::class, 'index'])->name('anggaran');
-        Route::get('/anggaran/week', [AnggaranController::class, 'index'])->name('anggaranWeek')->defaults('view', 'week');
-        Route::get('/anggaran/month', [AnggaranController::class, 'index'])->name('anggaranMonth')->defaults('view', 'month');
-        Route::get('/anggaran/year', [AnggaranController::class, 'index'])->name('anggaranYear')->defaults('view', 'year');
+        Route::get('/anggaran-week', [AnggaranController::class, 'index'])->name('anggaranWeek')->defaults('view', 'week');
+        Route::get('/anggaran-month', [AnggaranController::class, 'index'])->name('anggaranMonth')->defaults('view', 'month');
+        Route::get('/anggaran-year', [AnggaranController::class, 'index'])->name('anggaranYear')->defaults('view', 'year');
         Route::get('/anggaran', [AnggaranController::class, 'index'])->name('anggarannew');
         Route::post('/anggaran-store', [AnggaranController::class, 'store'])->name('anggaranstore');
         Route::post('/update-anggaran/{id}', [AnggaranController::class, 'update'])->name('updateAnggaran');
         Route::post('/delete-anggaran/{id}', [AnggaranController::class, 'destroy'])->name('hapusAnggaran');
+
+
         Route::get('/investasi-lumpsum', [InvestasiController::class, 'lumpsum'])->name('investasi-lumpsum');
         Route::get('/investasi-bulanan', [InvestasiController::class, 'bulanan'])->name('investasi-bulanan');
         Route::get('/investasi-target', [InvestasiController::class, 'target'])->name('investasi-target');
+
+
         Route::get('/pinjaman', [PinjamanController::class, 'index'])->name('pinjaman');
         Route::get('/pinjaman-bunga-tetap', [PinjamanController::class, 'bungaTetap'])->name('bungaTetap');
         Route::get('/pinjaman-bunga-floating', [PinjamanController::class, 'bungaFloating'])->name('bungaFloating');
