@@ -19,6 +19,6 @@ class GuestMiddleware
         if(!$request->hasCookie('auth')){
             return $next($request);
         }
-        return redirect()->route('loginPage');
+        return redirect()->route('dashboard');
     }
 }

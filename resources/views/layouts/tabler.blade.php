@@ -437,7 +437,7 @@
     <!-- Libs JS -->
     <script src="{{ asset('libs/apexcharts/dist/apexcharts.min.js?1684106062') }}" defer></script>
     <!-- Tabler Core -->
-    <script src="{{ ('js/tabler.min.js?1684106062') }}" defer></script>
+    <script src="{{ asset('js/tabler.min.js?1684106062') }}" defer></script>
 	<script>
 		@if (Session::has('success'))
 			toastr.options = {

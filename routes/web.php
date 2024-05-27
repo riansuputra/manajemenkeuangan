@@ -64,8 +64,10 @@ Route::middleware([])->group(function(){
         Route::get('/statistik', [StatistikController::class, 'index'])->name('statistik');
         Route::post('/statistik-filter', [StatistikController::class, 'filter'])->name('statistik-filter');
         Route::get('/anggaran', [AnggaranController::class, 'index'])->name('anggaran');
-        Route::get('/anggarannew', [AnggaranControllertest::class, 'index'])->name('anggaranew');
+        Route::get('/anggarannew', [AnggaranControllertest::class, 'index'])->name('anggarannew');
         Route::post('/anggaran-store', [AnggaranControllertest::class, 'store'])->name('anggaranstore');
+        Route::post('/update-anggaran/{id}', [AnggaranControllertest::class, 'update'])->name('updateAnggaran');
+        Route::post('/delete-anggaran/{id}', [AnggaranControllertest::class, 'destroy'])->name('hapusAnggaran');
         Route::get('/investasi-lumpsum', [InvestasiController::class, 'lumpsum'])->name('investasi-lumpsum');
         Route::get('/investasi-bulanan', [InvestasiController::class, 'bulanan'])->name('investasi-bulanan');
         Route::get('/investasi-target', [InvestasiController::class, 'target'])->name('investasi-target');
@@ -73,7 +75,7 @@ Route::middleware([])->group(function(){
         Route::get('/pinjaman-bunga-tetap', [PinjamanController::class, 'bungaTetap'])->name('bungaTetap');
         Route::get('/pinjaman-bunga-floating', [PinjamanController::class, 'bungaFloating'])->name('bungaFloating');
         Route::get('/pinjaman-bunga-efektif', [PinjamanController::class, 'bungaEfektif'])->name('bungaEfektif');
-        Route::get('/pengaturan', [PinjamanController::class, 'index'])->name('pinjaman');
+        // Route::get('/pengaturan', [PinjamanController::class, 'index'])->name('pinjaman');
     });
 
 });
