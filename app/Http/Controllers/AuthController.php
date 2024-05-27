@@ -83,9 +83,9 @@ class AuthController extends Controller
         }else if(!empty($response["message"]) && !empty($response["errors"])){
             return back()->with('error', $response["message"])->withErrors($response["errors"])->withInput($input);
         }else if(!empty($response["message"])){
-            return back()->with('error', $response["message"])->withInput($input);
+            return back()->with('error', $response["message"]);
         }else{
-            return back()->with('error', 'Gagal keluar')->withInput($input);
+            return back()->with('error', 'Gagal keluar');
         }
     }
 
