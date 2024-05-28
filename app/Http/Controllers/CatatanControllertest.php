@@ -8,87 +8,9 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Pagination\Paginator;
 use Carbon\Carbon;
-use Illuminate\Http\Client\Pool;
 
-class CatatanController extends Controller
+class CatatanControllertest extends Controller
 {
-    public function indextest() {
-        return view('catatan.indextest');
-    }
-    private function getHeaders($request) {
-        return [
-            'Accept' => 'application/json',
-            'x-api-key' => env('API_KEY'),
-            'Authorization' => 'Bearer ' . $request->auth['token'],
-            'user-type' => $request->auth['user_type'],
-        ];
-    }
-
-    public function index(Request $request) {
-        $responses = Http::pool(fn (Pool $pool) => [
-            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/pemasukansWeb'),
-            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/pengeluaransWeb'),
-            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/kategori_pemasukansWeb'),
-            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/kategori_pengeluaransWeb')
-        ]);
-
-        // dd($responses);
-    
-        if ($responses[0]->successful() && $responses[1]->successful() && $responses[2]->successful() && $responses[3]->successful()) {
-            $pemasukanData = collect($responses[0]->json()['data']['pemasukan']);
-            $pengeluaranData = collect($responses[1]->json()['data']['pengeluaran']);
-            $kategoriPemasukanData = collect($responses[2]->json()['data']['kategoriPemasukan']);
-            $kategoriPengeluaranData = collect($responses[3]->json()['data']['kategoriPengeluaran']);
-
-            $combinedData = $pemasukanData->merge($pengeluaranData);
-
-            $combinedData = $combinedData->sort(function ($a, $b) {
-                // Get the most recent timestamp for $a
-                $aTimestamp = strtotime($a['updated_at'] ?? $a['created_at']);
-                if ($aTimestamp > time()) {
-                    $aTimestamp = time();
-                }
-            
-                // Get the most recent timestamp for $b
-                $bTimestamp = strtotime($b['updated_at'] ?? $b['created_at']);
-                if ($bTimestamp > time()) {
-                    $bTimestamp = time();
-                }
-            
-                // Compare the timestamps
-                return $bTimestamp - $aTimestamp; // Sort in descending order
-            });
-
-            $groupedData = $combinedData->groupBy('tanggal');
-
-            // dd($groupedData);
-
-            $summedData = $groupedData->map(function ($group) {
-                $totalPemasukan = $group->where('id_pemasukan')->sum('jumlah');
-                $totalPengeluaran = $group->where('id_pengeluaran')->sum('jumlah');
-                $totalJumlah = $totalPemasukan - $totalPengeluaran;
-            
-                return $group->map(function ($item) use ($totalJumlah) {
-                    $item['total_jumlah'] = $totalJumlah;
-                    return $item;
-                });
-            });
-            
-            // dd($summedData);
-            
-            
-            // dd($summedData);
-    
-            return view('catatan.index', [
-                'groupedData' => $groupedData,
-                'combinedData' => $combinedData,
-                'summedData' => $summedData,
-            ]);
-        } else {
-            abort(500, 'Failed to fetch data from API');
-        }
-    }
-
     private function fetchData(Request $request, $resource)
     {
         $currentPage = 1;
@@ -141,7 +63,7 @@ class CatatanController extends Controller
         });
     }
 
-    public function indexweb(Request $request)
+    public function index(Request $request)
     {
         $user_id = $request->auth['user']['user_id'];
 

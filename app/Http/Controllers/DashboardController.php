@@ -284,7 +284,6 @@ class DashboardController extends Controller
 
         // Redirect back to the index view with the form data stored in session
         return redirect()->route('dashboard')->with([
-            'auth' => $response['auth'],
             'jenisFilter' => $jenisFilter,
             'filterValue' => $filterValue,
         ]);
