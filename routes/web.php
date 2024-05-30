@@ -9,6 +9,7 @@ use App\Http\Controllers\AnggaranControllertes;
 use App\Http\Controllers\CatatanController;
 use App\Http\Controllers\StatistikController;
 use App\Http\Controllers\PinjamanController;
+use App\Http\Controllers\PengaturanController;
 use App\Http\Controllers\InvestasiController;
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Http;
@@ -32,6 +33,8 @@ Route::middleware([])->group(function(){
         Route::get('/register',[AuthController::class,'registerPage'])->name('registerPage');
         Route::post('/login/auth',[AuthController::class,'login'])->name('login');
         Route::post('/register/auth',[AuthController::class,'register'])->name('register');
+        Route::post('/loginAdmin/auth',[AuthController::class,'loginAdmin'])->name('loginAdmin');
+        Route::get('/loginAdmin',[AuthController::class,'loginAdminPage'])->name('loginAdminPage');
     });
 
     Route::middleware([App\Http\Middleware\AdminUserMiddleware::class])->group(function(){
@@ -47,10 +50,17 @@ Route::middleware([])->group(function(){
     });
     
     Route::middleware([App\Http\Middleware\AdminMiddleware::class])->group(function(){
+        
+        Route::get('/admin', [AdminController::class, 'index'])->name('admin-layout');
+        Route::get('/categories-request', [AdminController::class, 'categoryRequests'])->name('categoryRequests');
+        Route::post('/update-catatan/{id}', [CatatanController::class, 'update'])->name('updateCatatan');
+        Route::post('/update-catatan/{id}', [CatatanController::class, 'update'])->name('updateCatatan');
+
+        Route::post('/category-requests/{id}/approve', [AdminController::class, 'approve'])->name('categoryApprove');
+        Route::post('/category-requests/{id}/reject', [AdminController::class, 'reject'])->name('categoryReject');
     });
     
     Route::middleware([App\Http\Middleware\UserMiddleware::class])->group(function(){
-        Route::get('/admin', [AdminController::class, 'index'])->name('admin-layout');
 
         Route::get('/catatan-test', [CatatanController::class, 'indextest']);
         Route::get('/catatan-harian', [CatatanController::class, 'index'])->name('catatanHarian');
@@ -85,7 +95,9 @@ Route::middleware([])->group(function(){
         Route::get('/pinjaman-bunga-tetap', [PinjamanController::class, 'bungaTetap'])->name('bungaTetap');
         Route::get('/pinjaman-bunga-floating', [PinjamanController::class, 'bungaFloating'])->name('bungaFloating');
         Route::get('/pinjaman-bunga-efektif', [PinjamanController::class, 'bungaEfektif'])->name('bungaEfektif');
-        // Route::get('/pengaturan', [PinjamanController::class, 'index'])->name('pinjaman');
+        Route::get('/pengaturan', [PengaturanController::class, 'index'])->name('settings');
+        Route::get('/category-request', [PengaturanController::class, 'categoryRequestIndex'])->name('categoryRequest');
+        Route::post('/category-store', [PengaturanController::class, 'store'])->name('categoryStore');
     });
 
 });

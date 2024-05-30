@@ -57,6 +57,32 @@ class AuthController extends Controller
         } else {
             return back()->with('error', 'Gagal masuk')->withInput($input);
         }
+    }
+
+    public function loginAdminPage(){
+        return view('autentikasi.loginAdmin');
+    }    
+
+    public function loginAdmin(Request $request){
+        $input = array(
+            'email' => $request->email,
+            'password' => $request->password,
+        );
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'x-api-key' => env('API_KEY')
+        ])->post(env('API_URL')."/login-admin", $input);
+
+        if ($response->status() == 200) {
+            Cookie::queue('auth', serialize($response['auth']));
+            return redirect()->route('admin-layout')->with('success', 'Login Berhasil');
+        } else if (!empty($response["message"]) && !empty($response["errors"])) {
+            return back()->with('error', $response["message"])->withErrors($response["errors"])->withInput($input);
+        } else if (!empty($response["message"])) {
+            return back()->with('error', $response["message"])->withInput($input);
+        } else {
+            return back()->with('error', 'Gagal masuk')->withInput($input);
+        }
     }    
 
     public function dashboardPage(Request $request){

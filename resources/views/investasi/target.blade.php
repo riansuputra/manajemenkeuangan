@@ -414,32 +414,53 @@
             localStorage.setItem('investasi-target', JSON.stringify(investasiTargetData));
         }
 
+        // function calculateNilai() {
+		// 	const awaldana = parseFloat(document.getElementById('awaldana').value);
+		// 	const jmhtahun = parseFloat(document.getElementById('jmhtahun').value);
+		// 	const persentasebunga = parseFloat(document.getElementById('persentasebunga').value);
+
+		// 	let totalMultiplier = 1.0;
+
+		// 	const monthlyInterestRate = persentasebunga / 100 / 12; // Tingkat bunga per bulan
+		// 	const months = jmhtahun * 12; // Jumlah total bulan
+
+		// 	for (let i = 0; i < months; i++) {
+		// 		totalMultiplier *= (1 + monthlyInterestRate);
+		// 	}
+
+		// 	if (!isNaN(awaldana) && !isNaN(jmhtahun) && !isNaN(persentasebunga)) {
+		// 		const nilai = awaldana / ((((totalMultiplier - 1) / monthlyInterestRate)) * (1 + monthlyInterestRate));
+		// 		return nilai.toFixed(0); // Mengembalikan nilai dengan format tanpa desimal
+		// 	} else {
+		// 		return 0;
+		// 	}
+
+		// 	const totalInvestment = nilai * months;
+		// 	const estimatedReturn = totalInvestment - awaldana;
+		// 	return totalInvestment.toFixed(0);
+		// 	return estimatedReturn.toFixed(0);
+		// }
+
         function calculateNilai() {
-			const awaldana = parseFloat(document.getElementById('awaldana').value);
-			const jmhtahun = parseFloat(document.getElementById('jmhtahun').value);
-			const persentasebunga = parseFloat(document.getElementById('persentasebunga').value);
+    const targetValue = parseFloat(document.getElementById('awaldana').value);
+    const jmhtahun = parseFloat(document.getElementById('jmhtahun').value);
+    const persentasebunga = parseFloat(document.getElementById('persentasebunga').value);
 
-			let totalMultiplier = 1.0;
+    if (!isNaN(targetValue) && !isNaN(jmhtahun) && !isNaN(persentasebunga)) {
+        const monthlyInterestRate = persentasebunga / 100 / 12; // Tingkat bunga per bulan
+        const months = jmhtahun * 12; // Jumlah total bulan
 
-			const monthlyInterestRate = persentasebunga / 100 / 12; // Tingkat bunga per bulan
-			const months = jmhtahun * 12; // Jumlah total bulan
+        let totalMultiplier = 1.0;
+        for (let i = 0; i < months; i++) {
+            totalMultiplier *= (1 + monthlyInterestRate);
+        }
 
-			for (let i = 0; i < months; i++) {
-				totalMultiplier *= (1 + monthlyInterestRate);
-			}
-
-			if (!isNaN(awaldana) && !isNaN(jmhtahun) && !isNaN(persentasebunga)) {
-				const nilai = awaldana / ((((totalMultiplier - 1) / monthlyInterestRate)) * (1 + monthlyInterestRate));
-				return nilai.toFixed(0); // Mengembalikan nilai dengan format tanpa desimal
-			} else {
-				return 0;
-			}
-
-			const totalInvestment = nilai * months;
-			const estimatedReturn = totalInvestment - awaldana;
-			return totalInvestment.toFixed(0);
-			return estimatedReturn.toFixed(0);
-		}
+        const lumpsum = targetValue / totalMultiplier;
+        return lumpsum.toFixed(2); // Mengembalikan nilai lumpsum dengan dua desimal
+    } else {
+        return 0;
+    }
+}
 
 
 		
