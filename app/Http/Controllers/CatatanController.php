@@ -42,24 +42,24 @@ class CatatanController extends Controller
 
             $combinedData = $pemasukanData->merge($pengeluaranData);
 
+            // dd($kategoriPemasukanData, $kategoriPengeluaranData);
+
             $combinedData = $combinedData->sort(function ($a, $b) {
-                // Get the most recent timestamp for $a
-                $aTimestamp = strtotime($a['updated_at'] ?? $a['created_at']);
-                if ($aTimestamp > time()) {
-                    $aTimestamp = time();
-                }
+                // Get the created_at timestamp for $a
+                $aTimestamp = strtotime($a['created_at']);
             
-                // Get the most recent timestamp for $b
-                $bTimestamp = strtotime($b['updated_at'] ?? $b['created_at']);
-                if ($bTimestamp > time()) {
-                    $bTimestamp = time();
-                }
+                // Get the created_at timestamp for $b
+                $bTimestamp = strtotime($b['created_at']);
             
-                // Compare the timestamps
-                return $bTimestamp - $aTimestamp; // Sort in descending order
+                // Compare the timestamps and sort in descending order
+                return $bTimestamp - $aTimestamp;
             });
 
-            $groupedData = $combinedData->groupBy('tanggal');
+            $tanggalData = $combinedData->sortByDesc('tanggal');
+
+            // dd($tanggalData);
+
+            $groupedData = $tanggalData->groupBy('tanggal');
 
             // dd($groupedData);
 
@@ -83,6 +83,8 @@ class CatatanController extends Controller
                 'groupedData' => $groupedData,
                 'combinedData' => $combinedData,
                 'summedData' => $summedData,
+                'kategoriPemasukanData' => $kategoriPemasukanData,
+                'kategoriPengeluaranData' => $kategoriPengeluaranData,
             ]);
         } else {
             abort(500, 'Failed to fetch data from API');
@@ -337,43 +339,114 @@ class CatatanController extends Controller
     public function update(Request $request, string $id)
     {
         // dd($request);
+        $jenisedit2 = $request->input('jenisedit2'.$id);
+        // dd($jenisedit2 != $request->jenisedit);
 
-        $apiUrlPemasukan = env('API_URL').'/pemasukans/'.$id;
-        $apiUrlPengeluaran = env('API_URL').'/pengeluarans/'.$id;
-        $apiKey = env('API_KEY');        
-        $res = Parent::getDataLogin($request);
 
-        if($request->jenisedit == 1) {
-            $jenis = 'id_kategori_pemasukan';
-            $jenisapi = $apiUrlPemasukan;
-        }else if ($request->jenisedit == 2){
-            $jenis = 'id_kategori_pengeluaran';
-            $jenisapi = $apiUrlPengeluaran;
-        }
-
-        $input = array(
-            'user_id' => $request->auth['user']['user_id'],
-            'tanggal' => $request->tanggaledit,
-            'jumlah' => $request->jumlah1edit,
-            'catatan' => $request->catatanedit,
-            $jenis => $request->kategoriedit,
-        );
         
-        $response = Http::withHeaders([
-            'Accept' => 'application/json',
-            'x-api-key' => $apiKey,
-            'Authorization' => 'Bearer ' . $request->auth['token'],
-            'user-type' => $request->auth['user_type'],
-        ])->patch($jenisapi, $input);
 
-        if($response->status() == 200){
+        
+
+        
+
+
+        if($jenisedit2 != $request->jenisedit) {
+            if($request->jenisedit == 1) {
+                $apiUrlPemasukanDel = env('API_URL').'/pemasukans/'.$id;
+                $jenis = 'id_kategori_pemasukan';
+                $jenisapiDel = $apiUrlPemasukanDel;
+            }else if ($request->jenisedit == 2){
+                $apiUrlPengeluaranDel = env('API_URL').'/pengeluarans/'.$id;
+                $jenis = 'id_kategori_pengeluaran';
+                $jenisapiDel = $apiUrlPengeluaranDel;
+            }
+
+            $response = Http::withHeaders([
+                'Accept' => 'application/json',
+                'x-api-key' => env('API_KEY'),
+                'Authorization' => 'Bearer ' . $request->auth['token'],
+                'user-type' => $request->auth['user_type'],
+            ])->delete($jenisapiDel);
+
+            if($jenisedit2 == 1) {
+                $apiUrlPemasukan = env('API_URL').'/pemasukans';
+                $jenis = 'id_kategori_pemasukan';
+                $jenisapi = $apiUrlPemasukan;
+            }else if ($jenisedit2 == 2){
+                $apiUrlPengeluaran = env('API_URL').'/pengeluarans';
+                $jenis = 'id_kategori_pengeluaran';
+                $jenisapi = $apiUrlPengeluaran;
+            }
+
+            $input = array(
+                'user_id' => $request->auth['user']['user_id'],
+                'tanggal' => $request->tanggaledit,
+                'jumlah' => $request->jumlah1edit,
+                'catatan' => $request->catatanedit,
+                $jenis => $request->kategoriedit,
+            );
+
             
-            return redirect()->route('catatanHarian')->with('success',$response["message"]);
-        }else if(!empty($response["errors"])){
-            return back()->with('success',$response["message"]);
-        }else{
-            return back()->with('success',$response["message"]);
+
+            $response = Http::withHeaders([
+                'Accept' => 'application/json',
+                'x-api-key' => env('API_KEY'),
+                'Authorization' => 'Bearer ' . $request->auth['token'],
+                'user-type' => $request->auth['user_type'],
+            ])->post($jenisapi, $input);
+
+            if($response->status() == 200){
+            
+                return redirect()->route('catatanHarian')->with('success',$response["message"]);
+            }else if(!empty($response["errors"])){
+                return back()->with('success',$response["message"]);
+            }else{
+                return back()->with('success',$response["message"]);
+            }
+
+
+
+
+
+        } else if ($jenisedit2 == $request->jenisedit) {
+
+            if($request->jenisedit == 1) {
+                $apiUrlPemasukan = env('API_URL').'/pemasukans/'.$id;
+                $jenis = 'id_kategori_pemasukan';
+                $jenisapi = $apiUrlPemasukan;
+            }else if ($request->jenisedit == 2){
+                $apiUrlPengeluaran = env('API_URL').'/pengeluarans/'.$id;
+                $jenis = 'id_kategori_pengeluaran';
+                $jenisapi = $apiUrlPengeluaran;
+            }
+    
+            $input = array(
+                'user_id' => $request->auth['user']['user_id'],
+                'tanggal' => $request->tanggaledit,
+                'jumlah' => $request->jumlah1edit,
+                'catatan' => $request->catatanedit,
+                $jenis => $request->kategoriedit,
+            );
+            
+            $response = Http::withHeaders([
+                'Accept' => 'application/json',
+                'x-api-key' => env('API_KEY'),
+                'Authorization' => 'Bearer ' . $request->auth['token'],
+                'user-type' => $request->auth['user_type'],
+            ])->patch($jenisapi, $input);
+
+            if($response->status() == 200){
+            
+                return redirect()->route('catatanHarian')->with('success',$response["message"]);
+            }else if(!empty($response["errors"])){
+                return back()->with('success',$response["message"]);
+            }else{
+                return back()->with('success',$response["message"]);
+            }
+
         }
+
+        
     }
 
     /**

@@ -354,7 +354,7 @@
             			<div class="form-selectgroup-boxes row mb-3">
 							<div class="col-lg-6">
 								<label class="form-selectgroup-item">
-									<input type="radio" id="pemasukan" name="jenis" value="1" class="form-selectgroup-input" onchange="updateSelectOptions()" required>
+									<input type="radio" id="pemasukan" name="jenis" value="1" class="form-selectgroup-input pemasukan-radio" onchange="updateSelectOptions1(this)" required>
 									<span class="form-selectgroup-label d-flex align-items-center p-2">
 										<span class="me-3">
 											<span class="form-selectgroup-check"></span>
@@ -368,7 +368,7 @@
 							</div>		
 							<div class="col-lg-6">
 								<label class="form-selectgroup-item">
-									<input type="radio" id="pengeluaran" name="jenis" value="2" class="form-selectgroup-input" onchange="updateSelectOptions()" required>
+									<input type="radio" id="pengeluaran" name="jenis" value="2" class="form-selectgroup-input pengeluaran-radio" onchange="updateSelectOptions1(this)" required>
 									<span class="form-selectgroup-label d-flex align-items-center p-2">
 										<span class="me-3">
 											<span class="form-selectgroup-check"></span>
@@ -397,10 +397,11 @@
               				<div class="col-lg-4">
                 				<div class="mb-3">
                   					<label class="form-label">Kategori :</label>
-                  					<select id="kategori" name="kategori" class="form-select">
-									  <option value="" disabled selected>Pilih Kategori</option>
-                    					
-                  					</select>
+                  					
+									
+									<select id="kategoriadd" name="kategoriadd" class="form-select kategoriadd">
+                                        <option value="" disabled selected>Pilih Kategori</option>
+                                    </select>
                 				</div>
               				</div>
 			  				<div class="col-lg-4">
@@ -498,42 +499,66 @@ document.getElementById('jumlah').addEventListener('input', updateFormattedNumbe
 </script>
 
 	<script>
-		function updateSelectOptions() {
-			var pemasukanRadio = document.getElementById('pemasukan');
-			var pengeluaranRadio = document.getElementById('pengeluaran');
-			var selectElement = document.getElementById('kategori');
+		document.addEventListener("DOMContentLoaded", function() {
+    const kategoriPemasukanData = @json($kategoriPemasukanData ?? []);
+    const kategoriPengeluaranData = @json($kategoriPengeluaranData ?? []);
 
-			var defaultOption = selectElement.querySelector('option[value=""]');
-        if (defaultOption) {
-            selectElement.removeChild(defaultOption);
+    function updateSelectOptions1(radioElement) {
+        // Find the closest modal and its select element
+        var modal = radioElement.closest('.modal');
+        var selectElement = modal.querySelector('.kategoriadd');
+
+        // Clear existing options
+        selectElement.innerHTML = '';
+
+        // Add appropriate options based on the selected radio button
+        if (radioElement.classList.contains('pemasukan-radio')) {
+            kategoriPemasukanData.forEach(function(item) {
+                selectElement.innerHTML += `<option value="${item.id_kategori_pemasukan}">${item.nama_kategori_pemasukan}</option>`;
+            });
+        } else if (radioElement.classList.contains('pengeluaran-radio')) {
+            kategoriPengeluaranData.forEach(function(item) {
+                selectElement.innerHTML += `<option value="${item.id_kategori_pengeluaran}">${item.nama_kategori_pengeluaran}</option>`;
+            });
         }
 
-			if (pemasukanRadio.checked) {
-				// If "Pemasukan" radio button is checked
-				selectElement.innerHTML = ''; // Clear existing options
-				selectElement.innerHTML += '<option value="1">Uang Saku</option>';
-				selectElement.innerHTML += '<option value="2">Upah</option>';
-				selectElement.innerHTML += '<option value="3">Bonus</option>';
-				selectElement.innerHTML += '<option value="3">Lainnya</option>';
-			} else if (pengeluaranRadio.checked) {
-				// If "Pengeluaran" radio button is checked
-				selectElement.innerHTML = ''; // Clear existing options
-				selectElement.innerHTML += '<option value="1">Makanan</option>';
-				selectElement.innerHTML += '<option value="2">Minuman</option>';
-				selectElement.innerHTML += '<option value="3">Tagihan</option>';
-				selectElement.innerHTML += '<option value="4">Shopping</option>';
-				selectElement.innerHTML += '<option value="5>Kesehatan & Olahraga</option>';
-				selectElement.innerHTML += '<option value="6">Lainnya</option>';
-			
-		} else {
-            // If neither radio button is checked, show "Pilih jenis" option
-            selectElement.innerHTML += '<option value="" disabled selected>Pilih Kategori</option>';
-        }
+        selectElement.disabled = false;
+    }
 
-			selectElement.disabled = false;
-		}
-		updateSelectOptions();
+    // Add event listeners to the radio buttons in the modal
+    document.querySelectorAll('.pemasukan-radio, .pengeluaran-radio').forEach(function(radio) {
+        radio.addEventListener('change', function() {
+            updateSelectOptions1(this);
+        });
+    });
 
+    // Clear modal fields when the modal is hidden
+    const modals = document.querySelectorAll('.modal');
+    modals.forEach(modal => {
+        modal.addEventListener('hidden.bs.modal', function() {
+            // Clear the form fields
+            const form = this.querySelector('form');
+            if (form) {
+                form.reset();
+            }
+
+            // Clear the select element
+            const selectElement = this.querySelector('.kategoriadd');
+            if (selectElement) {
+                selectElement.innerHTML = '<option value="" disabled selected>Pilih Kategori</option>';
+                selectElement.disabled = true;
+            }
+
+            // Clear radio buttons
+            const radioButtons = this.querySelectorAll('.pemasukan-radio, .pengeluaran-radio');
+            radioButtons.forEach(function(radio) {
+                radio.checked = false;
+            });
+        });
+    });
+});
+
+    </script>
 	</script>
     
   </body>
