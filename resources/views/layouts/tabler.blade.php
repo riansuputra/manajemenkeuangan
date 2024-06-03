@@ -399,7 +399,7 @@
                   					<label class="form-label">Kategori :</label>
                   					
 									
-									<select id="kategoriadd" name="kategoriadd" class="form-select kategoriadd">
+									<select id="kategori" name="kategori" class="form-select kategoriadd">
                                         <option value="" disabled selected>Pilih Kategori</option>
                                     </select>
                 				</div>

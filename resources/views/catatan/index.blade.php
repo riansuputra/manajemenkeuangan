@@ -31,102 +31,103 @@
 @section('content')
 <div class="container-xl">
 	<div class="row g-4">
-
 		<div class="col-md-3">
-			<form action="./" method="get" autocomplete="off" novalidate="" class="">
-				<div class="form-label">Record Types</div>
-				<div class="mb-4">
-                    <label class="form-check">
-						<input type="radio" class="form-check-input" name="form-salary" value="1">
-                      	<span class="form-check-label">All Record Types</span>
-                    </label>
-                    <label class="form-check">
-						<input type="radio" class="form-check-input" name="form-salary" value="2">
-                      	<span class="form-check-label">Income</span>
-                    </label>
-                    <label class="form-check">
-						<input type="radio" class="form-check-input" name="form-salary" value="3">
-                      	<span class="form-check-label">Expense</span>
-                    </label>
+
+		<div class="input-icon mb-4">
+			<input type="text" value="" class="form-control" id="searchRecord" name="searchRecord" placeholder="Search…">
+			<span class="input-icon-addon">
+				<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>
+			</span>
+			</div>
+
+		<div class="form-label mt-1 mb-2">Record Types</div>
+			<div class="mb-4">
+				<label class="form-check">
+					<input type="radio" class="form-check-input" name="record-type" value="1" checked>
+					<span class="form-check-label">All Record Types</span>
+				</label>
+				<label class="form-check">
+					<input type="radio" class="form-check-input" name="record-type" value="2">
+					<span class="form-check-label">Income</span>
+				</label>
+				<div class="ms-4">
+					<div class="mb-2">
+						<select class="form-select category-select income-category" disabled>
+							<option value="" class="text-muted">Select Category</option>
+							@foreach($kategoriPemasukanData as $incomeCategory)
+							<option value="{{$incomeCategory['nama_kategori_pemasukan']}}income">{{$incomeCategory['nama_kategori_pemasukan']}}</option>
+							@endforeach
+						</select>
+					</div>
 				</div>
-				<div class="form-label">Record Types</div>
-				<div class="mb-4">
-					<label class="form-check">
-						<input type="checkbox" class="form-check-input" name="form-type[]" value="1" checked="">
-                      	<span class="form-check-label">Programming</span>
-                    </label>
-                    <label class="form-check">
-						<input type="checkbox" class="form-check-input" name="form-type[]" value="2" checked="">
-                      	<span class="form-check-label">Design</span>
-                    </label>
-                    <label class="form-check">
-						<input type="checkbox" class="form-check-input" name="form-type[]" value="3">
-                      	<span class="form-check-label">Management / Finance</span>
-                    </label>
-                    <label class="form-check">
-						<input type="checkbox" class="form-check-input" name="form-type[]" value="4">
-                      	<span class="form-check-label">Customer Support</span>
-                    </label>
-                    <label class="form-check">
-                      	<input type="checkbox" class="form-check-input" name="form-type[]" value="5">
-                      	<span class="form-check-label">Sales / Marketing</span>
-                    </label>
+				<label class="form-check">
+					<input type="radio" class="form-check-input" name="record-type" value="3">
+					<span class="form-check-label">Expense</span>
+				</label>
+				<div class="ms-4">
+					<div class="">
+						<select class="form-select category-select expense-category" disabled>
+							<option value="" class="text-muted">Select Category</option>
+							@foreach($kategoriPengeluaranData as $expenseCategory)
+							<option value="{{$expenseCategory['nama_kategori_pengeluaran']}}expense">{{$expenseCategory['nama_kategori_pengeluaran']}}</option>
+							@endforeach
+						</select>
+					</div>
 				</div>
-				<div class="form-label">Remote</div>
-				<div class="mb-4">
-                    <label class="form-check form-switch">
-						<input class="form-check-input" type="checkbox">
-                      	<span class="form-check-label form-check-label-on">On</span>
-                      	<span class="form-check-label form-check-label-off">Off</span>
-					</label>
-				</div>
-				<div class="form-label">Salary Range</div>
-				<div class="mb-4">
-                    <label class="form-check">
-						<input type="radio" class="form-check-input" name="form-salary" value="1" checked="">
-                      	<span class="form-check-label">$20K - $50K</span>
-                    </label>
-                    <label class="form-check">
-						<input type="radio" class="form-check-input" name="form-salary" value="2" checked="">
-                      	<span class="form-check-label">$50K - $100K</span>
-                    </label>
-                    <label class="form-check">
-						<input type="radio" class="form-check-input" name="form-salary" value="3">
-                      	<span class="form-check-label">&gt; $100K</span>
-                    </label>
-                    <label class="form-check">
-						<input type="radio" class="form-check-input" name="form-salary" value="4">
-                      	<span class="form-check-label">Drawing / Painting</span>
-                    </label>
-				</div>
-				<div class="form-label">Immigration</div>
-				<div class="mb-4">
-					<label class="form-check form-switch">
-						<input class="form-check-input" type="checkbox">
-                      	<span class="form-check-label form-check-label-on">On</span>
-                      	<span class="form-check-label form-check-label-off">Off</span>
-                    </label>
-                    <div class="small text-muted">Only show companies that can sponsor a visa</div>
-				</div>
-				<div class="form-label">Location</div>
-				<div class="mb-4">
-					<select class="form-select">
-						<option>Anywhere</option>
-                      	<option>London</option>
-                      	<option>San Francisco</option>
-                      	<option>New York</option>
-                      	<option>Berlin</option>
-                    </select>
-				</div>
-				<div class="mt-5">
-                    <button class="btn btn-primary w-100">
-						Confirm changes
-                    </button>
-                    <a href="#" class="btn btn-link w-100">
+			</div>
+		<div class="form-label mt-1 mb-2">
+		<a href="#" class="w-100 btn-resetfilter">
                       Reset to defaults
                     </a>
-				</div>
-			</form>
+		</div>
+
+			
+			
+		
+
+			
+			
+
+
+				<hr>
+
+				<div class="form-label">Date Filter</div>
+			
+
+
+			<div class="col-auto d-print-none" >
+				<form class="row"id="filterForm" action="{{ route('catatan-filter') }}" method="POST">
+					@csrf
+					<div class="col-auto d-print-none input-group">
+						<select class="form-select" name="jenisFilter" id="jenisFilter">
+							<option value="Kisaran" {{ $jenisFilter == 'Kisaran' ? 'selected' : '' }}>Range</option>
+							<option value="Mingguan" {{ $jenisFilter == 'Mingguan' ? 'selected' : '' }}>Weeks</option>
+							<option value="Bulanan" {{ $jenisFilter == 'Bulanan' ? 'selected' : '' }}>Months</option>
+							<option value="Tahunan" {{ $jenisFilter == 'Tahunan' ? 'selected' : '' }}>Years</option>
+							<option value="Custom" {{ $jenisFilter == 'Custom' ? 'selected' : '' }}>Custom Range</option>
+						</select>
+						<div class="col-auto d-print-none" name="pilihanFilter" id="pilihanFilter"></div>
+					</div>
+					<div class="mt-4 mb-2 input-group">
+						<div class="form-label mt-2 me-1">Start Date &nbsp:</div>
+						<input type="date" class="ms-2 form-control" name="startdate-filter" id="startdate-filter" disabled>
+					</div>
+					<div class="mt-2 input-group">
+						<div class="form-label mt-2 me-1">End Date &nbsp&nbsp&nbsp:</div>
+						<input type="date" class="ms-2 form-control" name="enddate-filter" id="enddate-filter" disabled>
+					</div>
+					<div class="col-auto d-print-none mt-5 w-100" name="btnFilter" id="btnFilter">
+						<button type="submit" class="btn btn-primary w-100">
+							<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-filter-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11.18 20.274l-2.18 .726v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414v3" /><path d="M15 19l2 2l4 -4" /></svg>
+							Confirm changes
+						</button>
+					</div>
+				</form>
+			</div>
+
+			
+			
+			
 		</div>
 
 		<div class="col-md-9">
@@ -140,17 +141,7 @@
 										<div class="d-flex align-items-center mb-1">
 											<div class="subheader">Current Wallet Balance</div>
 										</div>
-										<div class="h3 text-muted">Rp. {{ number_format(floatval(1000000), 0, ',', '.')}}</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-4">
-								<div class="card">
-									<div class="card-body">
-										<div class="d-flex align-items-center mb-1">
-											<div class="subheader">Total Period Expenses</div>
-										</div>
-										<div class="h3 text-red">- Rp. {{ number_format(floatval(1000000), 0, ',', '.')}}</div>
+										<div id ="current-balance" class="h3 text-strong">Rp. {{ number_format(floatval(1000000), 0, ',', '.')}}</div>
 									</div>
 								</div>
 							</div>
@@ -160,7 +151,17 @@
 										<div class="d-flex align-items-center mb-1">
 											<div class="subheader">Total Period Income</div>
 										</div>
-										<div class="h3 text-green">+ Rp. {{ number_format(floatval(1000000), 0, ',', '.')}}</div>
+										<div id="total-income" class="h3 text-green">+ Rp. {{ number_format(floatval(1000000), 0, ',', '.')}}</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<div class="card">
+									<div class="card-body">
+										<div class="d-flex align-items-center mb-1">
+											<div class="subheader">Total Period Expenses</div>
+										</div>
+										<div id="total-expenses" class="h3 text-red">- Rp. {{ number_format(floatval(1000000), 0, ',', '.')}}</div>
 									</div>
 								</div>
 							</div>
@@ -187,20 +188,21 @@
                             {{$headerItem['jumlah']}}
                             {{$headerItem['catatan']}}
                             {{$headerItem['total_jumlah']}} 
+                            {{$headerItem['tanggal']}} 
                             @if(isset($headerItem['id_pemasukan']))
-                                {{$headerItem['kategori_pemasukan']['nama_kategori_pemasukan']}} income incomes pemasukan
+                                {{$headerItem['kategori_pemasukan']['nama_kategori_pemasukan']}}income income incomes pemasukan
                             @else
-                                {{$headerItem['kategori_pengeluaran']['nama_kategori_pengeluaran']}}
+                                {{$headerItem['kategori_pengeluaran']['nama_kategori_pengeluaran']}}expense
                                 {{$headerItem['id_kategori_pengeluaran']}} expense expenses pengeluaran
                             @endif
 							@if ($item['total_jumlah'] < 0)
-																	<strong class="amount text-red">- Rp. {{ number_format(abs(floatval($item['total_jumlah'])), 0, ',', '.') }}</strong>
+																	<strong class="amount">- Rp. {{ number_format(abs(floatval($item['total_jumlah'])), 0, ',', '.') }}</strong>
 																@else
-																	<strong class="amount text-green">+ Rp. {{ number_format(floatval($item['total_jumlah']), 0, ',', '.') }}</strong>
+																	<strong class="amount">+ Rp. {{ number_format(floatval($item['total_jumlah']), 0, ',', '.') }}</strong>
 																@endif
                         @endforeach
 														</span>
-														<div class="row  mt-2 text-muted">
+														<div class="row  mt-2">
 															<div class="col">
 																<strong>{{ \Carbon\Carbon::parse($item['tanggal'])->translatedFormat('d F Y') }}</strong>
 															</div>
@@ -225,9 +227,10 @@
 													{{ \Carbon\Carbon::parse($item['tanggal'])->translatedFormat('d F Y') }}
 													{{$item['jumlah']}}
 													{{$item['catatan']}}
+													{{$item['tanggal']}}
 													{{$item['total_jumlah']}} 
 													{{$item['id_kategori_pemasukan']}}
-													{{$item['kategori_pemasukan']['nama_kategori_pemasukan']}} income incomes pemasukan
+													{{$item['kategori_pemasukan']['nama_kategori_pemasukan']}}income income incomes pemasukan
 													
 													</span>
 																		<div class="row">
@@ -289,8 +292,9 @@
 													{{$item['jumlah']}}
 													{{$item['catatan']}}
 													{{$item['total_jumlah']}} 
+													{{$item['tanggal']}} 
 													
-													{{$item['kategori_pengeluaran']['nama_kategori_pengeluaran']}}
+													{{$item['kategori_pengeluaran']['nama_kategori_pengeluaran']}}expense
 													{{$item['id_kategori_pengeluaran']}} expense expenses pengeluaran
 													
 													</span>
@@ -554,6 +558,155 @@
 </script>
 
 <script>
+	document.addEventListener("DOMContentLoaded", function() {
+    	const jenisSelect = document.getElementById("jenisFilter");
+    	const pilihanDiv = document.getElementById("pilihanFilter");
+		const inputStartDate = document.getElementById("startdate-filter");
+		const inputEndDate = document.getElementById("enddate-filter");
+		const filterValue = '{{ $filterValue }}';
+		const startDate = '{{ $startDate }}';
+		const endDate = '{{ $endDate }}';
+
+    
+
+		function handleChange() {
+    const selectedOption = jenisSelect.value;
+    // Clear existing content
+    pilihanDiv.innerHTML = "";
+
+    if (selectedOption === "Mingguan") {
+        // Create input type week
+        const inputWeek = document.createElement("input");
+        inputWeek.type = "week";
+        inputWeek.classList.add("form-control");
+        inputWeek.setAttribute("name", "filterMingguan");
+        inputWeek.setAttribute("id", "filterMingguan");
+        inputWeek.setAttribute("required", "required");
+		pilihanDiv.appendChild(inputWeek);
+		if (filterValue) {
+			inputWeek.value = filterValue;
+			inputStartDate.value = startDate;
+			inputEndDate.value = endDate;
+		}
+    } else if (selectedOption === "Bulanan") {
+        // Create input type month
+        const inputMonth = document.createElement("input");
+        inputMonth.type = "month";
+        inputMonth.classList.add("form-control");
+        inputMonth.setAttribute("name", "filterBulanan");
+        inputMonth.setAttribute("id", "filterBulanan");
+        inputMonth.setAttribute("required", "required");
+        pilihanDiv.appendChild(inputMonth);
+		if (filterValue) {
+			inputMonth.value = filterValue;
+			inputStartDate.value = startDate;
+			inputEndDate.value = endDate;
+		}
+    } else if (selectedOption === "Tahunan") {
+        // Create input type number for year
+        const inputYear = document.createElement("input");
+        inputYear.type = "number";
+        inputYear.min = "1900";
+        inputYear.max = "2099";
+        inputYear.step = "1";
+        inputYear.classList.add("form-control");
+        inputYear.setAttribute("name", "filterTahunan");
+        inputYear.setAttribute("id", "filterTahunan");
+        inputYear.setAttribute("required", "required");
+		inputYear.setAttribute("placeholder", "2024");
+		pilihanDiv.appendChild(inputYear);
+		if (filterValue) {
+			inputYear.value = filterValue;
+			inputStartDate.value = startDate;
+			inputEndDate.value = endDate;
+		} else {
+			inputYear.value = "2024";
+		}
+	} else if (selectedOption === "Custom") {
+		
+
+		// Enable the start and end date inputs
+		inputStartDate.disabled = false;
+		inputEndDate.disabled = false;
+		if (filterValue) {
+			inputStartDate.value = startDate;
+			inputEndDate.value = endDate;
+		}
+
+			
+	} else if (selectedOption === "Kisaran") {
+        // Create select with options for Kisaran
+        const selectKisaran = document.createElement("select");
+        selectKisaran.classList.add("form-select");
+        selectKisaran.setAttribute("name", "filterKisaran");
+        selectKisaran.setAttribute("id", "filterKisaran");
+        selectKisaran.setAttribute("required", "required");
+
+        const options = [
+            { text: "Semua", value: "semuaHari" },
+            { text: "Hari Ini", value: "iniHari" },
+            { text: "7 Hari", value: "7Hari" },
+            { text: "30 Hari", value: "30Hari" },
+            { text: "90 Hari", value: "90Hari" },
+            { text: "12 Bulan", value: "12Bulan" },
+        ];
+
+        options.forEach(optionData => {
+            const option = document.createElement("option");
+            option.text = optionData.text;
+            option.value = optionData.value;
+
+            // Check if option value matches the passed value
+            if (option.value === filterValue) {
+                option.selected = true;
+				inputStartDate.value = startDate;
+				inputEndDate.value = endDate;
+            }
+
+            selectKisaran.add(option);
+        });
+
+        pilihanDiv.appendChild(selectKisaran);
+    }
+}
+
+function handleSubmit(event) {
+    event.preventDefault(); // Prevent form submission
+
+    const selectedOption = jenisSelect.value;
+
+    if (selectedOption === "Mingguan") {
+        const filterMingguan = document.getElementById("filterMingguan").value;
+        // Now you have the value of the selected week, you can do whatever you need with it
+    } else if (selectedOption === "Bulanan") {
+        const filterBulanan = document.getElementById("filterBulanan").value;
+        // Now you have the value of the selected month, you can do whatever you need with it
+    } else if (selectedOption === "Tahunan") {
+        const filterTahunan = document.getElementById("filterTahunan").value;
+        // Now you have the value of the selected year, you can do whatever you need with it
+    } else if (selectedOption === "Kisaran") {
+        const filterKisaran = document.getElementById("filterKisaran").value;
+        // Now you have the value of the selected Kisaran option, you can do whatever you need with it
+    }
+
+    // Now you can submit the form data, or perform any other action based on the selected option
+}
+
+
+
+		// Add event listener for change event
+		jenisSelect.addEventListener("change", handleChange);
+
+		// Trigger change event on page load
+		const initialEvent = new Event("change");
+		jenisSelect.dispatchEvent(initialEvent);
+	});
+
+	
+</script>
+
+
+<script>
     document.addEventListener('DOMContentLoaded', function () {
 
 		const spinner = document.getElementById("spinner");
@@ -745,53 +898,164 @@
         }
     });
 
+	// Hide all elements with class .dataTables_filter
+// Hide all elements with class .dataTables_filter
+$('.dataTables_filter').each(function() {
+    $(this).attr("hidden", "hidden");
+});
+
+// Event listener for input change in searchRecord
+$('#searchRecord').on('input', function() {
+    // Get the value from searchRecord input
+    var searchValue = $(this).val();
+    
+    // Clear the DataTables filter input if searchValue is empty
+    if (searchValue === '') {
+        $('.dataTables_filter input[type="search"]').val('').trigger('input');
+        return; // Exit the function early
+    }
+    
+    // Get the value of the existing search input
+    var existingSearchValue = $('.dataTables_filter input[type="search"]').val();
+    
+    // Concatenate space and searchValue if existing value is not empty
+    var updatedValue = existingSearchValue ? existingSearchValue + ' ' + searchValue : searchValue;
+    
+    // Set the updated value to all elements with class .dataTables_filter
+    $('.dataTables_filter input[type="search"]').val(updatedValue).trigger('input');
+});
+
+
+
+	
 	function updateHeaderTotals() {
-            // Clear previous totals
-            $('.header-total').each(function() {
-                $(this).text('');
-            });
+    console.log('Updating header totals...');
 
-            var totals = {};
+    // Clear previous totals
+    $('.header-total').each(function() {
+        $(this).text('');
+    });
 
-            table.rows({ search: 'applied' }).every(function(rowIdx, tableLoop, rowLoop) {
-                var data = this.data();
-                var date = $(data[0]).find('.item-data').data('date');
-                var amount = parseFloat($(data[0]).find('.item-data').data('amount'));
+    var totals = {};
+    var totalIncome = 0;
+    var totalExpense = 0;
 
-                if (!totals[date]) {
-                    totals[date] = { income: 0, expense: 0 };
-                }
-                if ($(data[0]).find('.item-data').data('id-pemasukan') !== undefined) {
-                    totals[date].income += amount;
-                } else {
-                    totals[date].expense += amount;
-                }
-            });
+    table.rows({ search: 'applied' }).every(function(rowIdx, tableLoop, rowLoop) {
+        var data = this.data();
+        var date = $(data[0]).find('.item-data').data('date');
+        var amount = parseFloat($(data[0]).find('.item-data').data('amount'));
 
-            $('.header-total').each(function() {
-                var date = $(this).closest('tr').find('.item-data').data('date');
-                if (totals[date] !== undefined) {
-                    var netTotal = totals[date].income - Math.abs(totals[date].expense);
-                    if (netTotal < 0) {
-                        $(this).text(`- Rp. ${new Intl.NumberFormat('id-ID').format(Math.abs(netTotal))}`).addClass('text-red').removeClass('text-green');
-                    } else {
-                        $(this).text(`+ Rp. ${new Intl.NumberFormat('id-ID').format(netTotal)}`).addClass('text-green').removeClass('text-red');
-                    }
-                }
-            });
+        console.log('Processing row:', data, 'Date:', date, 'Amount:', amount);
+
+        if (!totals[date]) {
+            totals[date] = { income: 0, expense: 0 };
         }
+        if ($(data[0]).find('.item-data').data('amount') !== undefined && !isNaN(amount)) {
+            if ($(data[0]).find('.item-data').data('id-pemasukan') !== undefined) {
+                totals[date].income += amount;
+                totalIncome += amount;
+            } else {
+                totals[date].expense += amount;
+                totalExpense += amount;
+            }
+        }
+    });
 
-        // Call the function initially to set the totals
-        updateHeaderTotals();
+    console.log('Totals:', totals);
+    console.log('Total income:', totalIncome);
+    console.log('Total expense:', totalExpense);
 
-        // Update totals whenever the table is searched
-        table.on('search.dt', function() {
-            updateHeaderTotals();
-        });
+    $('.header-total').each(function() {
+        var date = $(this).closest('tr').find('.item-data').data('date');
+        if (totals[date] !== undefined) {
+            var netTotal = totals[date].income - Math.abs(totals[date].expense);
+            if (!isNaN(netTotal)) {
+                if (netTotal < 0) {
+                    $(this).text(`- Rp. ${new Intl.NumberFormat('id-ID').format(Math.abs(netTotal))}`).addClass('text-red').removeClass('text-green');
+                } else {
+                    $(this).text(`+ Rp. ${new Intl.NumberFormat('id-ID').format(netTotal)}`).addClass('text-green').removeClass('text-red');
+                }
+            }
+        }
+    });
+
+    // Update the current balance
+    $('#current-balance').text(`Rp. ${new Intl.NumberFormat('id-ID').format(totalIncome - Math.abs(totalExpense))}`);
+
+    // Update the total period expenses
+    $('#total-expenses').text(`- Rp. ${new Intl.NumberFormat('id-ID').format(Math.abs(totalExpense))}`).addClass('text-red');
+
+    // Update the total period income
+    $('#total-income').text(`+ Rp. ${new Intl.NumberFormat('id-ID').format(totalIncome)}`).addClass('text-green');
+}
+
+// Call the function initially to set the totals
+updateHeaderTotals();
+
+// Update totals whenever the table is searched
+table.on('search.dt', function() {
+    console.log('Table search event triggered...');
+    updateHeaderTotals();
+});
+
+// Add event listener to radio buttons
+$('input[type="radio"][name="record-type"]').change(function() {
+    var value = $(this).val();
+    console.log('Radio button value changed:', value);
+
+    // Reset category select options
+    $('.category-select').val('');
+
+    if (value === "1") {
+        // Disable both select elements
+        $('.category-select').prop('disabled', true);
+        table.search('').draw();
+    } else if (value === "2") {
+        // Enable income select and disable expense select
+        $('.income-category').prop('disabled', false);
+        $('.expense-category').prop('disabled', true);
+        table.search('Income').draw();
+    } else if (value === "3") {
+        // Enable expense select and disable income select
+        $('.income-category').prop('disabled', true);
+        $('.expense-category').prop('disabled', false);
+        table.search('Expense').draw();
+    }
+
+    // Call updateHeaderTotals after changing radio buttons
+    updateHeaderTotals();
+});
+
+// Add event listener to select elements
+$('.category-select').change(function() {
+    var recordType = $('input[type="radio"][name="record-type"]:checked').val();
+    var category = $(this).val();
+    console.log('Select element value changed:', category);
+
+    table.search(category).draw();
+	updateHeaderTotals();
+});
+
+// Add event listener to date filter
+
     // Custom search function
     
 });
+$('.btn-resetfilter').on('click', function(e) {
+        e.preventDefault(); // Prevent default link behavior
 
+        // Reset searchRecord input value to an empty string
+        $('#searchRecord').val('');
+
+        // Set the radio button with the value '1' to be checked
+        $('input[name="record-type"][value="1"]').prop('checked', true);
+
+        // Optionally, you can also disable the category selects
+        $('.category-select').prop('disabled', true);
+
+        // Trigger the input event on searchRecord to update DataTables filter
+        $('#searchRecord').trigger('input');
+    });
 
 </script>
 

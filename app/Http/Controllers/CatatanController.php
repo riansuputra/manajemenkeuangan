@@ -25,6 +25,13 @@ class CatatanController extends Controller
     }
 
     public function index(Request $request) {
+        $jenisFilter = session('jenisFilter', 'Kisaran');
+        $filterValue = session('filterValue', ($jenisFilter == 'Kisaran') ? 'semuaHari' : null);
+        $filterValue2 = session('filterValue2');
+
+        // dd($jenisFilter, $filterValue, $filterValue2);
+
+
         $responses = Http::pool(fn (Pool $pool) => [
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/pemasukansWeb'),
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/pengeluaransWeb'),
@@ -40,7 +47,18 @@ class CatatanController extends Controller
             $kategoriPemasukanData = collect($responses[2]->json()['data']['kategoriPemasukan']);
             $kategoriPengeluaranData = collect($responses[3]->json()['data']['kategoriPengeluaran']);
 
-            $combinedData = $pemasukanData->merge($pengeluaranData);
+            $combinedData3 = $pemasukanData->merge($pengeluaranData);
+
+            // dd($combinedData3);
+
+            $combinedData2 = $this->applyDateFilters($combinedData3, $jenisFilter, $filterValue, $filterValue2);
+
+            $startDate = $combinedData2['startDate']; // Access start date
+            $endDate = $combinedData2['endDate'];
+
+            $combinedData = $combinedData2['data'];
+
+            // dd($combinedData);
 
             // dd($kategoriPemasukanData, $kategoriPengeluaranData);
 
@@ -77,18 +95,147 @@ class CatatanController extends Controller
             // dd($summedData);
             
             
-            // dd($summedData);
+            // dd($kategoriPemasukanData);
     
             return view('catatan.index', [
                 'groupedData' => $groupedData,
                 'combinedData' => $combinedData,
                 'summedData' => $summedData,
+                'startDate' => $startDate,
+                'endDate' => $endDate,
+                'jenisFilter' => $jenisFilter,
+                'filterValue' => $filterValue,
                 'kategoriPemasukanData' => $kategoriPemasukanData,
                 'kategoriPengeluaranData' => $kategoriPengeluaranData,
             ]);
         } else {
             abort(500, 'Failed to fetch data from API');
         }
+    }
+
+    private function applyDateFilters($data, $jenisFilter, $filterValue, $filterValue2 = null) {
+        $startDate = null;
+        $endDate = null;
+        switch ($jenisFilter) {
+            case 'Mingguan':
+                // Apply weekly date filter
+                list($year, $week) = explode('-W', $filterValue);
+                
+                // Set the date to the first day of the specified week
+                $startDate = Carbon::now()->setISODate($year, $week)->startOfWeek()->toDateString();
+                $endDate = Carbon::now()->setISODate($year, $week)->endOfWeek()->toDateString();
+                
+                $data = $data->whereBetween('tanggal', [$startDate, $endDate]);
+                break;
+            case 'Bulanan':
+                // Apply monthly date filter
+                list($year, $month) = explode('-', $filterValue);
+                $startDate = Carbon::createFromDate($year, $month, 1)->startOfMonth()->toDateString();
+                $endDate = Carbon::createFromDate($year, $month, 1)->endOfMonth()->toDateString();
+                $data = $data->whereBetween('tanggal', [
+                    $startDate,
+                    $endDate
+                ]);
+                break;
+            case 'Custom':
+                // Apply custom date range filter
+                $startDate = Carbon::createFromFormat('Y-m-d', $filterValue)->toDateString();
+                $endDate = Carbon::createFromFormat('Y-m-d', $filterValue2)->toDateString();
+                $data = $data->whereBetween('tanggal', [
+                    $startDate,
+                    $endDate
+                ]);
+                break;
+            case 'Tahunan':
+                // Apply yearly date filter
+                $year = $filterValue;
+                $startDate = Carbon::createFromDate($year, 1, 1)->startOfYear()->toDateString();
+                $endDate = Carbon::createFromDate($year, 12, 31)->endOfYear()->toDateString();
+                $data = $data->whereBetween('tanggal', [
+                    $startDate,
+                    $endDate
+                ]);
+                break;
+            case 'Kisaran':
+                // Apply custom date range filter
+                if ($filterValue === 'semuaHari') {
+                    // Filter all data without specific date range
+                    // No additional filtering needed here
+                } elseif ($filterValue === 'iniHari') {
+                    $startDate = Carbon::now()->toDateString();
+                    $endDate = Carbon::now()->toDateString();
+                    $data = $data->where('tanggal', Carbon::now()->toDateString());
+                } elseif ($filterValue === '7Hari') {
+                    $startDate = Carbon::now()->subDays(7)->toDateString();
+                    $endDate = Carbon::now()->toDateString();
+                    $data = $data->whereBetween('tanggal', [
+                        $startDate,
+                        $endDate
+                    ]);
+                } elseif ($filterValue === '30Hari') {
+                    $startDate = Carbon::now()->subDays(30)->toDateString();
+                    $endDate = Carbon::now()->toDateString();
+                    $data = $data->whereBetween('tanggal', [
+                        $startDate,
+                        $endDate
+                    ]);
+                } elseif ($filterValue === '90Hari') {
+                    $startDate = Carbon::now()->subDays(90)->toDateString();
+                    $endDate = Carbon::now()->toDateString();
+                    $data = $data->whereBetween('tanggal', [
+                        $startDate,
+                        $endDate
+                    ]);
+                } elseif ($filterValue === '12Bulan') {
+                    $startDate = Carbon::now()->subMonths(12)->toDateString();
+                    $endDate = Carbon::now()->toDateString();
+                    $data = $data->whereBetween('tanggal', [
+                        $startDate,
+                        $endDate
+                    ]);
+                }
+                break;
+        }
+
+        // dd($startDate, $endDate);
+    
+        return ['data' => $data, 'startDate' => $startDate, 'endDate' => $endDate];
+    }
+
+    public function filter(Request $request)
+    {
+        // Retrieve data from the submitted form
+        $jenisFilter = $request->input('jenisFilter', 'Kisaran');
+
+        $filterValue = null;
+        $filterValue2 = null;
+        switch ($jenisFilter) {
+            case 'Mingguan':
+                $filterValue = $request->input('filterMingguan');
+                break;
+            case 'Bulanan':
+                $filterValue = $request->input('filterBulanan');
+                break;
+            case 'Tahunan':
+                $filterValue = $request->input('filterTahunan');
+                break;
+            case 'Custom':
+                $filterValue = $request->input('startdate-filter');
+                $filterValue2 = $request->input('enddate-filter');
+                break;
+            case 'Kisaran':
+                $filterValue = $request->input('filterKisaran', 'semuaHari');
+                break;
+        }
+
+        // Perform any processing with the form data if needed
+
+        // Redirect back to the index view with the form data stored in session
+        return redirect()->route('catatanHarian')->with([
+            'jenisFilter' => $jenisFilter,
+            'filterValue' => $filterValue,
+            'filterValue2' => $filterValue2,
+        ]);
     }
 
     private function fetchData(Request $request, $resource)

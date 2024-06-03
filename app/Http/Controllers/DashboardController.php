@@ -51,11 +51,19 @@ class DashboardController extends Controller
         });
     
         // Filter data based on user ID
-        $filteredData = $combinedData->where('user_id', $request->auth['user']['user_id']);
+        $filteredData2 = $combinedData->where('user_id', $request->auth['user']['user_id']);
         
 
         // Apply date-based filters
-        $filteredData = $this->applyDateFilters($filteredData, $jenisFilter, $filterValue);
+        $filteredData1 = $this->applyDateFilters($filteredData2, $jenisFilter, $filterValue);
+
+        dd($filteredData1);
+
+
+        $filteredData = $filteredData1['data'];
+
+        // dd($filteredData);
+
 
         $alldata = $this->attachCategoryInfo($filteredData, $kategoriPemasukanData, $kategoriPengeluaranData);
         // dd($alldata);
@@ -125,12 +133,16 @@ class DashboardController extends Controller
     
     
     private function applyDateFilters($data, $jenisFilter, $filterValue) {
+        $startDate = null;
+        $endDate = null;
         switch ($jenisFilter) {
             case 'Mingguan':
                 // Apply weekly date filter
+                $startDate = Carbon::now()->startOfWeek()->toDateString();
+                $endDate = Carbon::now()->endOfWeek()->toDateString();
                 $data = $data->whereBetween('tanggal', [
-                    Carbon::now()->startOfWeek()->toDateString(),
-                    Carbon::now()->endOfWeek()->toDateString()
+                    $startDate, $endDate
+                    
                 ]);
                 break;
             case 'Bulanan':
@@ -159,32 +171,42 @@ class DashboardController extends Controller
                     // Filter all data without specific date range
                     // No additional filtering needed here
                 } elseif ($filterValue === 'iniHari') {
+                    $startDate = Carbon::now()->toDateString();
+                    $endDate = Carbon::now()->toDateString();
                     $data = $data->where('tanggal', Carbon::now()->toDateString());
                 } elseif ($filterValue === '7Hari') {
+                    $startDate = Carbon::now()->subDays(7)->toDateString();
+                    $endDate = Carbon::now()->toDateString();
                     $data = $data->whereBetween('tanggal', [
-                        Carbon::now()->subDays(7)->toDateString(),
-                        Carbon::now()->toDateString()
+                        $startDate,
+                        $endDate
                     ]);
                 } elseif ($filterValue === '30Hari') {
+                    $startDate = Carbon::now()->subDays(30)->toDateString();
+                    $endDate = Carbon::now()->toDateString();
                     $data = $data->whereBetween('tanggal', [
-                        Carbon::now()->subDays(30)->toDateString(),
-                        Carbon::now()->toDateString()
+                        $startDate,
+                        $endDate
                     ]);
                 } elseif ($filterValue === '90Hari') {
+                    $startDate = Carbon::now()->subDays(90)->toDateString();
+                    $endDate = Carbon::now()->toDateString();
                     $data = $data->whereBetween('tanggal', [
-                        Carbon::now()->subDays(90)->toDateString(),
-                        Carbon::now()->toDateString()
+                        $startDate,
+                        $endDate
                     ]);
                 } elseif ($filterValue === '12Bulan') {
+                    $startDate = Carbon::now()->subMonths(12)->toDateString();
+                    $endDate = Carbon::now()->toDateString();
                     $data = $data->whereBetween('tanggal', [
-                        Carbon::now()->subMonths(12)->toDateString(),
-                        Carbon::now()->toDateString()
+                        $startDate,
+                        $endDate
                     ]);
                 }
                 break;
         }
     
-        return $data;
+        return ['data' => $data, 'startDate' => $startDate, 'endDate' => $endDate];
     }
     
 
