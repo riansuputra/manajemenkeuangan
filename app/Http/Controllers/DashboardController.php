@@ -9,13 +9,153 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Pagination\Paginator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Http\Client\Pool;
 
 class DashboardController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    private function getHeaders($request) {
+        return [
+            'Accept' => 'application/json',
+            'x-api-key' => env('API_KEY'),
+            'Authorization' => 'Bearer ' . $request->auth['token'],
+            'user-type' => $request->auth['user_type'],
+        ];
+    }
+
     public function index(Request $request) {
+        $jenisFilter = session('jenisFilter', 'Kisaran');
+        $filterValue = session('filterValue', ($jenisFilter == 'Kisaran') ? 'semuaHari' : null);
+        $filterValue2 = session('filterValue2');
+
+        // dd($jenisFilter, $filterValue, $filterValue2);
+
+
+        $responses = Http::pool(fn (Pool $pool) => [
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/pemasukansWeb'),
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/pengeluaransWeb'),
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/kategori_pemasukansWeb'),
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/kategori_pengeluaransWeb')
+        ]);
+
+        // dd($responses);
+    
+        if ($responses[0]->successful() && $responses[1]->successful() && $responses[2]->successful() && $responses[3]->successful()) {
+            $pemasukanData = collect($responses[0]->json()['data']['pemasukan']);
+            $pengeluaranData = collect($responses[1]->json()['data']['pengeluaran']);
+            $kategoriPemasukanData = collect($responses[2]->json()['data']['kategoriPemasukan']);
+            $kategoriPengeluaranData = collect($responses[3]->json()['data']['kategoriPengeluaran']);
+
+            $combinedData3 = $pemasukanData->merge($pengeluaranData);
+
+            $filteredPemasukan = $this->applyDateFilters($pemasukanData, $jenisFilter, $filterValue, $filterValue2);
+            $filteredPengeluaran = $this->applyDateFilters($pengeluaranData, $jenisFilter, $filterValue, $filterValue2);
+            $groupedPemasukanData = $this->groupByCategoryPemasukan($filteredPemasukan['data']);
+            $groupedPengeluaranData = $this->groupByCategoryPengeluaran($filteredPengeluaran['data']);
+            // dd($combinedData3);
+            
+            $combinedData2 = $this->applyDateFilters($combinedData3, $jenisFilter, $filterValue, $filterValue2);
+            $groupedSemuaData = $this->groupByCategory($combinedData2['data']);
+
+            $startDate = $combinedData2['startDate']; // Access start date
+            $endDate = $combinedData2['endDate'];
+
+            $combinedData = $combinedData2['data'];
+
+            // dd($groupedSemuaData);
+
+            // dd($kategoriPemasukanData, $kategoriPengeluaranData);
+
+            $combinedData = $combinedData->sort(function ($a, $b) {
+                // Get the created_at timestamp for $a
+                $aTimestamp = strtotime($a['created_at']);
+            
+                // Get the created_at timestamp for $b
+                $bTimestamp = strtotime($b['created_at']);
+            
+                // Compare the timestamps and sort in descending order
+                return $bTimestamp - $aTimestamp;
+            });
+
+            $sortedData = $combinedData->sortByDesc('tanggal');
+
+            // dd($tanggalData);
+
+
+            // dd($groupedData);
+
+            
+            $summary = $this->calculateSummary($sortedData);
+            
+            
+            // dd($kategoriPemasukanData);
+    
+            return view('dashboard.index', [
+                'jenisFilter' => $jenisFilter,
+                'filterValue' => $filterValue,
+                'summary' => $summary,
+                'sortedData' => $sortedData,
+                'combinedData' => $combinedData,
+                'groupedSemuaData' => $groupedSemuaData,
+                'groupedPemasukanData' => $groupedPemasukanData,
+                'groupedPengeluaranData' => $groupedPengeluaranData,
+                'startDate' => $startDate,
+                'endDate' => $endDate,
+                'jenisFilter' => $jenisFilter,
+                'filterValue' => $filterValue,
+                'kategoriPemasukanData' => $kategoriPemasukanData,
+                'kategoriPengeluaranData' => $kategoriPengeluaranData,
+            ]);
+        } else {
+            abort(500, 'Failed to fetch data from API');
+        }
+    }
+
+    private function groupByCategoryPemasukan($data)
+    {
+        // dd($data);
+        return $data->groupBy(function ($item) {
+            return $item['kategori_pemasukan']['nama_kategori_pemasukan']; // Access nested category name for income
+        })->map(function ($items) {
+            $totalJumlah = $items->sum('jumlah');
+            $jumlah_catatan = $items->count();
+            return [
+                'kategori' => $items->first()['kategori_pemasukan']['nama_kategori_pemasukan'], // Access nested category name for income
+                'total_jumlah' => $totalJumlah,
+                'jumlah_catatan' => $jumlah_catatan,
+            ];
+        });
+    }
+
+    private function groupByCategory($data)
+    {
+        return $data->groupBy(function ($item) {
+            return isset($item['id_pemasukan']) ? 'Pemasukan' : 'Pengeluaran';
+            // dd($data);
+        })->map(function ($items, $key) {
+            $totalJumlah = $items->sum('jumlah');
+            return [
+                'jenis' => $key,
+                'total_jumlah' => $totalJumlah,
+            ];
+        });
+    }
+
+    private function groupByCategoryPengeluaran($data)
+{
+    return $data->groupBy(function ($item) {
+        return $item['kategori_pengeluaran']['nama_kategori_pengeluaran']; // Access nested category name for expenses
+    })->map(function ($items) {
+        $totalJumlah = $items->sum('jumlah');
+        $jumlah_catatan = $items->count();
+        return [
+            'kategori' => $items->first()['kategori_pengeluaran']['nama_kategori_pengeluaran'], // Access nested category name for expenses
+            'total_jumlah' => $totalJumlah,
+            'jumlah_catatan' => $jumlah_catatan,
+        ];
+    });
+}
+
+    public function indexs(Request $request) {
         // Retrieve filter preferences from session or set defaults
         $jenisFilter = session('jenisFilter', 'Kisaran');
         $filterValue = session('filterValue', ($jenisFilter == 'Kisaran') ? 'semuaHari' : null);
@@ -57,7 +197,7 @@ class DashboardController extends Controller
         // Apply date-based filters
         $filteredData1 = $this->applyDateFilters($filteredData2, $jenisFilter, $filterValue);
 
-        dd($filteredData1);
+        // dd($filteredData1);
 
 
         $filteredData = $filteredData1['data'];
@@ -132,37 +272,47 @@ class DashboardController extends Controller
     }
     
     
-    private function applyDateFilters($data, $jenisFilter, $filterValue) {
+    private function applyDateFilters($data, $jenisFilter, $filterValue, $filterValue2 = null) {
         $startDate = null;
         $endDate = null;
         switch ($jenisFilter) {
             case 'Mingguan':
                 // Apply weekly date filter
-                $startDate = Carbon::now()->startOfWeek()->toDateString();
-                $endDate = Carbon::now()->endOfWeek()->toDateString();
-                $data = $data->whereBetween('tanggal', [
-                    $startDate, $endDate
-                    
-                ]);
+                list($year, $week) = explode('-W', $filterValue);
+                
+                // Set the date to the first day of the specified week
+                $startDate = Carbon::now()->setISODate($year, $week)->startOfWeek()->toDateString();
+                $endDate = Carbon::now()->setISODate($year, $week)->endOfWeek()->toDateString();
+                
+                $data = $data->whereBetween('tanggal', [$startDate, $endDate]);
                 break;
             case 'Bulanan':
                 // Apply monthly date filter
                 list($year, $month) = explode('-', $filterValue);
-                $startDate = Carbon::createFromDate($year, $month, 1)->startOfMonth();
-                $endDate = Carbon::createFromDate($year, $month, 1)->endOfMonth();
+                $startDate = Carbon::createFromDate($year, $month, 1)->startOfMonth()->toDateString();
+                $endDate = Carbon::createFromDate($year, $month, 1)->endOfMonth()->toDateString();
                 $data = $data->whereBetween('tanggal', [
-                    $startDate->toDateString(),
-                    $endDate->toDateString()
+                    $startDate,
+                    $endDate
+                ]);
+                break;
+            case 'Custom':
+                // Apply custom date range filter
+                $startDate = Carbon::createFromFormat('Y-m-d', $filterValue)->toDateString();
+                $endDate = Carbon::createFromFormat('Y-m-d', $filterValue2)->toDateString();
+                $data = $data->whereBetween('tanggal', [
+                    $startDate,
+                    $endDate
                 ]);
                 break;
             case 'Tahunan':
                 // Apply yearly date filter
                 $year = $filterValue;
-                $startDate = Carbon::createFromDate($year, 1, 1)->startOfYear();
-                $endDate = Carbon::createFromDate($year, 12, 31)->endOfYear();
+                $startDate = Carbon::createFromDate($year, 1, 1)->startOfYear()->toDateString();
+                $endDate = Carbon::createFromDate($year, 12, 31)->endOfYear()->toDateString();
                 $data = $data->whereBetween('tanggal', [
-                    $startDate->toDateString(),
-                    $endDate->toDateString()
+                    $startDate,
+                    $endDate
                 ]);
                 break;
             case 'Kisaran':
@@ -205,8 +355,46 @@ class DashboardController extends Controller
                 }
                 break;
         }
+
+        // dd($startDate, $endDate);
     
         return ['data' => $data, 'startDate' => $startDate, 'endDate' => $endDate];
+    }
+
+    public function filter(Request $request)
+    {
+        // Retrieve data from the submitted form
+        $jenisFilter = $request->input('jenisFilter', 'Kisaran');
+
+        $filterValue = null;
+        $filterValue2 = null;
+        switch ($jenisFilter) {
+            case 'Mingguan':
+                $filterValue = $request->input('filterMingguan');
+                break;
+            case 'Bulanan':
+                $filterValue = $request->input('filterBulanan');
+                break;
+            case 'Tahunan':
+                $filterValue = $request->input('filterTahunan');
+                break;
+            case 'Custom':
+                $filterValue = $request->input('startdate-filter');
+                $filterValue2 = $request->input('enddate-filter');
+                break;
+            case 'Kisaran':
+                $filterValue = $request->input('filterKisaran', 'semuaHari');
+                break;
+        }
+
+        // Perform any processing with the form data if needed
+
+        // Redirect back to the index view with the form data stored in session
+        return redirect()->route('dashboard')->with([
+            'jenisFilter' => $jenisFilter,
+            'filterValue' => $filterValue,
+            'filterValue2' => $filterValue2,
+        ]);
     }
     
 
@@ -281,35 +469,7 @@ class DashboardController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function filter(Request $request)
-    {
-        // Retrieve data from the submitted form
-        $jenisFilter = $request->input('jenisFilter', 'Kisaran');
-
-        $filterValue = null;
-        switch ($jenisFilter) {
-            case 'Mingguan':
-                $filterValue = $request->input('filterMingguan');
-                break;
-            case 'Bulanan':
-                $filterValue = $request->input('filterBulanan');
-                break;
-            case 'Tahunan':
-                $filterValue = $request->input('filterTahunan');
-                break;
-            case 'Kisaran':
-                $filterValue = $request->input('filterKisaran', 'semuaHari');
-                break;
-        }
-
-        // Perform any processing with the form data if needed
-
-        // Redirect back to the index view with the form data stored in session
-        return redirect()->route('dashboard')->with([
-            'jenisFilter' => $jenisFilter,
-            'filterValue' => $filterValue,
-        ]);
-    }
+    
 
 
     /**

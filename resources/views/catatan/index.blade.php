@@ -339,7 +339,7 @@
 																							data-tanggal="{{$item['tanggal']}}" 
 																							data-createdat="{{$item['created_at']}}" 
 																							data-catatan="{{$item['catatan']}}">
-																							Documentation
+																							Edit
 																						</a>
 																						<a class="dropdown-item delete-btn" href="./changelog.html"
 																							data-bs-toggle="modal"
@@ -905,25 +905,7 @@ $('.dataTables_filter').each(function() {
 });
 
 // Event listener for input change in searchRecord
-$('#searchRecord').on('input', function() {
-    // Get the value from searchRecord input
-    var searchValue = $(this).val();
-    
-    // Clear the DataTables filter input if searchValue is empty
-    if (searchValue === '') {
-        $('.dataTables_filter input[type="search"]').val('').trigger('input');
-        return; // Exit the function early
-    }
-    
-    // Get the value of the existing search input
-    var existingSearchValue = $('.dataTables_filter input[type="search"]').val();
-    
-    // Concatenate space and searchValue if existing value is not empty
-    var updatedValue = existingSearchValue ? existingSearchValue + ' ' + searchValue : searchValue;
-    
-    // Set the updated value to all elements with class .dataTables_filter
-    $('.dataTables_filter input[type="search"]').val(updatedValue).trigger('input');
-});
+
 
 
 
@@ -998,6 +980,53 @@ table.on('search.dt', function() {
     updateHeaderTotals();
 });
 
+$('#searchRecord').on('input', function() {
+    // Get the value from searchRecord input
+    var searchValue = $(this).val();
+    
+    // Clear the DataTables filter input if searchValue is empty
+    if (searchValue === '') {
+        $('.dataTables_filter input[type="search"]').val('').trigger('input');
+		// Set the radio button with the value '1' to be checked
+        $('input[name="record-type"][value="1"]').prop('checked', true);
+
+        // Optionally, you can also disable the category selects
+        $('.category-select').prop('disabled', true);
+		updateHeaderTotals();
+
+        return; // Exit the function early
+    }
+    
+    // Get the value of the existing search input
+    var existingSearchValue = $('.dataTables_filter input[type="search"]').val();
+    
+    // Concatenate space and searchValue if existing value is not empty
+    var updatedValue = existingSearchValue ? existingSearchValue + ' ' + searchValue : searchValue;
+    
+    // Set the updated value to all elements with class .dataTables_filter
+    $('.dataTables_filter input[type="search"]').val(updatedValue).trigger('input');
+updateHeaderTotals();
+
+});
+
+$('.btn-resetfilter').on('click', function(e) {
+        e.preventDefault(); // Prevent default link behavior
+
+        // Reset searchRecord input value to an empty string
+        $('#searchRecord').val('');
+
+        // Set the radio button with the value '1' to be checked
+        $('input[name="record-type"][value="1"]').prop('checked', true);
+
+        // Optionally, you can also disable the category selects
+        $('.category-select').prop('disabled', true);
+
+        // Trigger the input event on searchRecord to update DataTables filter
+        $('#searchRecord').trigger('input');
+	updateHeaderTotals();
+
+    });
+
 // Add event listener to radio buttons
 $('input[type="radio"][name="record-type"]').change(function() {
     var value = $(this).val();
@@ -1041,21 +1070,7 @@ $('.category-select').change(function() {
     // Custom search function
     
 });
-$('.btn-resetfilter').on('click', function(e) {
-        e.preventDefault(); // Prevent default link behavior
 
-        // Reset searchRecord input value to an empty string
-        $('#searchRecord').val('');
-
-        // Set the radio button with the value '1' to be checked
-        $('input[name="record-type"][value="1"]').prop('checked', true);
-
-        // Optionally, you can also disable the category selects
-        $('.category-select').prop('disabled', true);
-
-        // Trigger the input event on searchRecord to update DataTables filter
-        $('#searchRecord').trigger('input');
-    });
 
 </script>
 

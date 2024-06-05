@@ -63,7 +63,7 @@ Route::middleware([])->group(function(){
     Route::middleware([App\Http\Middleware\UserMiddleware::class])->group(function(){
 
         Route::get('/catatan-test', [CatatanController::class, 'indextest']);
-        Route::get('/catatan-harian', [CatatanController::class, 'index'])->name('catatanHarian');
+        Route::get('/catatan', [CatatanController::class, 'index'])->name('catatanHarian');
         Route::get('/catatan-mingguan', [CatatanController::class, 'indexMingguan'])->name('catatanMingguan');
         Route::get('/catatan-bulanan', [CatatanController::class, 'indexBulanan'])->name('catatanBulanan');
         Route::get('/create', [CatatanController::class, 'create'])->name('tambah-matakuliah-post');

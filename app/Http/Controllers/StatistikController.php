@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Pagination\Paginator;
 use Carbon\Carbon;
+use Illuminate\Http\Client\Pool;
 
 class StatistikController extends Controller
 {
@@ -57,7 +58,7 @@ class StatistikController extends Controller
     $groupedPemasukanData = $this->groupByCategoryPemasukan($filteredPemasukan);
     $groupedPengeluaranData = $this->groupByCategoryPengeluaran($filteredPengeluaran);
 
-    // dd($groupedPengeluaranData);
+    dd($filteredPemasukan);
 
     return view('statistik.index', [
         'user' => $request->auth['user'],

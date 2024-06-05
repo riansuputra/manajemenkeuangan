@@ -11,21 +11,25 @@
 <div class="col-auto d-print-none" >
 	<form class="row"id="filterForm" action="{{ route('dashboard-filter') }}" method="POST">
 		@csrf
-		<div class="col-auto d-print-none">
-		<select class="form-select" name="jenisFilter" id="jenisFilter">
-    <option value="Kisaran" {{ $jenisFilter == 'Kisaran' ? 'selected' : '' }}>Kisaran</option>
-    <option value="Mingguan" {{ $jenisFilter == 'Mingguan' ? 'selected' : '' }}>Mingguan</option>
-    <option value="Bulanan" {{ $jenisFilter == 'Bulanan' ? 'selected' : '' }}>Bulanan</option>
-    <option value="Tahunan" {{ $jenisFilter == 'Tahunan' ? 'selected' : '' }}>Tahunan</option>
-</select>
+		<div class="col-auto d-print-none input-group">
+					<select class="form-select" name="jenisFilter" id="jenisFilter">
+				<option value="Kisaran" {{ $jenisFilter == 'Kisaran' ? 'selected' : '' }}>Kisaran</option>
+				<option value="Mingguan" {{ $jenisFilter == 'Mingguan' ? 'selected' : '' }}>Mingguan</option>
+				<option value="Bulanan" {{ $jenisFilter == 'Bulanan' ? 'selected' : '' }}>Bulanan</option>
+				<option value="Tahunan" {{ $jenisFilter == 'Tahunan' ? 'selected' : '' }}>Tahunan</option>
+				<option value="Custom" {{ $jenisFilter == 'Custom' ? 'selected' : '' }}>Custom Range</option>
+			</select>
 
-		</div>
 		<div class="col-auto d-print-none" name="pilihanFilter" id="pilihanFilter"></div>
+						<input type="date" class="form-control" name="startdate-filter" id="startdate-filter" hidden>
+						<input type="date" class="form-control" name="enddate-filter" id="enddate-filter" hidden>
 		<div class="col-auto d-print-none" name="btnFilter" id="btnFilter">
 			<button type="submit" class="btn w-100 btn-icon" aria-label="Tabler">
 				<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-filter-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11.18 20.274l-2.18 .726v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414v3" /><path d="M15 19l2 2l4 -4" /></svg>
 			</button>
 		</div>
+		</div>
+
 	</form>
 </div>
 <div class="col-auto ms-auto d-print-none">
@@ -56,11 +60,18 @@
                             		</span>
                           		</div>
                           		<div class="col">
-                            		<div class="subheader mb-1">
-                              			Total Catatan
-                            		</div>
-                            		<div class="text-muted">
-                              			{{$summary['catTotal']}} Catatan
+								  	<div class="d-flex align-items-center">
+										<div class="text-muted">Total Saldo</div>
+										<div class="ms-auto lh-1">
+											<div class="dropdown">
+												<a class="text-muted">
+													{{$summary['catTotal']}} Catatan
+												</a>
+											</div>
+										</div>
+									</div>
+                            		<div class="h2 m-0 text-muted">
+										Rp. {{ number_format(floatval($summary['saldo']), 0, ',', '.')}}
                             		</div>
                           		</div>
                         	</div>
@@ -78,11 +89,18 @@
                             		</span>
                           		</div>
                           		<div class="col">
-                            		<div class="subheader mb-1">
-                              			Pemasukan
-                            		</div>
-                            		<div class="text-muted">
-                              			{{$summary['catPemasukan']}} Catatan
+								  	<div class="d-flex align-items-center">
+										<div class="text-muted">Total Pemasukan</div>
+										<div class="ms-auto lh-1">
+											<div class="dropdown">
+												<a class="text-muted">
+													{{$summary['catPemasukan']}} Catatan
+												</a>
+											</div>
+										</div>
+									</div>
+                            		<div class="h2 m-0 text-green">
+										+Rp. {{ number_format(floatval($summary['totalPemasukan']), 0, ',', '.')}}
                             		</div>
                           		</div>
                         	</div>
@@ -97,13 +115,19 @@
                             		<span class="bg-red text-white avatar">
                             			<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart-dollar"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 19a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M13 17h-7v-14h-2" /><path d="M6 5l14 1l-.575 4.022m-4.925 2.978h-8.5" /><path d="M21 15h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" /><path d="M19 21v1m0 -8v1" /></svg>
                             		</span>
+									
                           		</div>
                           		<div class="col">
-                            		<div class="subheader mb-1">
-                              			Pengeluaran
-                            		</div>
-									<div class="text-muted">
-                              			{{$summary['catPengeluaran']}} Catatan
+								  	<div class="d-flex align-items-center">
+										<div class="text-muted">Total Pengeluaran</div>
+										<div class="ms-auto lh-1">
+											<div class="dropdown">
+												<a class="text-muted">{{$summary['catPengeluaran']}} Catatan</a>
+											</div>
+										</div>
+									</div>
+									<div class="h2 m-0 text-red">
+										-Rp. {{ number_format(floatval($summary['totalPengeluaran']), 0, ',', '.')}}
                             		</div>
                           		</div>
                         	</div>
@@ -114,56 +138,47 @@
 		</div>
 		<div class="col-lg-4">
 			<div class="card">
-				<div class="card-body">
-					<div class="d-flex align-items-center mb-2">
-						<div class="subheader">Saldo</div>
-					</div>
-					<div class="h1 text-muted">Rp. {{ number_format(floatval($summary['saldo']), 2, ',', '.')}}</div>
+					<div class="card-body">
+					<h3 class="card-title text-muted">All Record</h3>
+					<div id="chart-demo-pie#3" class="chart-lg mb-2" style="height: 130px;"></div>
 				</div>
 			</div>
 		</div>
 		<div class="col-lg-4">
 			<div class="card">
-				<div class="card-body">
-					<div class="d-flex align-items-center mb-2">
-						<div class="subheader">Total Pemasukan</div>
-					</div>
-					<div class="h1 text-green">+Rp. {{ number_format(floatval($summary['totalPemasukan']), 2, ',', '.')}}</div>
+					<div class="card-body">
+					<h3 class="card-title text-muted">Pemasukan</h3>
+					<div id="chart-demo-pie" class="chart-lg mb-2" style="height: 130px;"></div>
 				</div>
 			</div>
 		</div>
 		<div class="col-lg-4">
 			<div class="card">
-				<div class="card-body">
-					<div class="d-flex align-items-center mb-2">
-						<div class="subheader">Total Pengeluaran</div>
-					</div>
-					<div class="h1 text-red">-Rp. {{ number_format(floatval($summary['totalPengeluaran']), 2, ',', '.')}}</div>
+					<div class="card-body">
+					<h3 class="card-title text-muted">Pengeluaran</h3>
+					<div id="chart-demo-pie#2" class="chart-lg mb-2" style="height: 130px;"></div>
 				</div>
 			</div>
 		</div>
 		
 		<div class="col-lg-6">
 			<div class="card">
-				<div class="card-header">
-
-					<h3 class="card-title text-muted">Tren Saldo</h3>
-				</div>
-				<div class="card-body">
+					<div class="card-body">
+					<h3 class="card-title text-muted mb-5">Tren Saldo</h3>
 					<div id="chart-completion-tasks-3" class="chart-lg" style="min-height: 240px;"></div>
 				</div>
 			</div>
 		</div>
 		<div class="col-lg-6">
 			<div class="card">
-				<div class="card-header">
+				<div class="card-body" style="flex:0;">
 
 					<h3 class="card-title text-muted">Catatan Terakhir</h3>
 				</div>
 				<div class="card-table table-responsive">
                     <table class="table table-vcenter">
                       	<tbody>
-							@foreach ($alldata->take(4) as $catatan)
+							@foreach ($sortedData->take(4) as $catatan)
 							@if (isset($catatan['id_pemasukan']))
 							<tr style="height:70px">
 								<td class="w-1">
@@ -234,6 +249,11 @@
 	document.addEventListener("DOMContentLoaded", function() {
     	const jenisSelect = document.getElementById("jenisFilter");
     	const pilihanDiv = document.getElementById("pilihanFilter");
+		const inputStartDate = document.getElementById("startdate-filter");
+		const inputEndDate = document.getElementById("enddate-filter");
+		const filterValue = '{{ $filterValue }}';
+		const startDate = '{{ $startDate }}';
+		const endDate = '{{ $endDate }}';
 
 	    const spinner = document.getElementById("spinner");
     	const pageContent = document.getElementById("page-content");
@@ -249,45 +269,88 @@
     // Function to show spinner
     
 
-		function handleChange() {
+	function handleChange() {
     const selectedOption = jenisSelect.value;
     // Clear existing content
     pilihanDiv.innerHTML = "";
 
     if (selectedOption === "Mingguan") {
+		
         // Create input type week
         const inputWeek = document.createElement("input");
         inputWeek.type = "week";
         inputWeek.classList.add("form-control");
         inputWeek.setAttribute("name", "filterMingguan");
         inputWeek.setAttribute("id", "filterMingguan");
-        pilihanDiv.appendChild(inputWeek);
+        inputWeek.setAttribute("required", "required");
+		pilihanDiv.appendChild(inputWeek);
+		if (filterValue) {
+			inputWeek.value = filterValue;
+			
+		}
+		pilihanDiv.hidden = false;
+		inputStartDate.hidden = true;
+		inputEndDate.hidden = true;
     } else if (selectedOption === "Bulanan") {
         // Create input type month
+		
         const inputMonth = document.createElement("input");
         inputMonth.type = "month";
         inputMonth.classList.add("form-control");
         inputMonth.setAttribute("name", "filterBulanan");
         inputMonth.setAttribute("id", "filterBulanan");
+        inputMonth.setAttribute("required", "required");
         pilihanDiv.appendChild(inputMonth);
+		if (filterValue) {
+			inputMonth.value = filterValue;
+			
+		}
+		pilihanDiv.hidden = false;
+		inputStartDate.hidden = true;
+		inputEndDate.hidden = true;
     } else if (selectedOption === "Tahunan") {
         // Create input type number for year
+		
         const inputYear = document.createElement("input");
         inputYear.type = "number";
         inputYear.min = "1900";
         inputYear.max = "2099";
         inputYear.step = "1";
-        inputYear.value = "2024";
         inputYear.classList.add("form-control");
         inputYear.setAttribute("name", "filterTahunan");
         inputYear.setAttribute("id", "filterTahunan");
-        pilihanDiv.appendChild(inputYear);
-    } else if (selectedOption === "Kisaran") {
+        inputYear.setAttribute("required", "required");
+		inputYear.setAttribute("placeholder", "2024");
+		pilihanDiv.appendChild(inputYear);
+		if (filterValue) {
+			inputYear.value = filterValue;
+			
+		} else {
+			inputYear.value = "2024";
+		}
+		pilihanDiv.hidden = false;
+		inputStartDate.hidden = true;
+		inputEndDate.hidden = true;
+	} else if (selectedOption === "Custom") {
+		
+		pilihanDiv.hidden = true;
+		// Enable the start and end date inputs
+		inputStartDate.hidden = false;
+		inputEndDate.hidden = false;
+		if (filterValue) {
+			inputStartDate.value = startDate;
+			inputEndDate.value = endDate;
+		}
+
+			
+	} else if (selectedOption === "Kisaran") {
+		
         // Create select with options for Kisaran
         const selectKisaran = document.createElement("select");
         selectKisaran.classList.add("form-select");
         selectKisaran.setAttribute("name", "filterKisaran");
         selectKisaran.setAttribute("id", "filterKisaran");
+        selectKisaran.setAttribute("required", "required");
 
         const options = [
             { text: "Semua", value: "semuaHari" },
@@ -304,14 +367,18 @@
             option.value = optionData.value;
 
             // Check if option value matches the passed value
-            if (option.value === '{{ $filterValue }}') {
+            if (option.value === filterValue) {
                 option.selected = true;
+				
             }
 
             selectKisaran.add(option);
         });
 
         pilihanDiv.appendChild(selectKisaran);
+		pilihanDiv.hidden = false;
+		inputStartDate.hidden = true;
+		inputEndDate.hidden = true;
     }
 }
 
@@ -432,5 +499,238 @@ function handleSubmit(event) {
     // @formatter:on
 </script>
 
+<script>
+    console.log("Pemasukan Data:", @json($groupedPemasukanData));
+    console.log("Pengeluaran Data:", @json($groupedPengeluaranData));
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        
+        const pemasukanData = @json($groupedPemasukanData);
+        
+        if (typeof pemasukanData === 'object' && !Array.isArray(pemasukanData)) {
+            const seriesData = Object.values(pemasukanData).map((stat, index) => {
+                const value = parseFloat(stat['total_jumlah']);
+                const greenShades = [
+                    "rgb(0, 255, 0)",       // Lime Green
+                    "rgb(50, 205, 50)",     // Lime Green
+                    "rgb(0, 128, 0)",       // Green
+                    "rgb(34, 139, 34)",     // Forest Green
+                    "rgb(0, 100, 0)",       // Dark Green
+                ];
+                const color = greenShades[index % greenShades.length]; // Cycle through shades
+                
+                const rgbaColor = color.replace(')', ', 0.8)').replace('rgb', 'rgba');
+                
+                return {
+                    value: value,
+                    color: rgbaColor
+                };
+            });
+            
+            const labelsData = Object.values(pemasukanData).map(stat => stat['kategori']);
+            
+            console.log("Pemasukan Series Data:", seriesData);
+            console.log("Pemasukan Labels Data:", labelsData);
+
+            window.ApexCharts && (new ApexCharts(document.getElementById('chart-demo-pie'), {
+                chart: {
+                    type: "donut",
+                    fontFamily: 'inherit',
+                    height: 150,
+                    sparkline: {
+                        enabled: true
+                    },
+                    animations: {
+                        enabled: true
+                    },
+                },
+                series: seriesData.map(data => data.value),
+                labels: labelsData,
+                fill: {
+                    opacity: 1,
+                },
+                colors: seriesData.map(data => data.color), // Use colors with reduced opacity
+                legend: {
+                    show: true,
+                    position: 'right',
+                    offsetY: 0,
+                    markers: {
+                        width: 10,
+                        height: 10,
+                        radius: 100,
+                    },
+                    itemMargin: {
+                        horizontal: 2,
+                        vertical: 2
+                    },
+                },
+                tooltip: {
+                    theme: 'dark',
+                    y: {
+                        formatter: function(val) {
+                            return 'Rp. ' + formatNumber(val.toFixed(2));
+                        },
+                    },
+                    fillSeriesColor: false
+                },
+            })).render();
+        } else {
+            console.error("Pemasukan data is not an object:", pemasukanData);
+        }
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const pengeluaranData = @json($groupedPengeluaranData);
+        
+        if (typeof pengeluaranData === 'object' && !Array.isArray(pengeluaranData)) {
+            const seriesData = Object.values(pengeluaranData).map((stat, index) => {
+                const value = parseFloat(stat['total_jumlah']);
+                const redShades = [
+                    "rgb(255, 0, 0)",       // Red
+                    "rgb(220, 20, 60)",     // Crimson
+                    "rgb(178, 34, 34)",     // Firebrick
+                    "rgb(139, 0, 0)",       // Dark Red
+                    "rgb(205, 92, 92)",     // Indian Red
+                ];
+                const color = redShades[index % redShades.length]; // Cycle through shades
+                
+                const rgbaColor = color.replace(')', ', 0.8)').replace('rgb', 'rgba');
+                
+                return {
+                    value: value,
+                    color: rgbaColor
+                };
+            });
+            
+            const labelsData = Object.values(pengeluaranData).map(stat => stat['kategori']);
+            
+            console.log("Pemasukan Series Data:", seriesData);
+            console.log("Pemasukan Labels Data:", labelsData);
+
+            window.ApexCharts && (new ApexCharts(document.getElementById('chart-demo-pie#2'), {
+                chart: {
+                    type: "donut",
+                    fontFamily: 'inherit',
+                    height: 150,
+                    sparkline: {
+                        enabled: true
+                    },
+                    animations: {
+                        enabled: true
+                    },
+                },
+                series: seriesData.map(data => data.value),
+                labels: labelsData,
+                fill: {
+                    opacity: 1,
+                },
+                colors: seriesData.map(data => data.color), // Use colors with reduced opacity
+                legend: {
+                    show: true,
+                    position: 'right',
+                    offsetY: 0,
+                    markers: {
+                        width: 10,
+                        height: 10,
+                        radius: 100,
+                    },
+                    itemMargin: {
+                        horizontal: 2,
+                        vertical: 2
+                    },
+                },
+                tooltip: {
+                    theme: 'dark',
+                    y: {
+                        formatter: function(val) {
+                            return 'Rp. ' + formatNumber(val.toFixed(2));
+                        },
+                    },
+                    fillSeriesColor: false
+                },
+            })).render();
+        } else {
+            console.error("Pemasukan data is not an object:", pengeluaranData);
+        }
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const semuaData = @json($groupedSemuaData);
+        
+        if (typeof semuaData === 'object' && !Array.isArray(semuaData)) {
+            const seriesData = Object.values(semuaData).map((stat, index) => {
+                const value = parseFloat(stat['total_jumlah']);
+                const redShades = [
+                    "rgb(0, 255, 0)",     // Crimson
+                    "rgb(255, 0, 0)",       // Red
+                ];
+                const color = redShades[index % redShades.length]; // Cycle through shades
+                
+                const rgbaColor = color.replace(')', ', 0.8)').replace('rgb', 'rgba');
+                
+                return {
+                    value: value,
+                    color: rgbaColor
+                };
+            });
+            
+            const labelsData = Object.values(semuaData).map(stat => stat['jenis']);
+            
+            console.log("Pemasukan Series Data:", seriesData);
+            console.log("Pemasukan Labels Data:", labelsData);
+
+            window.ApexCharts && (new ApexCharts(document.getElementById('chart-demo-pie#3'), {
+                chart: {
+                    type: "donut",
+                    fontFamily: 'inherit',
+                    height: 150,
+                    sparkline: {
+                        enabled: true
+                    },
+                    animations: {
+                        enabled: true
+                    },
+                },
+                series: seriesData.map(data => data.value),
+                labels: labelsData,
+                fill: {
+                    opacity: 1,
+                },
+                colors: seriesData.map(data => data.color), // Use colors with reduced opacity
+                legend: {
+                    show: true,
+                    position: 'right',
+                    offsetY: 0,
+                    markers: {
+                        width: 10,
+                        height: 10,
+                        radius: 100,
+                    },
+                    itemMargin: {
+                        horizontal: 2,
+                        vertical: 2
+                    },
+                },
+                tooltip: {
+                    theme: 'dark',
+                    y: {
+                        formatter: function(val) {
+                            return 'Rp. ' + formatNumber(val.toFixed(2));
+                        },
+                    },
+                    fillSeriesColor: false
+                },
+            })).render();
+        } else {
+            console.error("Pemasukan data is not an object:", semuaData);
+        }
+    });
+</script>
 
 @endsection
