@@ -40,9 +40,9 @@
                           	</td>
 							<td >
 								@if($data['category_type'] == 'pengeluaran')
-									<div>Expense</div>
+									<div class="text-red text-strong">Expense</div>
 								@else
-									<div>Income</div>
+									<div class="text-green text-strong">Income</div>
 								@endif
 							</td>
 							<td>

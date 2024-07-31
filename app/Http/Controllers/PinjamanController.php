@@ -13,7 +13,7 @@ class PinjamanController extends Controller
     {
         $res = Parent::getDataLogin($request);
         return view('pinjaman.index', [
-            'user' => $res['user'],
+            'user' => $request->auth['user'],
         ]);  
     }
 
@@ -21,7 +21,7 @@ class PinjamanController extends Controller
     {
         $res = Parent::getDataLogin($request);
         return view('pinjaman.bungaTetap', [
-            'user' => $res['user'],
+            'user' => $request->auth['user'],
         ]);  
     }
 
@@ -29,7 +29,7 @@ class PinjamanController extends Controller
     {
         $res = Parent::getDataLogin($request);
         return view('pinjaman.bungaFloating', [
-            'user' => $res['user'],
+            'user' => $request->auth['user'],
         ]);  
     }
 
@@ -37,7 +37,7 @@ class PinjamanController extends Controller
     {
         $res = Parent::getDataLogin($request);
         return view('pinjaman.bungaEfektif', [
-            'user' => $res['user'],
+            'user' => $request->auth['user'],
         ]);  
     }
 

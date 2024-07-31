@@ -21,13 +21,10 @@
 			<div class="card-header">
 				<ul class="nav nav-tabs card-header-tabs nav-fill" data-bs-toggle="tabs" role="tablist">
 					<li class="nav-item" role="presentation">
-						<a href="{{ route('investasi-lumpsum') }}" class="nav-link" aria-selected="true" role="tab">Lumpsum</a>
+						<a href="{{ route('investasi-target-lumpsum') }}" class="nav-link active" aria-selected="true" role="tab">Lumpsum</a>
 					</li>
 					<li class="nav-item" role="presentation">
-						<a href="{{ route('investasi-bulanan') }}" class="nav-link" aria-selected="false" role="tab" tabindex="-1">Bulanan</a>
-					</li>
-					<li class="nav-item" role="presentation">
-						<a href="{{ route('investasi-target') }}" class="nav-link active" aria-selected="false" role="tab" tabindex="-1">Target</a>
+						<a href="{{ route('investasi-target-bulanan') }}" class="nav-link" aria-selected="false" role="tab" tabindex="-1">Bulanan</a>
 					</li>
 				</ul>
 			</div>
@@ -130,7 +127,7 @@
                                                                     <td style="width:%" class="text-end" id="nilai"><strong>Rp. 0</strong></td>
                                                                 </tr>
                                                                 <tr style="height:2.93rem;">
-                                                                    <td style="width:45%;"><strong>Investasi Bulanan</strong></td>
+                                                                    <td style="width:45%;"><strong>Jumlah Investasi</strong></td>
                                                                     <td style="width:5%;">:</td>
                                                                     <td style="width:%" class="text-end" id="totalnilai"><strong>Rp. 0</strong></td>
                                                                 </tr>
@@ -260,6 +257,7 @@
                                     <th class="text-center">Tahun</th>
                                     <th class="text-center">Investasi</th>
                                     <th class="text-center">Nilai Investasi</th>
+                                    <th class="text-center">Target Dana</th>
                                 </tr>
                             </thead>
                             <tbody id="modalTableBody">
@@ -329,7 +327,7 @@
 			const months = jmhtahun * 12;
             const danaInvestasiAwal = awaldana;
             const nilaiInvestasi = nilai;
-			const totalInvestment = nilai * months;
+			const totalInvestment = nilai;
     		const estimatedReturn = awaldana - totalInvestment;
 
             document.getElementById('awaldana2').textContent = 'Rp. ' + formatNumber(awaldana);
@@ -442,25 +440,24 @@
 		// }
 
         function calculateNilai() {
-    const targetValue = parseFloat(document.getElementById('awaldana').value);
+    const targetDana = parseFloat(document.getElementById('awaldana').value);
     const jmhtahun = parseFloat(document.getElementById('jmhtahun').value);
-    const persentasebunga = parseFloat(document.getElementById('persentasebunga').value);
+    const persentaseBunga = parseFloat(document.getElementById('persentasebunga').value);
 
-    if (!isNaN(targetValue) && !isNaN(jmhtahun) && !isNaN(persentasebunga)) {
-        const monthlyInterestRate = persentasebunga / 100 / 12; // Tingkat bunga per bulan
-        const months = jmhtahun * 12; // Jumlah total bulan
+    if (!isNaN(targetDana) && !isNaN(jmhtahun) && !isNaN(persentaseBunga) && targetDana > 0 && jmhtahun > 0 && persentaseBunga > 0) {
+        // Ubah persentase bunga ke dalam bentuk desimal
+        const bungaDesimal = persentaseBunga / 100;
 
-        let totalMultiplier = 1.0;
-        for (let i = 0; i < months; i++) {
-            totalMultiplier *= (1 + monthlyInterestRate);
-        }
+        // Hitung jumlah investasi lumpsum yang diperlukan
+        const investasiLumpsum = targetDana / Math.pow((1 + bungaDesimal), jmhtahun);
 
-        const lumpsum = targetValue / totalMultiplier;
-        return lumpsum.toFixed(2); // Mengembalikan nilai lumpsum dengan dua desimal
+        // Kembalikan jumlah investasi lumpsum
+        return investasiLumpsum.toFixed(2); // Mengembalikan nilai dengan dua desimal
     } else {
         return 0;
     }
 }
+
 
 
 		
@@ -482,12 +479,13 @@
             const modalTableBody = document.getElementById('modalTableBody');
             modalTableBody.innerHTML = '';
 
-            const tahunValues = [5, 8, 10, 12, 15, 18, 20, 22, 25, 28, 30, 35];
+            const totalYears = jmhtahun;
+            const tahunValues = Array.from({ length: totalYears }, (_, i) => i + 1);
             
             tahunValues.forEach(tahun => {
                 const row = document.createElement('tr');
-				const months = tahun * 12;
-				const investasiValue = nilai * months;
+				const months = 12 * tahun ;
+				const investasiValue = nilai ;
 
                 
                 const tahunCell = document.createElement('td');
@@ -503,13 +501,22 @@
                 const nilaiInvestasiCell = document.createElement('td');
 				let totalMultiplier = 1.0;
 				const monthlyInterestRate = persentasebunga / 100 / 12;
+                
 				for (let i = 0; i < months; i++) {
         			totalMultiplier *= (1 + monthlyInterestRate);
     			}
-                const nilaiTahun = nilai * ((((totalMultiplier - 1) / monthlyInterestRate)) * (1 + monthlyInterestRate));
-                nilaiInvestasiCell.textContent = 'Rp. ' + formatNumber(nilaiTahun.toFixed(0));
+                const nilaiTahun = awaldana / totalMultiplier;
+                const keuntungan = awaldana - nilai;
+                nilaiInvestasiCell.textContent = 'Rp. ' + formatNumber(keuntungan.toFixed(0));
                 nilaiInvestasiCell.classList.add('text-center');
                 row.appendChild(nilaiInvestasiCell);
+
+                const targetDanaCell = document.createElement('td');
+
+
+                targetDanaCell.textContent = 'Rp. ' + formatNumber(awaldana.toFixed(0));
+                targetDanaCell.classList.add('text-center');
+                row.appendChild(targetDanaCell);
                 
                 modalTableBody.appendChild(row);
             });

@@ -17,9 +17,9 @@
 		<a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-report" aria-label="Create new report">
 			<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
 		</a>   
-		<a href="#" class="btn btn-primary d-none d-sm-inline-block">
+		<a href="{{ url('/category-request') }}" class="btn btn-primary d-none d-sm-inline-block">
         	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-          	Category Request
+          	Request New Category
       	</a>
 		<a href="#" class="btn btn-primary d-sm-none btn-icon" >
 			<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
@@ -911,7 +911,6 @@ $('.dataTables_filter').each(function() {
 
 	
 	function updateHeaderTotals() {
-    console.log('Updating header totals...');
 
     // Clear previous totals
     $('.header-total').each(function() {
@@ -927,7 +926,6 @@ $('.dataTables_filter').each(function() {
         var date = $(data[0]).find('.item-data').data('date');
         var amount = parseFloat($(data[0]).find('.item-data').data('amount'));
 
-        console.log('Processing row:', data, 'Date:', date, 'Amount:', amount);
 
         if (!totals[date]) {
             totals[date] = { income: 0, expense: 0 };
@@ -943,9 +941,6 @@ $('.dataTables_filter').each(function() {
         }
     });
 
-    console.log('Totals:', totals);
-    console.log('Total income:', totalIncome);
-    console.log('Total expense:', totalExpense);
 
     $('.header-total').each(function() {
         var date = $(this).closest('tr').find('.item-data').data('date');
@@ -976,7 +971,6 @@ updateHeaderTotals();
 
 // Update totals whenever the table is searched
 table.on('search.dt', function() {
-    console.log('Table search event triggered...');
     updateHeaderTotals();
 });
 
@@ -1030,7 +1024,6 @@ $('.btn-resetfilter').on('click', function(e) {
 // Add event listener to radio buttons
 $('input[type="radio"][name="record-type"]').change(function() {
     var value = $(this).val();
-    console.log('Radio button value changed:', value);
 
     // Reset category select options
     $('.category-select').val('');
@@ -1059,7 +1052,6 @@ $('input[type="radio"][name="record-type"]').change(function() {
 $('.category-select').change(function() {
     var recordType = $('input[type="radio"][name="record-type"]:checked').val();
     var category = $(this).val();
-    console.log('Select element value changed:', category);
 
     table.search(category).draw();
 	updateHeaderTotals();

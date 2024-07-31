@@ -13,7 +13,7 @@ class InvestasiController extends Controller
     {
         $res = Parent::getDataLogin($request);
         return view('investasi.lumpsum', [
-            'user' => $res['user'],
+            'user' => $request->auth['user'],
         ]);  
     }
 
@@ -21,15 +21,23 @@ class InvestasiController extends Controller
     {
         $res = Parent::getDataLogin($request);
         return view('investasi.bulanan', [
-            'user' => $res['user'],
+            'user' => $request->auth['user'],
         ]);  
     }
 
-    public function target(Request $request)
+    public function targetLumpsum(Request $request)
     {
         $res = Parent::getDataLogin($request);
         return view('investasi.target', [
-            'user' => $res['user'],
+            'user' => $request->auth['user'],
+        ]);  
+    }
+
+    public function targetBulanan(Request $request)
+    {
+        $res = Parent::getDataLogin($request);
+        return view('investasi.targetbulanan', [
+            'user' => $request->auth['user'],
         ]);  
     }
 

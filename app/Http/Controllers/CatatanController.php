@@ -98,6 +98,7 @@ class CatatanController extends Controller
             // dd($kategoriPemasukanData);
     
             return view('catatan.index', [
+                'user' => $request->auth['user'],
                 'groupedData' => $groupedData,
                 'combinedData' => $combinedData,
                 'summedData' => $summedData,

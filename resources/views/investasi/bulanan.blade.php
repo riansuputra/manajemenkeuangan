@@ -16,24 +16,7 @@
 @section('content')
 
 <div class="container-xl">
-	<div class="col">
-		<div class="card">
-			<div class="card-header">
-				<ul class="nav nav-tabs card-header-tabs nav-fill" data-bs-toggle="tabs" role="tablist">
-					<li class="nav-item" role="presentation">
-						<a href="{{ route('investasi-lumpsum') }}" class="nav-link" aria-selected="true" role="tab">Lumpsum</a>
-					</li>
-					<li class="nav-item" role="presentation">
-						<a href="{{ route('investasi-bulanan') }}" class="nav-link active" aria-selected="false" role="tab" tabindex="-1">Bulanan</a>
-					</li>
-					<li class="nav-item" role="presentation">
-						<a href="{{ route('investasi-target') }}" class="nav-link" aria-selected="false" role="tab" tabindex="-1">Target</a>
-					</li>
-				</ul>
-			</div>
-			<div class="card-body">
-				<div class="tab-content">
-                    <div class="tab-pane active show" id="tabs-lumpsum" role="tabpanel">
+			
                         <div class="row row-cards">
                             <div class="col-md-4">
                                 <div class="card">
@@ -92,16 +75,16 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="card">
+                                <div class="card" style="min-height: 342px;">
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-xl-12">
                                                 <div class="mb-3">
                                                     <h3 class="text-center text-bold">Hasil Perhitungan</h3>
                                                     <div class="table-responsive">
-                                                        <table class="table table-vcenter card-table">
+                                                        <table class="table table-vcenter card-table table-borderless">
                                                             <thead>
-                                                                <tr>
+                                                                <tr hidden>
                                                                     <th></th>
                                                                     <th></th>
                                                                     <th></th>
@@ -158,11 +141,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-				</div>
-			</div>
-		</div>
-	</div>
 </div>
 
 <!-- Modal Detail -->
@@ -257,7 +235,7 @@
                         <table class="table table-bordered table-vcenter card-table">
                             <thead>
                                 <tr>
-                                    <th class="text-center">Tahun</th>
+                                    <th class="text-center">Bulan</th>
                                     <th class="text-center">Investasi</th>
                                     <th class="text-center">Nilai Investasi</th>
                                 </tr>
@@ -429,6 +407,7 @@
 
         function populateModalTable() {
             const awaldana = parseFloat(document.getElementById('awaldana').value);
+            const jmhtahun = parseFloat(document.getElementById('jmhtahun').value);
             const persentasebunga = parseFloat(document.getElementById('persentasebunga').value);
             
             document.getElementById('awaldana4').textContent = 'Rp. ' + formatNumber(awaldana);
@@ -436,10 +415,11 @@
             const modalTableBody = document.getElementById('modalTableBody');
             modalTableBody.innerHTML = '';
 
-            const tahunValues = [5, 8, 10, 12, 15, 18, 20, 22, 25, 28, 30, 35];
+            const totalYears = 12 * jmhtahun;
+            const tahunValues = Array.from({ length: totalYears }, (_, i) => i + 1);
             
             tahunValues.forEach(tahun => {
-				const totalSetoran = 12 * tahun;
+				const totalSetoran = tahun;
                 const row = document.createElement('tr');
                 
                 const tahunCell = document.createElement('td');

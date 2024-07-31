@@ -33,6 +33,7 @@ class AdminController extends Controller
      */
     public function categoryRequests(Request $request)
     {
+        // dd($request);
         // dd($request->auth['user_type']);
 
         $responses = Http::pool(fn (Pool $pool) => [

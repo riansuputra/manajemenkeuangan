@@ -111,6 +111,7 @@ class AnggaranController extends Controller
             }
 
             return view($viewName, [
+                'user' => $request->auth['user'],
                 'combinedAnggaranData' => $combinedAnggaranData,
                 'kategoriData' => $kategoriData,
                 'dateWeek' => $dateWeek,

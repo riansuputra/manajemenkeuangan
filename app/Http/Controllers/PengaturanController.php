@@ -33,18 +33,22 @@ class PengaturanController extends Controller
     public function categoryRequestIndex(Request $request)
     {
         $responses = Http::pool(fn (Pool $pool) => [
-            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/category-requests'),
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/category-request'),
         ]);
+
+
+        // dd($responses->collect());
     
         if ($responses[0]->successful()) {
+           
             $categoryRequestData = collect($responses[0]->json()['data']['categoryRequest'])
                         ->sortByDesc('created_at')
                         ->values()
                         ->all();
 
-            // dd($categoryRequestData);
 
             return view('pengaturan.requestCategory', [
+                'user' => $request->auth['user'],
                 'categoryRequestData' => $categoryRequestData,
             ]);
         } else {
@@ -68,6 +72,7 @@ class PengaturanController extends Controller
 
         // dd($request->auth);
         $input = array(
+            'user_id' => $request->auth['user']['user_id'],
             'nama_kategori' => $request->nama_kategori,
             'category_type' => $request->category_type,
         );

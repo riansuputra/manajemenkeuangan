@@ -8,10 +8,12 @@ use App\Http\Controllers\AnggaranController;
 use App\Http\Controllers\AnggaranControllertes;
 use App\Http\Controllers\CatatanController;
 use App\Http\Controllers\StatistikController;
+use App\Http\Controllers\PortofolioController;
 use App\Http\Controllers\PinjamanController;
 use App\Http\Controllers\PengaturanController;
 use App\Http\Controllers\InvestasiController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\LanguageController;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cookie;
 
@@ -35,6 +37,7 @@ Route::middleware([])->group(function(){
         Route::post('/register/auth',[AuthController::class,'register'])->name('register');
         Route::post('/loginAdmin/auth',[AuthController::class,'loginAdmin'])->name('loginAdmin');
         Route::get('/loginAdmin',[AuthController::class,'loginAdminPage'])->name('loginAdminPage');
+        Route::get('lang/{lang}', [LanguageController::class, 'switch'])->name('lang.switch');
     });
 
     Route::middleware([App\Http\Middleware\AdminUserMiddleware::class])->group(function(){
@@ -89,7 +92,8 @@ Route::middleware([])->group(function(){
 
         Route::get('/investasi-lumpsum', [InvestasiController::class, 'lumpsum'])->name('investasi-lumpsum');
         Route::get('/investasi-bulanan', [InvestasiController::class, 'bulanan'])->name('investasi-bulanan');
-        Route::get('/investasi-target', [InvestasiController::class, 'target'])->name('investasi-target');
+        Route::get('/investasi-target-lumpsum', [InvestasiController::class, 'targetLumpsum'])->name('investasi-target-lumpsum');
+        Route::get('/investasi-target-bulanan', [InvestasiController::class, 'targetBulanan'])->name('investasi-target-bulanan');
 
 
         Route::get('/pinjaman', [PinjamanController::class, 'index'])->name('pinjaman');
@@ -99,6 +103,13 @@ Route::middleware([])->group(function(){
         Route::get('/pengaturan', [PengaturanController::class, 'index'])->name('settings');
         Route::get('/category-request', [PengaturanController::class, 'categoryRequestIndex'])->name('categoryRequest');
         Route::post('/category-store', [PengaturanController::class, 'store'])->name('categoryStore');
+
+        Route::get('/portofolio', [PortofolioController::class, 'portofolio'])->name('portofolio');
+        Route::post('/portofolio-store', [PortofolioController::class, 'store'])->name('portofolioStore');
+        Route::get('/portofolio/mutasi-dana', [PortofolioController::class, 'mutasiDana'])->name('portofolio-mutasi-dana');
+        Route::get('/portofolio/kinerja', [PortofolioController::class, 'kinerja'])->name('portofolio-kinerja');
+        Route::get('/portofolio/historis', [PortofolioController::class, 'historis'])->name('portofolio-historis');
+
     });
 
 });

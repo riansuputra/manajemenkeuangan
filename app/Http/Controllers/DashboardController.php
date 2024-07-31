@@ -90,6 +90,7 @@ class DashboardController extends Controller
             // dd($kategoriPemasukanData);
     
             return view('dashboard.index', [
+                'user' => $request->auth['user'],
                 'jenisFilter' => $jenisFilter,
                 'filterValue' => $filterValue,
                 'summary' => $summary,

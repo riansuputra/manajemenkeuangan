@@ -16,15 +16,16 @@
 @section('content')
 
 <div class="container-xl">
-	<div class="col">
-		<div class="card">
-			<div class="card-body">
-                <div class="row row-cards">
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-xl-12">
+    
+    <div class="row row-deck row-cards">
+        <div class="col-12">
+			<div class="row row-cards">
+				
+				<div class="col-sm-6 col-lg-4">
+                    <div class="card card-sm" style="min-height: 338px;">
+						<div class="card-body">
+                        	<div class="row-auto">
+                            <div class="col-xl-12">
                                         <div class="mb-3">
                                             <label class="form-label">Jumlah Pinjaman : </label>
                                             <div class="input-group">
@@ -74,25 +75,19 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
+                        	</div>
+                      	</div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="card">
-                        <div class="card-status-bottom bg-grey"></div>
-                            <div class="card-body">
-                                test
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-xl-12">
+				</div>
+				<div class="col-sm-6 col-lg-4">
+                    <div class="card card-sm" style="min-height: 342px;">
+                      	<div class="card-body-table">
+	                        <div class="row align-items-center">
+                            <div class="col-xl-12">
                                         <div class="mb-3">
-                                            <h3 class="text-center text-bold">Hasil Perhitungan</h3>
+                                            <h3 class="text-center text-bold mt-3">Hasil Perhitungan</h3>
                                             <div class="table-responsive">
-                                                <table class="table table-vcenter card-table">
+                                                <table class="table table-vcenter card-table table-borderless">
                                                     <thead>
                                                         <tr>
                                                             <th></th>
@@ -132,28 +127,45 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-xl-12">
+                        	</div>
+                      	</div>
+					</div>
+				</div>
+                <div class="col-sm-6 col-lg-4">
+					<div class="card card-sm">
+						<div class="card-body">
+                        	<div class="row align-items-center">
+                            <div class="col-xl-12">
                                         <div class="mb-3">
                                             <h3 class="text-center text-bold">Statistik</h3>
                                         </div>
                                         <div id="chart-demo-pie#3" style="min-height: 267px;"></div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
+                        	</div>
+                      	</div>
                     </div>
-                </div>
+				</div>
 			</div>
 		</div>
-	</div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </div>
 
 <!-- Modal Detail -->

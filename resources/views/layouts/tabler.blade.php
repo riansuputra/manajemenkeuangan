@@ -9,6 +9,8 @@
     <!-- CSS files -->
     <link href="{{ asset('css/tabler.min.css?1684106062') }}" rel="stylesheet"/>
     <link href="{{ asset('css/tabler-vendors.min.css?1684106062') }}" rel="stylesheet"/>
+	<link href="{{ asset('dist/css/demo.min.css?1684106062')}}" rel="stylesheet"/>
+	<link href="{{asset('dist/css/tabler-flags.min.css?1684106062')}}" rel="stylesheet"/>
 	<link rel="icon" type="image/png" href="{{ asset('img\logo_new.png') }}">
 
     <style>
@@ -28,6 +30,7 @@
 </head>
 
 <body>
+	<script src="{{ asset('dist/js/demo-theme.min.js?1684106062')}}"></script>
 
 	<div class="page">
 
@@ -52,6 +55,7 @@
                   <!-- Download SVG icon from http://tabler-icons.io/i/moon -->
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"></path></svg>
                 </a>
+				<!-- <span class="flag flag-country-us"></span> -->
                 <a href="?theme=light" class="nav-link px-0 hide-theme-light" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Enable light mode" data-bs-original-title="Enable light mode">
                   <!-- Download SVG icon from http://tabler-icons.io/i/sun -->
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"></path></svg>
@@ -145,8 +149,8 @@
                 			<a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
                   				<span class="avatar avatar-sm" style="background-image: url(./static/avatars/000m.jpg)"></span>
                   				<div class="d-none d-xl-block ps-2">
-                    				<div>test</div>
-                    				<div class="mt-1 small text-muted">test</div>
+                    				<div>{{$user['name']}}</div>
+                    				<div class="mt-1 small text-muted">{{$user['email']}}</div>
                   				</div>
                 			</a>
                 			<div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -158,7 +162,7 @@
 							  		<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"></path><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"></path></svg>
                               		Pengaturan
                             	</a>
-								<form id="logoutForm" action="{{ route('logout') }}" method="POST">
+								<form id="logoutForm" action="{{ url('/logout') }}" method="POST">
     								@csrf
     								@method('POST')
     								<button type="submit" class="dropdown-item">
@@ -221,7 +225,7 @@
                       					</span>
 									</a>
                   				</li>
-								  <li class="nav-item {{ url()->current() == url('/statistik') ? 'active' : '' }}" >
+								  <!-- <li class="nav-item {{ url()->current() == url('/statistik') ? 'active' : '' }}" >
                     				<a class="nav-link" href="{{ url('./statistik') }}" >
                       					<span class="nav-link-icon d-md-none d-lg-inline-block">
 					  						<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M3 12m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"></path><path d="M9 8m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"></path><path d="M15 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"></path><path d="M4 20l14 0"></path></svg>
@@ -230,7 +234,7 @@
                         					Statistik
                       					</span>
                     				</a>
-                  				</li>
+                  				</li> -->
 				  <li class="nav-item dropdown {{ url()->current() == url('/pinjaman') ? 'active' : '' }}" >
                     <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
                       <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
@@ -259,7 +263,7 @@
                         
                     </div>
                   </li>
-				  <li class="nav-item dropdown {{ url()->current() == url('/investasi-lumpsum') ? 'active' : '' }} {{ url()->current() == url('/investasi-bulanan') ? 'active' : '' }} {{ url()->current() == url('/investasi-target') ? 'active' : '' }}" >
+				  <li class="nav-item dropdown {{ url()->current() == url('/investasi-lumpsum') ? 'active' : '' }} {{ url()->current() == url('/investasi-bulanan') ? 'active' : '' }} {{ url()->current() == url('/investasi-target-bulanan') ? 'active' : '' }} {{ url()->current() == url('/investasi-target-lumpsum') ? 'active' : '' }}" >
                     <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
                       <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
 					  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M3 3v18h18"></path><path d="M20 18v3"></path><path d="M16 16v5"></path><path d="M12 13v8"></path><path d="M8 16v5"></path><path d="M3 11c6 0 5 -5 9 -5s3 5 9 5"></path></svg>
@@ -278,27 +282,82 @@
                           <a class="dropdown-item" href="{{ url('/investasi-lumpsum') }}">
                             Lumpsum
                           </a>
-                          <a class="dropdown-item" href="{{ url('/investasi-target') }}">
+                          <a class="dropdown-item" href="{{ url('/investasi-target-lumpsum') }}">
                             Target
                           </a>
                           
                         
                     </div>
                   </li>
+				  
 
-				  </li>
-								  <li class="nav-item {{ url()->current() == url('/saham') ? 'active' : '' }}" >
-                    				<a class="nav-link" href="/saham">
-                      					<span class="nav-link-icon d-md-none d-lg-inline-block">
-										  	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"></path><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"></path><path d="M9 17v-5"></path><path d="M12 17v-1"></path><path d="M15 17v-3"></path></svg>
-                      					</span>
-                      					<span class="nav-link-title">
-                        					Saham
-                      					</span>
-									</a>
-                  				</li>
-                  
+				  <li class="nav-item dropdown {{ url()->current() == url('/portofolio') ? 'active' : '' }}" >
+                    <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
+                      <span class="nav-link-icon d-md-none d-lg-inline-block">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M15 15l3.35 3.35"></path><path d="M9 15l-3.35 3.35"></path><path d="M5.65 5.65l3.35 3.35"></path><path d="M18.35 5.65l-3.35 3.35"></path></svg>
+
+
+                      </span>
+                      <span class="nav-link-title">
+                        Portofolio
+                      </span>
+                    </a>
+                    <div class="dropdown-menu">
+                      
+						<a class="dropdown-item" href="{{ url('/portofolio') }}">
+						  Portofolio
+						</a>
+                          <a class="dropdown-item" href="{{ url('/portofolio/mutasi-dana') }}">
+                            Mutasi Dana
+                          </a>
+                          <a class="dropdown-item" href="{{ url('/portofolio/kinerja') }}">
+                            Kinerja
+                          </a>
+						  <a class="dropdown-item" href="{{ url('/portofolio/historis') }}">
+                            Historis
+                          </a>
+                          
+                        
+                    </div>
+                  </li>
+								  
                 </ul>
+
+				<div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">
+                
+              <ul class="navbar-nav">
+                
+                
+                
+                
+                
+                
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#navbar-help" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
+                    <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/lifebuoy -->
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M15 15l3.35 3.35"></path><path d="M9 15l-3.35 3.35"></path><path d="M5.65 5.65l3.35 3.35"></path><path d="M18.35 5.65l-3.35 3.35"></path></svg>
+                    </span>
+                    <span class="nav-link-title">
+                      Language
+                    </span>
+                  </a>
+                  <div class="dropdown-menu">
+                  
+                    <a class="dropdown-item" href="https://github.com/sponsors/codecalm" target="_blank" rel="noopener">
+                      <!-- Download SVG icon from http://tabler-icons.io/i/heart -->
+					  <span class="flag flag-country-us"></span>
+                      &nbsp English
+                    </a>
+					<a class="dropdown-item" href="https://github.com/sponsors/codecalm" target="_blank" rel="noopener">
+                      <!-- Download SVG icon from http://tabler-icons.io/i/heart -->
+					  <span class="flag flag-country-id"></span>
+                      &nbsp Indonesia
+                    </a>
+                  </div>
+                </li>
+              </ul>
+			</div>
+
                 
               </div>
             </div>
