@@ -352,41 +352,40 @@
             
         }
 
-        function calculateNilai() {
-    const pinjamandana = parseFloat(document.getElementById('pinjamandana').value);
-    const jmhtahun = parseFloat(document.getElementById('jmhtahun').value);
-    const persentasebunga = parseFloat(document.getElementById('persentasebunga').value);
+    function calculateNilai() {
+        const pinjamandana = parseFloat(document.getElementById('pinjamandana').value);
+        const jmhtahun = parseFloat(document.getElementById('jmhtahun').value);
+        const persentasebunga = parseFloat(document.getElementById('persentasebunga').value);
 
-    if (!isNaN(pinjamandana) && !isNaN(jmhtahun) && !isNaN(persentasebunga)) {
-        const tingkatBungaPerBulan = persentasebunga / 100 / 12; // Tingkat bunga per bulan
-        let remainingLoan = pinjamandana;
-        const monthlyPayments = [];
-        let totalPayment = 0;
+        if (!isNaN(pinjamandana) && !isNaN(jmhtahun) && !isNaN(persentasebunga)) {
+            const tingkatBungaPerBulan = persentasebunga / 100 / 12; // Tingkat bunga per bulan
+            let remainingLoan = pinjamandana;
+            const monthlyPayments = [];
+            let totalPayment = 0;
 
-        for (let i = 1; i <= jmhtahun; i++) {
-            const interestPayment = remainingLoan * tingkatBungaPerBulan;
-            const principalPayment = (pinjamandana / jmhtahun);
-            const monthlyPayment = interestPayment + principalPayment;
-            remainingLoan -= principalPayment;
-            totalPayment += monthlyPayment;
+            for (let i = 1; i <= jmhtahun; i++) {
+                const interestPayment = remainingLoan * tingkatBungaPerBulan;
+                const principalPayment = (pinjamandana / jmhtahun);
+                const monthlyPayment = interestPayment + principalPayment;
+                remainingLoan -= principalPayment;
+                totalPayment += monthlyPayment;
 
-            monthlyPayments.push({
-                'month': i,
-                'monthly_payment': monthlyPayment,
-                'interest_payment': interestPayment,
-                'principal_payment': principalPayment,
-                'remaining_loan': remainingLoan,
-            });
+                monthlyPayments.push({
+                    'month': i,
+                    'monthly_payment': monthlyPayment,
+                    'interest_payment': interestPayment,
+                    'principal_payment': principalPayment,
+                    'remaining_loan': remainingLoan,
+                });
+            }
+            return {
+                'monthly_payments': monthlyPayments,
+                'total_payment': totalPayment,
+            };
+        } else {
+            return 'Invalid input';
         }
-
-        return {
-            'monthly_payments': monthlyPayments,
-            'total_payment': totalPayment,
-        };
-    } else {
-        return 'Invalid input';
     }
-}
 
 
 

@@ -10,14 +10,20 @@
 </div>
 <div class="col-auto ms-auto d-print-none">
 	<div class="btn-list">
-		<a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-portofolio">
+        <a href="#" class="btn btn-primary d-none d-sm-inline-block">
+            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-refresh"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" /><path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" /></svg>
+            Refresh
+		</a>
+        <a href="#" class="btn btn-primary d-sm-none btn-icon">
+            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-refresh"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" /><path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" /></svg>
+		</a>    
+		<a href="#" class="btn btn-success d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-portofolio">
         	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
           	Tambah Catatan
       	</a>
-		<a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-portofolio" aria-label="Create new report">
+        <a href="#" class="btn btn-success d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-portofolio" aria-label="Create new report">
 			<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-		</a>   
-		    
+		</a> 
 	</div>
 </div>
 @endsection
@@ -29,28 +35,35 @@
             <div class="card">
                 <div class="card-body pb-0 mb-0">
                     <div class="row">
-                        <div class="col-7">
+                        <div class="col-6">
                             <h4>Valuasi Saat Ini :</h4>
                         </div>
                         <div class="col-5">
                             <input type="text" class="form-control pb-0 pt-0" style="padding-left:0.25rem; padding-right:0.25rem" autocomplete="off" disabled>
                         </div>
+                        <div class="col-1"></div>
                     </div>
                     <div class="row">
-                        <div class="col-7">
+                        <div class="col-6">
                             <h4>Jumlah Unit Penyertaan :</h4>
                         </div>
                         <div class="col-5">
                             <input type="text" class="form-control pb-0 pt-0" style="padding-left:0.25rem; padding-right:0.25rem" autocomplete="off">
                         </div>
+                        <div class="col-1">
+                            <a href="#" class="btn btn-sm btn-green btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Update">
+                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg>
+                            </a>
+                        </div>
                     </div>
                     <div class="row">
-                        <div class="col-7">
+                        <div class="col-6">
                             <h4>Harga Unit :</h4>
                         </div>
                         <div class="col-5">
                             <input type="text" class="form-control pb-0 pt-0" style="padding-left:0.25rem; padding-right:0.25rem" autocomplete="off" disabled>
                         </div>
+                        <div class="col-1"></div>
                     </div>
                 </div>
             </div>
@@ -80,7 +93,7 @@
                         <tbody>
                             <tr>
                                 <td class="text-center"></td>
-                                <td class="fw-bold" colspan="2">KAS</td>
+                                <td class="fw-bold text-center" colspan="2">KAS</td>
                                 <td class="text-end fw-bold" colspan="2">100</td>
                                 <td class="text-end" hidden>1</td>
                                 <td class="text-end" hidden>1</td>
@@ -93,27 +106,27 @@
                             </tr>
                             @foreach($portoData as $porto)
                             <tr>
-                                <td class="text-center">{{$loop->iteration}}</td>
+                                <td style="width:1%" class="text-center">{{$loop->iteration}}</td>
                                 <td style="width:1%"><span class="avatar avatar-xs" style="background-image: url({{$porto['saham']['pic']}}); --tblr-avatar-size:1.3rem;"></span></td>
-                                <td>&nbsp{{$porto['saham']['nama_saham']}}</td>
+                                <td style="width:6%">&nbsp{{$porto['saham']['nama_saham']}}</td>
                                 <td class="text-end">{{$porto['volume_beli']}}</td>
                                 <td class="text-end"hidden>1</td>
-                                <td class="text-end">{{ number_format(floatval($porto['pembelian']), 0, ',', '.')}}</td>
+                                <td class="text-end">{{ number_format(floatval($porto['harga_total']), 0, ',', '.')}}</td>
                                 <td class="text-end" hidden>1</td>
-                                <td class="text-end">{{ number_format(floatval($porto['pembelian']), 0, ',', '.')}}</td>
-                                <td class="text-end">{{ number_format(floatval($porto['pembelian']), 0, ',', '.')}}</td>
+                                <td class="text-end">{{ number_format(floatval($porto['harga_total']), 0, ',', '.')}}</td>
+                                <td class="text-end">{{ number_format(floatval($porto['harga_total']), 0, ',', '.')}}</td>
                                 <td class="text-end">test</td>
                                 <td class="text-end" hidden>1</td>
                                 <td class="text-end" hidden>1</td>
                                 <td style="width:1%" class="text-center">
                                     <span class="btn-group" role="group">
-                                        <a href="#" class="btn btn-sm btn-green w-100 btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top">
-                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-currency-dollar"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2" /><path d="M12 3v3m0 12v3" /></svg>
+                                        <a href="#" class="btn btn-sm btn-secondary w-100 btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="History">
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-history"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 8l0 4l2 2" /><path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5" /></svg>
                                         </a>
-                                        <a href="#" class="btn btn-sm btn-yellow w-100 btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top">
-                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
+                                        <a href="#" class="btn btn-sm btn-success w-100 btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Buy">
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 17h-11v-14h-2" /><path d="M6 5l14 1l-1 7h-13" /></svg>
                                         </a>
-                                        <a href="#" class="btn btn-sm btn-red w-100 btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top">
+                                        <a href="#" class="btn btn-sm btn-danger w-100 btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Sell">
                                             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
                                         </a>
                                     </span>
@@ -141,7 +154,7 @@
                         <div class="col-lg-8">
                             <div class="mb-3">
                                 <label class="form-label">Pilih Saham:</label>
-                                <select name="saham" type="text" class="form-select" id="select-people" value="">
+                                <select name="id_saham" type="text" class="form-select" id="select-people" value="" required>
                                     <option value="" selected>Pilih Saham</option>
                                     @foreach($sahamData as $saham)
                                     <option value="{{$saham['id_saham']}}" data-custom-properties="&lt;span class=&quot;avatar avatar-xs&quot; style=&quot;background-image: url({{$saham['pic']}})&quot;&gt;&lt;/span&gt;">{{$saham['nama_saham']}} - {{$saham['nama_perusahaan']}}</option>
@@ -152,7 +165,7 @@
                         <div class="col-lg-4">
                             <div class="mb-3">
                                 <label class="form-label">Tanggal Beli: </label>
-                                <input type="date" name="tanggalbeli" id="tanggalbeli" class="form-control" value="{{ now()->format('Y-m-d') }}">
+                                <input type="date" name="tanggal_beli" id="tanggal_beli" class="form-control" value="{{ now()->format('Y-m-d') }}">
                             </div>
                         </div>
                     </div>
@@ -173,7 +186,7 @@
                                         Rp.
                                     </span>
                                     <input type="text" id="jumlah" oninput="updateFormattedNumberSaham()" name="jumlah" class="form-control text-end" autocomplete="off" required>
-                                    <input type="text" id="jumlah1" name="jumlah1" class="form-control text-end" autocomplete="off">
+                                    <input type="text" id="jumlah1" name="jumlah1" class="form-control text-end" autocomplete="off" hidden>
                                 </div>
                                 
                             </div>
@@ -186,7 +199,7 @@
                                         Rp.
                                     </span>
                                     <input type="text" id="avgprice" oninput="updateFormattedNumberAvg()" name="avgprice" class="form-control text-end" autocomplete="off" required>
-                                    <input type="text" id="avgprice1" name="avgprice1" class="form-control text-end" autocomplete="off">
+                                    <input type="text" id="avgprice1" name="avgprice1" class="form-control text-end" autocomplete="off" hidden>
                                 </div>
                                 
                             </div>
@@ -239,7 +252,7 @@
     document.getElementById('avgprice').addEventListener('input', updateFormattedNumberAvg);
 </script>                     
                           
-<script src="./dist/libs/tom-select/dist/js/tom-select.base.min.js?1684106062" defer></script>
+<script src="{{url('dist/libs/tom-select/dist/js/tom-select.base.min.js?1684106062')}}" defer></script>
   
 <script>
 // @formatter:off

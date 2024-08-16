@@ -57,7 +57,33 @@ class PortofolioController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        // dd($request);
+        $input = array(
+            'user_id' => $request->auth['user']['user_id'],
+            'volume_beli' => $request->jumlahlembar,
+            'tanggal_beli' => $request->tanggal_beli,
+            'id_saham' => $request->id_saham,
+            'harga_beli' => $request->jumlah1, //avg price
+            'harga_total' => $request->avgprice1, //current price
+            'pembelian' => '0',
+            'id_sekuritas' => '3'
+        );
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'x-api-key' => env('API_KEY'),
+            'Authorization' => 'Bearer ' . $request->auth['token'],
+            'user-type' => $request->auth['user_type'],
+        ])->post(env('API_URL') . '/portofolio-beli', $input);
+
+        if($response->status() == 201){
+            // $this->updateAuthCookie($request->auth, $response['auth']);
+            return redirect()->route('portofolio')->with('success',$response["message"]);
+        }else if(!empty($response["errors"])){
+            return back()->with('error',$response["message"]);
+        }else{
+            return back()->with('error',$response["message"]);
+        }
+
     }
 
     /**
