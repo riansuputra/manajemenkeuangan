@@ -45,7 +45,7 @@ class AuthController extends Controller
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'x-api-key' => env('API_KEY')
-        ])->post(env('API_URL')."/login-user", $input);
+        ])->post(env('API_URL')."/login", $input);
 
         if ($response->status() == 200) {
             Cookie::queue('auth', serialize($response['auth']));

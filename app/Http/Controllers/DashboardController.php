@@ -31,10 +31,10 @@ class DashboardController extends Controller
 
 
         $responses = Http::pool(fn (Pool $pool) => [
-            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/pemasukansWeb'),
-            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/pengeluaransWeb'),
-            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/kategori_pemasukansWeb'),
-            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/kategori_pengeluaransWeb')
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/pemasukan'),
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/pengeluaran'),
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/kategori-pemasukan'),
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/kategori-pengeluaran')
         ]);
 
         // dd($responses);
@@ -42,8 +42,8 @@ class DashboardController extends Controller
         if ($responses[0]->successful() && $responses[1]->successful() && $responses[2]->successful() && $responses[3]->successful()) {
             $pemasukanData = collect($responses[0]->json()['data']['pemasukan']);
             $pengeluaranData = collect($responses[1]->json()['data']['pengeluaran']);
-            $kategoriPemasukanData = collect($responses[2]->json()['data']['kategoriPemasukan']);
-            $kategoriPengeluaranData = collect($responses[3]->json()['data']['kategoriPengeluaran']);
+            $kategoriPemasukanData = collect($responses[2]->json()['data']['kategori_pemasukan']);
+            $kategoriPengeluaranData = collect($responses[3]->json()['data']['kategori_pengeluaran']);
 
             $combinedData3 = $pemasukanData->merge($pengeluaranData);
 
@@ -62,6 +62,8 @@ class DashboardController extends Controller
             $combinedData = $combinedData2['data'];
 
             // dd($groupedSemuaData);
+            // dd($combinedData2);
+
 
             // dd($kategoriPemasukanData, $kategoriPengeluaranData);
 
@@ -78,16 +80,16 @@ class DashboardController extends Controller
 
             $sortedData = $combinedData->sortByDesc('tanggal');
 
-            // dd($tanggalData);
+            // dd($combinedData);
 
 
-            // dd($groupedData);
+            // dd($sortedData);
 
             
             $summary = $this->calculateSummary($sortedData);
             
             
-            // dd($kategoriPemasukanData);
+            // dd($summary);
     
             return view('dashboard.index', [
                 'user' => $request->auth['user'],
@@ -130,7 +132,7 @@ class DashboardController extends Controller
     private function groupByCategory($data)
     {
         return $data->groupBy(function ($item) {
-            return isset($item['id_pemasukan']) ? 'Pemasukan' : 'Pengeluaran';
+            return isset($item['kategori_pemasukan_id']) ? 'Pemasukan' : 'Pengeluaran';
             // dd($data);
         })->map(function ($items, $key) {
             $totalJumlah = $items->sum('jumlah');
@@ -192,7 +194,7 @@ class DashboardController extends Controller
         });
     
         // Filter data based on user ID
-        $filteredData2 = $combinedData->where('user_id', $request->auth['user']['user_id']);
+        $filteredData2 = $combinedData->where('user_id', $request->auth['user']['id']);
         
 
         // Apply date-based filters
@@ -263,9 +265,9 @@ class DashboardController extends Controller
 
     private function attachCategoryInfo($filteredData, $kategoriPemasukanData, $kategoriPengeluaranData) {
         return $filteredData->map(function ($item) use ($kategoriPemasukanData, $kategoriPengeluaranData) {
-            if (isset($item['id_pemasukan'])) {
+            if (isset($item['kategori_pemasukan_id'])) {
                 $item['kategori_pemasukan'] = $kategoriPemasukanData->firstWhere('id_kategori_pemasukan', $item['id_kategori_pemasukan']);
-            } elseif (isset($item['id_pengeluaran'])) {
+            } elseif (isset($item['kategori_pengeluaran_id'])) {
                 $item['kategori_pengeluaran'] = $kategoriPengeluaranData->firstWhere('id_kategori_pengeluaran', $item['id_kategori_pengeluaran']);
             }
             return $item;
@@ -414,28 +416,30 @@ class DashboardController extends Controller
         // dd($data);
     
         foreach ($data as $item) {
-            if (isset($item['id_pemasukan'])) {
+            if (isset($item['kategori_pemasukan_id'])) {
                 $summary['totalPemasukan'] += $item['jumlah'];
                 $summary['catPemasukan']++;
-            } elseif (isset($item['id_pengeluaran'])) {
+            } elseif (isset($item['kategori_pengeluaran_id'])) {
                 $summary['totalPengeluaran'] += abs($item['jumlah']);
                 $summary['catPengeluaran']++;
             }           
     
             // Ensure $item['tanggal'] is a Carbon date object
             $tanggal = Carbon::parse($item['tanggal']);
+            // dd($item['tanggal']);
     
             // Calculate daily balances
             $saldoHarianKey = $tanggal->toDateString();
+            // dd($saldoHarianKey);
             if (!isset($summary['saldoHarian'][$saldoHarianKey])) {
                 $summary['saldoHarian'][$saldoHarianKey] = 0;
             }
             $saldoHarian = $summary['saldoHarian'][$saldoHarianKey];
-            if (isset($item['id_pemasukan'])) {
-                $summary['saldoHarian'][$saldoHarianKey] = $saldoHarian + ($item['id_pemasukan'] ? $item['jumlah'] : -$item['jumlah']);
+            if (isset($item['kategori_pemasukan_id'])) {
+                $summary['saldoHarian'][$saldoHarianKey] = $saldoHarian + ($item['kategori_pemasukan_id'] ? $item['jumlah'] : -$item['jumlah']);
 
-            } elseif (isset($item['id_pengeluaran'])) {
-                $summary['saldoHarian'][$saldoHarianKey] = $saldoHarian + ($item['id_pengeluaran'] ? $item['jumlah'] : -$item['jumlah']);
+            } elseif (isset($item['kategori_pengeluaran_id'])) {
+                $summary['saldoHarian'][$saldoHarianKey] = $saldoHarian + ($item['kategori_pengeluaran_id'] ? $item['jumlah'] : -$item['jumlah']);
             }
         }
     

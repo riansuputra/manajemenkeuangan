@@ -6,6 +6,7 @@ use App\Models\Portofolio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Client\Pool;
+use \Carbon\Carbon;
 
 
 class PortofolioController extends Controller
@@ -26,7 +27,7 @@ class PortofolioController extends Controller
     {
         $responses = Http::pool(fn (Pool $pool) => [
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/saham'),
-            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/portofolio-beli')
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/beli-saham')
         ]);
         // dd($responses[1]->json());
         if ($responses[0]->successful() && $responses[1]->successful()){
@@ -47,9 +48,66 @@ class PortofolioController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        return view('portofolio.portofolio', [
+            'user' => $request->auth['user'],
+        ]);
+    }
+
+    public function make(Request $request)
+    {
+        return view('portofolio.portofolioril', [
+            'user' => $request->auth['user'],
+        ]);
+    }
+
+    public function histori(Request $request)
+    {
+        return view('portofolio.histori', [
+            'user' => $request->auth['user'],
+        ]);
+    }
+
+     /**
+     * Show the form for creating a new resource.
+     */
+    public function mutasiDana(Request $request)
+    {
+        $responses = Http::pool(fn (Pool $pool) => [
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/berita'),
+        ]);
+        // dd($request->auth['user']);
+
+        if ($responses[0]->successful()){
+            $beritaData = $responses[0]->json()['data']['berita'];
+            // dd($beritaData);
+            return view('berita.berita', [
+                'user' => $request->auth['user'],
+                'beritaData' => $beritaData,
+            ]);
+        } else {
+            abort(500, 'Failed to fetch data from API');
+        }
+    }
+
+    public function dividen(Request $request)
+    {
+        $responses = Http::pool(fn (Pool $pool) => [
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/dividen'),
+        ]);
+        // dd($request->auth['user']);
+
+        if ($responses[0]->successful()){
+            $dividenData = $responses[0]->json()['data']['dividen'];
+            // dd($dividenData);
+            return view('berita.dividen', [
+                'user' => $request->auth['user'],
+                'dividenData' => $dividenData,
+            ]);
+        } else {
+            abort(500, 'Failed to fetch data from API');
+        }
     }
 
     /**

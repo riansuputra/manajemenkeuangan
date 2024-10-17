@@ -179,7 +179,7 @@
                     <table class="table table-vcenter">
                       	<tbody>
 							@foreach ($sortedData->take(4) as $catatan)
-							@if (isset($catatan['id_pemasukan']))
+							@if (isset($catatan['kategori_pemasukan_id']))
 							<tr style="height:70px">
 								<td class="w-1">
 									<span class="bg-green text-white avatar">
@@ -207,7 +207,7 @@
 									</div>
 								</td>
 							</tr>
-							@else
+							@elseif (isset($catatan['kategori_pengeluaran_id']))
 							<tr style="height:70px">
 								<td class="w-1">
 									<span class="bg-red text-white avatar">
