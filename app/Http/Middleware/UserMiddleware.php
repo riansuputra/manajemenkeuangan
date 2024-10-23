@@ -24,23 +24,5 @@ class UserMiddleware
             }
         }
         return redirect()->route('loginPage');
-
-        // $token = request()->cookie('token');
-        // $response = Http::withHeaders([
-        //     'Accept' => 'application/json',
-        //     'x-api-key' => env('API_KEY'),
-        //     'Authorization' => 'Bearer '. $token,
-        //     // 'Authorization' => 'Bearer ' . $request->cookie('token')
-        // ])->get(env('API_URL')."/auth");
-        // if($response->status() == 200){
-        //     if(isset($response['data']['user'])){
-        //         $request->merge(['user' => $response['data']['user']]);
-        //         if(isset($request->admin)){
-        //             unset($request->admin);
-        //         }
-        //         return $next($request);
-        //     }
-        // }
-        // return redirect()->route('loginPage')->with(["toast" => ["type" => "error", "message" => $response["message"]]]);
     }
 }
