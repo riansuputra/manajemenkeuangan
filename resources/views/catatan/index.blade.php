@@ -10,19 +10,19 @@
 </div>
 <div class="col-auto ms-auto d-print-none">
 	<div class="btn-list">
-		<a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-report">
+		<a href="#" class="btn btn-success d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-report">
         	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
           	Tambah Catatan
       	</a>
-		<a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-report" aria-label="Create new report">
+		<a href="#" class="btn btn-success d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-report" aria-label="Create new report">
 			<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
 		</a>   
 		<a href="{{ url('/category-request') }}" class="btn btn-primary d-none d-sm-inline-block">
-        	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-          	Request New Category
+			<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-category"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4h6v6h-6z" /><path d="M14 4h6v6h-6z" /><path d="M4 14h6v6h-6z" /><path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /></svg>
+          	Tambah Kategori
       	</a>
 		<a href="#" class="btn btn-primary d-sm-none btn-icon" >
-			<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+			<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-category"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4h6v6h-6z" /><path d="M14 4h6v6h-6z" /><path d="M4 14h6v6h-6z" /><path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /></svg>
 		</a>       
 	</div>
 </div>
@@ -31,16 +31,15 @@
 @section('content')
 <div class="container-xl">
 	<div class="row g-4">
+		<!-- Filter -->
 		<div class="col-md-3">
-
-		<div class="input-icon mb-4">
-			<input type="text" value="" class="form-control" id="searchRecord" name="searchRecord" placeholder="Search…">
-			<span class="input-icon-addon">
-				<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>
-			</span>
+			<div class="input-icon mb-4">
+				<input type="text" value="" class="form-control" id="searchRecord" name="searchRecord" placeholder="Search…">
+				<span class="input-icon-addon">
+					<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>
+				</span>
 			</div>
-
-		<div class="form-label mt-1 mb-2">Record Types</div>
+			<div class="form-label mt-1 mb-2">Record Types</div>
 			<div class="mb-4">
 				<label class="form-check">
 					<input type="radio" class="form-check-input" name="record-type" value="1" checked>
@@ -75,26 +74,13 @@
 					</div>
 				</div>
 			</div>
-		<div class="form-label mt-1 mb-2">
-		<a href="#" class="w-100 btn-resetfilter">
-                      Reset to defaults
-                    </a>
-		</div>
-
-			
-			
-		
-
-			
-			
-
-
-				<hr>
-
-				<div class="form-label">Date Filter</div>
-			
-
-
+			<div class="form-label mt-1 mb-2">
+				<a href="#" class="w-100 btn-resetfilter">
+					Reset to defaults
+				</a>
+			</div>
+			<hr>
+			<div class="form-label">Date Filter</div>
 			<div class="col-auto d-print-none" >
 				<form class="row"id="filterForm" action="{{ route('catatan-filter') }}" method="POST">
 					@csrf
@@ -124,12 +110,9 @@
 					</div>
 				</form>
 			</div>
-
-			
-			
-			
 		</div>
-
+		<!-- Filter end -->
+		<!-- Catatan -->
 		<div class="col-md-9">
 			<div class="row row-cards">
 				<div class="space-y">
@@ -183,31 +166,31 @@
 												<tr>
 													<td class="p-2">
 														<span class="item-data" data-date="{{ \Carbon\Carbon::parse($item['tanggal'])->format('d F Y') }}" data-amount="{{ $item['total_jumlah'] }}" hidden>
-														@foreach($group as $headerItem)
-                            {{ \Carbon\Carbon::parse($headerItem['tanggal'])->translatedFormat('d F Y') }}
-                            {{$headerItem['jumlah']}}
-                            {{$headerItem['catatan']}}
-                            {{$headerItem['total_jumlah']}} 
-                            {{$headerItem['tanggal']}} 
-                            @if(isset($headerItem['id_pemasukan']))
-                                {{$headerItem['kategori_pemasukan']['nama_kategori_pemasukan']}}income income incomes pemasukan
-                            @else
-                                {{$headerItem['kategori_pengeluaran']['nama_kategori_pengeluaran']}}expense
-                                {{$headerItem['id_kategori_pengeluaran']}} expense expenses pengeluaran
-                            @endif
-							@if ($item['total_jumlah'] < 0)
-																	<strong class="amount">- Rp. {{ number_format(abs(floatval($item['total_jumlah'])), 0, ',', '.') }}</strong>
+															@foreach($group as $headerItem)
+																{{ \Carbon\Carbon::parse($headerItem['tanggal'])->translatedFormat('d F Y') }}
+																{{$headerItem['jumlah']}}
+																{{$headerItem['catatan']}}
+																{{$headerItem['total_jumlah']}} 
+																{{$headerItem['tanggal']}} 
+																@if(isset($headerItem['kategori_pemasukan_id']))
+																	{{$headerItem['kategori_pemasukan']['nama_kategori_pemasukan']}}income income incomes pemasukan
 																@else
-																	<strong class="amount">+ Rp. {{ number_format(floatval($item['total_jumlah']), 0, ',', '.') }}</strong>
+																	{{$headerItem['kategori_pengeluaran']['nama_kategori_pengeluaran']}}expense
+																	{{$headerItem['kategori_pengeluaran_id']}} expense expenses pengeluaran
 																@endif
-                        @endforeach
+																@if ($item['total_jumlah'] < 0)
+																		<strong class="amount">- Rp. {{ number_format(abs(floatval($item['total_jumlah'])), 0, ',', '.') }}</strong>
+																	@else
+																		<strong class="amount">+ Rp. {{ number_format(floatval($item['total_jumlah']), 0, ',', '.') }}</strong>
+																	@endif
+															@endforeach
 														</span>
 														<div class="row  mt-2">
 															<div class="col">
 																<strong>{{ \Carbon\Carbon::parse($item['tanggal'])->translatedFormat('d F Y') }}</strong>
 															</div>
 															<div class="col-auto me-2">
-															<strong class="header-total"></strong>
+																<strong class="header-total"></strong>
 															</div>
 														</div>
 													</td>
@@ -215,30 +198,27 @@
 												@php $first = false; @endphp
 											@endif
 											<tr>
-												
 												<td class="p-0">
-													
 													<div class="card mb-0">
 														<div class="row g-0">
 															<div class="col">
 																<div class="card-body">
-																	@if(isset($item['id_pemasukan']))
-																	<span class="item-data" data-date="{{ \Carbon\Carbon::parse($item['tanggal'])->format('d F Y') }}" data-amount="{{ $item['jumlah'] }}" data-id-pemasukan="{{ $item['id_pemasukan'] }}" hidden>
-													{{ \Carbon\Carbon::parse($item['tanggal'])->translatedFormat('d F Y') }}
-													{{$item['jumlah']}}
-													{{$item['catatan']}}
-													{{$item['tanggal']}}
-													{{$item['total_jumlah']}} 
-													{{$item['id_kategori_pemasukan']}}
-													{{$item['kategori_pemasukan']['nama_kategori_pemasukan']}}income income incomes pemasukan
-													
-													</span>
+																	@if(isset($item['kategori_pemasukan_id']))
+																		<span class="item-data" data-date="{{ \Carbon\Carbon::parse($item['tanggal'])->format('d F Y') }}" data-amount="{{ $item['jumlah'] }}" data-id-pemasukan="{{ $item['id'] }}" hidden>
+																			{{ \Carbon\Carbon::parse($item['tanggal'])->translatedFormat('d F Y') }}
+																			{{$item['jumlah']}}
+																			{{$item['catatan']}}
+																			{{$item['tanggal']}}
+																			{{$item['total_jumlah']}} 
+																			{{$item['kategori_pemasukan_id']}}
+																			{{$item['kategori_pemasukan']['nama_kategori_pemasukan']}}income income incomes pemasukan
+																		</span>
 																		<div class="row">
-																			<div class="col-md">
+																			<div class="col">
 																				<div class="list-inline list-inline-dots mb-0 text-muted d-sm-block d-none">
 																					<div class="list-inline-item">
 																						<svg xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="#00ff00"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-coin icon-inline"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M14.8 9a2 2 0 0 0 -1.8 -1h-2a2 2 0 1 0 0 4h2a2 2 0 1 1 0 4h-2a2 2 0 0 1 -1.8 -1" /><path d="M12 7v10" /></svg>
-																							{{$item['kategori_pemasukan']['nama_kategori_pemasukan']}}
+																							<strong>{{$item['kategori_pemasukan']['nama_kategori_pemasukan']}}</strong>
 																					</div>
 																					@if(isset($item['catatan']))
 																						<div class="list-inline-item">
@@ -246,17 +226,32 @@
 																						</div>
 																					@else
 																						<div class="list-inline-item">
-																							-
+																							(Tanpa catatan)
+																						</div>
+																					@endif
+																				</div>
+																				<div class="list mb-0 text-muted d-block d-sm-none">
+																					<div class="list-item">
+																						<svg xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="#00ff00"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-coin icon-inline"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M14.8 9a2 2 0 0 0 -1.8 -1h-2a2 2 0 1 0 0 4h2a2 2 0 1 1 0 4h-2a2 2 0 0 1 -1.8 -1" /><path d="M12 7v10" /></svg>
+																							<strong>{{$item['kategori_pemasukan']['nama_kategori_pemasukan']}}</strong>
+																					</div>
+																					@if(isset($item['catatan']))
+																						<div class="list-item mt-1">
+																							{{ \Illuminate\Support\Str::limit($item['catatan'], 30, '...') }}
+																						</div>
+																					@else
+																						<div class="list-item mt-1">
+																							(Tanpa catatan)
 																						</div>
 																					@endif
 																				</div>
 																			</div>	
-																			<div class="col-md-auto">
+																			<div class="col-auto">
 																				<div class="badges">
 																					<a href="#" class="text-green fw-bold">+ Rp. {{ number_format(floatval($item['jumlah']), 0, ',', '.') }}</a>
 																				</div>
 																			</div>
-																			<div class="col-md-auto">
+																			<div class="col-auto">
 																				<div class="badges">
 																					<a class="nav-link"  data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
 																						<span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -266,10 +261,10 @@
 																					<div class="dropdown-menu">
 																						<a class="dropdown-item edit-btn" href="https://tabler.io/docs" 
 																							data-bs-toggle="modal" 
-																							data-bs-target="#modal-edit{{$item['id_pemasukan']}}"
-																							data-id="{{$item['id_pemasukan']}}" 
+																							data-bs-target="#modal-edit{{$item['id']}}"
+																							data-id="{{$item['id']}}" 
 																							data-jenis="1" data-jumlah="{{$item['jumlah']}}" 
-																							data-kategori="{{$item['kategori_pemasukan']['id_kategori_pemasukan']}}" 
+																							data-kategori="{{$item['kategori_pemasukan']['id']}}" 
 																							data-tanggal="{{$item['tanggal']}}" 
 																							data-createdat="{{$item['created_at']}}" 
 																							data-catatan="{{$item['catatan']}}">
@@ -277,8 +272,8 @@
 																						</a>
 																						<a class="dropdown-item delete-btn" href="./changelog.html"
 																							data-bs-toggle="modal"
-																							data-bs-target="#modal-danger{{$item['id_pemasukan']}}" 
-																							data-id="{{$item['id_pemasukan']}}" 
+																							data-bs-target="#modal-danger{{$item['id']}}" 
+																							data-id="{{$item['id']}}" 
 																							data-jenis="1">
 																							Delete
 																						</a>
@@ -287,23 +282,21 @@
 																			</div>
 																		</div>
 																	@else
-																	<span class="item-data" data-date="{{ \Carbon\Carbon::parse($item['tanggal'])->format('d F Y') }}" data-amount="{{ -abs($item['jumlah']) }}" hidden>
-													{{ \Carbon\Carbon::parse($item['tanggal'])->translatedFormat('d F Y') }}
-													{{$item['jumlah']}}
-													{{$item['catatan']}}
-													{{$item['total_jumlah']}} 
-													{{$item['tanggal']}} 
-													
-													{{$item['kategori_pengeluaran']['nama_kategori_pengeluaran']}}expense
-													{{$item['id_kategori_pengeluaran']}} expense expenses pengeluaran
-													
-													</span>
+																		<span class="item-data" data-date="{{ \Carbon\Carbon::parse($item['tanggal'])->format('d F Y') }}" data-amount="{{ -abs($item['jumlah']) }}" hidden>
+																			{{ \Carbon\Carbon::parse($item['tanggal'])->translatedFormat('d F Y') }}
+																			{{$item['jumlah']}}
+																			{{$item['catatan']}}
+																			{{$item['total_jumlah']}} 
+																			{{$item['tanggal']}} 
+																			{{$item['kategori_pengeluaran']['nama_kategori_pengeluaran']}}expense
+																			{{$item['kategori_pengeluaran_id']}} expense expenses pengeluaran
+																		</span>
 																		<div class="row">
-																			<div class="col-md">
+																			<div class="col">
 																				<div class="list-inline list-inline-dots mb-0 text-muted d-sm-block d-none">
-																					<div class="list-inline-item">
+																					<div class="list-inline-item ">
 																						<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="#ff0000"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart-dollar icon-inline"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 19a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M13 17h-7v-14h-2" /><path d="M6 5l14 1l-.575 4.022m-4.925 2.978h-8.5" /><path d="M21 15h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" /><path d="M19 21v1m0 -8v1" /></svg>
-																							{{$item['kategori_pengeluaran']['nama_kategori_pengeluaran']}}
+																							<strong>{{$item['kategori_pengeluaran']['nama_kategori_pengeluaran']}}</strong>
 																					</div>
 																					@if(isset($item['catatan']))
 																						<div class="list-inline-item">
@@ -311,31 +304,45 @@
 																						</div>
 																					@else
 																						<div class="list-inline-item">
-																							-
+																							(Tanpa catatan)
+																						</div>
+																					@endif
+																				</div>
+																				<div class="list mb-0 text-muted d-block d-sm-none">
+																					<div class="list-item">
+																						<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="#ff0000"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart-dollar icon-inline"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 19a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M13 17h-7v-14h-2" /><path d="M6 5l14 1l-.575 4.022m-4.925 2.978h-8.5" /><path d="M21 15h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" /><path d="M19 21v1m0 -8v1" /></svg>
+																							<strong>{{$item['kategori_pengeluaran']['nama_kategori_pengeluaran']}}</strong>
+																					</div>
+																					@if(isset($item['catatan']))
+																						<div class="list-item mt-1">
+																							{{ \Illuminate\Support\Str::limit($item['catatan'], 30, '...') }}
+																						</div>
+																					@else
+																						<div class="list-item mt-1">
+																							(Tanpa catatan)
 																						</div>
 																					@endif
 																				</div>
 																			</div>	
-																			<div class="col-md-auto">
+																			<div class="col-auto">
 																				<div class="badges">
 																					<a href="#" class="text-red fw-bold">- Rp. {{ number_format(abs(floatval($item['jumlah'])), 0, ',', '.') }}</a>
 																				</div>
 																			</div>
-																			<div class="col-md-auto">
+																			<div class="col-auto">
 																				<div class="badges">
 																					<a class="nav-link"  data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
 																						<span class="nav-link-icon d-md-none d-lg-inline-block">
 																							<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
-
 																						</span>
 																					</a>
 																					<div class="dropdown-menu">
 																						<a class="dropdown-item edit-btn" href="https://tabler.io/docs" 
 																							data-bs-toggle="modal" 
-																							data-bs-target="#modal-edit{{$item['id_pengeluaran']}}"
-																							data-id="{{$item['id_pengeluaran']}}" 
+																							data-bs-target="#modal-edit{{$item['id']}}"
+																							data-id="{{$item['id']}}" 
 																							data-jenis="2" data-jumlah="{{$item['jumlah']}}" 
-																							data-kategori="{{$item['kategori_pengeluaran']['id_kategori_pengeluaran']}}" 
+																							data-kategori="{{$item['kategori_pengeluaran']['id']}}" 
 																							data-tanggal="{{$item['tanggal']}}" 
 																							data-createdat="{{$item['created_at']}}" 
 																							data-catatan="{{$item['catatan']}}">
@@ -343,8 +350,8 @@
 																						</a>
 																						<a class="dropdown-item delete-btn" href="./changelog.html"
 																							data-bs-toggle="modal"
-																							data-bs-target="#modal-danger{{$item['id_pengeluaran']}}" 
-																							data-id="{{$item['id_pengeluaran']}}" 
+																							data-bs-target="#modal-danger{{$item['id']}}" 
+																							data-id="{{$item['id']}}" 
 																							data-jenis="2">
 																							Delete
 																						</a>
@@ -359,10 +366,10 @@
 													</div>
 												</td>
 											</tr>
-											@if (isset($item['id_pemasukan']))
-												<div class="modal modal-blur fade" id="modal-edit{{$item['id_pemasukan']}}" tabindex="-1" role="dialog" aria-hidden="true">
+											@if (isset($item['kategori_pemasukan_id']))
+												<div class="modal modal-blur fade" id="modal-edit{{$item['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
 											@else
-												<div class="modal modal-blur fade" id="modal-edit{{$item['id_pengeluaran']}}" tabindex="-1" role="dialog" aria-hidden="true">
+												<div class="modal modal-blur fade" id="modal-edit{{$item['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
 											@endif
 												<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
 													<div class="modal-content">
@@ -370,26 +377,25 @@
 															<h5 class="modal-title">Edit Catatan</h5>
 															<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 														</div>
-														@if (isset($item['id_pemasukan']))
-															<form action="{{route('updateCatatan', ['id'=> $item['id_pemasukan']])}}" method="post" autocomplete="off">
+														@if (isset($item['kategori_pemasukan_id']))
+															<form action="{{route('updateCatatan', ['id'=> $item['id']])}}" method="post" autocomplete="off">
 																@csrf
 																<input type="text" name="id" id="id" class="form-control text-end id-input" autocomplete="off" hidden>
 																<input type="text" name="jenisedit" id="jenisedit"class="form-control text-end jenisedit" autocomplete="off" hidden>
-																<input type="text" name="created_at" id="created_at{{$item['id_pemasukan']}}" class="form-control text-end created_at" autocomplete="off" hidden>
-
+																<input type="text" name="created_at" id="created_at{{$item['id']}}" class="form-control text-end created_at" autocomplete="off" hidden>
 														@else
-															<form action="{{route('updateCatatan', ['id'=> $item['id_pengeluaran']])}}" method="post" autocomplete="off">
+															<form action="{{route('updateCatatan', ['id'=> $item['id']])}}" method="post" autocomplete="off">
 																@csrf
 																<input type="text" name="id" id="id" class="form-control text-end id-input" autocomplete="off" hidden>
 																<input type="text" name="jenisedit" id="jenisedit"class="form-control text-end jenisedit" autocomplete="off" hidden>
-																<input type="text" name="created_at" id="created_at{{$item['id_pengeluaran']}}" class="form-control text-end created_at" autocomplete="off" hidden>
+																<input type="text" name="created_at" id="created_at{{$item['id']}}" class="form-control text-end created_at" autocomplete="off" hidden>
 														@endif
 															<div class="modal-body">
 																<label class="form-label">Pilih Jenis :</label>
 																<div class="form-selectgroup-boxes row mb-3">
 																	<div class="col-lg-6">
 																		<label class="form-selectgroup-item">
-																			<input type="radio" class="form-selectgroup-input pemasukan-radio" name="jenisedit2{{$item['id_pemasukan'] ?? $item['id_pengeluaran']}}" value="1">
+																			<input type="radio" class="form-selectgroup-input pemasukan-radio" name="jenisedit2{{$item['id'] ?? $item['id']}}" value="1">
 																			<span class="form-selectgroup-label d-flex align-items-center p-2">
 																				<span class="me-3">
 																					<span class="form-selectgroup-check"></span>
@@ -403,7 +409,7 @@
 																	</div>
 																	<div class="col-lg-6">
 																		<label class="form-selectgroup-item">
-																			<input type="radio" class="form-selectgroup-input pengeluaran-radio" name="jenisedit2{{$item['id_pemasukan'] ?? $item['id_pengeluaran']}}" value="2">
+																			<input type="radio" class="form-selectgroup-input pengeluaran-radio" name="jenisedit2{{$item['id'] ?? $item['id']}}" value="2">
 																			<span class="form-selectgroup-label d-flex align-items-center p-2">
 																				<span class="me-3">
 																					<span class="form-selectgroup-check"></span>
@@ -455,7 +461,7 @@
 																<a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
 																	Batal
 																</a>
-																<button type="submit" class="btn btn-primary ms-auto">
+																<button type="submit" class="btn btn-warning ms-auto">
 																	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
 																		Edit Catatan
 																</button>
@@ -464,10 +470,10 @@
 													</div>
 												</div>
 											</div>
-											@if (isset($item['id_pemasukan']))
-												<div class="modal modal-blur fade" id="modal-danger{{$item['id_pemasukan']}}" tabindex="-1" role="dialog" aria-hidden="true">
+											@if (isset($item['kategori_pemasukan_id']))
+												<div class="modal modal-blur fade" id="modal-danger{{$item['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
 											@else
-												<div class="modal modal-blur fade" id="modal-danger{{$item['id_pengeluaran']}}" tabindex="-1" role="dialog" aria-hidden="true">
+												<div class="modal modal-blur fade" id="modal-danger{{$item['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
 											@endif
 												<div class="modal-dialog modal-sm modal-dialog-centered" role="document">
 													<div class="modal-content">
@@ -475,8 +481,8 @@
 														<div class="modal-status bg-danger"></div>
 														<div class="modal-body text-center py-4">
 															<svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.24 3.957l-8.422 14.06a1.989 1.989 0 0 0 1.7 2.983h16.845a1.989 1.989 0 0 0 1.7 -2.983l-8.423 -14.06a1.989 1.989 0 0 0 -3.4 0z" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
-															<h3>Apakah anda yakin?</h3>
-														<div class="text-muted">Apakah anda yakin menghapus catatan ini?</div>
+															<h3>Konfirmasi Penghapusan</h3>
+														<div class="text-muted">Apakah anda yakin ingin menghapus catatan ini?</div>
 													</div>
 													<div class="modal-footer">
 														<div class="w-100">
@@ -487,16 +493,16 @@
 																	</a>
 																</div>
 																<div class="col">
-																	@if (isset($item['id_pemasukan']))
-																		<form method="POST" action="{{route('hapusCatatan', ['id' => $item['id_pemasukan']] )}}">
+																	@if (isset($item['kategori_pemasukan_id']))
+																		<form method="POST" action="{{route('hapusCatatan', ['id' => $item['id']] )}}">
 																			@csrf
 																			<input type="text" id="jenishapus" name="jenishapus" class="form-control text-end" autocomplete="off" hidden>
 																	@else
-																		<form method="POST" action="{{route('hapusCatatan', ['id' => $item['id_pengeluaran']])}}">
+																		<form method="POST" action="{{route('hapusCatatan', ['id' => $item['id']])}}">
 																			@csrf
 																			<input type="text" id="jenishapus" name="jenishapus" class="form-control text-end" autocomplete="off" hidden>
 																	@endif
-																			<button type="submit" class="btn btn-dangers w-100" data-bs-dismiss="modal">
+																			<button type="submit" class="btn btn-danger w-100" data-bs-dismiss="modal">
 																				Hapus
 																			</button>
 																		</form>
@@ -529,7 +535,6 @@
 	}
 
 	function updateFormattedNumber1(event) {
-		console.log("updateFormattedNumber called"); 
 		var inputElement = event.target;
 		var rawValue = inputElement.value.replace(/\D/g, ''); 
 		var formattedValue = formatNumber1(rawValue); 
@@ -567,148 +572,117 @@
 		const startDate = '{{ $startDate }}';
 		const endDate = '{{ $endDate }}';
 
-    
-
 		function handleChange() {
-    const selectedOption = jenisSelect.value;
-    // Clear existing content
-    pilihanDiv.innerHTML = "";
+			const selectedOption = jenisSelect.value;
+			pilihanDiv.innerHTML = "";
 
-    if (selectedOption === "Mingguan") {
-        // Create input type week
-        const inputWeek = document.createElement("input");
-        inputWeek.type = "week";
-        inputWeek.classList.add("form-control");
-        inputWeek.setAttribute("name", "filterMingguan");
-        inputWeek.setAttribute("id", "filterMingguan");
-        inputWeek.setAttribute("required", "required");
-		pilihanDiv.appendChild(inputWeek);
-		if (filterValue) {
-			inputWeek.value = filterValue;
-			inputStartDate.value = startDate;
-			inputEndDate.value = endDate;
+			if (selectedOption === "Mingguan") {
+				const inputWeek = document.createElement("input");
+				inputWeek.type = "week";
+				inputWeek.classList.add("form-control");
+				inputWeek.setAttribute("name", "filterMingguan");
+				inputWeek.setAttribute("id", "filterMingguan");
+				inputWeek.setAttribute("required", "required");
+				pilihanDiv.appendChild(inputWeek);
+				if (filterValue) {
+					inputWeek.value = filterValue;
+					inputStartDate.value = startDate;
+					inputEndDate.value = endDate;
+				}
+			} else if (selectedOption === "Bulanan") {
+				const inputMonth = document.createElement("input");
+				inputMonth.type = "month";
+				inputMonth.classList.add("form-control");
+				inputMonth.setAttribute("name", "filterBulanan");
+				inputMonth.setAttribute("id", "filterBulanan");
+				inputMonth.setAttribute("required", "required");
+				pilihanDiv.appendChild(inputMonth);
+				if (filterValue) {
+					inputMonth.value = filterValue;
+					inputStartDate.value = startDate;
+					inputEndDate.value = endDate;
+				}
+			} else if (selectedOption === "Tahunan") {
+				const inputYear = document.createElement("input");
+				inputYear.type = "number";
+				inputYear.min = "1900";
+				inputYear.max = "2099";
+				inputYear.step = "1";
+				inputYear.classList.add("form-control");
+				inputYear.setAttribute("name", "filterTahunan");
+				inputYear.setAttribute("id", "filterTahunan");
+				inputYear.setAttribute("required", "required");
+				inputYear.setAttribute("placeholder", "2024");
+				pilihanDiv.appendChild(inputYear);
+				if (filterValue) {
+					inputYear.value = filterValue;
+					inputStartDate.value = startDate;
+					inputEndDate.value = endDate;
+				} else {
+					inputYear.value = "2024";
+				}
+			} else if (selectedOption === "Custom") {
+				inputStartDate.disabled = false;
+				inputEndDate.disabled = false;
+				if (filterValue) {
+					inputStartDate.value = startDate;
+					inputEndDate.value = endDate;
+				}
+			} else if (selectedOption === "Kisaran") {
+				const selectKisaran = document.createElement("select");
+				selectKisaran.classList.add("form-select");
+				selectKisaran.setAttribute("name", "filterKisaran");
+				selectKisaran.setAttribute("id", "filterKisaran");
+				selectKisaran.setAttribute("required", "required");
+				const options = [
+					{ text: "Semua", value: "semuaHari" },
+					{ text: "Hari Ini", value: "iniHari" },
+					{ text: "7 Hari", value: "7Hari" },
+					{ text: "30 Hari", value: "30Hari" },
+					{ text: "90 Hari", value: "90Hari" },
+					{ text: "12 Bulan", value: "12Bulan" },
+				];
+				options.forEach(optionData => {
+					const option = document.createElement("option");
+					option.text = optionData.text;
+					option.value = optionData.value;
+					if (option.value === filterValue) {
+						option.selected = true;
+						inputStartDate.value = startDate;
+						inputEndDate.value = endDate;
+					}
+					selectKisaran.add(option);
+				});
+				pilihanDiv.appendChild(selectKisaran);
+			}
 		}
-    } else if (selectedOption === "Bulanan") {
-        // Create input type month
-        const inputMonth = document.createElement("input");
-        inputMonth.type = "month";
-        inputMonth.classList.add("form-control");
-        inputMonth.setAttribute("name", "filterBulanan");
-        inputMonth.setAttribute("id", "filterBulanan");
-        inputMonth.setAttribute("required", "required");
-        pilihanDiv.appendChild(inputMonth);
-		if (filterValue) {
-			inputMonth.value = filterValue;
-			inputStartDate.value = startDate;
-			inputEndDate.value = endDate;
-		}
-    } else if (selectedOption === "Tahunan") {
-        // Create input type number for year
-        const inputYear = document.createElement("input");
-        inputYear.type = "number";
-        inputYear.min = "1900";
-        inputYear.max = "2099";
-        inputYear.step = "1";
-        inputYear.classList.add("form-control");
-        inputYear.setAttribute("name", "filterTahunan");
-        inputYear.setAttribute("id", "filterTahunan");
-        inputYear.setAttribute("required", "required");
-		inputYear.setAttribute("placeholder", "2024");
-		pilihanDiv.appendChild(inputYear);
-		if (filterValue) {
-			inputYear.value = filterValue;
-			inputStartDate.value = startDate;
-			inputEndDate.value = endDate;
-		} else {
-			inputYear.value = "2024";
-		}
-	} else if (selectedOption === "Custom") {
-		
 
-		// Enable the start and end date inputs
-		inputStartDate.disabled = false;
-		inputEndDate.disabled = false;
-		if (filterValue) {
-			inputStartDate.value = startDate;
-			inputEndDate.value = endDate;
+		function handleSubmit(event) {
+			event.preventDefault(); 
+
+			const selectedOption = jenisSelect.value;
+
+			if (selectedOption === "Mingguan") {
+				const filterMingguan = document.getElementById("filterMingguan").value;
+			} else if (selectedOption === "Bulanan") {
+				const filterBulanan = document.getElementById("filterBulanan").value;
+			} else if (selectedOption === "Tahunan") {
+				const filterTahunan = document.getElementById("filterTahunan").value;
+			} else if (selectedOption === "Kisaran") {
+				const filterKisaran = document.getElementById("filterKisaran").value;
+			}
 		}
 
-			
-	} else if (selectedOption === "Kisaran") {
-        // Create select with options for Kisaran
-        const selectKisaran = document.createElement("select");
-        selectKisaran.classList.add("form-select");
-        selectKisaran.setAttribute("name", "filterKisaran");
-        selectKisaran.setAttribute("id", "filterKisaran");
-        selectKisaran.setAttribute("required", "required");
-
-        const options = [
-            { text: "Semua", value: "semuaHari" },
-            { text: "Hari Ini", value: "iniHari" },
-            { text: "7 Hari", value: "7Hari" },
-            { text: "30 Hari", value: "30Hari" },
-            { text: "90 Hari", value: "90Hari" },
-            { text: "12 Bulan", value: "12Bulan" },
-        ];
-
-        options.forEach(optionData => {
-            const option = document.createElement("option");
-            option.text = optionData.text;
-            option.value = optionData.value;
-
-            // Check if option value matches the passed value
-            if (option.value === filterValue) {
-                option.selected = true;
-				inputStartDate.value = startDate;
-				inputEndDate.value = endDate;
-            }
-
-            selectKisaran.add(option);
-        });
-
-        pilihanDiv.appendChild(selectKisaran);
-    }
-}
-
-function handleSubmit(event) {
-    event.preventDefault(); // Prevent form submission
-
-    const selectedOption = jenisSelect.value;
-
-    if (selectedOption === "Mingguan") {
-        const filterMingguan = document.getElementById("filterMingguan").value;
-        // Now you have the value of the selected week, you can do whatever you need with it
-    } else if (selectedOption === "Bulanan") {
-        const filterBulanan = document.getElementById("filterBulanan").value;
-        // Now you have the value of the selected month, you can do whatever you need with it
-    } else if (selectedOption === "Tahunan") {
-        const filterTahunan = document.getElementById("filterTahunan").value;
-        // Now you have the value of the selected year, you can do whatever you need with it
-    } else if (selectedOption === "Kisaran") {
-        const filterKisaran = document.getElementById("filterKisaran").value;
-        // Now you have the value of the selected Kisaran option, you can do whatever you need with it
-    }
-
-    // Now you can submit the form data, or perform any other action based on the selected option
-}
-
-
-
-		// Add event listener for change event
 		jenisSelect.addEventListener("change", handleChange);
 
-		// Trigger change event on page load
 		const initialEvent = new Event("change");
 		jenisSelect.dispatchEvent(initialEvent);
 	});
-
-	
 </script>
 
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-
 		const spinner = document.getElementById("spinner");
 		const pageContent = document.getElementById("page-content");
 		const pageTitle = document.getElementById("page-title");
@@ -724,12 +698,10 @@ function handleSubmit(event) {
         deleteButtons.forEach((button) => {
             button.addEventListener('click', function () {
                 const modal = document.querySelector(button.getAttribute('data-bs-target'));
-                const confirmButton = modal.querySelector('.btn-dangers');
+                const confirmButton = modal.querySelector('.btn-danger');
 
                 const itemId = button.getAttribute('data-id');
 				const itemType = button.getAttribute('data-jenis');
-				console.log('Item ID:', itemId);
-				console.log('Item type:', itemType);
 				const jenisHapus = modal.querySelector('#jenishapus');
 
 				if (jenisHapus) {
@@ -746,7 +718,6 @@ function handleSubmit(event) {
 <script>
 	document.addEventListener("DOMContentLoaded", function() {
     	const editButtons = document.querySelectorAll('.edit-btn');
-
 		document.querySelectorAll('.pemasukan-radio, .pengeluaran-radio').forEach(radio => {
 			radio.addEventListener('change', function() {
 				updateSelectOptions1(this);
@@ -757,31 +728,32 @@ function handleSubmit(event) {
         const kategoriPemasukanData = @json($kategoriPemasukanData);
 
 		function updateSelectOptions1(radioElement) {
-			// Find the closest modal and its select element
 			var modal = radioElement.closest('.modal');
 			var selectElement = modal.querySelector('.kategoriedit');
-
-			// Clear existing options
-			selectElement.innerHTML = ''; 
-
-			// Add appropriate options based on the selected radio button
-			if (radioElement.classList.contains('pemasukan-radio')) {
-				kategoriPemasukanData.forEach(function(item) {
-				selectElement.innerHTML += `<option value="${item.id_kategori_pemasukan}">${item.nama_kategori_pemasukan}</option>`;
-			});
-			} else if (radioElement.classList.contains('pengeluaran-radio')) {
-				kategoriPengeluaranData.forEach(function(item) {
-				selectElement.innerHTML += `<option value="${item.id_kategori_pengeluaran}">${item.nama_kategori_pengeluaran}</option>`;
-			});
+			
+			while (selectElement.options.length > 0) {
+				selectElement.remove(0);
 			}
-
+			let dataToUse = [];
+			if (radioElement.classList.contains('pemasukan-radio')) {
+				dataToUse = kategoriPemasukanData;
+			} else if (radioElement.classList.contains('pengeluaran-radio')) {
+				dataToUse = kategoriPengeluaranData;
+			} else {
+				return;
+			}
+			if (dataToUse.length > 0) {
+				dataToUse.forEach(function(item) {
+					let option = new Option(item.nama_kategori_pemasukan || item.nama_kategori_pengeluaran, item.id);
+					selectElement.add(option);
+				});
+			}
 			selectElement.disabled = false;
 		}
 
 		editButtons.forEach(button => {
 			button.addEventListener('click', function(e) {
 				e.preventDefault();
-
 				const id = this.getAttribute('data-id');
 				const jenis = this.getAttribute('data-jenis');
 				const jumlah = this.getAttribute('data-jumlah');
@@ -789,9 +761,7 @@ function handleSubmit(event) {
 				const tanggal = this.getAttribute('data-tanggal');
 				const catatan = this.getAttribute('data-catatan');
 				const createdat = this.getAttribute('data-createdat');
-
 				const modal = document.getElementById(`modal-edit${id}`);
-				
 				const idInput = modal.querySelector('.id-input');
 				const jenisRadioPemasukan = modal.querySelector('.pemasukan-radio');
 				const jenisRadioPengeluaran = modal.querySelector('.pengeluaran-radio');
@@ -802,17 +772,13 @@ function handleSubmit(event) {
 				const kategoriSelect = modal.querySelector('.kategoriedit');
 				const tanggalInput = modal.querySelector('.tanggaledit');
 				const catatanTextarea = modal.querySelector('.catatanedit');
-				
 				if (createdatInput) createdatInput.value = createdat;
-
 				if (idInput) {
 					idInput.value = id;
 				}
-
 				if (jenisEdit) {
 					jenisEdit.value = jenis;
 				}
-
 				if (jenis === '1' && jenisRadioPemasukan) {
 					jenisRadioPemasukan.checked = true;
 					updateSelectOptions1(jenisRadioPemasukan);
@@ -820,37 +786,26 @@ function handleSubmit(event) {
 					jenisRadioPengeluaran.checked = true;
 					updateSelectOptions1(jenisRadioPengeluaran);
 				}
-
 				if (jumlahInput) {
 					const rawValue = jumlah.replace(/\D/g, ''); 
-					console.log('Raw Value:', rawValue); 
-
 					const formattedValue = formatNumber1(rawValue); 
-					console.log('Formatted Value:', formattedValue); 
-
 					jumlahInput.value = formattedValue; 
 					jumlahInput.dispatchEvent(new Event('input')); 
-
 					if (jumlah1Input) {
 						jumlah1Input.value = rawValue; 
-						console.log('jumlah1edit Value:', jumlah1Input.value); 
 					}
 				}
-
 				if (kategoriSelect) {
 					kategoriSelect.value = kategori;
 				}
-
 				if (tanggalInput) {
 					tanggalInput.value = tanggal;
 				}
-
 				if (catatanTextarea) {
 					catatanTextarea.value = catatan;
 				}
 			});
 		});
-    
 		const modals = document.querySelectorAll('.modal');
 		modals.forEach(modal => {
 			modal.addEventListener('hidden.bs.modal', function() {
@@ -882,188 +837,125 @@ function handleSubmit(event) {
 
 <script>
 	$(document).ready(function() {
-    var table = $('#table-harian').DataTable({
-        "lengthMenu": [[5, 10, 25, 50, 100], [5, 10, 25, 50, 100]],
-        "pageLength": 100,
-        "ordering": false,
-        "lengthChange": false,
-        "paging": false,
-        "info": false,
-        initComplete: function(settings, json) {
-            $('#table-harian').css('display', 'table');
-            $('#table-harian th.sorting_disabled').remove();
-        },
-        "drawCallback": function(settings) {
-            $('#table-harian th.sorting_disabled').remove();
-        }
-    });
+		var table = $('#table-harian').DataTable({
+			"lengthMenu": [[5, 10, 25, 50, 100], [5, 10, 25, 50, 100]],
+			"pageLength": 100,
+			"ordering": false,
+			"lengthChange": false,
+			"paging": false,
+			"info": false,
+			initComplete: function(settings, json) {
+				$('#table-harian').css('display', 'table');
+				$('#table-harian th.sorting_disabled').remove();
+			},
+			"drawCallback": function(settings) {
+				$('#table-harian th.sorting_disabled').remove();
+			}
+		});
 
-	// Hide all elements with class .dataTables_filter
-// Hide all elements with class .dataTables_filter
-$('.dataTables_filter').each(function() {
-    $(this).attr("hidden", "hidden");
-});
-
-// Event listener for input change in searchRecord
-
-
-
-
+		$('.dataTables_filter').each(function() {
+			$(this).attr("hidden", "hidden");
+		});
 	
-	function updateHeaderTotals() {
+		function updateHeaderTotals() {
+			$('.header-total').each(function() {
+				$(this).text('');
+			});
+			var totals = {};
+			var totalIncome = 0;
+			var totalExpense = 0;
+			table.rows({ search: 'applied' }).every(function(rowIdx, tableLoop, rowLoop) {
+				var data = this.data();
+				var date = $(data[0]).find('.item-data').data('date');
+				var amount = parseFloat($(data[0]).find('.item-data').data('amount'));
+				if (!totals[date]) {
+					totals[date] = { income: 0, expense: 0 };
+				}
+				if ($(data[0]).find('.item-data').data('amount') !== undefined && !isNaN(amount)) {
+					if ($(data[0]).find('.item-data').data('id-pemasukan') !== undefined) {
+						totals[date].income += amount;
+						totalIncome += amount;
+					} else {
+						totals[date].expense += amount;
+						totalExpense += amount;
+					}
+				}
+			});
 
-    // Clear previous totals
-    $('.header-total').each(function() {
-        $(this).text('');
-    });
-
-    var totals = {};
-    var totalIncome = 0;
-    var totalExpense = 0;
-
-    table.rows({ search: 'applied' }).every(function(rowIdx, tableLoop, rowLoop) {
-        var data = this.data();
-        var date = $(data[0]).find('.item-data').data('date');
-        var amount = parseFloat($(data[0]).find('.item-data').data('amount'));
-
-
-        if (!totals[date]) {
-            totals[date] = { income: 0, expense: 0 };
-        }
-        if ($(data[0]).find('.item-data').data('amount') !== undefined && !isNaN(amount)) {
-            if ($(data[0]).find('.item-data').data('id-pemasukan') !== undefined) {
-                totals[date].income += amount;
-                totalIncome += amount;
-            } else {
-                totals[date].expense += amount;
-                totalExpense += amount;
-            }
-        }
-    });
-
-
-    $('.header-total').each(function() {
-        var date = $(this).closest('tr').find('.item-data').data('date');
-        if (totals[date] !== undefined) {
-            var netTotal = totals[date].income - Math.abs(totals[date].expense);
-            if (!isNaN(netTotal)) {
-                if (netTotal < 0) {
-                    $(this).text(`- Rp. ${new Intl.NumberFormat('id-ID').format(Math.abs(netTotal))}`).addClass('text-red').removeClass('text-green');
-                } else {
-                    $(this).text(`+ Rp. ${new Intl.NumberFormat('id-ID').format(netTotal)}`).addClass('text-green').removeClass('text-red');
-                }
-            }
-        }
-    });
-
-    // Update the current balance
-    $('#current-balance').text(`Rp. ${new Intl.NumberFormat('id-ID').format(totalIncome - Math.abs(totalExpense))}`);
-
-    // Update the total period expenses
-    $('#total-expenses').text(`- Rp. ${new Intl.NumberFormat('id-ID').format(Math.abs(totalExpense))}`).addClass('text-red');
-
-    // Update the total period income
-    $('#total-income').text(`+ Rp. ${new Intl.NumberFormat('id-ID').format(totalIncome)}`).addClass('text-green');
-}
-
-// Call the function initially to set the totals
-updateHeaderTotals();
-
-// Update totals whenever the table is searched
-table.on('search.dt', function() {
-    updateHeaderTotals();
-});
-
-$('#searchRecord').on('input', function() {
-    // Get the value from searchRecord input
-    var searchValue = $(this).val();
-    
-    // Clear the DataTables filter input if searchValue is empty
-    if (searchValue === '') {
-        $('.dataTables_filter input[type="search"]').val('').trigger('input');
-		// Set the radio button with the value '1' to be checked
-        $('input[name="record-type"][value="1"]').prop('checked', true);
-
-        // Optionally, you can also disable the category selects
-        $('.category-select').prop('disabled', true);
+			$('.header-total').each(function() {
+				var date = $(this).closest('tr').find('.item-data').data('date');
+				if (totals[date] !== undefined) {
+					var netTotal = totals[date].income - Math.abs(totals[date].expense);
+					if (!isNaN(netTotal)) {
+						if (netTotal < 0) {
+							$(this).text(`- Rp. ${new Intl.NumberFormat('id-ID').format(Math.abs(netTotal))}`).addClass('text-red').removeClass('text-green');
+						} else {
+							$(this).text(`+ Rp. ${new Intl.NumberFormat('id-ID').format(netTotal)}`).addClass('text-green').removeClass('text-red');
+						}
+					}
+				}
+			});
+			$('#current-balance').text(`Rp. ${new Intl.NumberFormat('id-ID').format(totalIncome - Math.abs(totalExpense))}`);
+			$('#total-expenses').text(`- Rp. ${new Intl.NumberFormat('id-ID').format(Math.abs(totalExpense))}`).addClass('text-red');
+			$('#total-income').text(`+ Rp. ${new Intl.NumberFormat('id-ID').format(totalIncome)}`).addClass('text-green');
+		}
 		updateHeaderTotals();
 
-        return; // Exit the function early
-    }
+		table.on('search.dt', function() {
+			updateHeaderTotals();
+		});
+
+		$('#searchRecord').on('input', function() {
+			var searchValue = $(this).val();
+			if (searchValue === '') {
+				$('.dataTables_filter input[type="search"]').val('').trigger('input');
+				$('input[name="record-type"][value="1"]').prop('checked', true);
+				$('.category-select').prop('disabled', true);
+				updateHeaderTotals();
+
+				return; 
+			}
+			var existingSearchValue = $('.dataTables_filter input[type="search"]').val();
+			var updatedValue = existingSearchValue ? existingSearchValue + ' ' + searchValue : searchValue;
+			$('.dataTables_filter input[type="search"]').val(updatedValue).trigger('input');
+			updateHeaderTotals();
+		});
+
+		$('.btn-resetfilter').on('click', function(e) {
+			e.preventDefault();
+			$('#searchRecord').val('');
+			$('input[name="record-type"][value="1"]').prop('checked', true);
+			$('.category-select').prop('disabled', true);
+			$('#searchRecord').trigger('input');
+			updateHeaderTotals();
+		});
+
+		$('input[type="radio"][name="record-type"]').change(function() {
+			var value = $(this).val();
+			$('.category-select').val('');
+			if (value === "1") {
+				$('.category-select').prop('disabled', true);
+				table.search('').draw();
+			} else if (value === "2") {
+				$('.income-category').prop('disabled', false);
+				$('.expense-category').prop('disabled', true);
+				table.search('Income').draw();
+			} else if (value === "3") {
+				$('.income-category').prop('disabled', true);
+				$('.expense-category').prop('disabled', false);
+				table.search('Expense').draw();
+			}
+			updateHeaderTotals();
+		});
+
+		$('.category-select').change(function() {
+			var recordType = $('input[type="radio"][name="record-type"]:checked').val();
+			var category = $(this).val();
+			table.search(category).draw();
+			updateHeaderTotals();
+		});
     
-    // Get the value of the existing search input
-    var existingSearchValue = $('.dataTables_filter input[type="search"]').val();
-    
-    // Concatenate space and searchValue if existing value is not empty
-    var updatedValue = existingSearchValue ? existingSearchValue + ' ' + searchValue : searchValue;
-    
-    // Set the updated value to all elements with class .dataTables_filter
-    $('.dataTables_filter input[type="search"]').val(updatedValue).trigger('input');
-updateHeaderTotals();
-
-});
-
-$('.btn-resetfilter').on('click', function(e) {
-        e.preventDefault(); // Prevent default link behavior
-
-        // Reset searchRecord input value to an empty string
-        $('#searchRecord').val('');
-
-        // Set the radio button with the value '1' to be checked
-        $('input[name="record-type"][value="1"]').prop('checked', true);
-
-        // Optionally, you can also disable the category selects
-        $('.category-select').prop('disabled', true);
-
-        // Trigger the input event on searchRecord to update DataTables filter
-        $('#searchRecord').trigger('input');
-	updateHeaderTotals();
-
-    });
-
-// Add event listener to radio buttons
-$('input[type="radio"][name="record-type"]').change(function() {
-    var value = $(this).val();
-
-    // Reset category select options
-    $('.category-select').val('');
-
-    if (value === "1") {
-        // Disable both select elements
-        $('.category-select').prop('disabled', true);
-        table.search('').draw();
-    } else if (value === "2") {
-        // Enable income select and disable expense select
-        $('.income-category').prop('disabled', false);
-        $('.expense-category').prop('disabled', true);
-        table.search('Income').draw();
-    } else if (value === "3") {
-        // Enable expense select and disable income select
-        $('.income-category').prop('disabled', true);
-        $('.expense-category').prop('disabled', false);
-        table.search('Expense').draw();
-    }
-
-    // Call updateHeaderTotals after changing radio buttons
-    updateHeaderTotals();
-});
-
-// Add event listener to select elements
-$('.category-select').change(function() {
-    var recordType = $('input[type="radio"][name="record-type"]:checked').val();
-    var category = $(this).val();
-
-    table.search(category).draw();
-	updateHeaderTotals();
-});
-
-// Add event listener to date filter
-
-    // Custom search function
-    
-});
-
-
+	});
 </script>
 
 @endsection

@@ -58,18 +58,12 @@ class AuthController extends Controller
             Cookie::queue('auth', serialize($response['auth']));
             return redirect()->route('dashboard')->with('success', 'Login Berhasil');
         } 
-        
-        // Jika ada error validasi dari API (misalnya status 422)
         elseif ($response->status() == 422 && isset($response['errors'])) {
             return back()->with('error', $response['message'])->withErrors($response['errors'])->withInput($input);
         }
-    
-        // Jika ada pesan error umum dari API
         elseif (!empty($response['message'])) {
             return back()->with('error', $response['message'])->withErrors($response['errors'])->withInput($input);
         }
-    
-        // Jika tidak ada respons atau respons tidak sesuai
         return back()->with('error', 'Gagal masuk, coba lagi nanti.')->withErrors($response['errors'])->withInput($input);
     }
 

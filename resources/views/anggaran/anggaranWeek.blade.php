@@ -10,11 +10,11 @@
 </div>
 <div class="col-auto ms-auto d-print-none">
 	<div class="btn-list">
-		<a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-anggaran">
+		<a href="#" class="btn btn-success d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-anggaran">
         	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-          	Create Budget
+          	Tambah Anggaran
       	</a>
-		<a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-anggaran" aria-label="Create new report">
+		<a href="#" class="btn btn-success d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-anggaran" aria-label="Create new report">
 			<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
 		</a>       
 	</div>
@@ -57,30 +57,11 @@
                                 @endphp
                                 <div>
                                     <div class="row">
-                                        <div class="col d-flex justify-content-between">
-                                            <div class="d-flex justify-content-between">
+                                        <div class="col">
                                                 <p class="mb-3">{{$data['nama_kategori_pengeluaran']}}</p>
-                                                <a href="#" class="ps-2 text-green btn-kategori" 
-                                                    data-bs-toggle="modal" 
-                                                    data-bs-target="#modal-edit-anggaran{{$data['id_anggaran']}}"
-                                                    data-id="{{ $data['id_anggaran'] }}"
-                                                    data-id-kategori-pengeluaran="{{ $data['id_kategori_pengeluaran'] }}"
-                                                    data-nama="{{ $data['nama_kategori_pengeluaran'] }}"
-                                                    data-anggaran="{{ $data['anggaran'] }}"
-                                                    data-jumlah="{{ $data['total_jumlah'] }}"
-                                                    data-tersisa="{{ $remaining }}"
-                                                    data-overspend="{{ $overspend }}"
-                                                    data-periode="{{ $data['periode'] }}">
-                                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-info-square"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 9h.01" /><path d="M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14z" /><path d="M11 12h1v4h1" /></svg>
-                                                </a>
-                                                <a class="ps-2 text-red btn-delete" 
-                                                    data-bs-toggle="modal" 
-                                                    data-bs-target="#modal-danger{{$data['id_anggaran']}}" 
-                                                    data-nama="{{ $data['nama_kategori_pengeluaran'] }}" 
-                                                    data-id="{{$data['id_anggaran']}}">
-                                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
-                                                </a>
-                                            </div>
+                                                
+</div>
+<div class="col-auto">
                                             <span>
                                                 @if($data['kategori_pengeluaran']->isNotEmpty())
                                                     <strong>Rp. {{ number_format(floatval($data['total_jumlah']), 0, ',', '.') }}</strong>
@@ -92,9 +73,40 @@
                                                 @php
                                                     $progressPercentage = ($data['anggaran'] > 0) ? ($data['total_jumlah'] / $data['anggaran']) * 100 : 0;
                                                 @endphp
-                                                <strong class="text-end kategori-total text-muted">({{ number_format($progressPercentage, 2) }}%)</strong>
+                                                <strong class="text-end kategori-total text-muted d-none d-sm-inline-block">({{ number_format($progressPercentage, 2) }}%)</strong>
                                             </span>
-                                        </div>
+</div>
+                                            <div class="col-auto">
+                                                <div class="badges">
+																					<a class="nav-link"  data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
+																						<span class="nav-link-icon d-md-none d-lg-inline-block">
+																							<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
+																						</span>
+																					</a>
+																					<div class="dropdown-menu">
+																						<a class="dropdown-item btn-kategori" href="" 
+                                                                                        data-bs-toggle="modal" 
+                                                    data-bs-target="#modal-edit-anggaran{{$data['id']}}"
+                                                    data-id="{{ $data['id'] }}"
+                                                    data-id-kategori-pengeluaran="{{ $data['kategori_pengeluaran_id'] }}"
+                                                    data-nama="{{ $data['nama_kategori_pengeluaran'] }}"
+                                                    data-anggaran="{{ $data['anggaran'] }}"
+                                                    data-jumlah="{{ $data['total_jumlah'] }}"
+                                                    data-tersisa="{{ $remaining }}"
+                                                    data-overspend="{{ $overspend }}"
+                                                    data-periode="{{ $data['periode'] }}">
+																							Edit
+																						</a>
+																						<a class="dropdown-item btn-delete" href=""
+                                                                                        data-bs-toggle="modal" 
+                                                    data-bs-target="#modal-danger{{$data['id']}}" 
+                                                    data-nama="{{ $data['nama_kategori_pengeluaran'] }}" 
+                                                    data-id="{{$data['id']}}">
+																							Delete
+																						</a>
+																					</div>
+																				</div>
+                                            </div>
                                     </div>
                                     <div class="progress">
                                         @php
@@ -105,46 +117,46 @@
                                     </div>
                                 </div>
                                 <!-- Modal Edit Budget -->
-                                <div class="modal modal-blur fade" id="modal-edit-anggaran{{$data['id_anggaran']}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal modal-blur fade" id="modal-edit-anggaran{{$data['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
                                     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title">Detail Budget<span id="modaledittitle_{{$data['id_anggaran']}}" name="modaledittitle"> </span></h5>
+                                                <h5 class="modal-title">Edit Anggaran<span id="modaledittitle_{{$data['id']}}" name="modaledittitle"> </span>Mingguan</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
-                                            <form action="{{ route('updateAnggaran', ['id'=> $data['id_anggaran']]) }}" method="post" autocomplete="off">
+                                            <form action="{{ route('updateAnggaran', ['id'=> $data['id']]) }}" method="post" autocomplete="off">
                                                 @csrf
                                                 
                                                 <div class="modal-body">
                                                     <div class="row mb-2">
                                                         <div class="col-lg-4">
                                                             <div class="form-floating mb-3">
-                                                                <input type="text" id="jumlah_anggaran_{{$data['id_anggaran']}}" name="jumlahanggaran" class="form-control text-strong text-warning border-warning mt-2" autocomplete="off" readonly>
-                                                                <label for="jumlah_anggaran_{{$data['id_anggaran']}}" class="form-label text-black">Used :</label>
+                                                                <input type="text" id="jumlah_anggaran_{{$data['id']}}" name="jumlahanggaran" class="form-control text-strong text-warning border-warning mt-2" autocomplete="off" readonly>
+                                                                <label for="jumlah_anggaran_{{$data['id']}}" class="form-label text-black">Used :</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-4">
                                                             <div class="form-floating mb-3">
-                                                                <input type="text" id="jumlah_tersisa_{{$data['id_anggaran']}}" name="jumlahtersisa" class="form-control text-strong text-success border-success mt-2" autocomplete="off" readonly>
-                                                                <label for="jumlah_tersisa_{{$data['id_anggaran']}}" class="form-label text-black">Remaining :</label>
+                                                                <input type="text" id="jumlah_tersisa_{{$data['id']}}" name="jumlahtersisa" class="form-control text-strong text-success border-success mt-2" autocomplete="off" readonly>
+                                                                <label for="jumlah_tersisa_{{$data['id']}}" class="form-label text-black">Remaining :</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-4">
                                                             <div class="form-floating mb-3">
-                                                                <input type="text" id="jumlah_overspend_{{$data['id_anggaran']}}" name="jumlahoverspend" class="form-control text-strong text-danger border-danger mt-2" autocomplete="off" readonly>
-                                                                <label for="jumlah_overspend_{{$data['id_anggaran']}}" class="form-label text-black">Overspend :</label>
+                                                                <input type="text" id="jumlah_overspend_{{$data['id']}}" name="jumlahoverspend" class="form-control text-strong text-danger border-danger mt-2" autocomplete="off" readonly>
+                                                                <label for="jumlah_overspend_{{$data['id']}}" class="form-label text-black">Overspend :</label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-lg-4">
-                                                            <input type="text" id="id_{{$data['id_anggaran']}}" name="id" value="{{$data['id_anggaran']}}" class="form-control text-end" autocomplete="off" hidden>
+                                                            <input type="text" id="id_{{$data['id']}}" name="id" value="{{$data['id']}}" class="form-control text-end" autocomplete="off" hidden>
                                                             <div class="mb-3">
                                                                 <label class="form-label">Kategori Pengeluaran:</label>
-                                                                <select id="id_kategori_pengeluaran_edit_{{$data['id_anggaran']}}" name="id_kategori_pengeluaran_edit" class="form-select">
+                                                                <select id="id_kategori_pengeluaran_edit_{{$data['id']}}" name="id_kategori_pengeluaran_edit" class="form-select">
                                                                     <option value="" selected>Pilih Kategori</option>
                                                                     @foreach($kategoriData as $kategori)
-                                                                        <option value="{{$kategori['id_kategori_pengeluaran']}}">{{$kategori['nama_kategori_pengeluaran']}}</option>
+                                                                        <option value="{{$kategori['id']}}">{{$kategori['nama_kategori_pengeluaran']}}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
@@ -154,15 +166,15 @@
                                                                 <label class="form-label">Jumlah : </label>
                                                                 <div class="input-group">
                                                                     <span class="input-group-text">Rp.</span>
-                                                                    <input type="text" id="jumlah_edit_{{$data['id_anggaran']}}" oninput="updateFormattedNumberAnggaran({{$data['id_anggaran']}})" name="jumlahedit" class="form-control text-end" autocomplete="off" required>
-                                                                    <input type="text" id="jumlah1_edit_{{$data['id_anggaran']}}" name="jumlah1edit" class="form-control text-end" autocomplete="off" hidden>
+                                                                    <input type="text" id="jumlah_edit_{{$data['id']}}" oninput="updateFormattedNumberAnggaran({{$data['id']}})" name="jumlahedit" class="form-control text-end" autocomplete="off" required>
+                                                                    <input type="text" id="jumlah1_edit_{{$data['id']}}" name="jumlah1edit" class="form-control text-end" autocomplete="off" hidden>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-4">
                                                             <div class="mb-3">
                                                                 <label class="form-label">Periode :</label>
-                                                                <select id="periodeedit_{{$data['id_anggaran']}}" name="periodeedit" class="form-select">
+                                                                <select id="periodeedit_{{$data['id']}}" name="periodeedit" class="form-select">
                                                                     <option value="" selected>Pilih Periode</option>
                                                                     <option value="Mingguan">Mingguan</option>
                                                                     <option value="Tahunan">Tahunan</option>
@@ -173,9 +185,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="submit" class="btn btn-primary ms-auto">
+                                                    <button type="submit" class="btn btn-warning ms-auto">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                                                        Simpan Perubahan
+                                                        Edit Anggaran
                                                     </button>
                                                 </div>
                                             </form>
@@ -184,15 +196,15 @@
                                 </div>
                                 <!-- End of Modal Edit Budget -->
                                 <!-- Modal Delete Budget -->
-                                <div class="modal modal-blur fade" id="modal-danger{{$data['id_anggaran']}}" tabindex="-1" role="dialog" aria-hidden="true">
-                                    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                                <div class="modal modal-blur fade" id="modal-danger{{$data['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog modal-md modal-dialog-centered" role="document">
                                         <div class="modal-content">
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             <div class="modal-status bg-danger"></div>
                                             <div class="modal-body text-center py-4">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.24 3.957l-8.422 14.06a1.989 1.989 0 0 0 1.7 2.983h16.845a1.989 1.989 0 0 0 1.7 -2.983l-8.423 -14.06a1.989 1.989 0 0 0 -3.4 0z" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
-                                                <h3>Apakah anda yakin?</h3>
-                                                <div class="text-muted">Apakah anda  catatan ini?<span >{{$data['nama_kategori_pengeluaran']}}</span></div>
+                                                <h3>Konfirmasi Penghapusan</h3>
+                                                <div class="text-muted">Apakah anda yakin ingin menghapus anggaran ini?</div>
                                             </div>
                                             <div class="modal-footer">
                                                 <div class="w-100">
@@ -203,9 +215,9 @@
                                                             </a>
                                                         </div>
                                                         <div class="col">
-                                                            <form method="POST" action="{{route('hapusAnggaran', ['id' => $data['id_anggaran']] )}}">
+                                                            <form method="POST" action="{{route('hapusAnggaran', ['id' => $data['id']] )}}">
                                                                 @csrf
-                                                                <button type="submit" class="btn btn-dangers w-100" data-bs-dismiss="modal">
+                                                                <button type="submit" class="btn btn-danger w-100" data-bs-dismiss="modal">
                                                                     Hapus
                                                                 </button>
                                                             </form>
@@ -254,31 +266,31 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="mb-3">
-                                <label class="form-label">Kategori Pengeluaran:</label>
-                                <select id="id_kategori_pengeluaran" name="id_kategori_pengeluaran" class="form-select">
+                                <label class="form-label required">Kategori Pengeluaran:</label>
+                                <select id="id_kategori_pengeluaran" name="id_kategori_pengeluaran" class="form-select" required>
                                     <option value="" selected>Pilih Kategori</option>
                                     @foreach($kategoriData as $kategori)
-                                    <option value="{{$kategori['id_kategori_pengeluaran']}}">{{$kategori['nama_kategori_pengeluaran']}}</option>
+                                    <option value="{{$kategori['id']}}">{{$kategori['nama_kategori_pengeluaran']}}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                             <div class="col-lg-4">
                             <div class="mb-3">
-                                <label class="form-label">Jumlah : </label>
+                                <label class="form-label required">Jumlah : </label>
                                 <div class="input-group">
                                     <span class="input-group-text">
                                         Rp.
                                     </span>
-                                    <input type="text" id="jumlah" oninput="updateFormattedNumberAnggaran()" name="jumlah" class="form-control text-end" autocomplete="off" required>
+                                    <input type="text" id="jumlah" name="jumlah" class="form-control text-end" autocomplete="off" required>
                                     <input type="text" id="jumlah1" name="jumlah1" class="form-control text-end" autocomplete="off" hidden>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="mb-3">
-                                <label class="form-label">Periode :</label>
-                                <select id="periode" name="periode" class="form-select">
+                                <label class="form-label required">Periode :</label>
+                                <select id="periode" name="periode" class="form-select" required>
                                     <option value="" selected>Pilih Periode</option>
                                     <option value="Mingguan" >Mingguan</option>
                                     <option value="Tahunan">Tahunan</option>
@@ -292,9 +304,9 @@
                     <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
                         Batal
                     </a>
-                    <button type="submit" class="btn btn-primary ms-auto">
+                    <button type="submit" class="btn btn-success ms-auto">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                        Tambah Catatan
+                        Tambah Anggaran
                     </button>
                 </div>
             </form>	
@@ -358,7 +370,7 @@
                 document.getElementById('jumlah_tersisa_' + id).value = 'Rp. ' + formatNumber(tersisa);
                 document.getElementById('jumlah_overspend_' + id).value = 'Rp. ' + formatNumber(overspend);
                 document.getElementById('periodeedit_' + id).value = periode;
-                document.getElementById('modaledittitle_' + id).textContent = ' "' + nama + '"';
+                document.getElementById('modaledittitle_' + id).textContent = ' "' + nama + '" ';
             });
         });
     });

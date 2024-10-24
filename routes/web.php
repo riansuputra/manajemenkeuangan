@@ -14,12 +14,14 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LanguageController;
 
 Route::middleware([App\Http\Middleware\GuestMiddleware::class])->group(function(){
-    Route::get('/login',[AuthController::class,'loginPage'])->name('loginPage');
     Route::get('/register',[AuthController::class,'registerPage'])->name('registerPage');
-    Route::post('/login/auth',[AuthController::class,'login'])->name('login');
     Route::post('/register/auth',[AuthController::class,'register'])->name('register');
+    Route::get('/login',[AuthController::class,'loginPage'])->name('loginPage');
+    Route::post('/login/auth',[AuthController::class,'login'])->name('login');
+    
     Route::post('/loginAdmin/auth',[AuthController::class,'loginAdmin'])->name('loginAdmin');
     Route::get('/loginAdmin',[AuthController::class,'loginAdminPage'])->name('loginAdminPage');
+    
     Route::get('lang/{lang}', [LanguageController::class, 'switch'])->name('lang.switch');
 });
 

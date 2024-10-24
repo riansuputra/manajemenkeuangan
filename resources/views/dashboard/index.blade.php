@@ -12,33 +12,31 @@
 	<form class="row"id="filterForm" action="{{ route('dashboard-filter') }}" method="POST">
 		@csrf
 		<div class="col-auto d-print-none input-group">
-					<select class="form-select" name="jenisFilter" id="jenisFilter">
+            <select class="form-select" name="jenisFilter" id="jenisFilter">
 				<option value="Kisaran" {{ $jenisFilter == 'Kisaran' ? 'selected' : '' }}>Kisaran</option>
 				<option value="Mingguan" {{ $jenisFilter == 'Mingguan' ? 'selected' : '' }}>Mingguan</option>
 				<option value="Bulanan" {{ $jenisFilter == 'Bulanan' ? 'selected' : '' }}>Bulanan</option>
 				<option value="Tahunan" {{ $jenisFilter == 'Tahunan' ? 'selected' : '' }}>Tahunan</option>
 				<option value="Custom" {{ $jenisFilter == 'Custom' ? 'selected' : '' }}>Custom Range</option>
 			</select>
-
-		<div class="col-auto d-print-none" name="pilihanFilter" id="pilihanFilter"></div>
-						<input type="date" class="form-control" name="startdate-filter" id="startdate-filter" hidden>
-						<input type="date" class="form-control" name="enddate-filter" id="enddate-filter" hidden>
-		<div class="col-auto d-print-none" name="btnFilter" id="btnFilter">
-			<button type="submit" class="btn w-100 btn-icon" aria-label="Tabler">
-				<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-filter-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11.18 20.274l-2.18 .726v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414v3" /><path d="M15 19l2 2l4 -4" /></svg>
-			</button>
-		</div>
-		</div>
-
+		    <div class="col-auto d-print-none" name="pilihanFilter" id="pilihanFilter"></div>
+            <input type="date" class="form-control" name="startdate-filter" id="startdate-filter" hidden>
+            <input type="date" class="form-control" name="enddate-filter" id="enddate-filter" hidden>
+            <div class="col-auto d-print-none" name="btnFilter" id="btnFilter">
+                <button type="submit" class="btn w-100 btn-icon btn-secondary" aria-label="Tabler">
+                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-filter-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11.18 20.274l-2.18 .726v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414v3" /><path d="M15 19l2 2l4 -4" /></svg>
+                </button>
+            </div>
+        </div>
 	</form>
 </div>
 <div class="col-auto ms-auto d-print-none">
 	<div class="btn-list">
-    	<a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-report">
+    	<a href="#" class="btn btn-success d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-report">
 			<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
 				Tambah Catatan
 		</a>
-		<a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-report" aria-label="Create new report">
+		<a href="#" class="btn btn-success d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-report" aria-label="Create new report">
 			<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
 		</a>    
     </div>
@@ -194,7 +192,7 @@
 									@if (isset($catatan['catatan']))
 										{{$catatan['catatan']}}
 									@else
-										-
+										(Tanpa catatan)
 									@endif
 									</div>
 								</td>
@@ -222,7 +220,7 @@
 									@if (isset($catatan['catatan']))
 										{{$catatan['catatan']}}
 									@else
-										-
+                                        (Tanpa catatan)
 									@endif
 									</div>
 								</td>
@@ -259,172 +257,135 @@
     	const pageContent = document.getElementById("page-content");
     	const pageTitle = document.getElementById("page-title");
 
-    // Hide spinner and show page content when fully loaded
 	    window.addEventListener("load", function() {
     	    spinner.style.display = "none";
 	        pageContent.style.display = "block";
         	pageTitle.style.display = "block";
     	});
 
-    // Function to show spinner
-    
+        function handleChange() {
+            const selectedOption = jenisSelect.value;
+            pilihanDiv.innerHTML = "";
 
-	function handleChange() {
-    const selectedOption = jenisSelect.value;
-    // Clear existing content
-    pilihanDiv.innerHTML = "";
+            if (selectedOption === "Mingguan") {
+                const inputWeek = document.createElement("input");
+                inputWeek.type = "week";
+                inputWeek.classList.add("form-control");
+                inputWeek.setAttribute("name", "filterMingguan");
+                inputWeek.setAttribute("id", "filterMingguan");
+                inputWeek.setAttribute("required", "required");
+                pilihanDiv.appendChild(inputWeek);
+                if (filterValue) {
+                    inputWeek.value = filterValue;
+                    
+                }
+                pilihanDiv.hidden = false;
+                inputStartDate.hidden = true;
+                inputEndDate.hidden = true;
+            } else if (selectedOption === "Bulanan") {
+                const inputMonth = document.createElement("input");
+                inputMonth.type = "month";
+                inputMonth.classList.add("form-control");
+                inputMonth.setAttribute("name", "filterBulanan");
+                inputMonth.setAttribute("id", "filterBulanan");
+                inputMonth.setAttribute("required", "required");
+                pilihanDiv.appendChild(inputMonth);
+                if (filterValue) {
+                    inputMonth.value = filterValue;
+                    
+                }
+                pilihanDiv.hidden = false;
+                inputStartDate.hidden = true;
+                inputEndDate.hidden = true;
+            } else if (selectedOption === "Tahunan") {
+                const inputYear = document.createElement("input");
+                inputYear.type = "number";
+                inputYear.min = "1900";
+                inputYear.max = "2099";
+                inputYear.step = "1";
+                inputYear.classList.add("form-control");
+                inputYear.setAttribute("name", "filterTahunan");
+                inputYear.setAttribute("id", "filterTahunan");
+                inputYear.setAttribute("required", "required");
+                inputYear.setAttribute("placeholder", "2024");
+                pilihanDiv.appendChild(inputYear);
+                if (filterValue) {
+                    inputYear.value = filterValue;
+                    
+                } else {
+                    inputYear.value = "2024";
+                }
+                pilihanDiv.hidden = false;
+                inputStartDate.hidden = true;
+                inputEndDate.hidden = true;
+            } else if (selectedOption === "Custom") {
+                pilihanDiv.hidden = true;
+                inputStartDate.hidden = false;
+                inputEndDate.hidden = false;
+                if (filterValue) {
+                    inputStartDate.value = startDate;
+                    inputEndDate.value = endDate;
+                }
+            } else if (selectedOption === "Kisaran") {
+                const selectKisaran = document.createElement("select");
+                selectKisaran.classList.add("form-select");
+                selectKisaran.setAttribute("name", "filterKisaran");
+                selectKisaran.setAttribute("id", "filterKisaran");
+                selectKisaran.setAttribute("required", "required");
 
-    if (selectedOption === "Mingguan") {
-		
-        // Create input type week
-        const inputWeek = document.createElement("input");
-        inputWeek.type = "week";
-        inputWeek.classList.add("form-control");
-        inputWeek.setAttribute("name", "filterMingguan");
-        inputWeek.setAttribute("id", "filterMingguan");
-        inputWeek.setAttribute("required", "required");
-		pilihanDiv.appendChild(inputWeek);
-		if (filterValue) {
-			inputWeek.value = filterValue;
-			
-		}
-		pilihanDiv.hidden = false;
-		inputStartDate.hidden = true;
-		inputEndDate.hidden = true;
-    } else if (selectedOption === "Bulanan") {
-        // Create input type month
-		
-        const inputMonth = document.createElement("input");
-        inputMonth.type = "month";
-        inputMonth.classList.add("form-control");
-        inputMonth.setAttribute("name", "filterBulanan");
-        inputMonth.setAttribute("id", "filterBulanan");
-        inputMonth.setAttribute("required", "required");
-        pilihanDiv.appendChild(inputMonth);
-		if (filterValue) {
-			inputMonth.value = filterValue;
-			
-		}
-		pilihanDiv.hidden = false;
-		inputStartDate.hidden = true;
-		inputEndDate.hidden = true;
-    } else if (selectedOption === "Tahunan") {
-        // Create input type number for year
-		
-        const inputYear = document.createElement("input");
-        inputYear.type = "number";
-        inputYear.min = "1900";
-        inputYear.max = "2099";
-        inputYear.step = "1";
-        inputYear.classList.add("form-control");
-        inputYear.setAttribute("name", "filterTahunan");
-        inputYear.setAttribute("id", "filterTahunan");
-        inputYear.setAttribute("required", "required");
-		inputYear.setAttribute("placeholder", "2024");
-		pilihanDiv.appendChild(inputYear);
-		if (filterValue) {
-			inputYear.value = filterValue;
-			
-		} else {
-			inputYear.value = "2024";
-		}
-		pilihanDiv.hidden = false;
-		inputStartDate.hidden = true;
-		inputEndDate.hidden = true;
-	} else if (selectedOption === "Custom") {
-		
-		pilihanDiv.hidden = true;
-		// Enable the start and end date inputs
-		inputStartDate.hidden = false;
-		inputEndDate.hidden = false;
-		if (filterValue) {
-			inputStartDate.value = startDate;
-			inputEndDate.value = endDate;
-		}
+                const options = [
+                    { text: "Semua", value: "semuaHari" },
+                    { text: "Hari Ini", value: "iniHari" },
+                    { text: "7 Hari", value: "7Hari" },
+                    { text: "30 Hari", value: "30Hari" },
+                    { text: "90 Hari", value: "90Hari" },
+                    { text: "12 Bulan", value: "12Bulan" },
+                ];
 
-			
-	} else if (selectedOption === "Kisaran") {
-		
-        // Create select with options for Kisaran
-        const selectKisaran = document.createElement("select");
-        selectKisaran.classList.add("form-select");
-        selectKisaran.setAttribute("name", "filterKisaran");
-        selectKisaran.setAttribute("id", "filterKisaran");
-        selectKisaran.setAttribute("required", "required");
+                options.forEach(optionData => {
+                    const option = document.createElement("option");
+                    option.text = optionData.text;
+                    option.value = optionData.value;
 
-        const options = [
-            { text: "Semua", value: "semuaHari" },
-            { text: "Hari Ini", value: "iniHari" },
-            { text: "7 Hari", value: "7Hari" },
-            { text: "30 Hari", value: "30Hari" },
-            { text: "90 Hari", value: "90Hari" },
-            { text: "12 Bulan", value: "12Bulan" },
-        ];
+                    if (option.value === filterValue) {
+                        option.selected = true;
+                        
+                    }
+                    selectKisaran.add(option);
+                });
 
-        options.forEach(optionData => {
-            const option = document.createElement("option");
-            option.text = optionData.text;
-            option.value = optionData.value;
-
-            // Check if option value matches the passed value
-            if (option.value === filterValue) {
-                option.selected = true;
-				
+                pilihanDiv.appendChild(selectKisaran);
+                pilihanDiv.hidden = false;
+                inputStartDate.hidden = true;
+                inputEndDate.hidden = true;
             }
+        }
 
-            selectKisaran.add(option);
-        });
+        function handleSubmit(event) {
+            event.preventDefault();
+            const selectedOption = jenisSelect.value;
+            if (selectedOption === "Mingguan") {
+                const filterMingguan = document.getElementById("filterMingguan").value;
+            } else if (selectedOption === "Bulanan") {
+                const filterBulanan = document.getElementById("filterBulanan").value;
+            } else if (selectedOption === "Tahunan") {
+                const filterTahunan = document.getElementById("filterTahunan").value;
+            } else if (selectedOption === "Kisaran") {
+                const filterKisaran = document.getElementById("filterKisaran").value;
+            }
+        }
 
-        pilihanDiv.appendChild(selectKisaran);
-		pilihanDiv.hidden = false;
-		inputStartDate.hidden = true;
-		inputEndDate.hidden = true;
-    }
-}
-
-function handleSubmit(event) {
-    event.preventDefault(); // Prevent form submission
-
-    const selectedOption = jenisSelect.value;
-
-    if (selectedOption === "Mingguan") {
-        const filterMingguan = document.getElementById("filterMingguan").value;
-        // Now you have the value of the selected week, you can do whatever you need with it
-    } else if (selectedOption === "Bulanan") {
-        const filterBulanan = document.getElementById("filterBulanan").value;
-        // Now you have the value of the selected month, you can do whatever you need with it
-    } else if (selectedOption === "Tahunan") {
-        const filterTahunan = document.getElementById("filterTahunan").value;
-        // Now you have the value of the selected year, you can do whatever you need with it
-    } else if (selectedOption === "Kisaran") {
-        const filterKisaran = document.getElementById("filterKisaran").value;
-        // Now you have the value of the selected Kisaran option, you can do whatever you need with it
-    }
-
-    // Now you can submit the form data, or perform any other action based on the selected option
-}
-
-
-
-		// Add event listener for change event
-		jenisSelect.addEventListener("change", handleChange);
-
-		// Trigger change event on page load
-		const initialEvent = new Event("change");
-		jenisSelect.dispatchEvent(initialEvent);
-	});
-
-	
+        jenisSelect.addEventListener("change", handleChange);
+        const initialEvent = new Event("change");
+        jenisSelect.dispatchEvent(initialEvent);
+    });
 </script>
 
 <script>
     // @formatter:off
     document.addEventListener("DOMContentLoaded", function () {
-        // Extracting dates and balances from PHP variable
         var dates = {!! json_encode(array_keys($summary['saldoHarian'])) !!};
         var balances = {!! json_encode(array_values($summary['cumulativeSaldoHarian'])) !!};
-
-        // Chart creation
         window.ApexCharts && (new ApexCharts(document.getElementById('chart-completion-tasks-3'), {
             chart: {
                 type: "area",
@@ -456,11 +417,16 @@ function handleSubmit(event) {
                 curve: "smooth",
             },
             series: [{
-                name: "Tasks completion",
+                name: "Jumlah",
                 data: balances
             }],
             tooltip: {
-                theme: 'dark'
+                theme: 'dark',
+                y: {
+                        formatter: function(val) {
+                            return 'Rp. ' + formatNumber(val);
+                        },
+                    },
             },
             grid: {
                 padding: {
@@ -486,7 +452,10 @@ function handleSubmit(event) {
             },
             yaxis: {
                 labels: {
-                    padding: 4
+                    padding: 4,
+                    formatter: function(val) {
+                        return 'Rp. ' + formatNumber(val);
+                    },
                 },
             },
             labels: dates,
@@ -506,23 +475,19 @@ function handleSubmit(event) {
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        
         const pemasukanData = @json($groupedPemasukanData);
-        
         if (typeof pemasukanData === 'object' && !Array.isArray(pemasukanData)) {
             const seriesData = Object.values(pemasukanData).map((stat, index) => {
                 const value = parseFloat(stat['total_jumlah']);
                 const greenShades = [
-                    "rgb(0, 255, 0)",       // Lime Green
-                    "rgb(50, 205, 50)",     // Lime Green
-                    "rgb(0, 128, 0)",       // Green
-                    "rgb(34, 139, 34)",     // Forest Green
-                    "rgb(0, 100, 0)",       // Dark Green
+                    "rgb(0, 255, 0)",       
+                    "rgb(50, 205, 50)",     
+                    "rgb(0, 128, 0)",       
+                    "rgb(34, 139, 34)",     
+                    "rgb(0, 100, 0)",       
                 ];
-                const color = greenShades[index % greenShades.length]; // Cycle through shades
-                
+                const color = greenShades[index % greenShades.length];                 
                 const rgbaColor = color.replace(')', ', 0.8)').replace('rgb', 'rgba');
-                
                 return {
                     value: value,
                     color: rgbaColor
@@ -530,10 +495,8 @@ function handleSubmit(event) {
             });
             
             const labelsData = Object.values(pemasukanData).map(stat => stat['kategori']);
-            
             console.log("Pemasukan Series Data:", seriesData);
             console.log("Pemasukan Labels Data:", labelsData);
-
             window.ApexCharts && (new ApexCharts(document.getElementById('chart-demo-pie'), {
                 chart: {
                     type: "donut",
@@ -551,7 +514,7 @@ function handleSubmit(event) {
                 fill: {
                     opacity: 1,
                 },
-                colors: seriesData.map(data => data.color), // Use colors with reduced opacity
+                colors: seriesData.map(data => data.color),
                 legend: {
                     show: true,
                     position: 'right',
@@ -570,7 +533,7 @@ function handleSubmit(event) {
                     theme: 'dark',
                     y: {
                         formatter: function(val) {
-                            return 'Rp. ' + formatNumber(val.toFixed(2));
+                            return 'Rp. ' + formatNumber(val);
                         },
                     },
                     fillSeriesColor: false
@@ -590,13 +553,13 @@ function handleSubmit(event) {
             const seriesData = Object.values(pengeluaranData).map((stat, index) => {
                 const value = parseFloat(stat['total_jumlah']);
                 const redShades = [
-                    "rgb(255, 0, 0)",       // Red
-                    "rgb(220, 20, 60)",     // Crimson
-                    "rgb(178, 34, 34)",     // Firebrick
-                    "rgb(139, 0, 0)",       // Dark Red
-                    "rgb(205, 92, 92)",     // Indian Red
+                    "rgb(255, 0, 0)",      
+                    "rgb(220, 20, 60)",    
+                    "rgb(178, 34, 34)",    
+                    "rgb(139, 0, 0)",      
+                    "rgb(205, 92, 92)",    
                 ];
-                const color = redShades[index % redShades.length]; // Cycle through shades
+                const color = redShades[index % redShades.length];
                 
                 const rgbaColor = color.replace(')', ', 0.8)').replace('rgb', 'rgba');
                 
@@ -628,7 +591,7 @@ function handleSubmit(event) {
                 fill: {
                     opacity: 1,
                 },
-                colors: seriesData.map(data => data.color), // Use colors with reduced opacity
+                colors: seriesData.map(data => data.color), 
                 legend: {
                     show: true,
                     position: 'right',
@@ -647,7 +610,7 @@ function handleSubmit(event) {
                     theme: 'dark',
                     y: {
                         formatter: function(val) {
-                            return 'Rp. ' + formatNumber(val.toFixed(2));
+                            return 'Rp. ' + formatNumber(val);
                         },
                     },
                     fillSeriesColor: false
@@ -662,15 +625,14 @@ function handleSubmit(event) {
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const semuaData = @json($groupedSemuaData);
-        
         if (typeof semuaData === 'object' && !Array.isArray(semuaData)) {
             const seriesData = Object.values(semuaData).map((stat, index) => {
                 const value = parseFloat(stat['total_jumlah']);
                 const redShades = [
-                    "rgb(0, 255, 0)",     // Crimson
-                    "rgb(255, 0, 0)",       // Red
+                    "rgb(0, 255, 0)",     
+                    "rgb(255, 0, 0)",     
                 ];
-                const color = redShades[index % redShades.length]; // Cycle through shades
+                const color = redShades[index % redShades.length]; 
                 
                 const rgbaColor = color.replace(')', ', 0.8)').replace('rgb', 'rgba');
                 
@@ -681,7 +643,6 @@ function handleSubmit(event) {
             });
             
             const labelsData = Object.values(semuaData).map(stat => stat['jenis']);
-            
             console.log("Pemasukan Series Data:", seriesData);
             console.log("Pemasukan Labels Data:", labelsData);
 
@@ -702,7 +663,7 @@ function handleSubmit(event) {
                 fill: {
                     opacity: 1,
                 },
-                colors: seriesData.map(data => data.color), // Use colors with reduced opacity
+                colors: seriesData.map(data => data.color), 
                 legend: {
                     show: true,
                     position: 'right',
@@ -721,7 +682,7 @@ function handleSubmit(event) {
                     theme: 'dark',
                     y: {
                         formatter: function(val) {
-                            return 'Rp. ' + formatNumber(val.toFixed(2));
+                            return 'Rp. ' + formatNumber(val);
                         },
                     },
                     fillSeriesColor: false

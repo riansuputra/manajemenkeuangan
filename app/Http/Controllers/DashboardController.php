@@ -66,7 +66,7 @@ class DashboardController extends Controller
 
             $sortedData = $combinedData->sortByDesc('tanggal');
             $summary = $this->calculateSummary($sortedData);
-    
+
             return view('dashboard.index', [
                 'user' => $request->auth['user'],
                 'jenisFilter' => $jenisFilter,

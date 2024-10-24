@@ -15,9 +15,9 @@ class AnggaranController extends Controller
     public function index(Request $request) {
         $view = $request->route('view', 'week');
         $responses = Http::pool(fn (Pool $pool) => [
-            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/anggarans'),
-            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/pengeluaransWeb'),
-            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/kategori_pengeluaransWeb')
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/anggaran'),
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/pengeluaran'),
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/kategori-pengeluaran')
         ]);
 
         $now = Carbon::now();
@@ -33,18 +33,17 @@ class AnggaranController extends Controller
         if ($responses[0]->successful() && $responses[1]->successful() && $responses[2]->successful()) {
             $anggaranData = $responses[0]->json()['data']['anggaran'];
             $pengeluaranData = $responses[1]->json()['data']['pengeluaran'];
-            $kategoriData = $responses[2]->json()['data']['kategoriPengeluaran'];
+            $kategoriData = $responses[2]->json()['data']['kategori_pengeluaran'];
     
-            
 
-            $groupedPengeluaranData = collect($pengeluaranData)->groupBy('id_kategori_pengeluaran')->map(function ($items, $key) {
+            $groupedPengeluaranData = collect($pengeluaranData)->groupBy('kategori_pengeluaran_id')->map(function ($items, $key) {
                 return [
-                    'id_kategori_pengeluaran' => $key,
+                    'kategori_pengeluaran_id' => $key,
                     'nama_kategori_pengeluaran' => $items->first()['kategori_pengeluaran']['nama_kategori_pengeluaran'],
-                    'pengeluarans' => $items,
+                    'pengeluaran' => $items,
                 ];
             });
-    
+
             $groupedAnggaranData = collect($anggaranData)
                 ->groupBy('periode')
                 ->map(function ($items, $key) use ($groupedPengeluaranData) {
@@ -53,19 +52,19 @@ class AnggaranController extends Controller
                         $item['nama_kategori_pengeluaran'] = $namaKategoriPengeluaran;
 
                         $item['kategori_pengeluaran'] = $groupedPengeluaranData->filter(function ($pengeluaran) use ($item) {
-                            return $pengeluaran['id_kategori_pengeluaran'] == $item['id_kategori_pengeluaran']
-                                && collect($pengeluaran['pengeluarans'])->filter(function ($pengeluaranItem) use ($item) {
+                            return $pengeluaran['kategori_pengeluaran_id'] == $item['kategori_pengeluaran_id']
+                                && collect($pengeluaran['pengeluaran'])->filter(function ($pengeluaranItem) use ($item) {
                                     return $pengeluaranItem['tanggal'] >= $item['tanggal_mulai'] && $pengeluaranItem['tanggal'] <= $item['tanggal_selesai'];
                                 })->isNotEmpty();
                         })->map(function ($pengeluaran) use ($item) {
-                            $pengeluaran['pengeluarans'] = collect($pengeluaran['pengeluarans'])->filter(function ($pengeluaranItem) use ($item) {
+                            $pengeluaran['pengeluaran'] = collect($pengeluaran['pengeluaran'])->filter(function ($pengeluaranItem) use ($item) {
                                 return $pengeluaranItem['tanggal'] >= $item['tanggal_mulai'] && $pengeluaranItem['tanggal'] <= $item['tanggal_selesai'];
                             })->values();
                             return $pengeluaran;
                         })->values();
 
                         $totalJumlah = $item['kategori_pengeluaran']->sum(function ($kategori) {
-                            return collect($kategori['pengeluarans'])->sum('jumlah');
+                            return collect($kategori['pengeluaran'])->sum('jumlah');
                         });
 
                         $item['total_jumlah'] = $totalJumlah;
@@ -74,16 +73,18 @@ class AnggaranController extends Controller
                     })->sortByDesc('created_at');
                 });
 
+                            // dd($groupedAnggaranData);
+
     
             $combinedAnggaranData = $groupedAnggaranData->map(function ($items) use ($groupedPengeluaranData) {
                 return $items->map(function ($item) use ($groupedPengeluaranData) {
                     $item['kategori_pengeluaran'] = $groupedPengeluaranData->filter(function ($pengeluaran) use ($item) {
-                        return $pengeluaran['id_kategori_pengeluaran'] == $item['id_kategori_pengeluaran']
-                            && collect($pengeluaran['pengeluarans'])->filter(function ($pengeluaranItem) use ($item) {
+                        return $pengeluaran['kategori_pengeluaran_id'] == $item['kategori_pengeluaran_id']
+                            && collect($pengeluaran['pengeluaran'])->filter(function ($pengeluaranItem) use ($item) {
                                 return $pengeluaranItem['tanggal'] >= $item['tanggal_mulai'] && $pengeluaranItem['tanggal'] <= $item['tanggal_selesai'];
                             })->isNotEmpty();
                     })->map(function ($pengeluaran) use ($item) {
-                        $pengeluaran['pengeluarans'] = collect($pengeluaran['pengeluarans'])->filter(function ($pengeluaranItem) use ($item) {
+                        $pengeluaran['pengeluaran'] = collect($pengeluaran['pengeluaran'])->filter(function ($pengeluaranItem) use ($item) {
                             return $pengeluaranItem['tanggal'] >= $item['tanggal_mulai'] && $pengeluaranItem['tanggal'] <= $item['tanggal_selesai'];
                         })->values();
                         return $pengeluaran;
@@ -109,6 +110,8 @@ class AnggaranController extends Controller
                     $viewName = 'anggaran.anggaranWeek'; // default view
                     break;
             }
+
+            // dd($combinedAnggaranData, $pengeluaranData, $kategoriData);
 
             return view($viewName, [
                 'user' => $request->auth['user'],
@@ -161,12 +164,12 @@ class AnggaranController extends Controller
 
         // Proceed with storing the new data
         $input = array(
-            'user_id' => $request->auth['user']['user_id'],
+            'user_id' => $request->auth['user']['id'],
             'periode' => $periode,
             'tanggal_mulai' => $tanggal_mulai,
             'tanggal_selesai' => $tanggal_selesai,
             'anggaran' => $request->jumlah1,
-            'id_kategori_pengeluaran' => $request->id_kategori_pengeluaran
+            'kategori_pengeluaran_id' => $request->id_kategori_pengeluaran
         );
 
         $response = Http::withHeaders([
@@ -174,7 +177,7 @@ class AnggaranController extends Controller
             'x-api-key' => env('API_KEY'),
             'Authorization' => 'Bearer ' . $request->auth['token'],
             'user-type' => $request->auth['user_type'],
-        ])->post(env('API_URL') . '/anggarans', $input);
+        ])->post(env('API_URL') . '/anggaran', $input);
 
         if ($response->status() == 201) {
             $this->updateAuthCookie($request->auth, $response['auth']);
@@ -234,12 +237,12 @@ class AnggaranController extends Controller
 
         // Proceed with storing the new data
         $input = array(
-            'user_id' => $request->auth['user']['user_id'],
+            'user_id' => $request->auth['user']['id'],
             'periode' => $periode,
             'tanggal_mulai' => $tanggal_mulai,
             'tanggal_selesai' => $tanggal_selesai,
             'anggaran' => $request->jumlah1edit,
-            'id_kategori_pengeluaran' => $request->id_kategori_pengeluaran_edit
+            'kategori_pengeluaran_id' => $request->id_kategori_pengeluaran_edit
         );
 
 
@@ -248,9 +251,9 @@ class AnggaranController extends Controller
             'x-api-key' => env('API_KEY'),
             'Authorization' => 'Bearer ' . $request->auth['token'],
             'user-type' => $request->auth['user_type'],
-        ])->patch(env('API_URL') . '/anggarans/'.$id, $input);
+        ])->patch(env('API_URL') . '/anggaran/'.$id, $input);
 
-        if ($response->status() == 201) {
+        if ($response->status() == 200) {
             $this->updateAuthCookie($request->auth, $response['auth']);
             return redirect()->route('anggarannew')->with('success', $response["message"]);
         } else if (!empty($response["errors"])) {
@@ -271,9 +274,9 @@ class AnggaranController extends Controller
             'x-api-key' => env('API_KEY'),
             'Authorization' => 'Bearer ' . $request->auth['token'],
             'user-type' => $request->auth['user_type'],
-        ])->delete(env('API_URL') . '/anggarans/'.$id);
+        ])->delete(env('API_URL') . '/anggaran/'.$id);
 
-        if ($response->status() == 201) {
+        if ($response->status() == 200) {
             $this->updateAuthCookie($request->auth, $response['auth']);
             return redirect()->route('anggarannew')->with('success', $response["message"]);
         } else if (!empty($response["errors"])) {

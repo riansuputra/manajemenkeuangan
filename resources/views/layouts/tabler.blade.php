@@ -320,9 +320,9 @@
 								  
                 </ul>
 
-				<div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">
+				<div class="my-md-0 flex-grow-1 flex-md-grow-0 order-last order-md-last">
                 
-              <ul class="navbar-nav">
+              <ul class="navbar-nav" style="min-height: 0rem">
                 
                 
                 
@@ -406,11 +406,11 @@
 		  		<form action="{{ route('catatan') }}" method="post" autocomplete="off">
 					@csrf
           			<div class="modal-body">
-            			<label class="form-label">Pilih Jenis :</label>
+            			<label class="form-label required">Pilih Jenis :</label>
             			<div class="form-selectgroup-boxes row mb-3">
 							<div class="col-lg-6">
 								<label class="form-selectgroup-item">
-									<input type="radio" id="pemasukan" name="jenis" value="1" class="form-selectgroup-input pemasukan-radio" onchange="updateSelectOptions1(this)" required>
+									<input type="radio" id="pemasukan" name="jenis" value="1" class="form-selectgroup-input pemasukan-radio" required>
 									<span class="form-selectgroup-label d-flex align-items-center p-2">
 										<span class="me-3">
 											<span class="form-selectgroup-check"></span>
@@ -424,7 +424,7 @@
 							</div>		
 							<div class="col-lg-6">
 								<label class="form-selectgroup-item">
-									<input type="radio" id="pengeluaran" name="jenis" value="2" class="form-selectgroup-input pengeluaran-radio" onchange="updateSelectOptions1(this)" required>
+									<input type="radio" id="pengeluaran" name="jenis" value="2" class="form-selectgroup-input pengeluaran-radio" required>
 									<span class="form-selectgroup-label d-flex align-items-center p-2">
 										<span class="me-3">
 											<span class="form-selectgroup-check"></span>
@@ -440,7 +440,7 @@
             			<div class="row">
               				<div class="col-lg-4">
                 				<div class="mb-3">
-                  					<label class="form-label">Jumlah : </label>
+                  					<label class="form-label required">Jumlah : </label>
 				  					<div class="input-group">
                               			<span class="input-group-text">
                                 			Rp.
@@ -452,7 +452,7 @@
               				</div>
               				<div class="col-lg-4">
                 				<div class="mb-3">
-                  					<label class="form-label">Kategori :</label>
+                  					<label class="form-label required">Kategori :</label>
                   					
 									
 									<select id="kategori" name="kategori" class="form-select kategoriadd">
@@ -462,7 +462,7 @@
               				</div>
 			  				<div class="col-lg-4">
                 				<div class="mb-3">
-                  					<label class="form-label">Tanggal :</label>
+                  					<label class="form-label required">Tanggal :</label>
                   					<input type="date" id="tanggal" name="tanggal" class="form-control" value="{{ now()->format('Y-m-d') }}">
                 				</div>
               				</div>
@@ -478,7 +478,7 @@
 	            		<a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
               				Batal
             			</a>
-						<button type="submit" class="btn btn-primary ms-auto">
+						<button type="submit" class="btn btn-success ms-auto">
               				<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
               				Tambah Catatan
 						</button>
@@ -560,26 +560,41 @@ document.getElementById('jumlah').addEventListener('input', updateFormattedNumbe
     const kategoriPengeluaranData = @json($kategoriPengeluaranData ?? []);
 
     function updateSelectOptions1(radioElement) {
-        // Find the closest modal and its select element
-        var modal = radioElement.closest('.modal');
-        var selectElement = modal.querySelector('.kategoriadd');
+    // Find the closest modal
+    var modal = radioElement.closest('.modal');
 
-        // Clear existing options
-        selectElement.innerHTML = '';
 
-        // Add appropriate options based on the selected radio button
-        if (radioElement.classList.contains('pemasukan-radio')) {
-            kategoriPemasukanData.forEach(function(item) {
-                selectElement.innerHTML += `<option value="${item.id_kategori_pemasukan}">${item.nama_kategori_pemasukan}</option>`;
-            });
-        } else if (radioElement.classList.contains('pengeluaran-radio')) {
-            kategoriPengeluaranData.forEach(function(item) {
-                selectElement.innerHTML += `<option value="${item.id_kategori_pengeluaran}">${item.nama_kategori_pengeluaran}</option>`;
-            });
-        }
+    // Find the select element within the modal
+    var selectElement = modal.querySelector('.kategoriadd');
+    
 
-        selectElement.disabled = false;
+    // Clear existing options using a loop
+    while (selectElement.options.length > 0) {
+        selectElement.remove(0);
     }
+
+    // Determine which data to use based on the selected radio button
+    let dataToUse = [];
+    if (radioElement.classList.contains('pemasukan-radio')) {
+        dataToUse = kategoriPemasukanData;
+    } else if (radioElement.classList.contains('pengeluaran-radio')) {
+        dataToUse = kategoriPengeluaranData;
+    } else {
+        return;
+    }
+
+    // Check if data is available and populate the select options
+    if (dataToUse.length > 0) {
+        dataToUse.forEach(function(item) {
+            // Create a new option element and add it to the select
+            let option = new Option(item.nama_kategori_pemasukan || item.nama_kategori_pengeluaran, item.id);
+            selectElement.add(option);
+        });
+    }
+
+    // Enable the select element
+    selectElement.disabled = false;
+}
 
     // Add event listeners to the radio buttons in the modal
     document.querySelectorAll('.pemasukan-radio, .pengeluaran-radio').forEach(function(radio) {
@@ -612,6 +627,8 @@ document.getElementById('jumlah').addEventListener('input', updateFormattedNumbe
             });
         });
     });
+
+    
 });
 
     </script>
