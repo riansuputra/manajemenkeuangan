@@ -192,8 +192,8 @@
                       					</span>
 									</a>
                   				</li>
-								  <li class="nav-item {{ url()->current() == url('/catatan') ? 'active' : '' }}" >
-                    				<a class="nav-link" href="{{ url('./catatan') }}">
+								  <li class="nav-item dropdown {{ url()->current() == url('/catatan') ? 'active' : '' }}" >
+                    				<a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
 										<span class="nav-link-icon d-md-none d-lg-inline-block">
 											<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M5 3m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z"></path><path d="M9 7l6 0"></path><path d="M9 11l6 0"></path><path d="M9 15l4 0"></path></svg>
 										</span>
@@ -201,6 +201,30 @@
                         					Catatan
                       					</span>
                     				</a>
+
+                            <div class="dropdown-menu">
+                      
+                          <!-- <a class="dropdown-item" href="{{ url('/pinjaman') }}">
+                            Simulasi Bunga Anuitas
+                          </a> -->
+						  <a class="dropdown-item" href="{{ url('/pinjaman-bunga-efektif') }}">
+							  Simulasi Bunga Efektif
+							</a>
+							<!-- <a class="dropdown-item" href="{{ url('/pinjaman-bunga-floating') }}">
+								Simulasi Bunga Floating
+							</a> -->
+							<a class="dropdown-item" href="{{ url('/pinjaman-bunga-tetap') }}">
+							  Simulasi Bunga Tetap
+							</a>
+
+              <a class="dropdown-item" href="#sidebar-error">
+                            <!-- Download SVG icon from http://tabler-icons.io/i/file-minus -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M14 3v4a1 1 0 0 0 1 1h4"></path><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"></path><path d="M9 14l6 0"></path></svg>
+                            Error pages
+                          </a>
+
+
+
                   				</li>
 								  <!-- <li class="nav-item {{ url()->current() == url('/anggaran') ? 'active' : '' }}" >
                     				<a class="nav-link" href="/anggaran">
@@ -212,8 +236,8 @@
                       					</span>
 									</a>
                   				</li> -->
-								  <li class="nav-item {{ url()->current() == url('/anggaran-week') ? 'active' : '' }} {{ url()->current() == url('/anggaran-month') ? 'active' : '' }} {{ url()->current() == url('/anggaran-year') ? 'active' : '' }}" >
-                    				<a class="nav-link" href="/anggaran-week">
+								  <li class="nav-item {{ url()->current() == url('/anggaran-mingguan') ? 'active' : '' }} {{ url()->current() == url('/anggaran-bulanan') ? 'active' : '' }} {{ url()->current() == url('/anggaran-tahunan') ? 'active' : '' }}" >
+                    				<a class="nav-link" href="/anggaran-mingguan">
                       					<span class="nav-link-icon d-md-none d-lg-inline-block">
 					  						<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M16 6m-5 0a5 3 0 1 0 10 0a5 3 0 1 0 -10 0"></path><path d="M11 6v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4"></path><path d="M11 10v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4"></path><path d="M11 14v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4"></path><path d="M7 9h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5"></path><path d="M5 15v1m0 -8v1"></path></svg>
                       					</span>
@@ -256,6 +280,12 @@
 							<a class="dropdown-item" href="{{ url('/pinjaman-bunga-tetap') }}">
 							  Simulasi Bunga Tetap
 							</a>
+
+              <a class="dropdown-item" href="#sidebar-error">
+                            <!-- Download SVG icon from http://tabler-icons.io/i/file-minus -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M14 3v4a1 1 0 0 0 1 1h4"></path><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"></path><path d="M9 14l6 0"></path></svg>
+                            Error pages
+                          </a>
                           
                         
                     </div>

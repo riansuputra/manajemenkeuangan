@@ -12,7 +12,8 @@ use Illuminate\Http\Client\Pool;
 
 class AnggaranController extends Controller
 {
-    public function index(Request $request) {
+    public function index(Request $request) 
+    {
         $view = $request->route('view', 'week');
         $responses = Http::pool(fn (Pool $pool) => [
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/anggaran'),
@@ -24,7 +25,6 @@ class AnggaranController extends Controller
         $dateWeek = [
             'tanggal_mulai' => $now->copy()->startOfWeek(),
             'tanggal_selesai' => $now->copy()->endOfWeek()
-            
         ];
         $dateMonth = $now->format('F Y');
         $dateYear = $now->format('Y');
@@ -35,7 +35,6 @@ class AnggaranController extends Controller
             $pengeluaranData = $responses[1]->json()['data']['pengeluaran'];
             $kategoriData = $responses[2]->json()['data']['kategori_pengeluaran'];
     
-
             $groupedPengeluaranData = collect($pengeluaranData)->groupBy('kategori_pengeluaran_id')->map(function ($items, $key) {
                 return [
                     'kategori_pengeluaran_id' => $key,
@@ -44,36 +43,32 @@ class AnggaranController extends Controller
                 ];
             });
 
-            $groupedAnggaranData = collect($anggaranData)
-                ->groupBy('periode')
-                ->map(function ($items, $key) use ($groupedPengeluaranData) {
-                    return $items->map(function ($item) use ($groupedPengeluaranData) {
-                        $namaKategoriPengeluaran = $item['kategori_pengeluaran']['nama_kategori_pengeluaran'] ?? 'Unknown';
-                        $item['nama_kategori_pengeluaran'] = $namaKategoriPengeluaran;
+            $groupedAnggaranData = collect($anggaranData)->groupBy('periode')->map(function ($items, $key) use ($groupedPengeluaranData) {
+                return $items->map(function ($item) use ($groupedPengeluaranData) {
+                    $namaKategoriPengeluaran = $item['kategori_pengeluaran']['nama_kategori_pengeluaran'] ?? 'Unknown';
+                    $item['nama_kategori_pengeluaran'] = $namaKategoriPengeluaran;
 
-                        $item['kategori_pengeluaran'] = $groupedPengeluaranData->filter(function ($pengeluaran) use ($item) {
-                            return $pengeluaran['kategori_pengeluaran_id'] == $item['kategori_pengeluaran_id']
-                                && collect($pengeluaran['pengeluaran'])->filter(function ($pengeluaranItem) use ($item) {
-                                    return $pengeluaranItem['tanggal'] >= $item['tanggal_mulai'] && $pengeluaranItem['tanggal'] <= $item['tanggal_selesai'];
-                                })->isNotEmpty();
-                        })->map(function ($pengeluaran) use ($item) {
-                            $pengeluaran['pengeluaran'] = collect($pengeluaran['pengeluaran'])->filter(function ($pengeluaranItem) use ($item) {
+                    $item['kategori_pengeluaran'] = $groupedPengeluaranData->filter(function ($pengeluaran) use ($item) {
+                        return $pengeluaran['kategori_pengeluaran_id'] == $item['kategori_pengeluaran_id']
+                            && collect($pengeluaran['pengeluaran'])->filter(function ($pengeluaranItem) use ($item) {
                                 return $pengeluaranItem['tanggal'] >= $item['tanggal_mulai'] && $pengeluaranItem['tanggal'] <= $item['tanggal_selesai'];
-                            })->values();
-                            return $pengeluaran;
+                            })->isNotEmpty();
+                    })->map(function ($pengeluaran) use ($item) {
+                        $pengeluaran['pengeluaran'] = collect($pengeluaran['pengeluaran'])->filter(function ($pengeluaranItem) use ($item) {
+                            return $pengeluaranItem['tanggal'] >= $item['tanggal_mulai'] && $pengeluaranItem['tanggal'] <= $item['tanggal_selesai'];
                         })->values();
+                        return $pengeluaran;
+                    })->values();
 
-                        $totalJumlah = $item['kategori_pengeluaran']->sum(function ($kategori) {
-                            return collect($kategori['pengeluaran'])->sum('jumlah');
-                        });
+                    $totalJumlah = $item['kategori_pengeluaran']->sum(function ($kategori) {
+                        return collect($kategori['pengeluaran'])->sum('jumlah');
+                    });
 
-                        $item['total_jumlah'] = $totalJumlah;
+                    $item['total_jumlah'] = $totalJumlah;
 
-                        return $item;
-                    })->sortByDesc('created_at');
-                });
-
-                            // dd($groupedAnggaranData);
+                    return $item;
+                })->sortByDesc('created_at');
+            });
 
     
             $combinedAnggaranData = $groupedAnggaranData->map(function ($items) use ($groupedPengeluaranData) {
@@ -94,8 +89,6 @@ class AnggaranController extends Controller
                 });
             });
 
-            // dd($combinedAnggaranData['Mingguan']);
-
             switch ($view) {
                 case 'week':
                     $viewName = 'anggaran.anggaranWeek';
@@ -107,11 +100,9 @@ class AnggaranController extends Controller
                     $viewName = 'anggaran.anggaranYear';
                     break;
                 default:
-                    $viewName = 'anggaran.anggaranWeek'; // default view
+                    $viewName = 'anggaran.anggaranWeek';
                     break;
             }
-
-            // dd($combinedAnggaranData, $pengeluaranData, $kategoriData);
 
             return view($viewName, [
                 'user' => $request->auth['user'],
@@ -127,7 +118,8 @@ class AnggaranController extends Controller
         }
     }
 
-    private function getHeaders($request) {
+    private function getHeaders($request) 
+    {
         return [
             'Accept' => 'application/json',
             'x-api-key' => env('API_KEY'),
@@ -139,7 +131,6 @@ class AnggaranController extends Controller
     public function store(Request $request)
     {
         $periode = $request->periode;
-        // dd($periode);
         $now = Carbon::now();
 
         switch ($periode) {
@@ -147,22 +138,18 @@ class AnggaranController extends Controller
                 $tanggal_mulai = $now->copy()->startOfYear()->toDateString();
                 $tanggal_selesai = $now->copy()->endOfYear()->toDateString();
                 break;
-
             case 'Mingguan':
                 $tanggal_mulai = $now->copy()->startOfWeek()->toDateString();
                 $tanggal_selesai = $now->copy()->endOfWeek()->toDateString();
                 break;
-
             case 'Bulanan':
                 $tanggal_mulai = $now->copy()->startOfMonth()->toDateString();
                 $tanggal_selesai = $now->copy()->endOfMonth()->toDateString();
                 break;
-
             default:
                 return back()->with('error', 'Invalid period');
         }
 
-        // Proceed with storing the new data
         $input = array(
             'user_id' => $request->auth['user']['id'],
             'periode' => $periode,
@@ -181,7 +168,7 @@ class AnggaranController extends Controller
 
         if ($response->status() == 201) {
             $this->updateAuthCookie($request->auth, $response['auth']);
-            return redirect()->route('anggarannew')->with('success', $response["message"]);
+            return redirect()->route('anggaranWeek')->with('success', $response["message"]);
         } else if (!empty($response["errors"])) {
             return back()->with('error', $response["message"]);
         } else {
@@ -189,30 +176,19 @@ class AnggaranController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        // dd($request);
         $periode = $request->periodeedit;
-        // dd($periode);
         $now = Carbon::now();
 
         switch ($periode) {
@@ -220,22 +196,18 @@ class AnggaranController extends Controller
                 $tanggal_mulai = $now->copy()->startOfYear()->toDateString();
                 $tanggal_selesai = $now->copy()->endOfYear()->toDateString();
                 break;
-
             case 'Mingguan':
                 $tanggal_mulai = $now->copy()->startOfWeek()->toDateString();
                 $tanggal_selesai = $now->copy()->endOfWeek()->toDateString();
                 break;
-
             case 'Bulanan':
                 $tanggal_mulai = $now->copy()->startOfMonth()->toDateString();
                 $tanggal_selesai = $now->copy()->endOfMonth()->toDateString();
                 break;
-
             default:
                 return back()->with('error', 'Invalid period');
         }
 
-        // Proceed with storing the new data
         $input = array(
             'user_id' => $request->auth['user']['id'],
             'periode' => $periode,
@@ -244,7 +216,6 @@ class AnggaranController extends Controller
             'anggaran' => $request->jumlah1edit,
             'kategori_pengeluaran_id' => $request->id_kategori_pengeluaran_edit
         );
-
 
         $response = Http::withHeaders([
             'Accept' => 'application/json',
@@ -263,12 +234,8 @@ class AnggaranController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Request $request, string $id)
     {
-        // dd($id);
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'x-api-key' => env('API_KEY'),

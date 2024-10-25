@@ -5,7 +5,6 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AnggaranController;
 use App\Http\Controllers\AnggaranControllertes;
 use App\Http\Controllers\CatatanController;
-use App\Http\Controllers\StatistikController;
 use App\Http\Controllers\PortofolioController;
 use App\Http\Controllers\PinjamanController;
 use App\Http\Controllers\PengaturanController;
@@ -13,7 +12,8 @@ use App\Http\Controllers\InvestasiController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LanguageController;
 
-Route::middleware([App\Http\Middleware\GuestMiddleware::class])->group(function(){
+Route::middleware([App\Http\Middleware\GuestMiddleware::class])->group(function()
+{
     Route::get('/register',[AuthController::class,'registerPage'])->name('registerPage');
     Route::post('/register/auth',[AuthController::class,'register'])->name('register');
     Route::get('/login',[AuthController::class,'loginPage'])->name('loginPage');
@@ -25,7 +25,8 @@ Route::middleware([App\Http\Middleware\GuestMiddleware::class])->group(function(
     Route::get('lang/{lang}', [LanguageController::class, 'switch'])->name('lang.switch');
 });
 
-Route::middleware([App\Http\Middleware\AdminUserMiddleware::class])->group(function(){
+Route::middleware([App\Http\Middleware\AdminUserMiddleware::class])->group(function()
+{
     Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
     Route::post('/dashboard-filter',[DashboardController::class,'filter'])->name('dashboard-filter');
     Route::get('/logout',[AuthController::class,'logout'])->name('logout');
@@ -33,43 +34,34 @@ Route::middleware([App\Http\Middleware\AdminUserMiddleware::class])->group(funct
     // Route::get('/catatan', function () {return view('catatan.index');})->name('catatan');
     // Route::get('/investasi', function () {return view('investasi.index');});
     // Route::get('/profil', function () {return view('profil.index');});
-    // Route::get('/statistik', function () {return view('statistik.index');});
     
 });
 
-Route::middleware([App\Http\Middleware\AdminMiddleware::class])->group(function(){
+Route::middleware([App\Http\Middleware\AdminMiddleware::class])->group(function()
+{
     
     Route::get('/admin', [AdminController::class, 'index'])->name('admin-layout');
-    Route::get('/categories-request', [AdminController::class, 'categoryRequests'])->name('categoryRequests');
-    Route::post('/update-catatan/{id}', [CatatanController::class, 'update'])->name('updateCatatan');
-    Route::post('/update-catatan/{id}', [CatatanController::class, 'update'])->name('updateCatatan');
 
+    Route::get('/categories-request', [AdminController::class, 'categoryRequests'])->name('categoryRequests');
     Route::post('/category-requests/{id}/approve', [AdminController::class, 'approve'])->name('categoryApprove');
     Route::post('/category-requests/{id}/reject', [AdminController::class, 'reject'])->name('categoryReject');
 });
 
-Route::middleware([App\Http\Middleware\UserMiddleware::class])->group(function(){
+Route::middleware([App\Http\Middleware\UserMiddleware::class])->group(function()
+{
 
-    Route::get('/catatan-test', [CatatanController::class, 'indextest']);
     Route::get('/catatan', [CatatanController::class, 'index'])->name('catatanHarian');
-    Route::get('/catatan-mingguan', [CatatanController::class, 'indexMingguan'])->name('catatanMingguan');
-    Route::get('/catatan-bulanan', [CatatanController::class, 'indexBulanan'])->name('catatanBulanan');
-    Route::get('/create', [CatatanController::class, 'create'])->name('tambah-matakuliah-post');
+    Route::get('/create', [CatatanController::class, 'create'])->name('tambah-catatan');
     Route::post('/catatan', [CatatanController::class, 'store'])->name('catatan');
     Route::post('/catatan-filter',[CatatanController::class,'filter'])->name('catatan-filter');
     Route::get('/catatan/{id}', [CatatanController::class, 'show'])->name('detailCatatan');
-    Route::get('/catatan/{catatan}', [CatatanController::class, 'edit'])->name('hapus-matakuliah-post');
+    Route::get('/catatan/{catatan}', [CatatanController::class, 'edit'])->name('hapus-catatan');
     Route::post('/update-catatan/{id}', [CatatanController::class, 'update'])->name('updateCatatan');
     Route::post('/delete-catatan/{id}', [CatatanController::class, 'destroy'])->name('hapusCatatan');
 
-    Route::get('/statistik', [StatistikController::class, 'index'])->name('statistik');
-    Route::post('/statistik-filter', [StatistikController::class, 'filter'])->name('statistik-filter');
-
-    Route::get('/anggarannew', [AnggaranControllertes::class, 'index'])->name('anggaran');
-    Route::get('/anggaran-week', [AnggaranController::class, 'index'])->name('anggaranWeek')->defaults('view', 'week');
-    Route::get('/anggaran-month', [AnggaranController::class, 'index'])->name('anggaranMonth')->defaults('view', 'month');
-    Route::get('/anggaran-year', [AnggaranController::class, 'index'])->name('anggaranYear')->defaults('view', 'year');
-    Route::get('/anggaran', [AnggaranController::class, 'index'])->name('anggarannew');
+    Route::get('/anggaran-mingguan', [AnggaranController::class, 'index'])->name('anggaranWeek')->defaults('view', 'week');
+    Route::get('/anggaran-bulanan', [AnggaranController::class, 'index'])->name('anggaranMonth')->defaults('view', 'month');
+    Route::get('/anggaran-tahunan', [AnggaranController::class, 'index'])->name('anggaranYear')->defaults('view', 'year');
     Route::post('/anggaran-store', [AnggaranController::class, 'store'])->name('anggaranstore');
     Route::post('/update-anggaran/{id}', [AnggaranController::class, 'update'])->name('updateAnggaran');
     Route::post('/delete-anggaran/{id}', [AnggaranController::class, 'destroy'])->name('hapusAnggaran');

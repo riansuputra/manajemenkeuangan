@@ -10,18 +10,18 @@
 </div>
 <div class="col-auto ms-auto d-print-none">
 	<div class="btn-list">
-		<a href="#" class="btn btn-success d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-report">
+		<a href="" class="btn btn-success d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-report">
         	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
           	Tambah Catatan
       	</a>
-		<a href="#" class="btn btn-success d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-report" aria-label="Create new report">
+		<a href="" class="btn btn-success d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-report" aria-label="Create new report">
 			<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
 		</a>   
 		<a href="{{ url('/category-request') }}" class="btn btn-primary d-none d-sm-inline-block">
 			<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-category"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4h6v6h-6z" /><path d="M14 4h6v6h-6z" /><path d="M4 14h6v6h-6z" /><path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /></svg>
           	Tambah Kategori
       	</a>
-		<a href="#" class="btn btn-primary d-sm-none btn-icon" >
+		<a href="" class="btn btn-primary d-sm-none btn-icon" >
 			<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-category"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4h6v6h-6z" /><path d="M14 4h6v6h-6z" /><path d="M4 14h6v6h-6z" /><path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /></svg>
 		</a>       
 	</div>
@@ -75,7 +75,7 @@
 				</div>
 			</div>
 			<div class="form-label mt-1 mb-2">
-				<a href="#" class="w-100 btn-resetfilter">
+				<a href="" class="w-100 btn-resetfilter">
 					Reset to defaults
 				</a>
 			</div>
@@ -248,7 +248,7 @@
 																			</div>	
 																			<div class="col-auto">
 																				<div class="badges">
-																					<a href="#" class="text-green fw-bold">+ Rp. {{ number_format(floatval($item['jumlah']), 0, ',', '.') }}</a>
+																					<a href="" class="text-green fw-bold">+ Rp. {{ number_format(floatval($item['jumlah']), 0, ',', '.') }}</a>
 																				</div>
 																			</div>
 																			<div class="col-auto">
@@ -259,7 +259,7 @@
 																						</span>
 																					</a>
 																					<div class="dropdown-menu">
-																						<a class="dropdown-item edit-btn" href="https://tabler.io/docs" 
+																						<a class="dropdown-item edit-btn" href="" 
 																							data-bs-toggle="modal" 
 																							data-bs-target="#modal-edit{{$item['id']}}"
 																							data-id="{{$item['id']}}" 
@@ -270,7 +270,7 @@
 																							data-catatan="{{$item['catatan']}}">
 																							Edit
 																						</a>
-																						<a class="dropdown-item delete-btn" href="./changelog.html"
+																						<a class="dropdown-item delete-btn" href=""
 																							data-bs-toggle="modal"
 																							data-bs-target="#modal-danger{{$item['id']}}" 
 																							data-id="{{$item['id']}}" 
@@ -326,7 +326,7 @@
 																			</div>	
 																			<div class="col-auto">
 																				<div class="badges">
-																					<a href="#" class="text-red fw-bold">- Rp. {{ number_format(abs(floatval($item['jumlah'])), 0, ',', '.') }}</a>
+																					<a href="" class="text-red fw-bold">- Rp. {{ number_format(abs(floatval($item['jumlah'])), 0, ',', '.') }}</a>
 																				</div>
 																			</div>
 																			<div class="col-auto">
@@ -337,7 +337,7 @@
 																						</span>
 																					</a>
 																					<div class="dropdown-menu">
-																						<a class="dropdown-item edit-btn" href="https://tabler.io/docs" 
+																						<a class="dropdown-item edit-btn" href="" 
 																							data-bs-toggle="modal" 
 																							data-bs-target="#modal-edit{{$item['id']}}"
 																							data-id="{{$item['id']}}" 
@@ -348,7 +348,7 @@
 																							data-catatan="{{$item['catatan']}}">
 																							Edit
 																						</a>
-																						<a class="dropdown-item delete-btn" href="./changelog.html"
+																						<a class="dropdown-item delete-btn" href=""
 																							data-bs-toggle="modal"
 																							data-bs-target="#modal-danger{{$item['id']}}" 
 																							data-id="{{$item['id']}}" 
@@ -458,7 +458,7 @@
 																</div>
 															</div>
 															<div class="modal-footer">
-																<a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+																<a href="" class="btn btn-link link-secondary" data-bs-dismiss="modal">
 																	Batal
 																</a>
 																<button type="submit" class="btn btn-warning ms-auto">
@@ -488,7 +488,7 @@
 														<div class="w-100">
 															<div class="row">
 																<div class="col">
-																	<a href="#" class="btn w-100" data-bs-dismiss="modal">
+																	<a href="" class="btn w-100" data-bs-dismiss="modal">
 																		Batal
 																	</a>
 																</div>

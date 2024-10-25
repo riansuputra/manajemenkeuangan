@@ -10,11 +10,11 @@
 </div>
 <div class="col-auto ms-auto d-print-none">
 	<div class="btn-list">
-		<a href="#" class="btn btn-success d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-anggaran">
+		<a href="" class="btn btn-success d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-anggaran">
         	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
           	Tambah Anggaran
       	</a>
-		<a href="#" class="btn btn-success d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-anggaran" aria-label="Create new report">
+		<a href="" class="btn btn-success d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-anggaran" aria-label="Create new report">
 			<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
 		</a>       
 	</div>
@@ -29,16 +29,16 @@
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <a href="{{ route('anggaranWeek') }}" class="nav-link active" aria-selected="true" role="tab">Week</a>
+                            <a href="{{ route('anggaranWeek') }}" class="nav-link active" aria-selected="true" role="tab">Mingguan</a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a href="{{ route('anggaranMonth') }}" class="nav-link" aria-selected="false" role="tab" tabindex="-1">Month</a>
+                            <a href="{{ route('anggaranMonth') }}" class="nav-link" aria-selected="false" role="tab" tabindex="-1">Bulanan</a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a href="{{ route('anggaranYear') }}" class="nav-link" aria-selected="false" role="tab" tabindex="-1">Year</a>
+                            <a href="{{ route('anggaranYear') }}" class="nav-link" aria-selected="false" role="tab" tabindex="-1">Tahunan</a>
                         </li>
                         <li class="nav-item ms-auto">
-                            <a class="nav-link disabled text-muted" href="#">
+                            <a class="nav-link disabled text-muted" href="">
                                 {{$formattedDateWeek}}
                             </a>
                         </li>
@@ -49,7 +49,6 @@
                         @if(isset($combinedAnggaranData['Mingguan']))
                             @foreach($combinedAnggaranData['Mingguan'] as $data)
                                 @php
-                                    // Calculate overspend and remaining values
                                     $totalJumlah = floatval($data['total_jumlah']);
                                     $anggaran = floatval($data['anggaran']);
                                     $overspend = ($totalJumlah > $anggaran) ? ($totalJumlah - $anggaran) : 0;
@@ -58,10 +57,9 @@
                                 <div>
                                     <div class="row">
                                         <div class="col">
-                                                <p class="mb-3">{{$data['nama_kategori_pengeluaran']}}</p>
-                                                
-</div>
-<div class="col-auto">
+                                            <p class="mb-3">{{$data['nama_kategori_pengeluaran']}}</p>
+                                        </div>
+                                        <div class="col-auto">
                                             <span>
                                                 @if($data['kategori_pengeluaran']->isNotEmpty())
                                                     <strong>Rp. {{ number_format(floatval($data['total_jumlah']), 0, ',', '.') }}</strong>
@@ -75,38 +73,38 @@
                                                 @endphp
                                                 <strong class="text-end kategori-total text-muted d-none d-sm-inline-block">({{ number_format($progressPercentage, 2) }}%)</strong>
                                             </span>
-</div>
-                                            <div class="col-auto">
-                                                <div class="badges">
-																					<a class="nav-link"  data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
-																						<span class="nav-link-icon d-md-none d-lg-inline-block">
-																							<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
-																						</span>
-																					</a>
-																					<div class="dropdown-menu">
-																						<a class="dropdown-item btn-kategori" href="" 
-                                                                                        data-bs-toggle="modal" 
-                                                    data-bs-target="#modal-edit-anggaran{{$data['id']}}"
-                                                    data-id="{{ $data['id'] }}"
-                                                    data-id-kategori-pengeluaran="{{ $data['kategori_pengeluaran_id'] }}"
-                                                    data-nama="{{ $data['nama_kategori_pengeluaran'] }}"
-                                                    data-anggaran="{{ $data['anggaran'] }}"
-                                                    data-jumlah="{{ $data['total_jumlah'] }}"
-                                                    data-tersisa="{{ $remaining }}"
-                                                    data-overspend="{{ $overspend }}"
-                                                    data-periode="{{ $data['periode'] }}">
-																							Edit
-																						</a>
-																						<a class="dropdown-item btn-delete" href=""
-                                                                                        data-bs-toggle="modal" 
-                                                    data-bs-target="#modal-danger{{$data['id']}}" 
-                                                    data-nama="{{ $data['nama_kategori_pengeluaran'] }}" 
-                                                    data-id="{{$data['id']}}">
-																							Delete
-																						</a>
-																					</div>
-																				</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <div class="badges">
+                                                <a class="nav-link"  data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
+                                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
+                                                    </span>
+                                                </a>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item btn-kategori" href="" 
+                                                        data-bs-toggle="modal" 
+                                                        data-bs-target="#modal-edit-anggaran{{$data['id']}}"
+                                                        data-id="{{ $data['id'] }}"
+                                                        data-id-kategori-pengeluaran="{{ $data['kategori_pengeluaran_id'] }}"
+                                                        data-nama="{{ $data['nama_kategori_pengeluaran'] }}"
+                                                        data-anggaran="{{ $data['anggaran'] }}"
+                                                        data-jumlah="{{ $data['total_jumlah'] }}"
+                                                        data-tersisa="{{ $remaining }}"
+                                                        data-overspend="{{ $overspend }}"
+                                                        data-periode="{{ $data['periode'] }}">
+                                                        Edit
+                                                    </a>
+                                                    <a class="dropdown-item btn-delete" href=""
+                                                        data-bs-toggle="modal" 
+                                                        data-bs-target="#modal-danger{{$data['id']}}" 
+                                                        data-nama="{{ $data['nama_kategori_pengeluaran'] }}" 
+                                                        data-id="{{$data['id']}}">
+                                                        Delete
+                                                    </a>
+                                                </div>
                                             </div>
+                                        </div>
                                     </div>
                                     <div class="progress">
                                         @php
@@ -126,7 +124,6 @@
                                             </div>
                                             <form action="{{ route('updateAnggaran', ['id'=> $data['id']]) }}" method="post" autocomplete="off">
                                                 @csrf
-                                                
                                                 <div class="modal-body">
                                                     <div class="row mb-2">
                                                         <div class="col-lg-4">
@@ -210,7 +207,7 @@
                                                 <div class="w-100">
                                                     <div class="row">
                                                         <div class="col">
-                                                            <a href="#" class="btn w-100" data-bs-dismiss="modal">
+                                                            <a href="" class="btn w-100" data-bs-dismiss="modal">
                                                                 Batal
                                                             </a>
                                                         </div>
@@ -240,7 +237,6 @@
                             <span id="inlimit">In limit</span>
                             <span class="d-none d-md-inline d-lg-none d-xxl-inline ms-2 text-muted"></span>
                         </div>
-
                         <div class="col-auto d-flex align-items-center ps-2" >
                             <span class="legend me-2 bg-danger" id="overspend"></span>
                             <span id="overspend">Overspend</span>
@@ -301,7 +297,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+                    <a href="" class="btn btn-link link-secondary" data-bs-dismiss="modal">
                         Batal
                     </a>
                     <button type="submit" class="btn btn-success ms-auto">

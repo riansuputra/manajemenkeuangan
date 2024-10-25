@@ -97,9 +97,6 @@ class AuthController extends Controller
 
     public function dashboardPage(Request $request)
     {
-        // $res = Parent::getDataLogin($request);
-        // dd($res);
-
         return view('dashboard.index', [
             'auth' => $request->auth,
         ]);
@@ -126,9 +123,4 @@ class AuthController extends Controller
             return back()->with('error', 'Gagal keluar');
         }
     }
-
-
-    
-    
-
 }

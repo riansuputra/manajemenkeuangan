@@ -12,11 +12,13 @@ use Illuminate\Http\Client\Pool;
 
 class CatatanController extends Controller
 {
-    public function indextest() {
+    public function indextest() 
+    {
         return view('catatan.indextest');
     }
 
-    private function getHeaders($request) {
+    private function getHeaders($request) 
+    {
         return [
             'Accept' => 'application/json',
             'x-api-key' => env('API_KEY'),
@@ -25,7 +27,8 @@ class CatatanController extends Controller
         ];
     }
 
-    public function index(Request $request) {
+    public function index(Request $request) 
+    {
         $jenisFilter = session('jenisFilter', 'Kisaran');
         $filterValue = session('filterValue', ($jenisFilter == 'Kisaran') ? 'semuaHari' : null);
         $filterValue2 = session('filterValue2');
@@ -85,7 +88,8 @@ class CatatanController extends Controller
         }
     }
 
-    private function applyDateFilters($data, $jenisFilter, $filterValue, $filterValue2 = null) {
+    private function applyDateFilters($data, $jenisFilter, $filterValue, $filterValue2 = null) 
+    {
         $startDate = null;
         $endDate = null;
         switch ($jenisFilter) {
@@ -194,9 +198,6 @@ class CatatanController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         //
@@ -241,25 +242,16 @@ class CatatanController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $jenisedit2 = $request->input('jenisedit2'.$id);
@@ -354,9 +346,6 @@ class CatatanController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Request $request, string $id)
     {
         $apiUrlPemasukan = env('API_URL').'/pemasukan/'.$id;
