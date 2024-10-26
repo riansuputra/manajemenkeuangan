@@ -42,7 +42,7 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
-            <h1 class="navbar-brand navbar-brand-autodark text-muted d-none-navbar-horizontal pe-0 pe-md-3">
+            <h1 class="navbar-brand navbar-brand-autodark text-black d-none-navbar-horizontal pe-0 pe-md-3">
 						<a href=".">
 							<img src="{{ asset('img\logo_new.png') }}" width="110" height="32" alt="Tabler" class="navbar-brand-image pe-1">
 						</a>
@@ -149,8 +149,8 @@
                 			<a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
                   				<span class="avatar avatar-sm" style="background-image: url(./static/avatars/000m.jpg)"></span>
                   				<div class="d-none d-xl-block ps-2">
-                    				<div>{{$user['name']}}</div>
-                    				<div class="mt-1 small text-muted">{{$user['email']}}</div>
+								  <div>user['name']</div>
+								  <div class="mt-1 small text-muted">user['email']</div>
                   				</div>
                 			</a>
                 			<div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -207,20 +207,15 @@
                           <!-- <a class="dropdown-item" href="{{ url('/pinjaman') }}">
                             Simulasi Bunga Anuitas
                           </a> -->
-						  <a class="dropdown-item" href="{{ url('/pinjaman-bunga-efektif') }}">
-							  Simulasi Bunga Efektif
-							</a>
-							<!-- <a class="dropdown-item" href="{{ url('/pinjaman-bunga-floating') }}">
-								Simulasi Bunga Floating
-							</a> -->
-							<a class="dropdown-item" href="{{ url('/pinjaman-bunga-tetap') }}">
-							  Simulasi Bunga Tetap
-							</a>
 
-              <a class="dropdown-item" href="#sidebar-error">
+              			<a class="dropdown-item" href="{{ url('/pinjaman-bunga-tetap') }}">
                             <!-- Download SVG icon from http://tabler-icons.io/i/file-minus -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M14 3v4a1 1 0 0 0 1 1h4"></path><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"></path><path d="M9 14l6 0"></path></svg>
-                            Error pages
+                            Keuangan
+                          </a>
+
+						  <a class="dropdown-item" href="{{ url('/pinjaman-bunga-tetap') }}">
+                            <!-- Download SVG icon from http://tabler-icons.io/i/file-minus -->
+                            Umum
                           </a>
 
 
@@ -405,7 +400,7 @@
 				<div class="mb-3">
 					<a href="." class="navbar-brand navbar-brand-autodark"><img src="{{ asset('img\logo_new.png') }}" height="100" alt=""></a>
 				</div>
-				<div class="text-muted mb-3">Loading . . . . . </div>
+				<div class="text-muted mb-3">Loading</div>
 				<div class="progress progress-sm">
 					<div class="progress-bar progress-bar-indeterminate"></div>
 				</div>
@@ -522,7 +517,6 @@
 	
 	<!-- End of Modal Edit Catatan -->
     <!-- Libs JS -->
-    <script src="{{ asset('libs/apexcharts/dist/apexcharts.min.js?1684106062') }}" defer></script>
     <!-- Tabler Core -->
     <script src="{{ asset('js/tabler.min.js?1684106062') }}" defer></script>
 	<script>

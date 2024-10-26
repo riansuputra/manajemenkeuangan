@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AnggaranController;
 use App\Http\Controllers\AnggaranControllertes;
 use App\Http\Controllers\CatatanController;
+use App\Http\Controllers\CatatanUmumController;
 use App\Http\Controllers\PortofolioController;
 use App\Http\Controllers\PinjamanController;
 use App\Http\Controllers\PengaturanController;
@@ -59,6 +60,14 @@ Route::middleware([App\Http\Middleware\UserMiddleware::class])->group(function()
     Route::post('/update-catatan/{id}', [CatatanController::class, 'update'])->name('updateCatatan');
     Route::post('/delete-catatan/{id}', [CatatanController::class, 'destroy'])->name('hapusCatatan');
 
+    Route::get('/catatan-umum', [CatatanUmumController::class, 'index'])->name('catatanUmum');
+    Route::get('/tambah-catatan-umum', [CatatanUmumController::class, 'create'])->name('tambahCatatanUmum');
+    Route::post('/catatan-umum', [CatatanUmumController::class, 'store'])->name('simpanCatatanUmum');
+    Route::get('/catatan-umum/{id}', [CatatanUmumController::class, 'show'])->name('detailCatatanUmum');
+    Route::get('/catatan-umum/{catatan}', [CatatanUmumController::class, 'edit'])->name('hapusCatatanUmum');
+    Route::post('/update-catatan-umum/{id}', [CatatanUmumController::class, 'update'])->name('updateCatatanUmum');
+    Route::post('/delete-catatan-umum/{id}', [CatatanUmumController::class, 'destroy'])->name('hapusCatatanUmum');
+
     Route::get('/anggaran-mingguan', [AnggaranController::class, 'index'])->name('anggaranWeek')->defaults('view', 'week');
     Route::get('/anggaran-bulanan', [AnggaranController::class, 'index'])->name('anggaranMonth')->defaults('view', 'month');
     Route::get('/anggaran-tahunan', [AnggaranController::class, 'index'])->name('anggaranYear')->defaults('view', 'year');
@@ -66,12 +75,10 @@ Route::middleware([App\Http\Middleware\UserMiddleware::class])->group(function()
     Route::post('/update-anggaran/{id}', [AnggaranController::class, 'update'])->name('updateAnggaran');
     Route::post('/delete-anggaran/{id}', [AnggaranController::class, 'destroy'])->name('hapusAnggaran');
 
-
     Route::get('/investasi-lumpsum', [InvestasiController::class, 'lumpsum'])->name('investasi-lumpsum');
     Route::get('/investasi-bulanan', [InvestasiController::class, 'bulanan'])->name('investasi-bulanan');
     Route::get('/investasi-target-lumpsum', [InvestasiController::class, 'targetLumpsum'])->name('investasi-target-lumpsum');
     Route::get('/investasi-target-bulanan', [InvestasiController::class, 'targetBulanan'])->name('investasi-target-bulanan');
-
 
     Route::get('/pinjaman', [PinjamanController::class, 'index'])->name('pinjaman');
     Route::get('/pinjaman-bunga-tetap', [PinjamanController::class, 'bungaTetap'])->name('bungaTetap');
@@ -95,6 +102,6 @@ Route::middleware([App\Http\Middleware\UserMiddleware::class])->group(function()
 
 });
 
-// Route::get('/test', function () {
-//     return view('layouts.adminkit');
-// });
+Route::get('/test', function () {
+    return view('catatan.indexUmum');
+});

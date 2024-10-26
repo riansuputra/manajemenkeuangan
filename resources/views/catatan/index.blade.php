@@ -1,11 +1,11 @@
 @extends('layouts.tabler')
 
-@section('title', 'Catatan')
+@section('title', 'Catatan Keuangan')
 
 @section('page-title')
 <div class="col">
 	<h2 class="page-title">
-        Catatan
+        Catatan Keuangan
     </h2>
 </div>
 <div class="col-auto ms-auto d-print-none">
