@@ -12,11 +12,6 @@ use Illuminate\Http\Client\Pool;
 
 class CatatanController extends Controller
 {
-    public function indextest() 
-    {
-        return view('catatan.indextest');
-    }
-
     private function getHeaders($request) 
     {
         return [

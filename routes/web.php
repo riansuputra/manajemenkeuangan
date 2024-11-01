@@ -12,6 +12,7 @@ use App\Http\Controllers\PengaturanController;
 use App\Http\Controllers\InvestasiController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LanguageController;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 Route::middleware([App\Http\Middleware\GuestMiddleware::class])->group(function()
 {
@@ -51,17 +52,15 @@ Route::middleware([App\Http\Middleware\AdminMiddleware::class])->group(function(
 Route::middleware([App\Http\Middleware\UserMiddleware::class])->group(function()
 {
 
-    Route::get('/catatan', [CatatanController::class, 'index'])->name('catatanHarian');
-    Route::get('/create', [CatatanController::class, 'create'])->name('tambah-catatan');
-    Route::post('/catatan', [CatatanController::class, 'store'])->name('catatan');
+    Route::get('/catatan-keuangan', [CatatanController::class, 'index'])->name('catatanHarian');
+    Route::post('/catatan-keuangan', [CatatanController::class, 'store'])->name('catatan');
     Route::post('/catatan-filter',[CatatanController::class,'filter'])->name('catatan-filter');
-    Route::get('/catatan/{id}', [CatatanController::class, 'show'])->name('detailCatatan');
-    Route::get('/catatan/{catatan}', [CatatanController::class, 'edit'])->name('hapus-catatan');
-    Route::post('/update-catatan/{id}', [CatatanController::class, 'update'])->name('updateCatatan');
-    Route::post('/delete-catatan/{id}', [CatatanController::class, 'destroy'])->name('hapusCatatan');
+    Route::get('/catatan-keuangan/{id}', [CatatanController::class, 'show'])->name('detailCatatan');
+    Route::get('/catatan-keuangan/{catatan}', [CatatanController::class, 'edit'])->name('hapus-catatan');
+    Route::post('/update-catatan-keuangan/{id}', [CatatanController::class, 'update'])->name('updateCatatan');
+    Route::post('/delete-catatan-keuangan/{id}', [CatatanController::class, 'destroy'])->name('hapusCatatan');
 
     Route::get('/catatan-umum', [CatatanUmumController::class, 'index'])->name('catatanUmum');
-    Route::get('/tambah-catatan-umum', [CatatanUmumController::class, 'create'])->name('tambahCatatanUmum');
     Route::post('/catatan-umum', [CatatanUmumController::class, 'store'])->name('simpanCatatanUmum');
     Route::get('/catatan-umum/{id}', [CatatanUmumController::class, 'show'])->name('detailCatatanUmum');
     Route::get('/catatan-umum/{catatan}', [CatatanUmumController::class, 'edit'])->name('hapusCatatanUmum');
@@ -99,7 +98,6 @@ Route::middleware([App\Http\Middleware\UserMiddleware::class])->group(function()
     Route::get('/portofolio-test', [PortofolioController::class, 'create'])->name('portofolio-historis');
     Route::get('/portofolio-testing', [PortofolioController::class, 'make'])->name('portofolio-historis');
     Route::get('/histori', [PortofolioController::class, 'histori'])->name('portofolio-historis');
-
 });
 
 Route::get('/test', function () {

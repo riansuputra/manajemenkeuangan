@@ -39,9 +39,7 @@ class CatatanUmumController extends Controller
 
     public function create(Request $request)
     {
-        return view('catatan.addUmum', [
-            'user' => $request->auth['user'],
-        ]);
+        //
     }
 
     public function store(Request $request)

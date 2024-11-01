@@ -4,24 +4,44 @@
 
 @section('page-title')
 <div class="col">
-    <h2 class="page-title">
-        Portofolio
-    </h2>
+    <h2 class="page-title">Portofolio</h2>
+    <div class="text-muted mt-1">Tahun 2024</div>
+</div>
+<div class="col-auto d-print-none" >
+	<form class="row"id="filterForm" action="{{ route('dashboard-filter') }}" method="POST">
+		@csrf
+		<div class="col-auto d-print-none input-group">
+            <select class="form-select" name="jenisFilter" id="jenisFilter">
+				<option value="Kisaran" {{ 'test' == 'Kisaran' ? 'selected' : '' }}>2024</option>
+			</select>
+            <div class="col-auto d-print-none" name="btnFilter" id="btnFilter">
+                <button type="submit" class="btn pe-1">
+                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-filter-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11.18 20.274l-2.18 .726v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414v3" /><path d="M15 19l2 2l4 -4" /></svg>
+                </button>
+            </div>
+        </div>
+	</form>
 </div>
 <div class="col-auto ms-auto d-print-none">
 	<div class="btn-list">
-        <a href="#" class="btn btn-primary d-none d-sm-inline-block">
+        <a href="" class="btn btn-tabler d-none d-sm-inline-block pe-1" aria-label="Tabler">
             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-refresh"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" /><path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" /></svg>
-            Refresh
-		</a>
-        <a href="#" class="btn btn-primary d-sm-none btn-icon">
+        </a>
+        <a href="" class="btn btn-primary d-sm-none btn-icon">
             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-refresh"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" /><path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" /></svg>
 		</a>    
-		<a href="#" class="btn btn-success d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-portofolio">
+		<a href="" class="btn btn-success d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-portofolio">
         	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-          	Tambah
+          	Transaksi
       	</a>
-        <a href="#" class="btn btn-success d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-portofolio" aria-label="Create new report">
+        <a href="" class="btn btn-success d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-portofolio" aria-label="Create new report">
+			<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+		</a>
+        <a href="" class="btn btn-danger d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-portofolio">
+        	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+          	Top Up
+      	</a>
+        <a href="" class="btn btn-danger d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-portofolio" aria-label="Create new report">
 			<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
 		</a> 
 	</div>
@@ -31,95 +51,51 @@
 @section('content')
 <div class="container-xl">
     <div class="row justify-content-between">
-        <div class="col-lg-4">
-            <div class="card bg-azure text-white">
+        <div class="col-lg-6 text-center">
+            <div class="card bg-primary-lt">
                 <div class="card-body pb-0 mb-0">
                     <div class="row">
-                        <div class="col-6">
-                            <h4>Valuasi Saat Ini :</h4>
+                        <div class="col-3">
+                            <h5 class="mt-0 mb-0 pt-0 pb-2">Harga Unit :</h5>
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">1000</h5>
                         </div>
-                        <div class="col-6">
-                            <input type="text" class="form-control pb-0 pt-0" style="padding-left:0.25rem; padding-right:0.25rem" autocomplete="off" disabled>
+                        <div class="col-3">
+                            <h5 class="mt-0 mb-0 pt-0 pb-2">Jumlah/Unit :</h5>
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">1000</h5>
                         </div>
-                        
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <h4>Modal :</h4>
+                        <div class="col-3">
+                            <h5 class="mt-0 mb-0 pt-0 pb-2">Valuation :</h5>
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">1000</h5>
                         </div>
-                        <div class="col-6">
-                            <input type="text" class="form-control pb-0 pt-0" style="padding-left:0.25rem; padding-right:0.25rem" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <h4>Yield :</h4>
-                        </div>
-                        <div class="col-6">
-                            <input type="text" class="form-control pb-0 pt-0" style="padding-left:0.25rem; padding-right:0.25rem" autocomplete="off" disabled>
+                        <div class="col-3">
+                            <h5 class="mt-0 mb-0 pt-0 pb-2">Equity :</h5>   
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">1000</h5>   
                         </div>
                         
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-4">
-            <div class="card bg-azure text-white">
+        <div class="col-lg-6 text-center">
+            <div class="card bg-teal-lt">
                 <div class="card-body pb-0 mb-0">
                     <div class="row">
-                        <div class="col-6">
-                            <h4>Harga Unit Awal :</h4>
+                        <div class="col-3">
+                            <h5 class="mt-0 mb-0 pt-0 pb-2">IHSG Start </h5>
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">1000
+                            </h5>
                         </div>
-                        <div class="col-6">
-                            <input type="text" class="form-control pb-0 pt-0" style="padding-left:0.25rem; padding-right:0.25rem" autocomplete="off" disabled>
+                        <div class="col-3">
+                            <h5 class="mt-0 mb-0 pt-0 pb-2">IHSG End :</h5>
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">1000</h5>
                         </div>
-                        
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <h4>Harga Unit Saat Ini :</h4>
+                        <div class="col-3">
+                            <h5 class="mt-0 mb-0 pt-0 pb-2">Yield IHSG :</h5>
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">1000</h5>
                         </div>
-                        <div class="col-6">
-                            <input type="text" class="form-control pb-0 pt-0" style="padding-left:0.25rem; padding-right:0.25rem" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <h4>Jumlah Unit Penyertaan :</h4>
-                        </div>
-                        <div class="col-6">
-                            <input type="text" class="form-control pb-0 pt-0" style="padding-left:0.25rem; padding-right:0.25rem" autocomplete="off" disabled>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="card bg-azure text-white">
-                <div class="card-body pb-0 mb-0">
-                    <div class="row">
-                        <div class="col-6">
-                            <h4>IHSG Start :</h4>
-                        </div>
-                        <div class="col-6">
-                            <input type="text" class="form-control pb-0 pt-0" style="padding-left:0.25rem; padding-right:0.25rem" autocomplete="off" disabled>
-                        </div>
-                        
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <h4>IHSG End :</h4>
-                        </div>
-                        <div class="col-6">
-                            <input type="text" class="form-control pb-0 pt-0" style="padding-left:0.25rem; padding-right:0.25rem" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <h4>Yield IHSG :</h4>
-                        </div>
-                        <div class="col-6">
-                            <input type="text" class="form-control pb-0 pt-0" style="padding-left:0.25rem; padding-right:0.25rem" autocomplete="off" disabled>
+                        <div class="col-3">
+                            <h5 class="mt-0 mb-0 pt-0 pb-2">Yield :</h5>   
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">1000</h5>   
                         </div>
                         
                     </div>
