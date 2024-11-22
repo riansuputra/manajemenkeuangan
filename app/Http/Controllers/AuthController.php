@@ -81,7 +81,7 @@ class AuthController extends Controller
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'x-api-key' => env('API_KEY')
-        ])->post(env('API_URL')."/login-admin", $input);
+        ])->post(env('API_URL')."/admin/login", $input);
 
         if ($response->status() == 200) {
             Cookie::queue('auth', serialize($response['auth']));
@@ -109,7 +109,7 @@ class AuthController extends Controller
             'x-api-key' => env('API_KEY'),
             'Authorization' => 'Bearer '. $request->auth['token'],
             'user-type' => $request->auth['user_type'],
-        ])->get(env('API_URL')."/logout-user");
+        ])->get(env('API_URL')."/logout");
 
         Cookie::expire('auth');
 

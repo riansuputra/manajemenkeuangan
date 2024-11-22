@@ -23,9 +23,20 @@ class AdminController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('layouts.admin');
+        // dd($request->auth['admin']);
+        return view('layouts.admin', [
+            'admin' => $request->auth['admin'],
+        ]);
+    }
+
+    public function dashboard(Request $request)
+    {
+        // dd($request->auth['admin']);
+        return view('admin.dashboard.index', [
+            'admin' => $request->auth['admin'],
+        ]);
     }
 
     /**
@@ -37,13 +48,13 @@ class AdminController extends Controller
         // dd($request->auth['user_type']);
 
         $responses = Http::pool(fn (Pool $pool) => [
-            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/category-requests-admin'),
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/permintaan-kategori-admin'),
         ]);
 
         // dd($responses);
     
         if ($responses[0]->successful()) {
-            $categoryRequestData = collect($responses[0]->json()['data']['categoryRequest'])
+            $categoryRequestData = collect($responses[0]->json()['data']['PermintaanKategori'])
                         ->sortByDesc('created_at')
                         ->values()
                         ->all();
@@ -51,6 +62,8 @@ class AdminController extends Controller
             // dd($categoryRequestData);
 
             return view('admin.kategori.index', [
+            'admin' => $request->auth['admin'],
+
                 'categoryRequestData' => $categoryRequestData,
             ]);
         } else {

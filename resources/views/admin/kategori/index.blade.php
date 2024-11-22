@@ -5,10 +5,10 @@
 @section('page-title')
 <div class="col">
     <div class="page-pretitle">
-        Categories
+        Admin
     </div>
     <h2 class="page-title">
-        Category Requests
+        Permintaan Kategori
     </h2>
 </div>
 @endsection
@@ -39,10 +39,10 @@
                                 <div class="font-weight-medium">{{$data['nama_kategori']}}</div>
                           	</td>
 							<td >
-								@if($data['category_type'] == 'pengeluaran')
-									<div class="text-red text-strong">Expense</div>
+								@if($data['tipe_kategori'] == 'pengeluaran')
+									<div class="text-red text-strong">Pengeluaran</div>
 								@else
-									<div class="text-green text-strong">Income</div>
+									<div class="text-green text-strong">Pemasukan</div>
 								@endif
 							</td>
 							<td>
@@ -73,39 +73,39 @@
 								</td>
 							@endif
 							<td class="text-muted" >
-								@if($data['status'] == 'Pending')
+								@if($data['status'] == 'pending')
 									<span class="badge bg-warning me-2"></span>{{$data['status']}}
-								@elseif($data['status'] == 'Rejected')
+								@elseif($data['status'] == 'rejected')
 									<span class="badge bg-danger me-2"></span>{{$data['status']}}
-								@elseif($data['status'] == 'Approved')
+								@elseif($data['status'] == 'approved')
 									<span class="badge bg-success me-2"></span>{{$data['status']}}
 								@endif
 							</td>
 							<td class="w-1">
 								<div class="btn-list flex-nowrap">
-									@if($data['status'] == 'Pending')
-									<form action="{{ route('categoryApprove', ['id'=> $data['id_category_request']]) }}" method="post" autocomplete="off">
+									@if($data['status'] == 'pending')
+									<form action="{{ route('categoryApprove', ['id'=> $data['id']]) }}" method="post" autocomplete="off">
                 						@csrf
-										<input type="text" id="id" name="id" value="{{ $data['id_category_request'] }}" hidden>
+										<input type="text" id="id" name="id" value="{{ $data['id'] }}" hidden>
 										<button type="submit" class="btn btn-outline-success btn-icon">
 											<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg>
 										</button>
 									</form>
-									<form action="{{ route('categoryReject', ['id'=> $data['id_category_request']]) }}" method="post" autocomplete="off">
+									<form action="{{ route('categoryReject', ['id'=> $data['id']]) }}" method="post" autocomplete="off">
 										@csrf
-										<input type="text" id="id" name="id" value="{{ $data['id_category_request'] }}" hidden>
+										<input type="text" id="id" name="id" value="{{ $data['id'] }}" hidden>
 										<button type="submit" class="btn btn-outline-danger btn-icon">
 											<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg>
 										</button>
 									</form>
-									@elseif($data['status'] == 'Rejected')
+									@elseif($data['status'] == 'rejected')
 										<button href="#" class="btn btn-outline-success btn-icon" disabled>
 											<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg>
 										</button>
 										<button href="#" class="btn btn-danger btn-icon" disabled>
 											<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg>
 										</button>
-									@elseif($data['status'] == 'Approved')
+									@elseif($data['status'] == 'approved')
 										<button href="#" class="btn btn-success btn-icon" disabled>
 											<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg>
 										</button>

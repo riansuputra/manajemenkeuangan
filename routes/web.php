@@ -43,6 +43,7 @@ Route::middleware([App\Http\Middleware\AdminMiddleware::class])->group(function(
 {
     
     Route::get('/admin', [AdminController::class, 'index'])->name('admin-layout');
+    Route::get('/dashboard-admin', [AdminController::class, 'dashboard'])->name('admin-dashboard');
 
     Route::get('/categories-request', [AdminController::class, 'categoryRequests'])->name('categoryRequests');
     Route::post('/category-requests/{id}/approve', [AdminController::class, 'approve'])->name('categoryApprove');

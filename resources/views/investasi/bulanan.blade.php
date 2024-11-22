@@ -68,6 +68,9 @@
                                                             Detail
                                                         </button>
                                                     </div>
+
+                <button type="button" id="printModalToPdf" class="btn btn-primary">Cetak ke PDF</button>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -498,26 +501,127 @@
             document.getElementById('jmhtahun4').textContent = '0 Tahun';
             document.getElementById('persentasebunga4').textContent = '0%';
             document.getElementById('nilai1').textContent = 'Rp. 0';
+            document.getElementById('nilaitotal').textContent = 'Rp. 0';
             document.getElementById('totalnilai1').textContent = 'Rp. 0';
 
             const modalTableBody = document.getElementById('modalTableBody');
             modalTableBody.innerHTML = '';
         }
 
-        document.getElementById('printModalToPdf').addEventListener('click', function() {
+        document.getElementById('printModalToPdf').addEventListener('click', function () {
             console.log("Button clicked");
-                const docDefinition = {
-                    content: [
-                        'Investasi Bulanan Detail',
-                        { text: 'Dana Awal: Rp. 100,000', margin: [0, 10] },
-                        { text: 'Jangka Waktu: 5 Tahun', margin: [0, 10] },
-                        { text: 'Persentase Bunga: 10%', margin: [0, 10] },
-                        { text: 'Nilai Investasi: Rp. 150,000', margin: [0, 10] },
-                        { text: 'Total Nilai: Rp. 250,000', margin: [0, 10] }
-                    ]
-                };
 
-                pdfMake.createPdf(docDefinition).download('investasi-bulanan.pdf');
+            const awaldana4 = document.getElementById('awaldana4').textContent.trim();
+            const jmhtahun4 = document.getElementById('jmhtahun4').textContent.trim();
+            const persentasebunga4 = document.getElementById('persentasebunga4').textContent.trim();
+            const nilai1 = document.getElementById('nilai1').textContent.trim();
+            const nilaitotal = document.getElementById('nilaitotal').textContent.trim();
+            const totalnilai1 = document.getElementById('totalnilai1').textContent.trim();
+
+            const summaryData = [
+                ': ' + awaldana4,
+                ': ' + jmhtahun4,
+                ': ' + persentasebunga4,
+                ': ' + nilaitotal,
+                ': ' + nilai1,
+                ': ' + totalnilai1 + '\n\n',
+            ];
+            
+            const modalTableBody = document.getElementById('modalTableBody');
+            const tableRows = Array.from(modalTableBody.querySelectorAll('tr'));
+            
+            const pdfTableBody = [
+                [{ text: 'Bulan', style: 'tableHeader' }, { text: 'Investasi', style: 'tableHeader' }, { text: 'Nilai Investasi', style: 'tableHeader' }]
+            ];
+            
+            tableRows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                pdfTableBody.push([
+                    cells[0].textContent, // Tahun
+                    cells[1].textContent, // Investasi
+                    cells[2].textContent  // Nilai Investasi
+                ]);
+            });
+            
+            const docDefinition = {
+                content: [
+                    {
+                        alignment: 'justify',
+                        columns: [
+                            {
+                                text: ['Rian Suputra\n', { text: 'rian@gmail.com', bold: false, color: 'gray' }],
+                                bold: true
+                            },
+                            {
+                                text: ['10/11/2024\nSmart Finance'],
+                                style: ['alignRight'],
+                                color: 'gray',
+                            }
+                        ]
+                    },
+                    {
+                        text: '\nSimulasi Investasi Bulanan\n\n',
+                        style: 'header',
+                        alignment: 'center'
+                    },
+                    {
+                        columns: [
+                            {
+                                stack: [
+                                    {
+                                        ul: [
+                                            'Dana Bulanan',
+                                            'Jangka Waktu',
+                                            'Persentase Bunga',
+                                            'Total Dana',
+                                            'Nilai Investasi',
+                                            'Total Nilai',
+                                        ]
+                                    },
+                                ]
+                            },
+                            {
+                                stack: summaryData,
+                            },
+                            '',
+                            '',
+                        ]
+                    },
+                    {
+                        style: 'tableExample',
+                        table: {
+                            headerRows: 1,
+                            widths: [50, '*', '*'], // Adjust column widths
+                            body: pdfTableBody // Use the dynamically generated rows
+                        },
+                        alignment: 'center',
+                    },
+                ],
+                styles: {
+                    header: {
+                        fontSize: 18,
+                        bold: true,
+                        alignment: 'justify',
+                    },
+                    alignRight: {
+                        alignment: 'right'
+                    },
+                    tableExample: {
+                        margin: [0, 5, 0, 15]
+                    },
+                    tableHeader: {
+                        bold: true,
+                        fontSize: 12,
+                        color: 'black'
+                    }
+                },
+                defaultStyle: {
+                    columnGap: 20
+                }
+            };
+            
+            // Generate and open the PDF
+            pdfMake.createPdf(docDefinition).open();
         });
 
         createOrUpdateChart();

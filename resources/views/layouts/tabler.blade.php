@@ -25,6 +25,8 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.12/pdfmake.min.js" integrity="sha512-axXaF5grZBaYl7qiM6OMHgsgVXdSLxqq0w7F4CQxuFyrcPmn0JfnqsOtYHUun80g6mRRdvJDrTCyL8LQqBOt/Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.12/vfs_fonts.js" integrity="sha512-nNkHPz+lD0Wf0eFGO0ZDxr+lWiFalFutgVeGkPdVgrG4eXDYUnhfEj9Zmg1QkrJFLC0tGs8ZExyU/1mjs4j93w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 	
 </head>
@@ -149,8 +151,9 @@
                 			<a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
                   				<span class="avatar avatar-sm" style="background-image: url(./static/avatars/000m.jpg)"></span>
                   				<div class="d-none d-xl-block ps-2">
-								  <div class="text-white">user['name']</div>
-								  <div class="mt-1 small text-white">user['email']</div>
+                            <!-- user['name'] -->
+								  <div class="text-white">Yansu</div>
+								  <div class="mt-1 small text-white">yansu@gmail.com</div>
                   				</div>
                 			</a>
                 			<div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
