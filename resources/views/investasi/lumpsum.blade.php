@@ -14,133 +14,130 @@
 @endsection
 
 @section('content')
-
 <div class="container-xl">
-			
-                        <div class="row row-cards">
-                            <div class="col-md-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-xl-12">
-                                                <div class="mb-3">
-                                                    <label class="form-label">Dana Investasi Awal : </label>
-                                                    <div class="input-group">
-                                                        <span class="input-group-text">
-                                                            Rp.
-                                                        </span>
-                                                        <input type="text" id="awaldana" name="awaldana" class="form-control text-end" autocomplete="off" hidden>
-                                                        <input type="text" id="awaldana1" name="awaldana1" class="form-control text-end" autocomplete="off">
-                                                    </div>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label">Jangka Waktu Investasi : </label>
-                                                    <div class="input-group">
-                                                        <input type="number" id="jmhtahun" name="jmhtahun" class="form-control text-end" autocomplete="off">
-                                                        <span class="input-group-text">
-                                                            Tahun
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label">Persentase Bunga :</label>
-                                                    <div class="input-group">
-
-                                                        <input type="number" id="persentasebunga" name="persentasebunga" class="form-control text-end" autocomplete="off">
-                                                        <span class="input-group-text">
-                                                            %
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-3">
-                                                    <div class="col mt-3">
-                                                        <button type="button" class="btn btn-success w-100">
-                                                            Hitung
-                                                        </button>
-                                                    </div>
-                                                    <div class="col mt-3">
-                                                        <button type="button" class="btn btn-secondary w-100">
-                                                            Reset
-                                                        </button>
-                                                    </div>
-                                                    <div class="col mt-3">
-                                                        <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#modal-scrollable">
-                                                            Detail
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+    <div class="row row-cards">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="mb-3">
+                                <label class="form-label">Dana Investasi Awal : </label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        Rp.
+                                    </span>
+                                    <input type="text" id="awaldana" name="awaldana" class="form-control text-end" autocomplete="off" hidden>
+                                    <input type="text" id="awaldana1" name="awaldana1" class="form-control text-end" autocomplete="off">
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="card" style="min-height: 342px;">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-xl-12">
-                                                <div class="mb-3">
-                                                    <h3 class="text-center text-bold">Hasil Perhitungan</h3>
-                                                    <div class="table-responsive">
-                                                        <table class="table table-vcenter table-borderless card-table">
-                                                            <thead>
-                                                                <tr hidden>
-                                                                    <th></th>
-                                                                    <th></th>
-                                                                    <th></th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr style="height:2.93rem;">
-                                                                    <td style="width:45%;">Dana Awal</td>
-                                                                    <td style="width:5%;">:</td>
-                                                                    <td style="width:%" class="text-end" id="awaldana2">Rp. 0</td>
-                                                                </tr>
-                                                                <td style="width:%" class="text-end" id="awaldana3" hidden>0</td>
-                                                                <tr style="height:2.93rem;">
-                                                                    <td style="width:45%;">Jangka Waktu</td>
-                                                                    <td style="width:5%;">:</td>
-                                                                    <td style="width:%" class="text-end" id="jmhtahun2">0 Bulan</td>
-                                                                </tr>
-                                                                <tr style="height:2.93rem;">
-                                                                    <td style="width:45%;">Persentase Bunga</td>
-                                                                    <td style="width:5%;">:</td>
-                                                                    <td style="width:%" class="text-end" id="persentasebunga1">0%</td>
-                                                                </tr>
-                                                                <tr style="height:2.93rem;">
-                                                                    <td style="width:45%;"><strong>Nilai Investasi</strong></td>
-                                                                    <td style="width:5%;">:</td>
-                                                                    <td style="width:%" class="text-end" id="nilai"><strong>Rp. 0</strong></td>
-                                                                </tr>
-                                                                <tr style="height:2.93rem;">
-                                                                    <td style="width:45%;"><strong>Total Nilai</strong></td>
-                                                                    <td style="width:5%;">:</td>
-                                                                    <td style="width:%" class="text-end" id="totalnilai"><strong>Rp. 0</strong></td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div class="mb-3">
+                                <label class="form-label">Jangka Waktu Investasi : </label>
+                                <div class="input-group">
+                                    <input type="number" id="jmhtahun" name="jmhtahun" class="form-control text-end" autocomplete="off">
+                                    <span class="input-group-text">
+                                        Tahun
+                                    </span>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-xl-12">
-                                                <div class="mb-3">
-                                                    <h3 class="text-center text-bold">Statistik</h3>
-                                                </div>
-                                                <div id="chart-demo-pie#3" style="min-height: 267px;"></div>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div class="mb-3">
+                                <label class="form-label">Persentase Bunga :</label>
+                                <div class="input-group">
+                                    <input type="number" id="persentasebunga" name="persentasebunga" class="form-control text-end" autocomplete="off">
+                                    <span class="input-group-text">
+                                        %
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col mt-3">
+                                    <button type="button" class="btn btn-success w-100">
+                                        Hitung
+                                    </button>
+                                </div>
+                                <div class="col mt-3">
+                                    <button type="button" class="btn btn-secondary w-100">
+                                        Reset
+                                    </button>
+                                </div>
+                                <div class="col mt-3">
+                                    <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#modal-scrollable">
+                                        Detail
+                                    </button>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card" style="min-height: 342px;">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="mb-3">
+                                <h3 class="text-center text-bold">Hasil Perhitungan</h3>
+                                <div class="table-responsive">
+                                    <table class="table table-vcenter table-borderless card-table">
+                                        <thead>
+                                            <tr hidden>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr style="height:2.93rem;">
+                                                <td style="width:45%;">Dana Awal</td>
+                                                <td style="width:5%;">:</td>
+                                                <td style="width:%" class="text-end" id="awaldana2">Rp. 0</td>
+                                            </tr>
+                                            <td style="width:%" class="text-end" id="awaldana3" hidden>0</td>
+                                            <tr style="height:2.93rem;">
+                                                <td style="width:45%;">Jangka Waktu</td>
+                                                <td style="width:5%;">:</td>
+                                                <td style="width:%" class="text-end" id="jmhtahun2">0 Bulan</td>
+                                            </tr>
+                                            <tr style="height:2.93rem;">
+                                                <td style="width:45%;">Persentase Bunga</td>
+                                                <td style="width:5%;">:</td>
+                                                <td style="width:%" class="text-end" id="persentasebunga1">0%</td>
+                                            </tr>
+                                            <tr style="height:2.93rem;">
+                                                <td style="width:45%;"><strong>Nilai Investasi</strong></td>
+                                                <td style="width:5%;">:</td>
+                                                <td style="width:%" class="text-end" id="nilai"><strong>Rp. 0</strong></td>
+                                            </tr>
+                                            <tr style="height:2.93rem;">
+                                                <td style="width:45%;"><strong>Total Nilai</strong></td>
+                                                <td style="width:5%;">:</td>
+                                                <td style="width:%" class="text-end" id="totalnilai"><strong>Rp. 0</strong></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="mb-3">
+                                <h3 class="text-center text-bold">Statistik</h3>
+                            </div>
+                            <div id="chart-demo-pie#3" style="min-height: 267px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Modal Detail -->
@@ -245,9 +242,8 @@
     </div>
 </div>
 <!-- End of Modal Detail -->
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-
-
 <script>
     function updateFormattedNumber3() {
         var inputElement = document.getElementById('awaldana1');
@@ -257,34 +253,30 @@
         inputElement.setAttribute('data-value', rawValue);
         setUnformattedValueToInput3();
     }
-
     function setUnformattedValueToInput3() {
         var unformattedValue = getUnformattedValue3();
         var inputElement = document.getElementById('awaldana');
         inputElement.value = unformattedValue;
     }
-
     function getUnformattedValue3() {
         var inputElement = document.getElementById('awaldana1');
         var unformattedValue = inputElement.getAttribute('data-value') || '';
         return unformattedValue;
     }
-
     document.getElementById('awaldana1').addEventListener('input', updateFormattedNumber3);
 </script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const spinner = document.getElementById("spinner");
-    const pageContent = document.getElementById("page-content");
-    const pageTitle = document.getElementById("page-title");
+        const pageContent = document.getElementById("page-content");
+        const pageTitle = document.getElementById("page-title");
 
-    // Hide spinner and show page content when fully loaded
-    window.addEventListener("load", function() {
-        spinner.style.display = "none";
-        pageContent.style.display = "block";
-        pageTitle.style.display = "block";
-    });
+        window.addEventListener("load", function() {
+            spinner.style.display = "none";
+            pageContent.style.display = "block";
+            pageTitle.style.display = "block";
+        });
 
         let chart = null; 
 
@@ -294,10 +286,6 @@
             awaldana = isNaN(awaldana) ? 0 : awaldana;
             const danaInvestasiAwal = awaldana;
             const nilaiInvestasi = nilai - awaldana;
-
-                        // Calculate nilaiInvestasi
-
-            // Convert to 0 if NaN
 
             document.getElementById('awaldana2').textContent = 'Rp. ' + formatNumber(awaldana);
             document.getElementById('awaldana3').textContent = awaldana;
@@ -334,7 +322,7 @@
                     opacity: 1,
                 },
                 series: chartData,
-                labels: ["Nilai Investasi", "Total Investasi"], // Switched the order
+                labels: ["Nilai Investasi", "Total Investasi"],
                 tooltip: {
                     theme: 'dark',
                     y: {
@@ -364,7 +352,7 @@
                 },
             });
 
-            chart.render(); // Render the chart
+            chart.render();
 
             const investasiLumpsumData = {
                 awaldana: awaldana || '',
@@ -394,7 +382,6 @@
             const awaldana = parseFloat(document.getElementById('awaldana').value);
             const persentasebunga = parseFloat(document.getElementById('persentasebunga').value);
             const jmhtahun = parseFloat(document.getElementById('jmhtahun').value);
-
             
             document.getElementById('awaldana4').textContent = 'Rp. ' + formatNumber(awaldana);
             
@@ -487,21 +474,125 @@
             modalTableBody.innerHTML = '';
         }
 
-        document.getElementById('printModalToPdf').addEventListener('click', function() {
+        document.getElementById('printModalToPdf').addEventListener('click', function () {
             console.log("Button clicked");
-                const docDefinition = {
-                    content: [
-                        'Investasi Lumpsum Detail',
-                        { text: 'Dana Awal: Rp. 100,000', margin: [0, 10] },
-                        { text: 'Jangka Waktu: 5 Tahun', margin: [0, 10] },
-                        { text: 'Persentase Bunga: 10%', margin: [0, 10] },
-                        { text: 'Nilai Investasi: Rp. 150,000', margin: [0, 10] },
-                        { text: 'Total Nilai: Rp. 250,000', margin: [0, 10] }
-                    ]
-                };
 
-                pdfMake.createPdf(docDefinition).download('investasi-lumpsum.pdf');
+            const userName = @json($user['name']);
+            const userEmail = @json($user['email']);
+            const currentDate = @json($date); 
+
+            const awaldana4 = document.getElementById('awaldana4').textContent.trim();
+            const jmhtahun4 = document.getElementById('jmhtahun4').textContent.trim();
+            const persentasebunga4 = document.getElementById('persentasebunga4').textContent.trim();
+            const nilai1 = document.getElementById('nilai1').textContent.trim();
+            const totalnilai1 = document.getElementById('totalnilai1').textContent.trim();
+
+            const summaryData = [
+                ': ' + awaldana4,
+                ': ' + jmhtahun4,
+                ': ' + persentasebunga4,
+                ': ' + nilai1,
+                ': ' + totalnilai1 + '\n\n',
+            ];
+            
+            const modalTableBody = document.getElementById('modalTableBody');
+            const tableRows = Array.from(modalTableBody.querySelectorAll('tr'));
+            
+            const pdfTableBody = [
+                [{ text: 'Tahun', style: 'tableHeader' }, { text: 'Investasi', style: 'tableHeader' }, { text: 'Nilai Investasi', style: 'tableHeader' }]
+            ];
+            
+            tableRows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                pdfTableBody.push([
+                    cells[0].textContent, 
+                    cells[1].textContent, 
+                    cells[2].textContent  
+                ]);
             });
+            
+            const docDefinition = {
+                content: [
+                    {
+                        alignment: 'justify',
+                        columns: [
+                            {
+                                text: [`${userName}\n`, { text: userEmail, bold: false, color: 'gray' }],
+                                bold: true
+                            },
+                            {
+                                text: [`${currentDate}\nSmart Finance`],
+                                style: ['alignRight'],
+                                color: 'gray',
+                            }
+                        ]
+                    },
+                    {
+                        text: '\nSimulasi Investasi Lumpsum\n\n',
+                        style: 'header',
+                        alignment: 'center'
+                    },
+                    {
+                        columns: [
+                            {
+                                stack: [
+                                    {
+                                        ul: [
+                                            'Dana Awal',
+                                            'Jangka Waktu',
+                                            'Persentase Bunga',
+                                            'Nilai Investasi',
+                                            'Total Nilai',
+                                        ]
+                                    },
+                                ]
+                            },
+                            {
+                                stack: summaryData,
+                            },
+                            '',
+                            '',
+                        ]
+                    },
+                    {
+                        style: 'tableExample',
+                        table: {
+                            headerRows: 1,
+                            widths: [50, '*', '*'], 
+                            body: pdfTableBody 
+                        },
+                        alignment: 'center',
+                        layout: {
+				fillColor: function (rowIndex, node, columnIndex) {
+					return (rowIndex % 2 === 0) ? '#CEEFFD' : null;
+				}
+			}
+                    },
+                ],
+                styles: {
+                    header: {
+                        fontSize: 18,
+                        bold: true,
+                        alignment: 'justify',
+                    },
+                    alignRight: {
+                        alignment: 'right'
+                    },
+                    tableExample: {
+                        margin: [0, 5, 0, 15]
+                    },
+                    tableHeader: {
+                        bold: true,
+                        fontSize: 12,
+                        color: 'black'
+                    }
+                },
+                defaultStyle: {
+                    columnGap: 20
+                }
+            };
+            pdfMake.createPdf(docDefinition).open();
+        });
 
         createOrUpdateChart();
     });

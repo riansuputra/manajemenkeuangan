@@ -8,23 +8,22 @@
         Simulasi
     </div>
     <h2 class="page-title">
-        Investasi Target
+        Investasi Bulanan
     </h2>
 </div>
 @endsection
 
 @section('content')
-
 <div class="container-xl">
 	<div class="col">
 		<div class="card">
 			<div class="card-header">
 				<ul class="nav nav-tabs card-header-tabs nav-fill" data-bs-toggle="tabs" role="tablist">
 					<li class="nav-item" role="presentation">
-						<a href="{{ route('investasi-target-lumpsum') }}" class="nav-link active" aria-selected="true" role="tab">Lumpsum</a>
+						<a href="{{ route('investasi-target-lumpsum') }}" class="nav-link" aria-selected="true" role="tab">Lumpsum</a>
 					</li>
 					<li class="nav-item" role="presentation">
-						<a href="{{ route('investasi-target-bulanan') }}" class="nav-link" aria-selected="false" role="tab" tabindex="-1">Bulanan</a>
+						<a href="{{ route('investasi-target-bulanan') }}" class="nav-link active" aria-selected="false" role="tab" tabindex="-1">Bulanan</a>
 					</li>
 				</ul>
 			</div>
@@ -127,7 +126,7 @@
                                                                     <td style="width:%" class="text-end" id="nilai"><strong>Rp. 0</strong></td>
                                                                 </tr>
                                                                 <tr style="height:2.93rem;">
-                                                                    <td style="width:45%;"><strong>Jumlah Investasi</strong></td>
+                                                                    <td style="width:45%;"><strong>Investasi Bulanan</strong></td>
                                                                     <td style="width:5%;">:</td>
                                                                     <td style="width:%" class="text-end" id="totalnilai"><strong>Rp. 0</strong></td>
                                                                 </tr>
@@ -173,7 +172,6 @@
             <div class="modal-header">
                 <div class="table-responsive">
                     <table class="table table-vcenter table-borderless card-table">
-                        
                         <tbody>
                             <tr >
                                 <td >Investasi Bulanan</td>
@@ -257,7 +255,6 @@
                                     <th class="text-center">Tahun</th>
                                     <th class="text-center">Investasi</th>
                                     <th class="text-center">Nilai Investasi</th>
-                                    <th class="text-center">Target Dana</th>
                                 </tr>
                             </thead>
                             <tbody id="modalTableBody">
@@ -274,9 +271,8 @@
     </div>
 </div>
 <!-- End of Modal Detail -->
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-
-
 <script>
     function updateFormattedNumber3() {
         var inputElement = document.getElementById('awaldana1');
@@ -286,34 +282,30 @@
         inputElement.setAttribute('data-value', rawValue);
         setUnformattedValueToInput3();
     }
-
     function setUnformattedValueToInput3() {
         var unformattedValue = getUnformattedValue3();
         var inputElement = document.getElementById('awaldana');
         inputElement.value = unformattedValue;
     }
-
     function getUnformattedValue3() {
         var inputElement = document.getElementById('awaldana1');
         var unformattedValue = inputElement.getAttribute('data-value') || '';
         return unformattedValue;
     }
-
     document.getElementById('awaldana1').addEventListener('input', updateFormattedNumber3);
 </script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const spinner = document.getElementById("spinner");
-    const pageContent = document.getElementById("page-content");
-    const pageTitle = document.getElementById("page-title");
+        const pageContent = document.getElementById("page-content");
+        const pageTitle = document.getElementById("page-title");
 
-    // Hide spinner and show page content when fully loaded
-    window.addEventListener("load", function() {
-        spinner.style.display = "none";
-        pageContent.style.display = "block";
-        pageTitle.style.display = "block";
-    });
+        window.addEventListener("load", function() {
+            spinner.style.display = "none";
+            pageContent.style.display = "block";
+            pageTitle.style.display = "block";
+        });
 
         let chart = null; 
 
@@ -323,11 +315,10 @@
             const nilai = parseFloat(calculateNilai());
             awaldana = isNaN(awaldana) ? 0 : awaldana;
 
-            
 			const months = jmhtahun * 12;
             const danaInvestasiAwal = awaldana;
             const nilaiInvestasi = nilai;
-			const totalInvestment = nilai;
+			const totalInvestment = nilai * months;
     		const estimatedReturn = awaldana - totalInvestment;
 
             document.getElementById('awaldana2').textContent = 'Rp. ' + formatNumber(awaldana);
@@ -366,7 +357,7 @@
                     opacity: 1,
                 },
                 series: chartData,
-                labels: ["Nilai Investasi", "Dana Investasi Awal"], // Switched the order
+                labels: ["Nilai Investasi", "Dana Investasi Awal"], 
                 tooltip: {
                     theme: 'dark',
                     y: {
@@ -397,9 +388,9 @@
                 
             });
 
-            chart.render(); // Render the chart
+            chart.render(); 
 
-            const investasiTargetData = {
+            const investasiTargetDataBulanan = {
                 awaldana: awaldana || '',
                 jmhtahun: document.getElementById('jmhtahun').value,
                 persentasebunga: document.getElementById('persentasebunga').value,
@@ -409,135 +400,83 @@
 				estimatedReturn: estimatedReturn
             };
 
-            localStorage.setItem('investasi-target', JSON.stringify(investasiTargetData));
+            localStorage.setItem('investasi-target-bulanan', JSON.stringify(investasiTargetDataBulanan));
         }
 
-        // function calculateNilai() {
-		// 	const awaldana = parseFloat(document.getElementById('awaldana').value);
-		// 	const jmhtahun = parseFloat(document.getElementById('jmhtahun').value);
-		// 	const persentasebunga = parseFloat(document.getElementById('persentasebunga').value);
-
-		// 	let totalMultiplier = 1.0;
-
-		// 	const monthlyInterestRate = persentasebunga / 100 / 12; // Tingkat bunga per bulan
-		// 	const months = jmhtahun * 12; // Jumlah total bulan
-
-		// 	for (let i = 0; i < months; i++) {
-		// 		totalMultiplier *= (1 + monthlyInterestRate);
-		// 	}
-
-		// 	if (!isNaN(awaldana) && !isNaN(jmhtahun) && !isNaN(persentasebunga)) {
-		// 		const nilai = awaldana / ((((totalMultiplier - 1) / monthlyInterestRate)) * (1 + monthlyInterestRate));
-		// 		return nilai.toFixed(0); // Mengembalikan nilai dengan format tanpa desimal
-		// 	} else {
-		// 		return 0;
-		// 	}
-
-		// 	const totalInvestment = nilai * months;
-		// 	const estimatedReturn = totalInvestment - awaldana;
-		// 	return totalInvestment.toFixed(0);
-		// 	return estimatedReturn.toFixed(0);
-		// }
-
         function calculateNilai() {
-    const targetDana = parseFloat(document.getElementById('awaldana').value);
-    const jmhtahun = parseFloat(document.getElementById('jmhtahun').value);
-    const persentaseBunga = parseFloat(document.getElementById('persentasebunga').value);
+            const targetValue = parseFloat(document.getElementById('awaldana').value);
+            const jmhtahun = parseFloat(document.getElementById('jmhtahun').value);
+            const persentasebunga = parseFloat(document.getElementById('persentasebunga').value);
 
-    if (!isNaN(targetDana) && !isNaN(jmhtahun) && !isNaN(persentaseBunga) && targetDana > 0 && jmhtahun > 0 && persentaseBunga > 0) {
-        // Ubah persentase bunga ke dalam bentuk desimal
-        const bungaDesimal = persentaseBunga / 100;
+            if (!isNaN(targetValue) && !isNaN(jmhtahun) && !isNaN(persentasebunga)) {
+                const monthlyInterestRate = persentasebunga / 100 / 12; 
+                const months = jmhtahun * 12; 
 
-        // Hitung jumlah investasi lumpsum yang diperlukan
-        const investasiLumpsum = targetDana / Math.pow((1 + bungaDesimal), jmhtahun);
+                const pmt = targetValue * monthlyInterestRate / (Math.pow(1 + monthlyInterestRate, months) - 1);
 
-        // Kembalikan jumlah investasi lumpsum
-        return investasiLumpsum.toFixed(2); // Mengembalikan nilai dengan dua desimal
-    } else {
-        return 0;
-    }
-}
-
-
-
-		
-
+                return pmt.toFixed(2);
+            } else {
+                return 0;
+            }
+        }
 
         function populateModalTable() {
-			const awaldana = parseFloat(document.getElementById('awaldana').value);
-			const jmhtahun = parseFloat(document.getElementById('jmhtahun').value);
-			const persentasebunga = parseFloat(document.getElementById('persentasebunga').value);
+            const targetValue = parseFloat(document.getElementById('awaldana').value);
+            const jmhtahun = parseFloat(document.getElementById('jmhtahun').value);
+            const persentasebunga = parseFloat(document.getElementById('persentasebunga').value);
             const nilai = parseFloat(calculateNilai());
-			const months = jmhtahun * 12;
-            const danaInvestasiAwal = awaldana;
-            const nilaiInvestasi = nilai;
-			const totalInvestment = nilai * months;
-    		const estimatedReturn = awaldana - totalInvestment;
-            
+            const months = jmhtahun * 12;
+            const monthlyInterestRate = persentasebunga / 100 / 12;
+
             document.getElementById('awaldana4').textContent = 'Rp. ' + formatNumber(nilai);
-            
+
             const modalTableBody = document.getElementById('modalTableBody');
             modalTableBody.innerHTML = '';
 
-            const totalYears = jmhtahun;
-            const tahunValues = Array.from({ length: totalYears }, (_, i) => i + 1);
-            
-            tahunValues.forEach(tahun => {
+            for (let month = 1; month <= months; month++) {
                 const row = document.createElement('tr');
-				const months = 12 * tahun ;
-				const investasiValue = nilai ;
 
-                
-                const tahunCell = document.createElement('td');
-                tahunCell.textContent = tahun;
-                tahunCell.classList.add('text-center');
-                row.appendChild(tahunCell);
-                
+                const monthCell = document.createElement('td');
+                monthCell.textContent = month;
+                monthCell.classList.add('text-center');
+                row.appendChild(monthCell);
+
+                const investasiValue = nilai * month;
                 const investasiCell = document.createElement('td');
-                investasiCell.textContent = formatNumber(investasiValue);
+                investasiCell.textContent = 'Rp. ' + formatNumber(investasiValue.toFixed(0));
                 investasiCell.classList.add('text-center');
                 row.appendChild(investasiCell);
-                
+
+                let totalMultiplier = 1.0;
+                for (let i = 0; i < month; i++) {
+                    totalMultiplier *= (1 + monthlyInterestRate);
+                }
+                const nilaiAkhir = nilai * ((Math.pow((1 + monthlyInterestRate), month) - 1) / monthlyInterestRate);
                 const nilaiInvestasiCell = document.createElement('td');
-				let totalMultiplier = 1.0;
-				const monthlyInterestRate = persentasebunga / 100 / 12;
-                
-				for (let i = 0; i < months; i++) {
-        			totalMultiplier *= (1 + monthlyInterestRate);
-    			}
-                const nilaiTahun = awaldana / totalMultiplier;
-                const keuntungan = awaldana - nilai;
-                nilaiInvestasiCell.textContent = 'Rp. ' + formatNumber(keuntungan.toFixed(0));
+                nilaiInvestasiCell.textContent = 'Rp. ' + formatNumber(nilaiAkhir.toFixed(0));
                 nilaiInvestasiCell.classList.add('text-center');
                 row.appendChild(nilaiInvestasiCell);
 
-                const targetDanaCell = document.createElement('td');
-
-
-                targetDanaCell.textContent = 'Rp. ' + formatNumber(awaldana.toFixed(0));
-                targetDanaCell.classList.add('text-center');
-                row.appendChild(targetDanaCell);
-                
                 modalTableBody.appendChild(row);
-            });
+            }
         }
 
         function populateFromLocalStorage() {
-            const investasiTargetData = JSON.parse(localStorage.getItem('investasi-target'));
-            if (investasiTargetData) {
-                document.getElementById('awaldana').value = investasiTargetData.awaldana || '';
-                document.getElementById('awaldana4').textContent = 'Rp. ' + formatNumber(investasiTargetData.awaldana) || '';
-                document.getElementById('awaldana1').value = formatNumber(investasiTargetData.awaldana) || '';
-                document.getElementById('jmhtahun').value = investasiTargetData.jmhtahun || '';
-                document.getElementById('persentasebunga').value = investasiTargetData.persentasebunga || '';
-                document.getElementById('awaldana2').textContent = 'Rp. ' + formatNumber(investasiTargetData.awaldana || '');
+            const investasiTargetDataBulanan = JSON.parse(localStorage.getItem('investasi-target-bulanan'));
+            if (investasiTargetDataBulanan) {
+                document.getElementById('awaldana').value = investasiTargetDataBulanan.awaldana || '';
+                document.getElementById('awaldana4').textContent = 'Rp. ' + formatNumber(investasiTargetDataBulanan.awaldana) || '';
+                document.getElementById('awaldana1').value = formatNumber(investasiTargetDataBulanan.awaldana) || '';
+                document.getElementById('jmhtahun').value = investasiTargetDataBulanan.jmhtahun || '';
+                document.getElementById('persentasebunga').value = investasiTargetDataBulanan.persentasebunga || '';
+                document.getElementById('awaldana2').textContent = 'Rp. ' + formatNumber(investasiTargetDataBulanan.awaldana || '');
 
                 createOrUpdateChart();
                 populateModalTable();
             }
         }
 
-        if (localStorage.getItem('investasi-target')) {
+        if (localStorage.getItem('investasi-target-bulanan')) {
             populateFromLocalStorage();
         }
 
@@ -547,7 +486,7 @@
         });
 
         document.querySelector('.btn-secondary').addEventListener('click', function() {
-            localStorage.removeItem('investasi-target');
+            localStorage.removeItem('investasi-target-bulanan');
             const awaldanaInput = document.getElementById('awaldana');
             const awaldanaInput1 = document.getElementById('awaldana1');
             const jmhtahunInput = document.getElementById('jmhtahun');
@@ -577,27 +516,134 @@
             document.getElementById('persentasebunga4').textContent = '0%';
             document.getElementById('nilai1').textContent = 'Rp. 0';
             document.getElementById('totalnilai1').textContent = 'Rp. 0';
+            document.getElementById('totalnilai2').textContent = 'Rp. 0';
 
             const modalTableBody = document.getElementById('modalTableBody');
             modalTableBody.innerHTML = '';
         }
 
-        document.getElementById('printModalToPdf').addEventListener('click', function() {
+        document.getElementById('printModalToPdf').addEventListener('click', function () {
             console.log("Button clicked");
-                const docDefinition = {
-                    content: [
-                        'Investasi Lumpsum Detail',
-                        { text: 'Dana Awal: Rp. 100,000', margin: [0, 10] },
-                        { text: 'Jangka Waktu: 5 Tahun', margin: [0, 10] },
-                        { text: 'Persentase Bunga: 10%', margin: [0, 10] },
-                        { text: 'Nilai Investasi: Rp. 150,000', margin: [0, 10] },
-                        { text: 'Total Nilai: Rp. 250,000', margin: [0, 10] }
-                    ]
-                };
 
-                pdfMake.createPdf(docDefinition).download('investasi-target.pdf');
+            const userName = @json($user['name']);
+            const userEmail = @json($user['email']);
+            const currentDate = @json($date); 
+
+            const awaldana4 = document.getElementById('awaldana4').textContent.trim();
+            const jmhtahun4 = document.getElementById('jmhtahun4').textContent.trim();
+            const persentasebunga4 = document.getElementById('persentasebunga4').textContent.trim();
+            const nilai1 = document.getElementById('nilai1').textContent.trim();
+            const totalnilai1 = document.getElementById('totalnilai1').textContent.trim();
+            const totalnilai2 = document.getElementById('totalnilai2').textContent.trim();
+
+            const summaryData = [
+                ': ' + awaldana4,
+                ': ' + jmhtahun4,
+                ': ' + persentasebunga4,
+                ': ' + nilai1,
+                ': ' + totalnilai1,
+                ': ' + totalnilai2 + '\n\n',
+            ];
+            
+            const modalTableBody = document.getElementById('modalTableBody');
+            const tableRows = Array.from(modalTableBody.querySelectorAll('tr'));
+            
+            const pdfTableBody = [
+                [{ text: 'Tahun', style: 'tableHeader' }, { text: 'Investasi', style: 'tableHeader' }, { text: 'Nilai Investasi', style: 'tableHeader' }]
+            ];
+            
+            tableRows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                pdfTableBody.push([
+                    cells[0].textContent, 
+                    cells[1].textContent, 
+                    cells[2].textContent  
+                ]);
             });
-
+            
+            const docDefinition = {
+                content: [
+                    {
+                        alignment: 'justify',
+                        columns: [
+                            {
+                                text: [`${userName}\n`, { text: userEmail, bold: false, color: 'gray' }],
+                                bold: true
+                            },
+                            {
+                                text: [`${currentDate}\nSmart Finance`],
+                                style: ['alignRight'],
+                                color: 'gray',
+                            }
+                        ]
+                    },
+                    {
+                        text: '\nSimulasi Investasi Target Bulanan\n\n',
+                        style: 'header',
+                        alignment: 'center'
+                    },
+                    {
+                        columns: [
+                            {
+                                stack: [
+                                    {
+                                        ul: [
+                                            'Investasi Bulanan',
+                                            'Jangka Waktu',
+                                            'Persentase Bunga',
+                                            'Nilai Investasi',
+                                            'Total Nilai',
+                                            'Target Dana',
+                                        ]
+                                    },
+                                ]
+                            },
+                            {
+                                stack: summaryData,
+                            },
+                            '',
+                            '',
+                        ]
+                    },
+                    {
+                        style: 'tableExample',
+                        table: {
+                            headerRows: 1,
+                            widths: [50, '*', '*'], 
+                            body: pdfTableBody 
+                        },
+                        alignment: 'center',
+                        layout: {
+				fillColor: function (rowIndex, node, columnIndex) {
+					return (rowIndex % 2 === 0) ? '#CEEFFD' : null;
+				}
+			}
+                    },
+                ],
+                styles: {
+                    header: {
+                        fontSize: 18,
+                        bold: true,
+                        alignment: 'justify',
+                    },
+                    alignRight: {
+                        alignment: 'right'
+                    },
+                    tableExample: {
+                        margin: [0, 5, 0, 15]
+                    },
+                    tableHeader: {
+                        bold: true,
+                        fontSize: 12,
+                        color: 'black'
+                    }
+                },
+                defaultStyle: {
+                    columnGap: 20
+                }
+            };
+            pdfMake.createPdf(docDefinition).open();
+        });
         createOrUpdateChart();
     });
 </script>

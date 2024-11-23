@@ -11,33 +11,37 @@ class InvestasiController extends Controller
      */
     public function lumpsum(Request $request)
     {
-        $res = Parent::getDataLogin($request);
+        $date = now()->format('d/m/Y');
         return view('investasi.lumpsum', [
             'user' => $request->auth['user'],
+            'date' => $date,
         ]);  
     }
 
     public function bulanan(Request $request)
     {
-        $res = Parent::getDataLogin($request);
+        $date = now()->format('d/m/Y');
         return view('investasi.bulanan', [
             'user' => $request->auth['user'],
+            'date' => $date,
         ]);  
     }
 
     public function targetLumpsum(Request $request)
     {
-        $res = Parent::getDataLogin($request);
-        return view('investasi.target', [
+        $date = now()->format('d/m/Y');
+        return view('investasi.lumpsumTarget', [
             'user' => $request->auth['user'],
+            'date' => $date,
         ]);  
     }
 
     public function targetBulanan(Request $request)
     {
-        $res = Parent::getDataLogin($request);
-        return view('investasi.targetbulanan', [
+        $date = now()->format('d/m/Y');
+        return view('investasi.bulananTarget', [
             'user' => $request->auth['user'],
+            'date' => $date,
         ]);  
     }
 
