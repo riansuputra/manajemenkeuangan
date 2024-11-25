@@ -1,4 +1,4 @@
-@extends('layouts.tabler')
+@extends('layouts.user')
 
 @section('title', 'Pinjaman')
 
@@ -181,6 +181,7 @@
     </div>
 </div>
 <!-- End of Modal Detail -->
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script>
     function updateFormattedNumber3() {
@@ -309,9 +310,7 @@
                 };
 
                 localStorage.setItem('rancangan-pinjaman-bunga-tetap', JSON.stringify(rancanganPinjamanTetapData));
-            } else {
-                console.error("Error calculating nilai.");
-            }
+            } 
         }
 
         function calculateNilai() {
@@ -526,20 +525,127 @@
             modalTableBody.innerHTML = '';
         }
 
-        document.getElementById('printModalToPdf').addEventListener('click', function() {
+        document.getElementById('printModalToPdf').addEventListener('click', function () {
             console.log("Button clicked");
-                const docDefinition = {
-                    content: [
-                        'Investasi Bulanan Detail',
-                        { text: 'Dana Awal: Rp. 100,000', margin: [0, 10] },
-                        { text: 'Jangka Waktu: 5 Tahun', margin: [0, 10] },
-                        { text: 'Persentase Bunga: 10%', margin: [0, 10] },
-                        { text: 'Nilai Investasi: Rp. 150,000', margin: [0, 10] },
-                        { text: 'Total Nilai: Rp. 250,000', margin: [0, 10] }
-                    ]
-                };
-                pdfMake.createPdf(docDefinition).download('rancangan-pinjaman-bunga-tetap.pdf');
+
+            const userName = @json($user['name']);
+            const userEmail = @json($user['email']);
+            const currentDate = @json($date); 
+
+            const pinjamandana2 = document.getElementById('pinjamandana2').textContent.trim();
+            const jmhtahun2 = document.getElementById('jmhtahun2').textContent.trim();
+            const persentasebunga1 = document.getElementById('persentasebunga1').textContent.trim();
+            const nilai = document.getElementById('nilai').textContent.trim();
+            const totalnilai = document.getElementById('totalnilai').textContent.trim();
+
+            const summaryData = [
+                ': ' + pinjamandana2,
+                ': ' + jmhtahun2,
+                ': ' + persentasebunga1,
+                ': ' + nilai,
+                ': ' + totalnilai + '\n\n',
+            ];
+            
+            const modalTableBody = document.getElementById('modalTableBody');
+            const tableRows = Array.from(modalTableBody.querySelectorAll('tr'));
+            
+            const pdfTableBody = [
+                [{ text: 'Bulan', style: 'tableHeader' }, { text: 'Angsuran Bunga', style: 'tableHeader' }, { text: 'Angsuran Pokok', style: 'tableHeader' }, { text: 'Total Angsuran', style: 'tableHeader' }, { text: 'Sisa Pinjaman', style: 'tableHeader' },]
+            ];
+            
+            tableRows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                pdfTableBody.push([
+                    cells[0].textContent, 
+                    cells[1].textContent, 
+                    cells[2].textContent,  
+                    cells[3].textContent,  
+                    cells[4].textContent,  
+                ]);
             });
+            
+            const docDefinition = {
+                content: [
+                    {
+                        alignment: 'justify',
+                        columns: [
+                            {
+                                text: [`${userName}\n`, { text: userEmail, bold: false, color: 'gray' }],
+                                bold: true
+                            },
+                            {
+                                text: [`${currentDate}\nSmart Finance`],
+                                style: ['alignRight'],
+                                color: 'gray',
+                            }
+                        ]
+                    },
+                    {
+                        text: '\nSimulasi Pinjaman Bunga Efektif\n\n',
+                        style: 'header',
+                        alignment: 'center'
+                    },
+                    {
+                        columns: [
+                            {
+                                stack: [
+                                    {
+                                        ul: [
+                                            'Jumlah Pinjaman',
+                                            'Jangka Waktu',
+                                            'Bunga per tahun',
+                                            'Total Bunga',
+                                            'Total Angsuran',
+                                        ]
+                                    },
+                                ]
+                            },
+                            {
+                                stack: summaryData,
+                            },
+                            '',
+                            '',
+                        ]
+                    },
+                    {
+                        style: 'tableExample',
+                        table: {
+                            headerRows: 1,
+                            widths: [50, '*', '*', '*', '*'], 
+                            body: pdfTableBody 
+                        },
+                        alignment: 'center',
+                        layout: {
+				fillColor: function (rowIndex, node, columnIndex) {
+					return (rowIndex % 2 === 0) ? '#CEEFFD' : null;
+				}
+			}
+                    },
+                ],
+                styles: {
+                    header: {
+                        fontSize: 18,
+                        bold: true,
+                        alignment: 'justify',
+                    },
+                    alignRight: {
+                        alignment: 'right'
+                    },
+                    tableExample: {
+                        margin: [0, 5, 0, 15]
+                    },
+                    tableHeader: {
+                        bold: true,
+                        fontSize: 12,
+                        color: 'black'
+                    }
+                },
+                defaultStyle: {
+                    columnGap: 20
+                }
+            };
+            pdfMake.createPdf(docDefinition).open();
+        });
         createOrUpdateChart();
     });
 </script>

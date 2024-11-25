@@ -1,4 +1,4 @@
-@extends('layouts.tabler')
+@extends('layouts.user')
 
 @section('title', 'Saldo')
 

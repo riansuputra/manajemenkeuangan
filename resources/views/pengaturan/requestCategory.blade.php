@@ -1,4 +1,4 @@
-@extends('layouts.tabler')
+@extends('layouts.user')
 
 @section('page-title')
 <div class="col">

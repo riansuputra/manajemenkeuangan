@@ -12,32 +12,36 @@ class PinjamanController extends Controller
      */
     public function index(Request $request)
     {
-        $res = Parent::getDataLogin($request);
+        $date = now()->format('d/m/Y');
         return view('pinjaman.index', [
+            'date' => $date,
             'user' => $request->auth['user'],
         ]);  
     }
 
     public function bungaTetap(Request $request)
     {
-        $res = Parent::getDataLogin($request);
+        $date = now()->format('d/m/Y');
         return view('pinjaman.bungaTetap', [
+            'date' => $date,
             'user' => $request->auth['user'],
         ]);  
     }
 
     public function bungaFloating(Request $request)
     {
-        $res = Parent::getDataLogin($request);
+        $date = now()->format('d/m/Y');
         return view('pinjaman.bungaFloating', [
+            'date' => $date,
             'user' => $request->auth['user'],
         ]);  
     }
 
     public function bungaEfektif(Request $request)
     {
-        $res = Parent::getDataLogin($request);
+        $date = now()->format('d/m/Y');
         return view('pinjaman.bungaEfektif', [
+            'date' => $date,
             'user' => $request->auth['user'],
         ]);  
     }

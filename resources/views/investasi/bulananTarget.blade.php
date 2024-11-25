@@ -1,4 +1,4 @@
-@extends('layouts.tabler')
+@extends('layouts.user')
 
 @section('title', 'Investasi Target')
 
@@ -20,10 +20,10 @@
 			<div class="card-header">
 				<ul class="nav nav-tabs card-header-tabs nav-fill" data-bs-toggle="tabs" role="tablist">
 					<li class="nav-item" role="presentation">
-						<a href="{{ route('investasi-target-lumpsum') }}" class="nav-link" aria-selected="true" role="tab">Lumpsum</a>
+						<a href="{{ route('investasi-bulanan') }}" class="nav-link" aria-selected="true" role="tab">Bulanan</a>
 					</li>
 					<li class="nav-item" role="presentation">
-						<a href="{{ route('investasi-target-bulanan') }}" class="nav-link active" aria-selected="false" role="tab" tabindex="-1">Bulanan</a>
+						<a href="{{ route('investasi-target-bulanan') }}" class="nav-link active" aria-selected="false" role="tab" tabindex="-1">Target Bulanan</a>
 					</li>
 				</ul>
 			</div>

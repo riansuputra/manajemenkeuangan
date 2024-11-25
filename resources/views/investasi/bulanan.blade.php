@@ -1,4 +1,4 @@
-@extends('layouts.tabler')
+@extends('layouts.user')
 
 @section('title', 'Investasi Bulanan')
 
@@ -15,130 +15,150 @@
 
 @section('content')
 <div class="container-xl">
-    <div class="row row-cards">
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="mb-3">
-                                <label class="form-label">Dana Investasi Bulanan : </label>
-                                <div class="input-group">
-                                    <span class="input-group-text">
-                                        Rp.
-                                    </span>
-                                    <input type="text" id="awaldana" name="awaldana" class="form-control text-end" autocomplete="off" hidden>
-                                    <input type="text" id="awaldana1" name="awaldana1" class="form-control text-end" autocomplete="off">
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Jangka Waktu Investasi : </label>
-                                <div class="input-group">
-                                    <input type="number" id="jmhtahun" name="jmhtahun" class="form-control text-end" autocomplete="off">
-                                    <span class="input-group-text">
-                                        Tahun
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Persentase Bunga :</label>
-                                <div class="input-group">
+	<div class="col">
+		<div class="card">
+			<div class="card-header">
+				<ul class="nav nav-tabs card-header-tabs nav-fill" data-bs-toggle="tabs" role="tablist">
+					<li class="nav-item" role="presentation">
+						<a href="{{ route('investasi-bulanan') }}" class="nav-link active" aria-selected="true" role="tab">Bulanan</a>
+					</li>
+					<li class="nav-item" role="presentation">
+						<a href="{{ route('investasi-target-bulanan') }}" class="nav-link" aria-selected="false" role="tab" tabindex="-1">Target Bulanan</a>
+					</li>
+				</ul>
+			</div>
+			<div class="card-body">
+				<div class="tab-content">
+                    <div class="tab-pane active show" id="tabs-lumpsum" role="tabpanel">
+                        <div class="row row-cards">
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-xl-12">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Dana Investasi Bulanan : </label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            Rp.
+                                                        </span>
+                                                        <input type="text" id="awaldana" name="awaldana" class="form-control text-end" autocomplete="off" hidden>
+                                                        <input type="text" id="awaldana1" name="awaldana1" class="form-control text-end" autocomplete="off">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Jangka Waktu Investasi : </label>
+                                                    <div class="input-group">
+                                                        <input type="number" id="jmhtahun" name="jmhtahun" class="form-control text-end" autocomplete="off">
+                                                        <span class="input-group-text">
+                                                            Tahun
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Persentase Bunga :</label>
+                                                    <div class="input-group">
 
-                                    <input type="number" id="persentasebunga" name="persentasebunga" class="form-control text-end" autocomplete="off">
-                                    <span class="input-group-text">
-                                        %
-                                    </span>
+                                                        <input type="number" id="persentasebunga" name="persentasebunga" class="form-control text-end" autocomplete="off">
+                                                        <span class="input-group-text">
+                                                            %
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <div class="col mt-3">
+                                                        <button type="button" class="btn btn-success w-100">
+                                                            Hitung
+                                                        </button>
+                                                    </div>
+                                                    <div class="col mt-3">
+                                                        <button type="button" class="btn btn-secondary w-100">
+                                                            Reset
+                                                        </button>
+                                                    </div>
+                                                    <div class="col mt-3">
+                                                        <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#modal-scrollable">
+                                                            Detail
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <div class="col mt-3">
-                                    <button type="button" class="btn btn-success w-100">
-                                        Hitung
-                                    </button>
+                            <div class="col-md-4">
+                                <div class="card" style="min-height: 342px;">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-xl-12">
+                                                <div class="mb-3">
+                                                    <h3 class="text-center text-bold">Hasil Perhitungan</h3>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-vcenter card-table table-borderless">
+                                                            <thead>
+                                                                <tr hidden>
+                                                                    <th></th>
+                                                                    <th></th>
+                                                                    <th></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr style="height:2.93rem;">
+                                                                    <td style="width:45%;">Total Dana</td>
+                                                                    <td style="width:5%;">:</td>
+                                                                    <td style="width:%" class="text-end" id="awaldana2">Rp. 0</td>
+                                                                </tr>
+                                                                <td style="width:%" class="text-end" id="awaldana3" hidden>0</td>
+                                                                <tr style="height:2.93rem;">
+                                                                    <td style="width:45%;">Jangka Waktu</td>
+                                                                    <td style="width:5%;">:</td>
+                                                                    <td style="width:%" class="text-end" id="jmhtahun2">0 Tahun</td>
+                                                                </tr>
+                                                                <tr style="height:2.93rem;">
+                                                                    <td style="width:45%;">Persentase Bunga</td>
+                                                                    <td style="width:5%;">:</td>
+                                                                    <td style="width:%" class="text-end" id="persentasebunga1">0%</td>
+                                                                </tr>
+                                                                <tr style="height:2.93rem;">
+                                                                    <td style="width:45%;"><strong>Nilai Investasi</strong></td>
+                                                                    <td style="width:5%;">:</td>
+                                                                    <td style="width:%" class="text-end" id="nilai"><strong>Rp. 0</strong></td>
+                                                                </tr>
+                                                                <tr style="height:2.93rem;">
+                                                                    <td style="width:45%;"><strong>Total Nilai</strong></td>
+                                                                    <td style="width:5%;">:</td>
+                                                                    <td style="width:%" class="text-end" id="totalnilai"><strong>Rp. 0</strong></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col mt-3">
-                                    <button type="button" class="btn btn-secondary w-100">
-                                        Reset
-                                    </button>
-                                </div>
-                                <div class="col mt-3">
-                                    <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#modal-scrollable">
-                                        Detail
-                                    </button>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-xl-12">
+                                                <div class="mb-3">
+                                                    <h3 class="text-center text-bold">Statistik</h3>
+                                                </div>
+                                                <div id="chart-demo-pie#3" style="min-height: 267px;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card" style="min-height: 342px;">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="mb-3">
-                                <h3 class="text-center text-bold">Hasil Perhitungan</h3>
-                                <div class="table-responsive">
-                                    <table class="table table-vcenter card-table table-borderless">
-                                        <thead>
-                                            <tr hidden>
-                                                <th></th>
-                                                <th></th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr style="height:2.93rem;">
-                                                <td style="width:45%;">Total Dana</td>
-                                                <td style="width:5%;">:</td>
-                                                <td style="width:%" class="text-end" id="awaldana2">Rp. 0</td>
-                                            </tr>
-                                            <td style="width:%" class="text-end" id="awaldana3" hidden>0</td>
-                                            <tr style="height:2.93rem;">
-                                                <td style="width:45%;">Jangka Waktu</td>
-                                                <td style="width:5%;">:</td>
-                                                <td style="width:%" class="text-end" id="jmhtahun2">0 Tahun</td>
-                                            </tr>
-                                            <tr style="height:2.93rem;">
-                                                <td style="width:45%;">Persentase Bunga</td>
-                                                <td style="width:5%;">:</td>
-                                                <td style="width:%" class="text-end" id="persentasebunga1">0%</td>
-                                            </tr>
-                                            <tr style="height:2.93rem;">
-                                                <td style="width:45%;"><strong>Nilai Investasi</strong></td>
-                                                <td style="width:5%;">:</td>
-                                                <td style="width:%" class="text-end" id="nilai"><strong>Rp. 0</strong></td>
-                                            </tr>
-                                            <tr style="height:2.93rem;">
-                                                <td style="width:45%;"><strong>Total Nilai</strong></td>
-                                                <td style="width:5%;">:</td>
-                                                <td style="width:%" class="text-end" id="totalnilai"><strong>Rp. 0</strong></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="mb-3">
-                                <h3 class="text-center text-bold">Statistik</h3>
-                            </div>
-                            <div id="chart-demo-pie#3" style="min-height: 267px;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <!-- Modal Detail -->
