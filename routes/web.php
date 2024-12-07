@@ -9,6 +9,7 @@ use App\Http\Controllers\CatatanUmumController;
 use App\Http\Controllers\PortofolioController;
 use App\Http\Controllers\PinjamanController;
 use App\Http\Controllers\PengaturanController;
+use App\Http\Controllers\KursController;
 use App\Http\Controllers\InvestasiController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LanguageController;
@@ -48,6 +49,10 @@ Route::middleware([App\Http\Middleware\AdminMiddleware::class])->group(function(
     Route::get('/categories-request', [AdminController::class, 'categoryRequests'])->name('categoryRequests');
     Route::post('/category-requests/{id}/approve', [AdminController::class, 'approve'])->name('categoryApprove');
     Route::post('/category-requests/{id}/reject', [AdminController::class, 'reject'])->name('categoryReject');
+
+    Route::get('/kurs-admin', [AdminController::class, 'kurs'])->name('kurs-admin');
+    Route::get('/user', [AdminController::class, 'user'])->name('user-admin');
+
 });
 
 Route::middleware([App\Http\Middleware\UserMiddleware::class])->group(function()
@@ -79,6 +84,8 @@ Route::middleware([App\Http\Middleware\UserMiddleware::class])->group(function()
     Route::get('/investasi-bulanan', [InvestasiController::class, 'bulanan'])->name('investasi-bulanan');
     Route::get('/investasi-target-lumpsum', [InvestasiController::class, 'targetLumpsum'])->name('investasi-target-lumpsum');
     Route::get('/investasi-target-bulanan', [InvestasiController::class, 'targetBulanan'])->name('investasi-target-bulanan');
+
+    Route::get('/kurs', [KursController::class, 'index'])->name('kurs');
 
     Route::get('/pinjaman', [PinjamanController::class, 'index'])->name('pinjaman');
     Route::get('/pinjaman-bunga-tetap', [PinjamanController::class, 'bungaTetap'])->name('bungaTetap');

@@ -10,7 +10,6 @@ use Illuminate\Pagination\Paginator;
 use Carbon\Carbon;
 use Illuminate\Http\Client\Pool;
 
-
 class PengaturanController extends Controller
 {
     private function getHeaders($request) {
