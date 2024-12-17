@@ -261,15 +261,15 @@
 										<a class="dropdown-item" href="{{ url('/portofolio') }}">
 						  					Portofolio
 										</a>
-                          				<a class="dropdown-item" href="{{ url('/portofolio/mutasi-dana') }}">
+                          				<a class="dropdown-item" href="{{ url('/portofolio-mutasi-dana') }}">
                             				Mutasi Dana
                           				</a>
-                          				<a class="dropdown-item" href="{{ url('/portofolio/kinerja') }}">
+                          				<a class="dropdown-item" href="{{ url('/portofolio-kinerja') }}">
                             				Kinerja
                           				</a>
-						  				<a class="dropdown-item" href="{{ url('/portofolio/historis') }}">
+						  				<!-- <a class="dropdown-item" href="{{ url('/portofolio-historis') }}">
                             				Historis
-                          				</a>
+                          				</a> -->
                     				</div>
                   				</li>
 							</ul>

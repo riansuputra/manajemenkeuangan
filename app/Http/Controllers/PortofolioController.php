@@ -43,6 +43,25 @@ class PortofolioController extends Controller
         
     }
 
+    public function mutasiDana(Request $request)
+    {
+        $responses = Http::pool(fn (Pool $pool) => [
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/aset'),
+        ]);
+        // dd($responses[1]->json());
+        if ($responses[0]->successful()){
+            $asetData = $responses[0]->json()['data']['aset'];
+            // dd($portoData);
+            return view('portofolio.mutasiDana', [
+                'user' => $request->auth['user'],
+                'asetData' => $asetData,
+            ]);
+        } else {
+            abort(500, 'Failed to fetch data from API');
+        }
+        
+    }
+
     /**
      * Show the form for creating a new resource.
      */

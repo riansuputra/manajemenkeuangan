@@ -99,7 +99,6 @@ Route::middleware([App\Http\Middleware\UserMiddleware::class])->group(function()
 
     Route::get('/portofolio', [PortofolioController::class, 'portofolio'])->name('portofolio');
     Route::post('/portofolio-store', [PortofolioController::class, 'store'])->name('portofolioStore');
-    Route::get('/portofolio-dividen', [PortofolioController::class, 'dividen'])->name('portofolioStore');
     Route::get('/portofolio-mutasi-dana', [PortofolioController::class, 'mutasiDana'])->name('portofolio-mutasi-dana');
     Route::get('/portofolio-kinerja', [PortofolioController::class, 'kinerja'])->name('portofolio-kinerja');
     Route::get('/portofolio-historis', [PortofolioController::class, 'historis'])->name('portofolio-historis');
