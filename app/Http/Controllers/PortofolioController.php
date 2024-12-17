@@ -23,21 +23,19 @@ class PortofolioController extends Controller
             'user-type' => $request->auth['user_type'],
         ];
     }
+
     public function portofolio(Request $request)
     {
         $responses = Http::pool(fn (Pool $pool) => [
-            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/saham'),
-            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/beli-saham')
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/aset'),
         ]);
         // dd($responses[1]->json());
-        if ($responses[0]->successful() && $responses[1]->successful()){
-            $sahamData = $responses[0]->json()['data']['saham'];
-            $portoData = $responses[1]->json()['data']['portofolioBeli'];
+        if ($responses[0]->successful()){
+            $asetData = $responses[0]->json()['data']['aset'];
             // dd($portoData);
             return view('portofolio.portofolio', [
                 'user' => $request->auth['user'],
-                'sahamData' => $sahamData,
-                'portoData' => $portoData,
+                'asetData' => $asetData,
             ]);
         } else {
             abort(500, 'Failed to fetch data from API');
@@ -72,7 +70,7 @@ class PortofolioController extends Controller
      /**
      * Show the form for creating a new resource.
      */
-    public function mutasiDana(Request $request)
+    public function berita(Request $request)
     {
         $responses = Http::pool(fn (Pool $pool) => [
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/berita'),
