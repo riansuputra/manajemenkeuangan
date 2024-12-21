@@ -50,6 +50,8 @@ class KursController extends Controller
 
             $update = collect($kursData)->sortByDesc('updated_at')->first()['updated_at'] ?? now();
             $update = \Carbon\Carbon::parse($update)->timezone('Asia/Makassar')->format('Y-m-d H:i:s');
+
+            // dd($kursData);
             
             return view('kurs.index', [
                 'user' => $request->auth['user'],

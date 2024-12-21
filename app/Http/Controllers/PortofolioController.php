@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Portofolio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Client\Pool;
@@ -46,15 +45,60 @@ class PortofolioController extends Controller
     public function mutasiDana(Request $request)
     {
         $responses = Http::pool(fn (Pool $pool) => [
-            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/aset'),
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/mutasi-dana'),
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/saldo'),
         ]);
         // dd($responses[1]->json());
-        if ($responses[0]->successful()){
-            $asetData = $responses[0]->json()['data']['aset'];
-            // dd($portoData);
+        if ($responses[0]->successful() && $responses[1]->successful()){
+            $mutasiData = $responses[0]->json()['data']['mutasi_dana'];
+            $saldoData = $responses[1]->json()['data']['saldo'];
+
+            $saldo = collect($saldoData)->sum('saldo');
+
+            $currentYear = Carbon::now()->year;
+
+            $mutasiDataGrup = collect($mutasiData)->groupBy('tahun')->toArray();
+
+            $mutasidana = collect($mutasiDataGrup)->filter(function ($items, $year) use ($currentYear) {
+                return $year == $currentYear;
+                })->map(function ($group) {
+                    $group = collect($group);  // Mengubah array menjadi koleksi
+                    $firstItem = $group->first();
+                
+                    return [
+                        'harga_unit' => $firstItem['harga_unit'] ?? 0,
+                        'modal' => $firstItem['modal'] ?? 0,
+                        'jumlah_unit_penyertaan' => $firstItem['jumlah_unit_penyertaan'] ?? 0,
+                    ];
+            })->toArray();
+
+            $mutasiDataGrup = collect($mutasiDataGrup)->map(function ($items) {
+                return collect($items)->groupBy('bulan')->map(function ($monthGroup) {
+                    return collect($monthGroup)->map(function ($item) {
+                        return [
+                            'id' => $item['id'],
+                            'user_id' => $item['user_id'],
+                            'tahun' => $item['tahun'],
+                            'bulan' => $item['bulan'],
+                            'modal' => $item['modal'] ?? 0,
+                            'harga_unit' => $item['harga_unit'] ?? 0,
+                            'harga_unit_saat_ini' => $item['harga_unit_saat_ini'] ?? 0,
+                            'jumlah_unit_penyertaan' => $item['jumlah_unit_penyertaan'] ?? 0,
+                            'alur_dana' => $item['alur_dana'] ?? 0
+                        ];
+                    });
+                });
+            });
+                        
+            // dd($mutasidana, $mutasiDataGrup, $saldo, $saldoData);
+
             return view('portofolio.mutasiDana', [
                 'user' => $request->auth['user'],
-                'asetData' => $asetData,
+                'mutasiData' => $mutasiData,
+                'mutasiDataGrup' => $mutasiDataGrup,
+                'mutasidana' => $mutasidana,
+                'saldoData' => $saldoData,
+                'saldo' => $saldo,
             ]);
         } else {
             abort(500, 'Failed to fetch data from API');
@@ -79,11 +123,23 @@ class PortofolioController extends Controller
         ]);
     }
 
-    public function histori(Request $request)
+    public function historis(Request $request)
     {
-        return view('portofolio.histori', [
-            'user' => $request->auth['user'],
+        $responses = Http::pool(fn (Pool $pool) => [
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/historis'),
         ]);
+        // dd($responses[0]);
+
+        if ($responses[0]->successful()){
+            $historisData = $responses[0]->json()['data']['historis'];
+            // dd($beritaData);
+            return view('portofolio.historis', [
+                'user' => $request->auth['user'],
+                'historisData' => $historisData,
+            ]);
+        } else {
+            abort(500, 'Failed to fetch data from API');
+        }
     }
 
      /**

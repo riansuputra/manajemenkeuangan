@@ -6,6 +6,7 @@ use App\Http\Controllers\AnggaranController;
 use App\Http\Controllers\AnggaranControllertes;
 use App\Http\Controllers\CatatanController;
 use App\Http\Controllers\CatatanUmumController;
+use App\Http\Controllers\SaldoController;
 use App\Http\Controllers\PortofolioController;
 use App\Http\Controllers\PinjamanController;
 use App\Http\Controllers\PengaturanController;
@@ -102,6 +103,8 @@ Route::middleware([App\Http\Middleware\UserMiddleware::class])->group(function()
     Route::get('/portofolio-mutasi-dana', [PortofolioController::class, 'mutasiDana'])->name('portofolio-mutasi-dana');
     Route::get('/portofolio-kinerja', [PortofolioController::class, 'kinerja'])->name('portofolio-kinerja');
     Route::get('/portofolio-historis', [PortofolioController::class, 'historis'])->name('portofolio-historis');
+
+    Route::post('/saldo-store', [SaldoController::class, 'store'])->name('saldoStore');
 
     Route::get('/portofolio-test', [PortofolioController::class, 'create'])->name('portofolio-historis');
     Route::get('/portofolio-testing', [PortofolioController::class, 'make'])->name('portofolio-historis');

@@ -388,7 +388,7 @@
         var balances = {!! json_encode(array_values($summary['cumulativeSaldoHarian'])) !!};
         window.ApexCharts && (new ApexCharts(document.getElementById('chart-completion-tasks-3'), {
             chart: {
-                type: "area",
+                type: "line",
                 fontFamily: 'inherit',
                 height: 240,
                 parentHeightOffset: 0,
@@ -408,13 +408,13 @@
                 enabled: false,
             },
             fill: {
-                opacity: .16,
+                opacity: 1,
                 type: 'solid'
             },
             stroke: {
                 width: 2,
                 lineCap: "round",
-                curve: "smooth",
+                curve: "straight",
             },
             series: [{
                 name: "Jumlah",
