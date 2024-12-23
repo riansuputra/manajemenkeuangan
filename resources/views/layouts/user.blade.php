@@ -264,12 +264,12 @@
                           				<a class="dropdown-item" href="{{ url('/portofolio-mutasi-dana') }}">
                             				Mutasi Dana
                           				</a>
-                          				<a class="dropdown-item" href="{{ url('/portofolio-kinerja') }}">
-                            				Kinerja
-                          				</a>
-						  				<!-- <a class="dropdown-item" href="{{ url('/portofolio-historis') }}">
+                          				<a class="dropdown-item" href="{{ url('/portofolio-historis') }}">
                             				Historis
-                          				</a> -->
+                          				</a>
+						  				<a class="dropdown-item" href="{{ url('/berita') }}">
+                            				Berita
+                          				</a>
                     				</div>
                   				</li>
 							</ul>

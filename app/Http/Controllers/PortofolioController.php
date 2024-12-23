@@ -155,9 +155,14 @@ class PortofolioController extends Controller
         if ($responses[0]->successful()){
             $beritaData = $responses[0]->json()['data']['berita'];
             // dd($beritaData);
+
+            $update = collect($beritaData)->sortByDesc('updated_at')->first()['updated_at'] ?? now();
+            $update = \Carbon\Carbon::parse($update)->timezone('Asia/Makassar')->format('Y-m-d H:i:s');
+
             return view('berita.berita', [
                 'user' => $request->auth['user'],
                 'beritaData' => $beritaData,
+                'update' => $update,
             ]);
         } else {
             abort(500, 'Failed to fetch data from API');

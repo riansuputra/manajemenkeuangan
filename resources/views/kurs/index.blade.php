@@ -7,7 +7,7 @@
 	<h2 class="page-title">
         Kurs
     </h2>
-    <div class="text-muted mt-1">Terakhir diperbarui pada <span class="text-black">{{$update}}</span> UTC+8</div>
+    <div class="text-muted mt-1">Terakhir diperbarui pada <span class="text-black">{{\Carbon\Carbon::parse($update)->locale('id')->translatedFormat('l, d F Y H:i')}}</span> UTC+8</div>
 </div>
 @endsection
 
