@@ -41,7 +41,7 @@
             		</button>
             		<h1 class="navbar-brand navbar-brand-autodark text-white d-none-navbar-horizontal pe-0 pe-md-3">
 						<a href=".">
-							<img src="{{ asset('img\logo-2.png') }}" width="110" height="32" alt="Tabler" class="navbar-brand-image pe-1">
+							<img src="{{ asset('img/logo-2.png') }}" width="110" height="32" alt="Tabler" class="navbar-brand-image pe-1">
 						</a>
 						Smart Finance
             		</h1>
@@ -134,8 +134,8 @@
                 			<a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
                   				<span class="avatar avatar-sm" style="background-image: url(./static/avatars/000m.jpg)"></span>
                   				<div class="d-none d-xl-block ps-2">
-									<div class="text-white">Yansu</div>
-								  	<div class="mt-1 small text-white">yansu@gmail.com</div>
+									<div class="text-white">{{$user['name']}}</div>
+								  	<div class="mt-1 small text-white">{{$user['email']}}</div>
                   				</div>
                 			</a>
                 			<div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -209,7 +209,7 @@
                       					</span>
                     				</a>
                   				</li>
-				  				<li class="nav-item dropdown {{ url()->current() == url('/pinjaman') ? 'active' : '' }}" >
+				  				<li class="nav-item dropdown {{ url()->current() == url('/pinjaman-bunga-efektif') ? 'active' : '' }} {{ url()->current() == url('/pinjaman-bunga-tetap') ? 'active' : '' }}" >
                     				<a class="nav-link dropdown-toggle" href="" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
                       					<span class="nav-link-icon d-md-none d-lg-inline-block">
 					  						<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 9m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z"></path><path d="M14 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path><path d="M17 9v-2a2 2 0 0 0 -2 -2h-10a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h2"></path></svg>
@@ -221,9 +221,6 @@
                     				<div class="dropdown-menu">
 						  				<a class="dropdown-item" href="{{ url('/pinjaman-bunga-efektif') }}">
 							  				Bunga Efektif
-										</a>
-										<a class="dropdown-item" href="{{ url('/pinjaman-bunga-floating') }}">
-											Bunga Floating
 										</a>
 										<a class="dropdown-item" href="{{ url('/pinjaman-bunga-tetap') }}">
 							  				Bunga Tetap
@@ -248,7 +245,7 @@
                           				</a>
                     				</div>
 								</li>
-				  				<li class="nav-item dropdown {{ url()->current() == url('/portofolio') ? 'active' : '' }}" >
+				  				<li class="nav-item dropdown {{ url()->current() == url('/portofolio') ? 'active' : '' }} {{ url()->current() == url('/portofolio-mutasi-dana') ? 'active' : '' }} {{ url()->current() == url('/portofolio-historis') ? 'active' : '' }} {{ url()->current() == url('/berita') ? 'active' : '' }}" >
                     				<a class="nav-link dropdown-toggle" href="" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
                       					<span class="nav-link-icon d-md-none d-lg-inline-block">
 										  	<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-file-spreadsheet"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M8 11h8v7h-8z" /><path d="M8 15h8" /><path d="M11 11v7" /></svg>

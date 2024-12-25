@@ -94,7 +94,7 @@
                                         @if($index == 0)
                                             <td class="text-center" rowspan="{{ $rowCount }}">{{ $loop->parent->index + 1 }}</td>
                                             <td class="text-center" rowspan="{{ $rowCount }}">
-                                                {{ \Carbon\Carbon::create($tahun, $bulan, 1)->format('F') }}
+                                                {{ \Carbon\Carbon::create($tahun, $bulan, 1)->locale('id')->translatedFormat('F') }}
                                             </td>
                                         @endif
 
@@ -192,7 +192,7 @@
                                         <tr>
                                             @if ($index == 0)
                                                 <td  rowspan="{{ $rowCount }}" class="text-center">{{ $loop->parent->index + 1 }}</td>
-                                                <td  rowspan="{{ $rowCount }}">{{ \Carbon\Carbon::parse($tanggal)->format('d F Y') }}</td>
+                                                <td  rowspan="{{ $rowCount }}">{{ \Carbon\Carbon::parse($tanggal)->locale('id')->translatedFormat('d F Y') }}</td>
                                             @endif
                                             <td class="text-center" style="width:5%">
                                                 @if ($data['tipe_saldo'] === 'masuk')
@@ -228,7 +228,7 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td class="text-center" colspan="5">Belum ada riwayat saldo.</td>
+                                    <td class="text-center" colspan="5">Belum ada riwayat dana.</td>
                                 </tr>
                             @endif
 
@@ -272,7 +272,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="mb-3">
-                                <label class="form-label">Jumlah </label>
+                                <label class="form-label required">Jumlah </label>
                                 <div class="input-group">
                                     <span class="input-group-text">
                                         Rp.

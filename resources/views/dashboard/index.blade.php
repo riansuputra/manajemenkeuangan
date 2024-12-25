@@ -386,84 +386,115 @@
     document.addEventListener("DOMContentLoaded", function () {
         var dates = {!! json_encode(array_keys($summary['saldoHarian'])) !!};
         var balances = {!! json_encode(array_values($summary['cumulativeSaldoHarian'])) !!};
-        window.ApexCharts && (new ApexCharts(document.getElementById('chart-completion-tasks-3'), {
-            chart: {
-                type: "line",
-                fontFamily: 'inherit',
-                height: 240,
-                parentHeightOffset: 0,
-                toolbar: {
-                    show: false,
+
+        if (dates.length === 0 || balances.length === 0) {
+            window.ApexCharts && (new ApexCharts(document.getElementById('chart-completion-tasks-3'), {
+                chart: {
+                    type: "line",
+                    fontFamily: 'inherit',
+                    height: 240,
+                    parentHeightOffset: 0,
+                    toolbar: {
+                        show: false,
+                    },
+                    animations: {
+                        enabled: false
+                    },
                 },
-                animations: {
-                    enabled: false
+                series: [], // Kosongkan data
+                noData: {
+                    text: "Tidak ada data.",
+                    align: 'center',
+                    verticalAlign: 'middle',
+                    style: {
+                        color: '#999',
+                        fontSize: '14px',
+                        fontFamily: 'inherit'
+                    }
                 }
-            },
-            plotOptions: {
-                bar: {
-                    columnWidth: '50%',
-                }
-            },
-            dataLabels: {
-                enabled: false,
-            },
-            fill: {
-                opacity: 1,
-                type: 'solid'
-            },
-            stroke: {
-                width: 2,
-                lineCap: "round",
-                curve: "straight",
-            },
-            series: [{
-                name: "Jumlah",
-                data: balances
-            }],
-            tooltip: {
-                theme: 'dark',
-                y: {
+            })).render();
+
+        } else {
+            // Jika ada data, buat chart seperti biasa
+            window.ApexCharts && (new ApexCharts(document.getElementById('chart-completion-tasks-3'), {
+                chart: {
+                    type: "line",
+                    fontFamily: 'inherit',
+                    height: 240,
+                    parentHeightOffset: 0,
+                    toolbar: {
+                        show: false,
+                    },
+                    animations: {
+                        enabled: false
+                    }
+                },
+                plotOptions: {
+                    bar: {
+                        columnWidth: '50%',
+                    }
+                },
+                dataLabels: {
+                    enabled: false,
+                },
+                fill: {
+                    opacity: 1,
+                    type: 'solid'
+                },
+                stroke: {
+                    width: 2,
+                    lineCap: "round",
+                    curve: "straight",
+                },
+                series: [{
+                    name: "Jumlah",
+                    data: balances
+                }],
+                tooltip: {
+                    theme: 'dark',
+                    y: {
                         formatter: function(val) {
                             return 'Rp. ' + formatNumber(val);
                         },
                     },
-            },
-            grid: {
-                padding: {
-                    top: -20,
-                    right: 0,
-                    left: -4,
-                    bottom: -4
                 },
-                strokeDashArray: 4,
-            },
-            xaxis: {
-                labels: {
-                    padding: 0,
+                grid: {
+                    padding: {
+                        top: -20,
+                        right: 0,
+                        left: -4,
+                        bottom: -4
+                    },
+                    strokeDashArray: 4,
                 },
-                tooltip: {
-                    enabled: false
+                xaxis: {
+                    labels: {
+                        padding: 0,
+                    },
+                    tooltip: {
+                        enabled: false
+                    },
+                    axisBorder: {
+                        show: false,
+                    },
+                    type: 'datetime',
+                    categories: dates
                 },
-                axisBorder: {
-                    show: false,
-                },
-                type: 'datetime',
-                categories: dates
-            },
-            yaxis: {
-                labels: {
-                    padding: 4,
-                    formatter: function(val) {
-                        return 'Rp. ' + formatNumber(val);
+                yaxis: {
+                    labels: {
+                        padding: 4,
+                        formatter: function(val) {
+                            return 'Rp. ' + formatNumber(val);
+                        },
                     },
                 },
-            },
-            labels: dates,
-            colors: [tabler.getColor("primary")],
-            legend: {
-                show: false,
-            },
-        })).render();
+                labels: dates,
+                colors: [tabler.getColor("primary")],
+                legend: {
+                    show: false,
+                },
+            })).render();
+        }
     });
     // @formatter:on
 </script>
@@ -541,6 +572,32 @@
             })).render();
         } else {
             console.error("Pemasukan data is not an object:", pemasukanData);
+
+            window.ApexCharts && (new ApexCharts(document.getElementById('chart-demo-pie'), {
+                chart: {
+                    type: "donut",
+                    fontFamily: 'inherit',
+                    height: 150,
+                    sparkline: {
+                        enabled: true
+                    },
+                    animations: {
+                        enabled: true
+                    },
+                },
+                series: [], // Empty series
+                labels: [], // No labels
+                noData: {
+                    text: "Tidak ada data.",
+                    align: 'center',
+                    verticalAlign: 'middle',
+                    style: {
+                        color: '#999',
+                        fontSize: '14px',
+                        fontFamily: 'inherit'
+                    }
+                }
+            })).render();
         }
     });
 </script>
@@ -618,6 +675,32 @@
             })).render();
         } else {
             console.error("Pemasukan data is not an object:", pengeluaranData);
+
+            window.ApexCharts && (new ApexCharts(document.getElementById('chart-demo-pie#2'), {
+                chart: {
+                    type: "donut",
+                    fontFamily: 'inherit',
+                    height: 150,
+                    sparkline: {
+                        enabled: true
+                    },
+                    animations: {
+                        enabled: true
+                    },
+                },
+                series: [], // Empty series
+                labels: [], // No labels
+                noData: {
+                    text: "Tidak ada data.",
+                    align: 'center',
+                    verticalAlign: 'middle',
+                    style: {
+                        color: '#999',
+                        fontSize: '14px',
+                        fontFamily: 'inherit'
+                    }
+                }
+            })).render();
         }
     });
 </script>
@@ -690,6 +773,32 @@
             })).render();
         } else {
             console.error("Pemasukan data is not an object:", semuaData);
+
+            window.ApexCharts && (new ApexCharts(document.getElementById('chart-demo-pie#3'), {
+                chart: {
+                    type: "donut",
+                    fontFamily: 'inherit',
+                    height: 150,
+                    sparkline: {
+                        enabled: true
+                    },
+                    animations: {
+                        enabled: true
+                    },
+                },
+                series: [], // Empty series
+                labels: [], // No labels
+                noData: {
+                    text: "Tidak ada data.",
+                    align: 'center',
+                    verticalAlign: 'middle',
+                    style: {
+                        color: '#999',
+                        fontSize: '14px',
+                        fontFamily: 'inherit'
+                    }
+                }
+            })).render();
         }
     });
 </script>

@@ -47,7 +47,11 @@
                                 <div>{!! $catatan['catatan'] !!}</div>
                                 <div class="mt-4">
                                     <div class="row">
-                                        <div class="col"></div>
+                                        <div class="col text-muted">
+                                            <h5>
+                                                {{\Carbon\Carbon::parse($catatan['updated_at'])->locale('id')->translatedFormat('d/m/Y H:i')}}
+                                            </h5>
+                                        </div>
                                         <div class="col-auto text-muted">
                                             <a class="nav-link"  data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
                                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -193,7 +197,11 @@
                                 <div>{!! $catatan['catatan'] !!}</div>
                                 <div class="mt-4">
                                     <div class="row">
-                                        <div class="col"></div>
+                                        <div class="col text-muted">
+                                            <h5>
+                                                {{\Carbon\Carbon::parse($catatan['updated_at'])->locale('id')->translatedFormat('d/m/Y H:i')}}
+                                            </h5>
+                                        </div>
                                         <div class="col-auto text-muted">
                                             <a class="nav-link"  data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
                                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -339,7 +347,11 @@
                                 <div>{!! $catatan['catatan'] !!}</div>
                                 <div class="mt-4">
                                     <div class="row">
-                                        <div class="col"></div>
+                                        <div class="col text-muted">
+                                            <h5>
+                                                {{\Carbon\Carbon::parse($catatan['updated_at'])->locale('id')->translatedFormat('d/m/Y H:i')}}
+                                            </h5>
+                                        </div>
                                         <div class="col-auto text-muted">
                                             <a class="nav-link"  data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
                                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -485,7 +497,11 @@
                                 <div>{!! $catatan['catatan'] !!}</div>
                                 <div class="mt-4">
                                     <div class="row">
-                                        <div class="col"></div>
+                                        <div class="col text-muted">
+                                            <h5>
+                                                {{\Carbon\Carbon::parse($catatan['updated_at'])->locale('id')->translatedFormat('d/m/Y H:i')}}
+                                            </h5>
+                                        </div>
                                         <div class="col-auto text-muted">
                                             <a class="nav-link"  data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
                                                 <span class="nav-link-icon d-md-none d-lg-inline-block">

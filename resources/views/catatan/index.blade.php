@@ -165,9 +165,9 @@
 											@if($first)
 												<tr>
 													<td class="p-2">
-														<span class="item-data" data-date="{{ \Carbon\Carbon::parse($item['tanggal'])->format('d F Y') }}" data-amount="{{ $item['total_jumlah'] }}" hidden>
+														<span class="item-data" data-date="{{ \Carbon\Carbon::parse($item['tanggal'])->locale('id')->translatedFormat('d F Y') }}" data-amount="{{ $item['total_jumlah'] }}" hidden>
 															@foreach($group as $headerItem)
-																{{ \Carbon\Carbon::parse($headerItem['tanggal'])->translatedFormat('d F Y') }}
+																{{ \Carbon\Carbon::parse($headerItem['tanggal'])->locale('id')->translatedFormat('d F Y') }}
 																{{$headerItem['jumlah']}}
 																{{$headerItem['catatan']}}
 																{{$headerItem['total_jumlah']}} 
@@ -187,7 +187,7 @@
 														</span>
 														<div class="row  mt-2">
 															<div class="col">
-																<strong>{{ \Carbon\Carbon::parse($item['tanggal'])->translatedFormat('d F Y') }}</strong>
+																<strong>{{ \Carbon\Carbon::parse($item['tanggal'])->locale('id')->translatedFormat('d F Y') }}</strong>
 															</div>
 															<div class="col-auto me-2">
 																<strong class="header-total"></strong>
@@ -204,8 +204,8 @@
 															<div class="col">
 																<div class="card-body">
 																	@if(isset($item['kategori_pemasukan_id']))
-																		<span class="item-data" data-date="{{ \Carbon\Carbon::parse($item['tanggal'])->format('d F Y') }}" data-amount="{{ $item['jumlah'] }}" data-id-pemasukan="{{ $item['id'] }}" hidden>
-																			{{ \Carbon\Carbon::parse($item['tanggal'])->translatedFormat('d F Y') }}
+																		<span class="item-data" data-date="{{ \Carbon\Carbon::parse($item['tanggal'])->locale('id')->translatedFormat('d F Y') }}" data-amount="{{ $item['jumlah'] }}" data-id-pemasukan="{{ $item['id'] }}" hidden>
+																			{{ \Carbon\Carbon::parse($item['tanggal'])->locale('id')->translatedFormat('d F Y') }}
 																			{{$item['jumlah']}}
 																			{{$item['catatan']}}
 																			{{$item['tanggal']}}
@@ -248,7 +248,7 @@
 																			</div>	
 																			<div class="col-auto">
 																				<div class="badges">
-																					<a href="" class="text-green fw-bold">+ Rp. {{ number_format(floatval($item['jumlah']), 0, ',', '.') }}</a>
+																					<a href="" aria-disabled="true" onclick="return false;" class="text-green fw-bold">+ Rp. {{ number_format(floatval($item['jumlah']), 0, ',', '.') }}</a>
 																				</div>
 																			</div>
 																			<div class="col-auto">
@@ -282,8 +282,8 @@
 																			</div>
 																		</div>
 																	@else
-																		<span class="item-data" data-date="{{ \Carbon\Carbon::parse($item['tanggal'])->format('d F Y') }}" data-amount="{{ -abs($item['jumlah']) }}" hidden>
-																			{{ \Carbon\Carbon::parse($item['tanggal'])->translatedFormat('d F Y') }}
+																		<span class="item-data" data-date="{{ \Carbon\Carbon::parse($item['tanggal'])->locale('id')->translatedFormat('d F Y') }}" data-amount="{{ -abs($item['jumlah']) }}" hidden>
+																			{{ \Carbon\Carbon::parse($item['tanggal'])->locale('id')->translatedFormat('d F Y') }}
 																			{{$item['jumlah']}}
 																			{{$item['catatan']}}
 																			{{$item['total_jumlah']}} 
@@ -326,7 +326,7 @@
 																			</div>	
 																			<div class="col-auto">
 																				<div class="badges">
-																					<a href="" class="text-red fw-bold">- Rp. {{ number_format(abs(floatval($item['jumlah'])), 0, ',', '.') }}</a>
+																					<a href="" aria-disabled="true" onclick="return false;" class="text-red fw-bold">- Rp. {{ number_format(abs(floatval($item['jumlah'])), 0, ',', '.') }}</a>
 																				</div>
 																			</div>
 																			<div class="col-auto">
@@ -391,7 +391,7 @@
 																<input type="text" name="created_at" id="created_at{{$item['id']}}" class="form-control text-end created_at" autocomplete="off" hidden>
 														@endif
 															<div class="modal-body">
-																<label class="form-label">Pilih Jenis :</label>
+																<label class="form-label required">Pilih Jenis :</label>
 																<div class="form-selectgroup-boxes row mb-3">
 																	<div class="col-lg-6">
 																		<label class="form-selectgroup-item">
@@ -425,7 +425,7 @@
 																<div class="row">
 																	<div class="col-lg-4">
 																		<div class="mb-3">
-																			<label class="form-label">Jumlah : </label>
+																			<label class="form-label required">Jumlah : </label>
 																			<div class="input-group">
 																				<span class="input-group-text">
 																					Rp.
@@ -437,7 +437,7 @@
 																	</div>
 																	<div class="col-lg-4">
 																		<div class="mb-3">
-																			<label class="form-label">Kategori :</label>
+																			<label class="form-label required">Kategori :</label>
 																			<select name="kategoriedit" id="kategoriedit"class="form-select kategoriedit">
 																				<option value="" disabled selected>Pilih Kategori</option>
 																			</select>
@@ -445,7 +445,7 @@
 																	</div>
 																	<div class="col-lg-4">
 																		<div class="mb-3">
-																			<label class="form-label">Tanggal :</label>
+																			<label class="form-label required">Tanggal :</label>
 																			<input type="date" name="tanggaledit" id="tanggaledit" class="form-control tanggaledit" value="{{ now()->format('Y-m-d') }}">
 																		</div>
 																	</div>

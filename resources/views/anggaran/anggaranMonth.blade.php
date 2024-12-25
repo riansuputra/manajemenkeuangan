@@ -149,7 +149,7 @@
                                                         <div class="col-lg-4">
                                                             <input type="text" id="id_{{$data['id']}}" name="id" value="{{$data['id']}}" class="form-control text-end" autocomplete="off" hidden>
                                                             <div class="mb-3">
-                                                                <label class="form-label">Kategori Pengeluaran:</label>
+                                                                <label class="form-label required">Kategori Pengeluaran:</label>
                                                                 <select id="id_kategori_pengeluaran_edit_{{$data['id']}}" name="id_kategori_pengeluaran_edit" class="form-select">
                                                                     <option value="" selected>Pilih Kategori</option>
                                                                     @foreach($kategoriData as $kategori)
@@ -160,7 +160,7 @@
                                                         </div>
                                                         <div class="col-lg-4">
                                                             <div class="mb-3">
-                                                                <label class="form-label">Jumlah : </label>
+                                                                <label class="form-label required">Jumlah : </label>
                                                                 <div class="input-group">
                                                                     <span class="input-group-text">Rp.</span>
                                                                     <input type="text" id="jumlah_edit_{{$data['id']}}" oninput="updateFormattedNumberAnggaran({{$data['id']}})" name="jumlahedit" class="form-control text-end" autocomplete="off" required>
@@ -170,7 +170,7 @@
                                                         </div>
                                                         <div class="col-lg-4">
                                                             <div class="mb-3">
-                                                                <label class="form-label">Periode :</label>
+                                                                <label class="form-label required">Periode :</label>
                                                                 <select id="periodeedit_{{$data['id']}}" name="periodeedit" class="form-select">
                                                                     <option value="" selected>Pilih Periode</option>
                                                                     <option value="Mingguan">Mingguan</option>

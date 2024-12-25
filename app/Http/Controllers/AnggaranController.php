@@ -26,9 +26,9 @@ class AnggaranController extends Controller
             'tanggal_mulai' => $now->copy()->startOfWeek(),
             'tanggal_selesai' => $now->copy()->endOfWeek()
         ];
-        $dateMonth = $now->format('F Y');
+        $dateMonth = $now->locale('id')->translatedFormat('F Y');
         $dateYear = $now->format('Y');
-        $formattedDateWeek = $dateWeek['tanggal_mulai']->format('d') . ' - ' . $dateWeek['tanggal_selesai']->format('d') . ' ' . $dateWeek['tanggal_selesai']->format('F Y');
+        $formattedDateWeek = $dateWeek['tanggal_mulai']->locale('id')->translatedFormat('d') . ' - ' . $dateWeek['tanggal_selesai']->locale('id')->translatedFormat('d') . ' ' . $dateWeek['tanggal_selesai']->locale('id')->translatedFormat('F Y');
     
         if ($responses[0]->successful() && $responses[1]->successful() && $responses[2]->successful()) {
             $anggaranData = $responses[0]->json()['data']['anggaran'];
