@@ -7,13 +7,8 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Client\Pool;
 use \Carbon\Carbon;
 
-
 class PortofolioController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-
      private function getHeaders($request) {
         return [
             'Accept' => 'application/json',
@@ -44,6 +39,10 @@ class PortofolioController extends Controller
 
     public function mutasiDana(Request $request)
     {
+        $filterValue = session('filterValue');
+        
+        // dd($filterValue);
+
         $responses = Http::pool(fn (Pool $pool) => [
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/mutasi-dana'),
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/saldo'),
@@ -56,8 +55,11 @@ class PortofolioController extends Controller
             $saldo = collect($saldoData)->sum('saldo');
 
             $currentYear = Carbon::now()->year;
-
-            $mutasiDataGrup = collect($mutasiData)->groupBy('tahun')->toArray();
+            // $data = $data->whereYear('tahun', $filterValue);
+            $selectedYear = $filterValue ?? $currentYear;
+            $mutasiDataFilter  = collect($mutasiData)->where('tahun', $selectedYear);
+            
+            $mutasiDataGrup = collect($mutasiDataFilter)->groupBy('tahun')->toArray();
 
             $mutasidana = collect($mutasiDataGrup)->filter(function ($items, $year) use ($currentYear) {
                 return $year == $currentYear;
@@ -89,8 +91,19 @@ class PortofolioController extends Controller
                     });
                 });
             });
+
+            $uniqueYears = collect($mutasiData)
+            ->pluck('tahun')  // Ambil semua nilai tahun
+            ->unique()        // Hilangkan duplikasi
+            ->sort()          // Urutkan
+            ->values(); 
+
+            // Tentukan tahun yang digunakan untuk filter
+            // $selectedYear = $filterValue ?? $uniqueYears->last(); // Gunakan tahun terakhir jika tidak ada filter
+            // dd($uniqueYears);
                         
-            // dd($mutasidana, $mutasiDataGrup, $saldo, $saldoData);
+            // Ambil data bulan terakhir
+            $lastMutasiDana = collect($mutasiData)->last();
 
             return view('portofolio.mutasiDana', [
                 'user' => $request->auth['user'],
@@ -99,6 +112,9 @@ class PortofolioController extends Controller
                 'mutasidana' => $mutasidana,
                 'saldoData' => $saldoData,
                 'saldo' => $saldo,
+                'lastMutasiDana' => $lastMutasiDana,
+                'uniqueYears' => $uniqueYears,
+                'selectedYear' => $selectedYear,
             ]);
         } else {
             abort(500, 'Failed to fetch data from API');
@@ -106,9 +122,21 @@ class PortofolioController extends Controller
         
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    private function mutasiDateFilter($data, $filterValue) 
+    {
+        $year = $filterValue;
+        $data = $data->whereYear('tahun', $year);
+        return ['data' => $data, 'year' => $year];
+    }
+
+    public function filter(Request $request)
+    {
+        $filterValue = $request->input('jenisFilter');
+        return redirect()->route('portofolio-mutasi-dana')->with([
+            'filterValue' => $filterValue,
+        ]);
+    }
+
     public function create(Request $request)
     {
         return view('portofolio.portofolio', [
@@ -142,9 +170,6 @@ class PortofolioController extends Controller
         }
     }
 
-     /**
-     * Show the form for creating a new resource.
-     */
     public function berita(Request $request)
     {
         $responses = Http::pool(fn (Pool $pool) => [
@@ -188,9 +213,6 @@ class PortofolioController extends Controller
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         // dd($request);
@@ -222,33 +244,21 @@ class PortofolioController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Portofolio $portofolio)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Portofolio $portofolio)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Portofolio $portofolio)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Portofolio $portofolio)
     {
         //

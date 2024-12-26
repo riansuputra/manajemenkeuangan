@@ -7,7 +7,7 @@
     <h2 class="page-title">
         Mutasi Dana
     </h2>
-    <div class="text-muted mt-1">Tahun 2024</div>
+    <div class="text-muted mt-1">Tahun {{$selectedYear}}</div>
 
 </div>
 <div class="col-auto d-print-none" >
@@ -15,7 +15,9 @@
 		@csrf
 		<div class="col-auto d-print-none input-group">
             <select class="form-select" name="jenisFilter" id="jenisFilter">
-				<option value="Kisaran" {{ 'test' == 'Kisaran' ? 'selected' : '' }}>2024</option>
+            @foreach ($uniqueYears as $year)
+				<option value="{{$year}}" {{ $year == $selectedYear ? 'selected' : '' }}>{{$year}}</option>
+            @endforeach
 			</select>
             <div class="col-auto d-print-none" name="btnFilter" id="btnFilter">
                 <button type="submit" class="btn pe-1">
@@ -40,21 +42,43 @@
 
 @section('content')
 <div class="container-xl">
-    <div class="col-lg-12 text-center">
-        <div class="card bg-primary-lt">
-            <div class="card-body pb-0 mb-0">
-                <div class="row">
-                    <div class="col-4">
-                        <h5 class="mt-0 mb-0 pt-0 pb-2">Valuasi Awal :</h5>
-                        <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format(array_key_exists(2024, $mutasidana) ? $mutasidana[2024]['modal'] : 0, 0, ',', '.') }}</h5>
+    <div class="row justify-content-between">
+        <div class="col-lg-6 text-center">
+            <div class="card bg-primary-lt">
+                <div class="card-body pb-0 mb-0">
+                    <div class="row">
+                        <div class="col-4">
+                            <h5 class="mt-0 mb-0 pt-0 pb-2">Valuasi Awal</h5>
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format(array_key_exists(2024, $mutasidana) ? $mutasidana[2024]['modal'] : 0, 0, ',', '.') }}</h5>
+                        </div>
+                        <div class="col-4">
+                            <h5 class="mt-0 mb-0 pt-0 pb-2">Harga Unit Awal</h5>
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format(array_key_exists(2024, $mutasidana) ? $mutasidana[2024]['harga_unit'] : 0, 0, ',', '.') }}</h5>
+                        </div>
+                        <div class="col-4">
+                            <h5 class="mt-0 mb-0 pt-0 pb-2">Jumlah Unit Awal</h5>
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format(array_key_exists(2024, $mutasidana) ? $mutasidana[2024]['jumlah_unit_penyertaan'] : 0, 0, ',', '.') }}</h5>
+                        </div>
                     </div>
-                    <div class="col-4">
-                        <h5 class="mt-0 mb-0 pt-0 pb-2">Harga Unit :</h5>
-                        <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format(array_key_exists(2024, $mutasidana) ? $mutasidana[2024]['harga_unit'] : 0, 0, ',', '.') }}</h5>
-                    </div>
-                    <div class="col-4">
-                        <h5 class="mt-0 mb-0 pt-0 pb-2">Jumlah Unit :</h5>
-                        <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format(array_key_exists(2024, $mutasidana) ? $mutasidana[2024]['jumlah_unit_penyertaan'] : 0, 0, ',', '.') }}</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 text-center">
+            <div class="card bg-teal-lt">
+                <div class="card-body pb-0 mb-0">
+                    <div class="row">
+                        <div class="col-4">
+                            <h5 class="mt-0 mb-0 pt-0 pb-2">Valuasi Saat Ini</h5>
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($saldo, 0, ',', '.') }}</h5>
+                        </div>
+                        <div class="col-4">
+                            <h5 class="mt-0 mb-0 pt-0 pb-2">Harga Unit Saat Ini</h5>
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($lastMutasiDana['harga_unit_saat_ini'], 0, ',', '.') }}</h5>
+                        </div>
+                        <div class="col-4">
+                            <h5 class="mt-0 mb-0 pt-0 pb-2">Jumlah Unit Saat Ini</h5>
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($lastMutasiDana['jumlah_unit_penyertaan'], 0, ',', '.') }}</h5>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -66,6 +90,9 @@
                 <div class="row">
                     <div class="col-6">
                         <h4>Mutasi Dana</h4>
+                    </div>
+                    <div class="col-6 text-muted text-end">
+                        <h4>{{$selectedYear}}</h4>
                     </div>
                 </div>
                 <div class="table-responsive">
@@ -132,11 +159,11 @@
                                         <td style="width:1%" class="text-center">
                                             <span class="btn-group" role="group">
                                                 <a href="" class="btn btn-sm btn-warning w-100 btn-icon"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Buy">
+                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="">
                                                     <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
                                                 </a>
                                                 <a href="" class="btn btn-sm btn-danger w-100 btn-icon"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Sell">
+                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="">
                                                     <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
                                                 </a>
                                             </span>
@@ -164,7 +191,7 @@
                     <div class="col-6">
                         <h4>Riwayat Dana</h4>
                     </div>
-                    <div class="col-6 text-end">
+                    <div class="col-6 text-muted text-end">
                         <h4>Total : Rp. {{ number_format($saldo, 0, ',', '.') }} </h4>
                     </div>
                 </div>
@@ -215,10 +242,10 @@
                                             </td>
                                             <td class="text-center" style="width:1%">
                                                 <span class="btn-group" role="group">
-                                                    <a href="" class="btn btn-sm btn-warning w-100 btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Buy">
+                                                    <a href="" class="btn btn-sm btn-warning w-100 btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="">
                                                         <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
                                                     </a>
-                                                    <a href="" class="btn btn-sm btn-danger w-100 btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Sell">
+                                                    <a href="" class="btn btn-sm btn-danger w-100 btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="">
                                                         <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
                                                     </a>
                                                 </span>
