@@ -122,14 +122,7 @@ class PortofolioController extends Controller
         
     }
 
-    private function mutasiDateFilter($data, $filterValue) 
-    {
-        $year = $filterValue;
-        $data = $data->whereYear('tahun', $year);
-        return ['data' => $data, 'year' => $year];
-    }
-
-    public function filter(Request $request)
+    public function filterMutasi(Request $request)
     {
         $filterValue = $request->input('jenisFilter');
         return redirect()->route('portofolio-mutasi-dana')->with([
@@ -137,38 +130,97 @@ class PortofolioController extends Controller
         ]);
     }
 
-    public function create(Request $request)
+    public function filterHistoris(Request $request)
     {
-        return view('portofolio.portofolio', [
-            'user' => $request->auth['user'],
+        $filterValue = $request->input('jenisFilter');
+        return redirect()->route('portofolio-historis')->with([
+            'filterValue' => $filterValue,
         ]);
     }
 
-    public function make(Request $request)
+    public function filterPortofolio(Request $request)
     {
-        return view('portofolio.portofolioril', [
-            'user' => $request->auth['user'],
+        $filterValue = $request->input('jenisFilter');
+        return redirect()->route('portofolio')->with([
+            'filterValue' => $filterValue,
         ]);
     }
 
     public function historis(Request $request)
-    {
-        $responses = Http::pool(fn (Pool $pool) => [
-            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/historis'),
-        ]);
-        // dd($responses[0]);
+{
+    $filterValue = session('filterValue');
+    
+    $responses = Http::pool(fn (Pool $pool) => [
+        $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/historis'),
+    ]);
 
-        if ($responses[0]->successful()){
-            $historisData = $responses[0]->json()['data']['historis'];
-            // dd($beritaData);
-            return view('portofolio.historis', [
-                'user' => $request->auth['user'],
-                'historisData' => $historisData,
-            ]);
-        } else {
-            abort(500, 'Failed to fetch data from API');
-        }
+    if ($responses[0]->successful()) {
+        $historisData = $responses[0]->json()['data']['historis'];
+
+        $currentYear = Carbon::now()->year;
+        $selectedYear = $filterValue ?? $currentYear;
+
+        // Filter data berdasarkan tahun terpilih
+        $filteredData = collect($historisData)->filter(function ($item) use ($selectedYear) {
+            return $item['historis_tahunan']['tahun'] == $selectedYear;
+        });
+
+        // Kelompokkan data berdasarkan bulan
+        $groupedByMonth = $filteredData->groupBy('bulan')->map(function ($items) {
+            return [
+                'yield' => $items->pluck('yield')->first() ?? '0.00',
+                'ihsg' => $items->pluck('ihsg')->first() ?? null,
+                'lq45' => $items->pluck('lq45')->first() ?? null,
+            ];
+        });
+
+        // Buat struktur data berdasarkan tahun
+        $resultData = [
+            'tahun' => $selectedYear,
+            'yield' => $filteredData->pluck('historis_tahunan.yield')->first() ?? '0.00',
+            'ihsg' => $filteredData->pluck('historis_tahunan.ihsg')->first() ?? null,
+            'lq45' => $filteredData->pluck('historis_tahunan.lq45')->first() ?? null,
+            'bulan' => $groupedByMonth,
+        ];
+
+        // Buat struktur data berdasarkan tahun untuk mengambil data terakhir per tahun
+        $groupedByYear = collect($historisData)->groupBy(function ($item) {
+            return $item['historis_tahunan']['tahun'];
+        });
+
+        $historisByYear = $groupedByYear->map(function ($yearGroup) {
+            // Ambil data terakhir berdasarkan bulan (misalnya bulan terbesar)
+            $latestMonth = $yearGroup->sortByDesc('bulan')->first();
+
+            return [
+                'tahun' => $latestMonth['historis_tahunan']['tahun'],
+                'yield' => $latestMonth['yield'] ?? '0.00',
+                'ihsg' => $latestMonth['ihsg'] ?? null,
+                'lq45' => $latestMonth['lq45'] ?? null,
+            ];
+        });
+
+        // dd($historisByYear);
+
+        // Ambil semua tahun unik untuk filter
+        $uniqueYears = collect($historisData)
+            ->pluck('historis_tahunan.tahun')
+            ->unique()
+            ->sort()
+            ->values();
+
+        return view('portofolio.historis', [
+            'user' => $request->auth['user'],
+            'resultData' => $resultData, // Data hasil transformasi
+            'uniqueYears' => $uniqueYears,
+            'selectedYear' => $selectedYear,
+            'groupedByMonth' => $groupedByMonth,
+            'historisByYear' => $historisByYear,
+        ]);
+    } else {
+        abort(500, 'Failed to fetch data from API');
     }
+}
 
     public function berita(Request $request)
     {

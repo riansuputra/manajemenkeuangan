@@ -8,10 +8,9 @@
         Mutasi Dana
     </h2>
     <div class="text-muted mt-1">Tahun {{$selectedYear}}</div>
-
 </div>
 <div class="col-auto d-print-none" >
-	<form class="row"id="filterForm" action="{{ route('dashboard-filter') }}" method="POST">
+	<form class="row"id="filterForm" action="{{ route('mutasi-filter') }}" method="POST">
 		@csrf
 		<div class="col-auto d-print-none input-group">
             <select class="form-select" name="jenisFilter" id="jenisFilter">

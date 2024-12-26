@@ -33,7 +33,9 @@ Route::middleware([App\Http\Middleware\AdminUserMiddleware::class])->group(funct
 {
     Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
     Route::post('/dashboard-filter',[DashboardController::class,'filter'])->name('dashboard-filter');
-    Route::post('/mutasi-filter',[PortofolioController::class,'filter'])->name('dashboard-filter');
+    Route::post('/mutasi-filter',[PortofolioController::class,'filterMutasi'])->name('mutasi-filter');
+    Route::post('/historis-filter',[PortofolioController::class,'filterHistoris'])->name('historis-filter');
+    Route::post('/portofolio-filter',[PortofolioController::class,'filterPortofolio'])->name('portofolio-filter');
     Route::get('/logout',[AuthController::class,'logout'])->name('logout');
     // Route::get('/catatan',[CatatanController::class,'index'])->name('catatan');
     // Route::get('/catatan', function () {return view('catatan.index');})->name('catatan');
@@ -107,9 +109,7 @@ Route::middleware([App\Http\Middleware\UserMiddleware::class])->group(function()
 
     Route::post('/saldo-store', [SaldoController::class, 'store'])->name('saldoStore');
 
-    Route::get('/portofolio-test', [PortofolioController::class, 'create'])->name('portofolio-historis');
-    Route::get('/portofolio-testing', [PortofolioController::class, 'make'])->name('portofolio-historis');
-    Route::get('/histori', [PortofolioController::class, 'histori'])->name('portofolio-historis');
+    // Route::get('/histori', [PortofolioController::class, 'historis'])->name('portofolio-historis');
 });
 
 Route::get('/test', function () {
