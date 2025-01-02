@@ -75,15 +75,15 @@
                     <div class="row">
                         <div class="col-4">
                             <h5 class="mt-0 mb-0 pt-0 pb-2">Valuasi Saat Ini</h5>
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($saldo, 0, ',', '.') }}</h5>
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($saldo ?? 0, 0, ',', '.') }}</h5>
                         </div>
                         <div class="col-4">
                             <h5 class="mt-0 mb-0 pt-0 pb-2">Harga Unit Saat Ini</h5>
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($lastMutasiDana['harga_unit_saat_ini'], 0, ',', '.') }}</h5>
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($lastMutasiDana['harga_unit_saat_ini'] ?? 0, 0, ',', '.') }}</h5>
                         </div>
                         <div class="col-4">
                             <h5 class="mt-0 mb-0 pt-0 pb-2">Jumlah Unit Saat Ini</h5>
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($lastMutasiDana['jumlah_unit_penyertaan'], 0, ',', '.') }}</h5>
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($lastMutasiDana['jumlah_unit_penyertaan'] ?? 0, 0, ',', '.') }}</h5>
                         </div>
                     </div>
                 </div>

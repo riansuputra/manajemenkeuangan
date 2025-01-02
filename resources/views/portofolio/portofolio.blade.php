@@ -60,11 +60,11 @@
                             <h5 class="mt-0 mb-1 pt-0 pb-2">1000</h5>
                         </div>
                         <div class="col-3">
-                            <h5 class="mt-0 mb-0 pt-0 pb-2">Valuation :</h5>
+                            <h5 class="mt-0 mb-0 pt-0 pb-2">Valuasi :</h5>
                             <h5 class="mt-0 mb-1 pt-0 pb-2">1000</h5>
                         </div>
                         <div class="col-3">
-                            <h5 class="mt-0 mb-0 pt-0 pb-2">Equity :</h5>   
+                            <h5 class="mt-0 mb-0 pt-0 pb-2">Modal :</h5>   
                             <h5 class="mt-0 mb-1 pt-0 pb-2">1000</h5>   
                         </div>
                         
@@ -76,26 +76,28 @@
             <div class="card bg-primary-lt">
                 <div class="card-body pb-0 mb-0">
                     <div class="row">
+                       
                         <div class="col-3">
-                            <a href="" title="click to edit" data-bs-toggle="modal" data-bs-target="#modal-ihsg">
-                                <h5 class="mt-0 mb-0 pt-0 pb-2">IHSG Start </h5>
-                                <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($sortedHistorisData['ihsg_start'], 0, ',', '.' )}}</h5>
-                            </a>
+                            <h5 class="mt-0 mb-0 pt-0 pb-2">Yield IHSG :</h5>
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ $sortedHistorisData['yield_ihsg'] ?? 0}}%</h5>
+                        </div>
+                        <div class="col-3">
+                            <h5 class="mt-0 mb-0 pt-0 pb-2">Yield :</h5>   
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ $sortedHistorisData['yield'] ?? 0}}%</h5>   
                         </div>
                         <div class="col-3">
                             <a href="" title="click to edit" data-bs-toggle="modal" data-bs-target="#modal-ihsg">
                                 <h5 class="mt-0 mb-0 pt-0 pb-2">IHSG End </h5>
-                                <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($sortedHistorisData['ihsg_end'], 0, ',', '.' )}}</h5>
+                                <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($sortedHistorisData['ihsg_end'] ?? 0, 0, ',', '.')}}</h5>
                             </a>
                         </div>
                         <div class="col-3">
-                            <h5 class="mt-0 mb-0 pt-0 pb-2">Yield IHSG :</h5>
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{$sortedHistorisData['yield_ihsg']}}</h5>
+                            <a href="" title="click to edit" data-bs-toggle="modal" data-bs-target="#modal-ihsg">
+                                <h5 class="mt-0 mb-0 pt-0 pb-2">IHSG Start </h5>
+                                <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($sortedHistorisData['ihsg_start'] ?? 0, 0, ',', '.' )}}</h5>
+                            </a>
                         </div>
-                        <div class="col-3">
-                            <h5 class="mt-0 mb-0 pt-0 pb-2">Yield :</h5>   
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{$sortedHistorisData['yield']}}</h5>   
-                        </div>
+                       
                         
                     </div>
                 </div>
@@ -283,13 +285,13 @@
                     <div class="row mb-2">
                         <div class="col-lg-6">
                             <div class="form-floating mb-3">
-                                <input type="text" id="ihsgstartlabel" name="ihsgstartlabel" value="{{ number_format($filteredHistorisData ? $filteredHistorisData->first()['ihsg_start'] : '0', 0, ',', '.')  }}" class="form-control text-strong text-warning border-warning mt-2" autocomplete="off" readonly>
+                                <input type="text" id="ihsgstartlabel" name="ihsgstartlabel" value="{{ $filteredHistorisData && !$filteredHistorisData->isEmpty() ? number_format($filteredHistorisData->first()['ihsg_start'], 0, ',', '.') : '0'  }}" class="form-control text-strong text-warning border-warning mt-2" autocomplete="off" readonly>
                                 <label for="ihsgstartlabel" class="form-label text-black">IHSG Start Sebelumnya :</label>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-floating mb-3">
-                                <input type="text" id="ihsgendlabel" name="ihsgendlabel" value="{{ number_format($filteredHistorisData->where('bulan', $currentMonth) ? $filteredHistorisData->where('bulan', $currentMonth)->first()['ihsg_end'] : '0', 0, ',', '.')  }}" class="form-control text-strong text-success border-success mt-2" autocomplete="off" readonly>
+                                <input type="text" id="ihsgendlabel" name="ihsgendlabel" value="{{ $filteredHistorisData && !$filteredHistorisData->isEmpty() ? number_format($filteredHistorisData->where('bulan', $currentMonth)->first()['ihsg_end'], 0, ',', '.') : '0' }}" class="form-control text-strong text-success border-success mt-2" autocomplete="off" readonly>
                                 <label for="ihsgendlabel" class="form-label text-black">IHSG End {{ \Carbon\Carbon::create($currentMonth)->locale('id')->translatedFormat('F') }} :</label>
                             </div>
                         </div>

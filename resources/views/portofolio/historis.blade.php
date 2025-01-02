@@ -49,6 +49,7 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @if(!empty($historisByYear->toArray()))
                                 @foreach($historisByYear as $tahun => $data)
                                 <tr>
                                     <td style="width:5%" class="text-center">{{ $tahun }}</td>
@@ -56,6 +57,11 @@
                                     <td class="text-center">{{ $data['yield_ihsg'] !== null ? number_format($data['yield_ihsg'], 2) . '%' : '-' }}</td>
                                 </tr>
                                 @endforeach
+                                @else
+                                <tr>
+                                    <td class="text-center" colspan="3">Belum ada riwayat tahunan.</td>
+                                </tr>
+                                @endif
                             </tbody>
                         </table>
                     </div>
@@ -83,6 +89,7 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @if(!empty($historisByYear->toArray()))
                                 @foreach($groupedByMonth as $bulan => $data)
                                 <tr>
                                     <td style="width:5%">{{ \Carbon\Carbon::create()->month($bulan)->locale('id')->translatedFormat('F') }}</td>
@@ -90,6 +97,11 @@
                                     <td class="text-center">{{ $data['yield_ihsg'] !== null ? number_format($data['yield_ihsg'], 2) . '%' : '-' }}</td>
                                 </tr>
                                 @endforeach
+                                @else
+                                <tr>
+                                    <td class="text-center" colspan="3">Belum ada riwayat bulanan.</td>
+                                </tr>
+                                @endif
                             </tbody>
                         </table>
                     </div>
