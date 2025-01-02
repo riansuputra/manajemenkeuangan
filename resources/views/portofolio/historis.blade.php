@@ -20,7 +20,7 @@
 			</select>
             <div class="col-auto d-print-none" name="btnFilter" id="btnFilter">
                 <button type="submit" class="btn pe-1">
-                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-filter-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11.18 20.274l-2.18 .726v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414v3" /><path d="M15 19l2 2l4 -4" /></svg>
+                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-filter-search"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11.36 20.213l-2.36 .787v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414" /><path d="M18 18m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /><path d="M20.2 20.2l1.8 1.8" /></svg>
                 </button>
             </div>
         </div>
@@ -53,7 +53,7 @@
                                 <tr>
                                     <td style="width:5%" class="text-center">{{ $tahun }}</td>
                                     <td class="text-center">{{ $data['yield'] !== null ? number_format($data['yield'], 2) . '%' : '-' }}</td>
-                                    <td class="text-center">{{ $data['ihsg'] !== null ? number_format($data['ihsg'], 2) . '%' : '-' }}</td>
+                                    <td class="text-center">{{ $data['yield_ihsg'] !== null ? number_format($data['yield_ihsg'], 2) . '%' : '-' }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -87,7 +87,7 @@
                                 <tr>
                                     <td style="width:5%">{{ \Carbon\Carbon::create()->month($bulan)->locale('id')->translatedFormat('F') }}</td>
                                     <td class="text-center">{{ $data['yield'] !== null ? number_format($data['yield'], 2) . '%' : '-' }}</td>
-                                    <td class="text-center">{{ $data['ihsg'] !== null ? number_format($data['ihsg'], 2) . '%' : '-' }}</td>
+                                    <td class="text-center">{{ $data['yield_ihsg'] !== null ? number_format($data['yield_ihsg'], 2) . '%' : '-' }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -136,7 +136,7 @@
         const seriesData = {
             labels: [],
             yield: [],
-            ihsg: [],
+            yield_ihsg: [],
         };
         console.log('@json($selectedYear)');
         // Proses data dari PHP
@@ -145,7 +145,7 @@
             const monthFormatted = month.padStart(2, '0'); // Pastikan bulan memiliki format dua digit
             seriesData.labels.push(`${year}-${monthFormatted}`);
             seriesData.yield.push(parseFloat(data.yield));
-            seriesData.ihsg.push(data.ihsg !== null ? parseFloat(data.ihsg) : null);
+            seriesData.yield_ihsg.push(data.yield_ihsg !== null ? parseFloat(data.yield_ihsg) : null);
         }
 
         // Konfigurasi ApexCharts
@@ -162,7 +162,7 @@
             stroke: { width: 2, lineCap: "round", curve: "straight" },
             series: [
                 { name: "YIELD", data: seriesData.yield },
-                { name: "IHSG", data: seriesData.ihsg },
+                { name: "YIELD IHSG", data: seriesData.yield_ihsg },
             ],
             tooltip: { theme: 'dark' },
             grid: {

@@ -20,7 +20,7 @@
 			</select>
             <div class="col-auto d-print-none" name="btnFilter" id="btnFilter">
                 <button type="submit" class="btn pe-1">
-                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-filter-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11.18 20.274l-2.18 .726v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414v3" /><path d="M15 19l2 2l4 -4" /></svg>
+                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-filter-search"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11.36 20.213l-2.36 .787v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414" /><path d="M18 18m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /><path d="M20.2 20.2l1.8 1.8" /></svg>
                 </button>
             </div>
         </div>
@@ -28,13 +28,20 @@
 </div>
 <div class="col-auto ms-auto d-print-none">
 	<div class="btn-list">
-        <a href="" class="btn btn-warning d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-saldo">
-            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-coin"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M14.8 9a2 2 0 0 0 -1.8 -1h-2a2 2 0 1 0 0 4h2a2 2 0 1 1 0 4h-2a2 2 0 0 1 -1.8 -1" /><path d="M12 7v10" /></svg>
+        <a href="" class="btn btn-success d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-saldo">
+        	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
             Kelola Dana
 		</a>
-        <a href="" class="btn btn-warning d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-saldo">
-            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-coin"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M14.8 9a2 2 0 0 0 -1.8 -1h-2a2 2 0 1 0 0 4h2a2 2 0 1 1 0 4h-2a2 2 0 0 1 -1.8 -1" /><path d="M12 7v10" /></svg>
-		</a>    
+        <a href="" class="btn btn-success d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-saldo">
+        	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+		</a>
+        <a href="{{ route('portofolio') }}" class="btn btn-warning d-none d-sm-inline-block">
+            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-file-spreadsheet"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M8 11h8v7h-8z" /><path d="M8 15h8" /><path d="M11 11v7" /></svg>        	
+          	Portofolio
+      	</a>
+        <a href="{{ route('portofolio') }}" class="btn btn-warning d-sm-none btn-icon" aria-label="Create new report">
+            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-file-spreadsheet"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M8 11h8v7h-8z" /><path d="M8 15h8" /><path d="M11 11v7" /></svg>
+		</a>
 	</div>
 </div>
 @endsection
@@ -95,7 +102,7 @@
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-bordered table-vcenter table-striped" style="--tblr-table-striped-bg: #f6f8fb;">
+                    <table class="table table-bordered table-vcenter table-striped">
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
@@ -171,11 +178,11 @@
                                     @endforeach
                                 @endforeach
                             @endforeach
-                                    @else
-                                        <tr>
-                                            <td class="text-center" colspan="7">Belum ada mutasi dana.</td>
-                                        </tr>
-                                    @endif
+                            @else
+                                <tr>
+                                    <td class="text-center" colspan="7">Belum ada mutasi dana.</td>
+                                </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>
@@ -195,7 +202,7 @@
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-bordered table-vcenter table-striped" style="--tblr-table-striped-bg: #f6f8fb;">
+                    <table class="table table-bordered table-vcenter table-striped">
                     <thead>
                             <tr>
                                 <th class="text-center">No</th>
@@ -208,7 +215,8 @@
                         <tbody>
                             @if (!empty($saldoData))
                                 @php
-                                    $groupedSaldoData = collect($saldoData)->groupBy('tanggal'); // Mengelompokkan data berdasarkan tanggal
+                                    $sortedGroupedSaldoData = collect($saldoData)->groupBy('tanggal'); // Mengelompokkan data berdasarkan tanggal
+                                    $groupedSaldoData = $sortedGroupedSaldoData->sortKeysDesc();
                                 @endphp
                                 @foreach ($groupedSaldoData as $tanggal => $dataGroup)
                                     @php
@@ -252,11 +260,11 @@
                                         </tr>
                                     @endforeach
                                 @endforeach
-                            @else
-                                <tr>
-                                    <td class="text-center" colspan="5">Belum ada riwayat dana.</td>
-                                </tr>
-                            @endif
+                                @else
+                                    <tr>
+                                        <td class="text-center" colspan="5">Belum ada riwayat dana.</td>
+                                    </tr>
+                                @endif
 
                         </tbody>
                     </table>
@@ -291,7 +299,7 @@
                         <div class="col-lg-6">
                             <div class="mb-3">
                                 <label class="form-label required">Tanggal: </label>
-                                <input type="date" name="tanggal" id="tanggal" class="form-control" value="{{ now()->format('Y-m-d') }}" required>
+                                <input type="date" name="tanggal" id="tanggal" class="form-control" min="{{ now()->format('Y-m-d') }}" value="{{ now()->format('Y-m-d') }}" required>
                             </div>
                         </div>
                     </div>
@@ -303,7 +311,7 @@
                                     <span class="input-group-text">
                                         Rp.
                                     </span>
-                                    <input type="text" id="jumlah" name="jumlah" class="form-control text-end" autocomplete="off" required>
+                                    <input type="text" id="jumlah" name="jumlah" class="form-control text-end" autocomplete="off" placeholder="0" required>
                                     <input type="text" id="jumlah1" name="jumlah1" class="form-control text-end" autocomplete="off" hidden>
                                 </div>
                                 

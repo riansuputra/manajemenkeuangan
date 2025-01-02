@@ -107,6 +107,8 @@ Route::middleware([App\Http\Middleware\UserMiddleware::class])->group(function()
     Route::get('/portofolio-kinerja', [PortofolioController::class, 'kinerja'])->name('portofolio-kinerja');
     Route::get('/portofolio-historis', [PortofolioController::class, 'historis'])->name('portofolio-historis');
 
+    Route::post('/historis-store', [PortofolioController::class, 'historisStore'])->name('historisStore');
+
     Route::post('/saldo-store', [SaldoController::class, 'store'])->name('saldoStore');
 
     // Route::get('/histori', [PortofolioController::class, 'historis'])->name('portofolio-historis');

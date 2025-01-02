@@ -5,18 +5,20 @@
 @section('page-title')
 <div class="col">
     <h2 class="page-title">Portofolio</h2>
-    <div class="text-muted mt-1">Tahun 2024</div>
+    <div class="text-muted mt-1">Tahun {{$selectedYear}}</div>
 </div>
 <div class="col-auto d-print-none" >
-	<form class="row"id="filterForm" action="{{ route('dashboard-filter') }}" method="POST">
+	<form class="row"id="filterForm" action="{{ route('portofolio-filter') }}" method="POST">
 		@csrf
 		<div class="col-auto d-print-none input-group">
             <select class="form-select" name="jenisFilter" id="jenisFilter">
-				<option value="Kisaran" {{ 'test' == 'Kisaran' ? 'selected' : '' }}>2024</option>
+                @foreach($groupedData as $year => $data)
+				<option value="{{$year}}" {{ $year == $selectedYear ? 'selected' : '' }}>{{$year}}</option>
+                @endforeach
 			</select>
             <div class="col-auto d-print-none" name="btnFilter" id="btnFilter">
                 <button type="submit" class="btn pe-1">
-                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-filter-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11.18 20.274l-2.18 .726v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414v3" /><path d="M15 19l2 2l4 -4" /></svg>
+                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-filter-search"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11.36 20.213l-2.36 .787v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414" /><path d="M18 18m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /><path d="M20.2 20.2l1.8 1.8" /></svg>    
                 </button>
             </div>
         </div>
@@ -31,11 +33,11 @@
         <a href="" class="btn btn-success d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-portofolio" aria-label="Create new report">
 			<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
 		</a>
-        <a href="" class="btn btn-warning d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-portofolio">
+        <a href="{{ route('portofolio-mutasi-dana') }}" class="btn btn-warning d-none d-sm-inline-block">
             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-coin"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M14.8 9a2 2 0 0 0 -1.8 -1h-2a2 2 0 1 0 0 4h2a2 2 0 1 1 0 4h-2a2 2 0 0 1 -1.8 -1" /><path d="M12 7v10" /></svg>
-          	Top Up
+          	Mutasi Dana
       	</a>
-        <a href="" class="btn btn-warning d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-portofolio" aria-label="Create new report">
+        <a href="{{ route('portofolio-mutasi-dana') }}" class="btn btn-warning d-sm-none btn-icon" aria-label="Create new report">
             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-coin"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M14.8 9a2 2 0 0 0 -1.8 -1h-2a2 2 0 1 0 0 4h2a2 2 0 1 1 0 4h-2a2 2 0 0 1 -1.8 -1" /><path d="M12 7v10" /></svg>
 		</a> 
 	</div>
@@ -46,7 +48,7 @@
 <div class="container-xl">
     <div class="row justify-content-between">
         <div class="col-lg-6 text-center">
-            <div class="card bg-primary-lt">
+            <div class="card bg-teal-lt">
                 <div class="card-body pb-0 mb-0">
                     <div class="row">
                         <div class="col-3">
@@ -71,25 +73,28 @@
             </div>
         </div>
         <div class="col-lg-6 text-center">
-            <div class="card bg-teal-lt">
+            <div class="card bg-primary-lt">
                 <div class="card-body pb-0 mb-0">
                     <div class="row">
                         <div class="col-3">
-                            <h5 class="mt-0 mb-0 pt-0 pb-2">IHSG Start </h5>
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">1000
-                            </h5>
+                            <a href="" title="click to edit" data-bs-toggle="modal" data-bs-target="#modal-ihsg">
+                                <h5 class="mt-0 mb-0 pt-0 pb-2">IHSG Start </h5>
+                                <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($sortedHistorisData['ihsg_start'], 0, ',', '.' )}}</h5>
+                            </a>
                         </div>
                         <div class="col-3">
-                            <h5 class="mt-0 mb-0 pt-0 pb-2">IHSG End :</h5>
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">1000</h5>
+                            <a href="" title="click to edit" data-bs-toggle="modal" data-bs-target="#modal-ihsg">
+                                <h5 class="mt-0 mb-0 pt-0 pb-2">IHSG End </h5>
+                                <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($sortedHistorisData['ihsg_end'], 0, ',', '.' )}}</h5>
+                            </a>
                         </div>
                         <div class="col-3">
                             <h5 class="mt-0 mb-0 pt-0 pb-2">Yield IHSG :</h5>
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">1000</h5>
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{$sortedHistorisData['yield_ihsg']}}</h5>
                         </div>
                         <div class="col-3">
                             <h5 class="mt-0 mb-0 pt-0 pb-2">Yield :</h5>   
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">1000</h5>   
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{$sortedHistorisData['yield']}}</h5>   
                         </div>
                         
                     </div>
@@ -120,29 +125,32 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @if($sortedData->isNotEmpty())
+                            @foreach($sortedData as $key => $index)
+                            @if ($loop->first)
                             <tr>
                                 <td class="text-center"></td>
                                 <td class="fw-bold text-center" colspan="2">KAS</td>
-                                <td class="text-end fw-bold" colspan="2">100</td>
+                                <td class="text-end fw-bold" colspan="2">{{number_format($index['cur_price'], 0, ',', '.')}}</td>
                                 <td class="text-end" hidden>1</td>
                                 <td class="text-end" hidden>1</td>
-                                <td class="text-end fw-bold">001</td>
+                                <td class="text-end fw-bold">{{ number_format($index['kinerja_portofolio']['valuasi_saat_ini'], 0, ',', '.')}}</td>
                                 <td class="text-end fw-bold">100</td>
                                 <td class="text-end fw-bold">10</td>
                                 <td class="text-end" hidden>1</td>
                                 <td class="text-end" hidden>1</td>
                                 <td class="text-end">1</td>
                             </tr>
-                            
+                            @else
                             <tr>
-                                <td style="width:1%" class="text-center">1</td>
-                                <td style="width:1%"><span class="avatar avatar-xs" style="background-image: url(https://s3.goapi.io/logo/ACST.jpg); --tblr-avatar-size:1.3rem;"></span></td>
-                                <td style="width:6%">ACST</td>
-                                <td class="text-end">1000</td>
-                                <td class="text-end"hidden>1</td>
-                                <td class="text-end">1000</td>
-                                <td class="text-end" hidden>1</td>
-                                <td class="text-end">1000</td>
+                                <td style="width:1%" class="text-center">{{$loop->iteration - 1}}</td>
+                                <td style="width:1%"><span class="avatar avatar-xs" style="background-image: url({{$index['aset']['info']}}); --tblr-avatar-size:1.3rem;"></span></td>
+                                <td style="width:6%">{{$index['aset']['nama']}}</td>
+                                <td class="text-end">{{ number_format($index['volume'], 0, ',', '.')}}</td>
+                                <td class="text-end"hidden>{{ number_format($index['avg_price'], 0, ',', '.')}}</td>
+                                <td class="text-end">{{ number_format($index['cur_price'], 0, ',', '.')}}</td>
+                                <td class="text-end" hidden>{{ number_format($index['volume'] * $index['cur_price'] , 0, ',', '.')}}</td>
+                                <td class="text-end">{{ number_format($index['kinerja_portofolio']['valuasi_saat_ini'], 0, ',', '.')}}</td>
                                 <td class="text-end">1000</td>
                                 <td class="text-end">test</td>
                                 <td class="text-end" hidden>1</td>
@@ -161,7 +169,13 @@
                                     </span>
                                 </td>
                             </tr>
-                           
+                           @endif
+                           @endforeach
+                           @else
+                            <tr>
+                                <td colspan="12" class="text-center">Tidak ada data yang tersedia.</td>
+                            </tr>
+                        @endif
                         </tbody>
                     </table>
                 </div>
@@ -173,62 +187,71 @@
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Tambah Portofolio</h5>
+                <h5 class="modal-title">Tambah Transaksi</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="{{ route('portofolioStore') }}" method="post" autocomplete="off">
                 @csrf
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-lg-8">
+                        
+                        <div class="col-lg-3">
                             <div class="mb-3">
-                                <label class="form-label">Pilih Saham:</label>
+                                <label class="form-label required">Jenis Transaksi:</label>
+                                <select name="jenis_transaksi" class="form-select" required>
+                                    <option value="" selected disabled>Pilih Jenis</option>
+                                    <option value="beli">Beli</option>
+                                    <option value="jual">Jual</option>
+                                    <option value="dividen">Dividen</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                <label class="form-label required">Pilih Saham:</label>
                                 <select name="id_saham" type="text" class="form-select" id="select-people" value="" required>
                                     <option value="" selected>Pilih Saham</option>
+                                    @foreach ($filteredAsetData as $saham)
+                                    <option value="{{$saham['nama']}}" data-custom-properties="<span class='avatar avatar-xs' style='background-image: url({{ $saham['info'] }})'></span>"> {{$saham['nama']}}</option>
+                                   @endforeach
                                    
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <div class="mb-3">
-                                <label class="form-label">Tanggal Beli: </label>
-                                <input type="date" name="tanggal_beli" id="tanggal_beli" class="form-control" value="{{ now()->format('Y-m-d') }}">
+                                <label class="form-label required">Tanggal: </label>
+                                <input type="date" name="tanggal" id="tanggal" class="form-control" min="{{ now()->format('Y-m-d') }}"  value="{{ now()->format('Y-m-d') }}">
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-4">
+                        <div class="col-lg-6">
                             <div class="mb-3">
-                                <label class="form-label">Jumlah Lembar: </label>
+                                <label class="form-label required">Jumlah Lembar: </label>
                                 <div class="input-group">
-                                    <input type="number" id="jumlahlembar" name="jumlahlembar" class="form-control text-end" autocomplete="off" required>
+                                    <input type="text" id="jumlahlembar" name="jumlahlembar" class="form-control text-end" autocomplete="off" placeholder="0" required >
+                                    <input type="text" id="jumlahlembar1" name="jumlahlembar1" class="form-control text-end" autocomplete="off" hidden>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-6">
                             <div class="mb-3">
-                                <label class="form-label">Avg. Price: </label>
+                                <label class="form-label required">Harga: </label>
                                 <div class="input-group">
                                     <span class="input-group-text">
                                         Rp.
                                     </span>
-                                    <input type="text" id="jumlah" oninput="updateFormattedNumberSaham()" name="jumlah" class="form-control text-end" autocomplete="off" required>
+                                    <input type="text" id="jumlah" name="jumlah" class="form-control text-end" autocomplete="off" required placeholder="0">
                                     <input type="text" id="jumlah1" name="jumlah1" class="form-control text-end" autocomplete="off" hidden>
                                 </div>
                                 
                             </div>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="mb-3">
-                                <label class="form-label">Current Price: </label>
-                                <div class="input-group">
-                                    <span class="input-group-text">
-                                        Rp.
-                                    </span>
-                                    <input type="text" id="avgprice" oninput="updateFormattedNumberAvg()" name="avgprice" class="form-control text-end" autocomplete="off" required>
-                                    <input type="text" id="avgprice1" name="avgprice1" class="form-control text-end" autocomplete="off" hidden>
-                                </div>
-                                
+                        <div class="col-lg-12">
+                            <div>
+                                <label class="form-label">Deskripsi</label>
+                                <textarea class="form-control" rows="3"></textarea>
                             </div>
                         </div>
                     </div>
@@ -237,9 +260,9 @@
                     <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
                         Batal
                     </a>
-                    <button type="submit" class="btn btn-primary ms-auto">
+                    <button type="submit" class="btn btn-success ms-auto">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                        Tambah Catatan
+                        Simpan
                     </button>
                 </div>
             </form>	
@@ -247,38 +270,123 @@
     </div>
 </div>
 
+<div class="modal modal-blur fade" id="modal-ihsg" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Kelola IHSG {{ \Carbon\Carbon::create($currentMonth)->locale('id')->translatedFormat('F') }} {{$selectedYear}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ route('historisStore') }}" method="post" autocomplete="off">
+                @csrf
+                <div class="modal-body">
+                    <div class="row mb-2">
+                        <div class="col-lg-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" id="ihsgstartlabel" name="ihsgstartlabel" value="{{ number_format($filteredHistorisData ? $filteredHistorisData->first()['ihsg_start'] : '0', 0, ',', '.')  }}" class="form-control text-strong text-warning border-warning mt-2" autocomplete="off" readonly>
+                                <label for="ihsgstartlabel" class="form-label text-black">IHSG Start Sebelumnya :</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" id="ihsgendlabel" name="ihsgendlabel" value="{{ number_format($filteredHistorisData->where('bulan', $currentMonth) ? $filteredHistorisData->where('bulan', $currentMonth)->first()['ihsg_end'] : '0', 0, ',', '.')  }}" class="form-control text-strong text-success border-success mt-2" autocomplete="off" readonly>
+                                <label for="ihsgendlabel" class="form-label text-black">IHSG End {{ \Carbon\Carbon::create($currentMonth)->locale('id')->translatedFormat('F') }} :</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label class="form-label required">Bulan: </label>
+                                <select name="bulan" id="bulan" class="form-select" required>
+                                    <option value="" disabled selected>Pilih Bulan</option>
+                                    @foreach (range(1, 12) as $month)
+                                        <option value="{{ $month }}" {{ $month == $currentMonth ? 'selected' : '' }}>
+                                            {{ \Carbon\Carbon::createFromFormat('!m', $month)->locale('id')->translatedFormat('F') }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <input type="number" id="tahun" name="tahun" value="{{$selectedYear}}" hidden>
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label class="form-label">IHSG Start: </label>
+                                <div class="input-group">
+                                    <input type="text" id="ihsgstart" name="ihsgstart" class="form-control text-end" autocomplete="off" placeholder="0" required>
+                                    <input type="text" id="ihsgstart1" name="ihsgstart1" class="form-control text-end" autocomplete="off" hidden>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label class="form-label">IHSG End: </label>
+                                <div class="input-group">
+                                    <input type="text" id="ihsgend" name="ihsgend" class="form-control text-end" autocomplete="off" placeholder="0" required>
+                                    <input type="text" id="ihsgend1" name="ihsgend1" class="form-control text-end" autocomplete="off" hidden>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+                        Batal
+                    </a>
+                    <button type="submit" class="btn btn-success ms-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                        SImpan
+                    </button>
+                </div>
+            </form>	
+        </div>
+    </div>
+</div>
 <script>
-    function formatNumberAvg(num) {
+    function formatNumberPorto(num) {
         const parts = num.toString().split(".");
         const integerPart = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         const decimalPart = parts.length > 1 ? "," + parts[1] : "";
         return integerPart + decimalPart;
     }
 
-    function updateFormattedNumberAvg() {
-        var inputElementAvg = document.getElementById('avgprice');
-        var rawValueAvg = inputElementAvg.value.replace(/\D/g, ''); // Remove non-numeric characters
-        var formattedValueAvg = formatNumberAvg(rawValueAvg); // Format the number
-        inputElementAvg.value = formattedValueAvg; // Update the input field with formatted value
-        inputElementAvg.setAttribute('data-value', rawValueAvg); // Store unformatted value in a data attribute
-        setUnformattedValueToInputAvg(); // Set the unformatted value to the input field jumlah1
+    function updateFormattedNumberPorto(elementId, inputId, dataAttribute) {
+        var inputElement = document.getElementById(elementId);
+        var rawValue = inputElement.value.replace(/\D/g, ''); // Remove non-numeric characters
+        var formattedValue = formatNumberPorto(rawValue); // Format the number
+        inputElement.value = formattedValue; // Update the input field with formatted value
+        inputElement.setAttribute('data-value', rawValue); // Store unformatted value in a data attribute
+        setUnformattedValueToInputPorto(inputId, dataAttribute); // Set the unformatted value to the input field
     }
 
-    function setUnformattedValueToInputAvg() {
-        var unformattedValueAvg = getUnformattedValueAvg(); // Retrieve the unformatted value
-        var inputElementAvg = document.getElementById('avgprice1');
-        inputElementAvg.value = unformattedValueAvg; // Set the unformatted value to the input field jumlah1
+    function setUnformattedValueToInputPorto(inputId, dataAttribute) {
+        var unformattedValuePorto = getUnformattedValuePorto(dataAttribute); // Retrieve the unformatted value
+        var inputElement = document.getElementById(inputId);
+        inputElement.value = unformattedValuePorto; // Set the unformatted value to the input field
     }
-    // Function to get the unformatted value from the data attribute
-    function getUnformattedValueAvg() {
-        var inputElementAvg = document.getElementById('avgprice');
-        var unformattedValueAvg = inputElementAvg.getAttribute('data-value') || ''; // Retrieve unformatted value from data attribute
-        return unformattedValueAvg;
+
+    function getUnformattedValuePorto(dataAttribute) {
+        var inputElement = document.getElementById(dataAttribute);
+        return inputElement.getAttribute('data-value') || ''; // Retrieve unformatted value from data attribute
     }
-    // Attach event listener to the input field to trigger formatting as the user types
-    document.getElementById('avgprice').addEventListener('input', updateFormattedNumberAvg);
-</script>                     
-                          
+
+    // Attach event listener to the input fields to trigger formatting as the user types
+    document.getElementById('ihsgend').addEventListener('input', function() {
+        updateFormattedNumberPorto('ihsgend', 'ihsgend1', 'ihsgend');
+    });
+
+    document.getElementById('ihsgstart').addEventListener('input', function() {
+        updateFormattedNumberPorto('ihsgstart', 'ihsgstart1', 'ihsgstart');
+    });
+
+    document.getElementById('jumlahlembar').addEventListener('input', function() {
+        updateFormattedNumberPorto('jumlahlembar', 'jumlahlembar1', 'jumlahlembar');
+    });
+</script>
+                     
 <script src="{{url('dist/libs/tom-select/dist/js/tom-select.base.min.js?1684106062')}}" defer></script>
   
 <script>
@@ -293,14 +401,12 @@ document.addEventListener("DOMContentLoaded", function () {
         render:{
             item: function(data,escape) {
                 if( data.customProperties ){
-                    console.log('Custom Properties:', data.customProperties);
                     return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
                 }
                 return '<div>' + escape(data.text) + '</div>';
             },
             option: function(data,escape){
                 if( data.customProperties ){
-                    console.log('Custom Properties:', data.customProperties);
                     return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
                 }
                 return '<div>' + escape(data.text) + '</div>';
