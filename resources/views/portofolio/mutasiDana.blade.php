@@ -55,15 +55,15 @@
                     <div class="row">
                         <div class="col-4">
                             <h5 class="mt-0 mb-0 pt-0 pb-2">Valuasi Awal</h5>
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format(array_key_exists(2024, $mutasidana) ? $mutasidana[2024]['modal'] : 0, 0, ',', '.') }}</h5>
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($firstMutasiDana['modal'] ?? 0, 0, ',', '.') }}</h5>
                         </div>
                         <div class="col-4">
                             <h5 class="mt-0 mb-0 pt-0 pb-2">Harga Unit Awal</h5>
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format(array_key_exists(2024, $mutasidana) ? $mutasidana[2024]['harga_unit'] : 0, 0, ',', '.') }}</h5>
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($firstMutasiDana['harga_unit'] ?? 0, 0, ',', '.') }}</h5>
                         </div>
                         <div class="col-4">
                             <h5 class="mt-0 mb-0 pt-0 pb-2">Jumlah Unit Awal</h5>
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format(array_key_exists(2024, $mutasidana) ? $mutasidana[2024]['jumlah_unit_penyertaan'] : 0, 0, ',', '.') }}</h5>
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($firstMutasiDana['jumlah_unit_penyertaan'] ?? 0, 0, ',', '.') }}</h5>
                         </div>
                     </div>
                 </div>
@@ -229,9 +229,9 @@
                                                 <td  rowspan="{{ $rowCount }}">{{ \Carbon\Carbon::parse($tanggal)->locale('id')->translatedFormat('d F Y') }}</td>
                                             @endif
                                             <td class="text-center" style="width:5%">
-                                                @if ($data['tipe_saldo'] === 'masuk')
+                                                @if ($data['saldo'] > 0)
                                                     <a href="" class="btn btn-sm btn-success btn-pill ms-auto">Masuk</a>
-                                                @elseif ($data['tipe_saldo'] === 'keluar')
+                                                @elseif ($data['saldo'] < 0)
                                                     <a href="" class="btn btn-sm btn-danger btn-pill ms-auto">Keluar</a>
                                                 @else
                                                     <a href="" class="btn btn-sm btn-primary btn-pill ms-auto">Dividen</a>

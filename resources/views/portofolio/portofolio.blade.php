@@ -53,19 +53,19 @@
                     <div class="row">
                         <div class="col-3">
                             <h5 class="mt-0 mb-0 pt-0 pb-2">Harga Unit :</h5>
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">1000</h5>
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">1.000</h5>
                         </div>
                         <div class="col-3">
                             <h5 class="mt-0 mb-0 pt-0 pb-2">Jumlah/Unit :</h5>
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">1000</h5>
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">15.000</h5>
                         </div>
                         <div class="col-3">
                             <h5 class="mt-0 mb-0 pt-0 pb-2">Valuasi :</h5>
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">1000</h5>
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">15.000.000</h5>
                         </div>
                         <div class="col-3">
                             <h5 class="mt-0 mb-0 pt-0 pb-2">Modal :</h5>   
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">1000</h5>   
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">15.000.000</h5>   
                         </div>
                         
                     </div>
@@ -76,14 +76,20 @@
             <div class="card bg-primary-lt">
                 <div class="card-body pb-0 mb-0">
                     <div class="row">
-                       
+                        <div class="col-3">
+                            <h5 class="mt-0 mb-0 pt-0 pb-2">Yield :</h5>   
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ $sortedHistorisData['yield'] ?? '0.00'}}%</h5>   
+                        </div>
                         <div class="col-3">
                             <h5 class="mt-0 mb-0 pt-0 pb-2">Yield IHSG :</h5>
                             <h5 class="mt-0 mb-1 pt-0 pb-2">{{ $sortedHistorisData['yield_ihsg'] ?? 0}}%</h5>
                         </div>
+                       
                         <div class="col-3">
-                            <h5 class="mt-0 mb-0 pt-0 pb-2">Yield :</h5>   
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ $sortedHistorisData['yield'] ?? 0}}%</h5>   
+                            <a href="" title="click to edit" data-bs-toggle="modal" data-bs-target="#modal-ihsg">
+                                <h5 class="mt-0 mb-0 pt-0 pb-2">IHSG Start </h5>
+                                <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($sortedHistorisData['ihsg_start'] ?? 0, 0, ',', '.' )}}</h5>
+                            </a>
                         </div>
                         <div class="col-3">
                             <a href="" title="click to edit" data-bs-toggle="modal" data-bs-target="#modal-ihsg">
@@ -91,12 +97,7 @@
                                 <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($sortedHistorisData['ihsg_end'] ?? 0, 0, ',', '.')}}</h5>
                             </a>
                         </div>
-                        <div class="col-3">
-                            <a href="" title="click to edit" data-bs-toggle="modal" data-bs-target="#modal-ihsg">
-                                <h5 class="mt-0 mb-0 pt-0 pb-2">IHSG Start </h5>
-                                <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($sortedHistorisData['ihsg_start'] ?? 0, 0, ',', '.' )}}</h5>
-                            </a>
-                        </div>
+                        
                        
                         
                     </div>
@@ -137,11 +138,23 @@
                                 <td class="text-end" hidden>1</td>
                                 <td class="text-end" hidden>1</td>
                                 <td class="text-end fw-bold">{{ number_format($index['kinerja_portofolio']['valuasi_saat_ini'], 0, ',', '.')}}</td>
-                                <td class="text-end fw-bold">100</td>
-                                <td class="text-end fw-bold">10</td>
+                                <td class="text-end fw-bold">-</td>
+                                <td class="text-end fw-bold">0.00%</td>
                                 <td class="text-end" hidden>1</td>
                                 <td class="text-end" hidden>1</td>
-                                <td class="text-end">1</td>
+                                <td style="width:1%" class="text-center">
+                                    <span class="btn-group" role="group">
+                                        <a href="#" class="btn btn-sm btn-secondary w-100 btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="History">
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-history"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 8l0 4l2 2" /><path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5" /></svg>
+                                        </a>
+                                        <a href="#" class="btn btn-sm btn-success w-100 btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Buy">
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 17h-11v-14h-2" /><path d="M6 5l14 1l-1 7h-13" /></svg>
+                                        </a>
+                                        <a href="#" class="btn btn-sm btn-danger w-100 btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Sell">
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
+                                        </a>
+                                    </span>
+                                </td>
                             </tr>
                             @else
                             <tr>
@@ -153,8 +166,8 @@
                                 <td class="text-end">{{ number_format($index['cur_price'], 0, ',', '.')}}</td>
                                 <td class="text-end" hidden>{{ number_format($index['volume'] * $index['cur_price'] , 0, ',', '.')}}</td>
                                 <td class="text-end">{{ number_format($index['kinerja_portofolio']['valuasi_saat_ini'], 0, ',', '.')}}</td>
-                                <td class="text-end">1000</td>
-                                <td class="text-end">test</td>
+                                <td class="text-end">-</td>
+                                <td class="text-end">0.00%</td>
                                 <td class="text-end" hidden>1</td>
                                 <td class="text-end" hidden>1</td>
                                 <td style="width:1%" class="text-center">

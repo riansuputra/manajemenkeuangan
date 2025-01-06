@@ -152,6 +152,7 @@ class PortofolioController extends Controller
                 ->values(); 
 
             $lastMutasiDana = collect($mutasiData)->last();
+            $firstMutasiDana = collect($mutasiData)->first();
 
             return view('portofolio.mutasiDana', [
                 'user' => $request->auth['user'],
@@ -161,6 +162,7 @@ class PortofolioController extends Controller
                 'saldoData' => $saldoData,
                 'saldo' => $saldo,
                 'lastMutasiDana' => $lastMutasiDana,
+                'firstMutasiDana' => $firstMutasiDana,
                 'uniqueYears' => $uniqueYears,
                 'selectedYear' => $selectedYear,
             ]);
@@ -328,7 +330,7 @@ class PortofolioController extends Controller
     public function store(Request $request)
     {
         $input = array(
-            'user_id' => $request->auth['user']['user_id'],
+            'user_id' => $request->auth['user']['id'],
             'volume_beli' => $request->jumlahlembar,
             'tanggal_beli' => $request->tanggal_beli,
             'id_saham' => $request->id_saham,

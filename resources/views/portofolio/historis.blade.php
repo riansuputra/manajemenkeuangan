@@ -192,7 +192,7 @@
                 labels: {
                     padding: 4,
                     formatter: function (value) {
-                        return value !== null ? value + '%' : '-'; // Tambahkan simbol %
+                        return value !== null ? value.toFixed(2) + '%' : '-';
                     }
                 },
             },

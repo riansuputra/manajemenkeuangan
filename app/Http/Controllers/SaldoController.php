@@ -50,7 +50,7 @@ class SaldoController extends Controller
 
         // dd($input, $request);
 
-        $response = Http::withHeaders($this->getHeaders($request))->post(env('API_URL') . '/saldo', $input);
+        $response = Http::withHeaders($this->getHeaders($request))->post(env('API_URL') . '/topup', $input);
 
         if ($response->status() == 201) {
             $this->updateAuthCookie($request->auth, $response['auth']);
