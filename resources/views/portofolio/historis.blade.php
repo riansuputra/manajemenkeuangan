@@ -53,8 +53,8 @@
                                 @foreach($historisByYear as $tahun => $data)
                                 <tr>
                                     <td style="width:5%" class="text-center">{{ $tahun }}</td>
-                                    <td class="text-center">{{ $data['yield'] !== null ? number_format($data['yield'], 2) . '%' : '-' }}</td>
-                                    <td class="text-center">{{ $data['yield_ihsg'] !== null ? number_format($data['yield_ihsg'], 2) . '%' : '-' }}</td>
+                                    <td class="text-center">{{ $data['yield'] !== null ? number_format($data['yield']* 100, 2, ',', '.') . '%' : '-' }}</td>
+                                    <td class="text-center">{{ $data['yield_ihsg'] !== null ? number_format($data['yield_ihsg'], 2, ',', '.') . '%' : '-' }}</td>
                                 </tr>
                                 @endforeach
                                 @else
@@ -93,8 +93,8 @@
                                 @foreach($groupedByMonth as $bulan => $data)
                                 <tr>
                                     <td style="width:5%">{{ \Carbon\Carbon::create()->month($bulan)->locale('id')->translatedFormat('F') }}</td>
-                                    <td class="text-center">{{ $data['yield'] !== null ? number_format($data['yield'], 2) . '%' : '-' }}</td>
-                                    <td class="text-center">{{ $data['yield_ihsg'] !== null ? number_format($data['yield_ihsg'], 2) . '%' : '-' }}</td>
+                                    <td class="text-center">{{ $data['yield'] !== null ? number_format($data['yield']* 100, 2, ',', '.') . '%' : '-' }}</td>
+                                    <td class="text-center">{{ $data['yield_ihsg'] !== null ? number_format($data['yield_ihsg'], 2, ',', '.') . '%' : '-' }}</td>
                                 </tr>
                                 @endforeach
                                 @else
@@ -143,72 +143,81 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        // Data dari server yang telah diproses
-        const groupedByMonth = @json($groupedByMonth);
-        const seriesData = {
-            labels: [],
-            yield: [],
-            yield_ihsg: [],
-        };
-        console.log('@json($selectedYear)');
-        // Proses data dari PHP
-        for (const [month, data] of Object.entries(groupedByMonth)) {
-            const year = @json($selectedYear); // Sesuaikan dengan tahun yang Anda gunakan
-            const monthFormatted = month.padStart(2, '0'); // Pastikan bulan memiliki format dua digit
+    const groupedByMonth = @json($groupedByMonth);
+    const seriesData = {
+        labels: [],
+        yield: [],
+        yield_ihsg: [],
+    };
+
+    for (const [month, data] of Object.entries(groupedByMonth)) {
+            const year = @json($selectedYear);
+            const monthFormatted = month.padStart(2, '0');
             seriesData.labels.push(`${year}-${monthFormatted}`);
-            seriesData.yield.push(parseFloat(data.yield));
-            seriesData.yield_ihsg.push(data.yield_ihsg !== null ? parseFloat(data.yield_ihsg) : null);
+
+            // Format nilai yield tanpa pembulatan
+            const yieldValue = parseFloat(data.yield) * 100; // Konversi ke persen
+            const yieldFormatted = yieldValue.toString() + '%';
+
+            // Format nilai yield_ihsg tanpa pembulatan
+            const yieldIhsgValue = data.yield_ihsg !== null 
+                ? parseFloat(data.yield_ihsg).toString() + '%' 
+                : '-';
+
+            seriesData.yield.push(yieldFormatted);
+            seriesData.yield_ihsg.push(yieldIhsgValue);
         }
 
-        // Konfigurasi ApexCharts
-        window.ApexCharts && (new ApexCharts(document.getElementById('chart-social-referrals'), {
-            chart: {
-                type: "line",
-                fontFamily: 'inherit',
-                height: 288,
-                parentHeightOffset: 0,
-                toolbar: { show: false },
-                animations: { enabled: false }
+    // Konfigurasi ApexCharts
+    window.ApexCharts && (new ApexCharts(document.getElementById('chart-social-referrals'), {
+        chart: {
+            type: "line",
+            fontFamily: 'inherit',
+            height: 288,
+            parentHeightOffset: 0,
+            toolbar: { show: false },
+            animations: { enabled: false }
+        },
+        fill: { opacity: 1 },
+        stroke: { width: 2, lineCap: "round", curve: "straight" },
+        series: [
+            { name: "YIELD", data: seriesData.yield },
+            { name: "YIELD IHSG", data: seriesData.yield_ihsg },
+        ],
+        tooltip: { theme: 'dark' },
+        grid: {
+            padding: { top: -20, right: 0, left: -4, bottom: -4 },
+            strokeDashArray: 4,
+            xaxis: { lines: { show: true } }
+        },
+        xaxis: {
+            labels: { padding: 0 },
+            tooltip: { enabled: false },
+            categories: seriesData.labels,
+            type: 'datetime'
+        },
+        yaxis: {
+            labels: {
+                padding: 4,
+                formatter: function (value) {
+                    return value !== null ? value.toFixed(2) + '%' : '-';
+                }
             },
-            fill: { opacity: 1 },
-            stroke: { width: 2, lineCap: "round", curve: "straight" },
-            series: [
-                { name: "YIELD", data: seriesData.yield },
-                { name: "YIELD IHSG", data: seriesData.yield_ihsg },
-            ],
-            tooltip: { theme: 'dark' },
-            grid: {
-                padding: { top: -20, right: 0, left: -4, bottom: -4 },
-                strokeDashArray: 4,
-                xaxis: { lines: { show: true } }
-            },
-            xaxis: {
-                labels: { padding: 0 },
-                tooltip: { enabled: false },
-                categories: seriesData.labels, // Labels untuk x-axis
-                type: 'datetime'
-            },
-            yaxis: {
-                labels: {
-                    padding: 4,
-                    formatter: function (value) {
-                        return value !== null ? value.toFixed(2) + '%' : '-';
-                    }
-                },
-            },
-            colors: [
-                tabler.getColor("facebook"), 
-                tabler.getColor("youtube"), 
-            ],
-            legend: {
-                show: true,
-                position: 'bottom',
-                offsetY: 12,
-                markers: { width: 10, height: 10, radius: 100 },
-                itemMargin: { horizontal: 8, vertical: 8 }
-            }
-        })).render();
-    });
+        },
+        colors: [
+            tabler.getColor("facebook"), 
+            tabler.getColor("youtube"), 
+        ],
+        legend: {
+            show: true,
+            position: 'bottom',
+            offsetY: 12,
+            markers: { width: 10, height: 10, radius: 100 },
+            itemMargin: { horizontal: 8, vertical: 8 }
+        }
+    })).render();
+});
+
 </script>
 
 

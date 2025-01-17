@@ -26,14 +26,19 @@ class PortofolioController extends Controller
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/aset'),
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/portofolio'),
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/historis'),
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/mutasi-dana'),
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/kinerja-portofolio'),
         ]);
-        // dd($responses[2]->json());
-        if ($responses[0]->successful() && $responses[1]->successful() && $responses[2]->successful()){
+
+        if ($responses[0]->successful() && $responses[1]->successful() && $responses[2]->successful() && $responses[3]->successful()){
             $asetData = $responses[0]->json()['data']['aset'];
             $portoData = $responses[1]->json()['data']['portofolio'];
             $historisData = $responses[2]->json()['data']['historis'];
+            $mutasiData = $responses[3]->json()['data']['mutasi_dana'];
+            $kinerjaData = $responses[4]->json()['data']['kinerja'];
             
             $portoData = collect($portoData);
+            // dd($portoData);
 
             $filteredAsetData = collect($asetData)->filter(function ($aset) {
                 return $aset['tipe_aset'] === 'saham';
@@ -67,13 +72,65 @@ class PortofolioController extends Controller
             $selectedYear = $filterValue ?? $currentYear;
             
             $filteredData = $groupedData->get($selectedYear, collect([])); 
-            $sortedData = $sortData->get($selectedYear, collect([])); 
+            $firstSortedData = $sortData->get($selectedYear, collect([])); 
 
             $filteredHistorisData = collect($historisData)->filter(function ($item) use ($selectedYear) {
                 return $item['tahun'] == $selectedYear;
             });
 
             $sortedHistorisData = $filteredHistorisData->sortByDesc('bulan')->first();
+
+            $mutasiDataFilter  = collect($mutasiData)->where('tahun', $selectedYear)->last();
+
+            $tahunKinerja = collect($kinerjaData)->last();
+            $filteredKinerjaData = collect($kinerjaData)->filter(function ($item) use ($selectedYear) {
+                $tanggalKinerja = $item['transaksi']['tanggal'];
+                $tahunKinerja = date('Y', strtotime($tanggalKinerja));
+                return $item ? $tahunKinerja == $selectedYear : 'Unknown Year';
+            });
+            // dd($filteredKinerjaData);
+
+            $kinerjaDataFilter  = collect($filteredKinerjaData)->last();
+
+            $sortedData = $firstSortedData->map(function ($item) {
+                $volume = $item['volume'];
+                $avgPrice = $item['avg_price'] ?? 0;
+                $curPrice = $item['cur_price'] ?? 0;
+    
+                $modal = $volume * $avgPrice;
+                $valuasi = $volume * $curPrice;
+                $profitLoss = $valuasi - $modal;
+                $profitLossPercent = $modal > 0 ? ($profitLoss / $modal) * 100 : 0;
+    
+                // Tambahkan informasi baru ke dalam data
+                $item['modal'] = $modal;
+                $item['valuasi'] = $valuasi;
+                $item['p/l'] = $profitLoss;
+                $item['p/l%'] = $profitLossPercent;
+    
+                return $item;
+            });
+
+            // Hitung Total Modal dan Valuasi untuk Fund Alloc dan Value Effect
+            $totalModal = $sortedData->sum('modal');
+            $totalValuasi = $sortedData->sum('valuasi');
+
+            $sortedData = $sortedData->map(function ($item) use ($totalModal, $totalValuasi) {
+                $modal = $item['modal'];
+                $valuasi = $item['valuasi'];
+            
+                // Fund Allocation dan Value Effect
+                $fundAlloc = $totalModal > 0 ? round(($modal / $totalModal) * 100) : 0;
+                $valueEffect = $totalValuasi > 0 ? round(($valuasi / $totalValuasi) * 100) : 0;
+            
+                $item['fund_alloc'] = $fundAlloc;
+                $item['value_effect'] = $valueEffect;
+            
+                return $item;
+            });
+
+            // dd($sortData);
+
 
             return view('portofolio.portofolio', [
                 'user' => $request->auth['user'],
@@ -86,11 +143,12 @@ class PortofolioController extends Controller
                 'filteredAsetData' => $filteredAsetData,
                 'sortedHistorisData' => $sortedHistorisData,
                 'filteredHistorisData' => $filteredHistorisData,
+                'mutasiDataFilter' => $mutasiDataFilter,
+                'kinerjaDataFilter' => $kinerjaDataFilter,
             ]);
         } else {
             abort(500, 'Failed to fetch data from API');
         }
-        
     }
 
     public function mutasiDana(Request $request)
@@ -274,6 +332,8 @@ class PortofolioController extends Controller
                 ->sort()
                 ->values();
 
+            // dd($groupedByMonth);
+
             return view('portofolio.historis', [
                 'user' => $request->auth['user'],
                 'resultData' => $resultData, 
@@ -329,22 +389,22 @@ class PortofolioController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request);
         $input = array(
             'user_id' => $request->auth['user']['id'],
-            'volume_beli' => $request->jumlahlembar,
-            'tanggal_beli' => $request->tanggal_beli,
+            'volume' => $request->jumlahlembar1,
+            'tanggal' => $request->tanggal,
             'id_saham' => $request->id_saham,
-            'harga_beli' => $request->jumlah1,
-            'harga_total' => $request->avgprice1, 
-            'pembelian' => '0',
-            'id_sekuritas' => '3'
+            'harga' => $request->jumlah1,
+            'jenis_transaksi' => $request->jenis_transaksi,
+            'aset_id' => $request->id_saham,
         );
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'x-api-key' => env('API_KEY'),
             'Authorization' => 'Bearer ' . $request->auth['token'],
             'user-type' => $request->auth['user_type'],
-        ])->post(env('API_URL') . '/portofolio-beli', $input);
+        ])->post(env('API_URL') . '/transaksi', $input);
 
         if($response->status() == 201){
             // $this->updateAuthCookie($request->auth, $response['auth']);

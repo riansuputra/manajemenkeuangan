@@ -53,19 +53,19 @@
                     <div class="row">
                         <div class="col-3">
                             <h5 class="mt-0 mb-0 pt-0 pb-2">Harga Unit :</h5>
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">1.000</h5>
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($mutasiDataFilter['harga_unit_saat_ini'] ?? 0, 0, ',', '.' )}}</h5>
                         </div>
                         <div class="col-3">
                             <h5 class="mt-0 mb-0 pt-0 pb-2">Jumlah/Unit :</h5>
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">15.000</h5>
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($mutasiDataFilter['jumlah_unit_penyertaan'] ?? 0, 0, ',', '.' )}}</h5>
                         </div>
                         <div class="col-3">
                             <h5 class="mt-0 mb-0 pt-0 pb-2">Valuasi :</h5>
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">15.000.000</h5>
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($kinerjaDataFilter['valuasi_saat_ini'] ?? 0, 0, ',', '.' )}}</h5>
                         </div>
                         <div class="col-3">
                             <h5 class="mt-0 mb-0 pt-0 pb-2">Modal :</h5>   
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">15.000.000</h5>   
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($mutasiDataFilter['modal'] ?? 0, 0, ',', '.' )}}</h5>   
                         </div>
                         
                     </div>
@@ -78,11 +78,13 @@
                     <div class="row">
                         <div class="col-3">
                             <h5 class="mt-0 mb-0 pt-0 pb-2">Yield :</h5>   
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ $sortedHistorisData['yield'] ?? '0.00'}}%</h5>   
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format(($sortedHistorisData['yield'] ?? 0) * 100, 2, ',', '.') }}%
+                            </h5>   
                         </div>
                         <div class="col-3">
                             <h5 class="mt-0 mb-0 pt-0 pb-2">Yield IHSG :</h5>
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ $sortedHistorisData['yield_ihsg'] ?? 0}}%</h5>
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format(($sortedHistorisData['yield_ihsg'] ?? 0) , 2, ',', '.') }}%
+                            </h5>
                         </div>
                        
                         <div class="col-3">
@@ -116,15 +118,11 @@
                                 <th class="text-center">No</th>
                                 <th class="text-center" colspan="2">Emiten</th>
                                 <th class="text-center">Jumlah<br>Lembar</th>
-                                <th class="text-center" hidden>Avg.<br>Price</th>
                                 <th class="text-center">Current<br>Price</th>
-                                <th class="text-center" hidden>Cost<br>Modal</th>
                                 <th class="text-center">Valuation</th>
                                 <th class="text-center">P/L</th>
                                 <th class="text-center">P/L (%)</th>
-                                <th class="text-center" hidden>Fund<br>Alloc</th>
-                                <th class="text-center" hidden>Value<br>Effect</th>
-                                <th class="text-center">Action</th>
+                                <th class="text-center"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -135,55 +133,266 @@
                                 <td class="text-center"></td>
                                 <td class="fw-bold text-center" colspan="2">KAS</td>
                                 <td class="text-end fw-bold" colspan="2">{{number_format($index['cur_price'], 0, ',', '.')}}</td>
-                                <td class="text-end" hidden>1</td>
-                                <td class="text-end" hidden>1</td>
                                 <td class="text-end fw-bold">{{ number_format($index['kinerja_portofolio']['valuasi_saat_ini'], 0, ',', '.')}}</td>
                                 <td class="text-end fw-bold">-</td>
                                 <td class="text-end fw-bold">0.00%</td>
-                                <td class="text-end" hidden>1</td>
-                                <td class="text-end" hidden>1</td>
                                 <td style="width:1%" class="text-center">
-                                    <span class="btn-group" role="group">
-                                        <a href="#" class="btn btn-sm btn-secondary w-100 btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="History">
-                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-history"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 8l0 4l2 2" /><path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5" /></svg>
-                                        </a>
-                                        <a href="#" class="btn btn-sm btn-success w-100 btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Buy">
-                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 17h-11v-14h-2" /><path d="M6 5l14 1l-1 7h-13" /></svg>
-                                        </a>
-                                        <a href="#" class="btn btn-sm btn-danger w-100 btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Sell">
-                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
-                                        </a>
-                                    </span>
+                                    <a href="" class=""  title="Info" data-bs-toggle="modal" data-bs-target="#modal-info-{{$index['aset']['id']}}">
+                                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-menu-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 6l16 0" /><path d="M4 12l16 0" /><path d="M4 18l16 0" /></svg>
+                                        </span>
+                                    </a>
                                 </td>
                             </tr>
+                            <!-- Modal Info -->
+                            <div class="modal modal-blur fade" id="modal-info-{{$index['aset']['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">{{$index['aset']['nama']}} <span class="text-muted">- {{$index['aset']['deskripsi']}}</span></h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h4 class="mb-2">Informasi Aset :</h4>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <p class="mb-0 text-muted">Volume :</p>
+                                                    <h4>{{number_format($index['volume'], 0, ',', '.')}}</h4>
+                                                </div>
+                                                <div class="col-4">
+                                                    <p class="mb-0 text-muted">Avg. Price :</p>
+                                                    <h4>{{number_format($index['avg_price'], 0, ',', '.')}}</h4>
+                                                </div>
+                                                <div class="col-4">
+                                                    <p class="mb-0 text-muted">Cur. Price :</p>
+                                                    <h4>{{number_format($index['cur_price'], 0, ',', '.')}}</h4>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <p class="mb-0 text-muted">Modal :</p>
+                                                    <h4>{{number_format($index['modal'], 0, ',', '.')}}</h4>
+                                                </div>
+                                                <div class="col-4">
+                                                    <p class="mb-0 text-muted">Valuation :</p>
+                                                    <h4>{{number_format($index['valuasi'], 0, ',', '.')}}</h4>
+                                                </div>
+                                                <div class="col-4">
+                                                    <p class="mb-0 text-muted">P/L :</p>
+                                                    <h4>{{number_format($index['p/l'], 0, ',', '.')}}</h4>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <p class="mb-0 text-muted">P/L(%) :</p>
+                                                    <h4>{{number_format($index['p/l%'], 0, ',', '.')}}%</h4>
+                                                </div>
+                                                <div class="col-4">
+                                                    <p class="mb-0 text-muted">Fund Alloc :</p>
+                                                    <h4>{{number_format($index['fund_alloc'], 0, ',', '.')}}%</h4>
+                                                </div>
+                                                <div class="col-4">
+                                                    <p class="mb-0 text-muted">Value Effect :</p>
+                                                    <h4>{{number_format($index['value_effect'], 0, ',', '.')}}%</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h4>Riwayat Transaksi :</h4>
+                                            @if($filteredData->isNotEmpty())
+                                                @foreach($filteredData as $item => $key)
+                                                    @if($item == $index['aset']['id'])
+                                                        @if($key->isNotEmpty())
+                                                        @foreach($key as $k)
+                                                                <div class="card mb-3 
+                                                                    @if($k['kinerja_portofolio']['transaksi']['jenis_transaksi'] == 'beli') bg-teal-lt
+                                                                    @elseif($k['kinerja_portofolio']['transaksi']['jenis_transaksi'] == 'jual') bg-red-lt
+                                                                    @else bg-primary-lt
+                                                                    @endif">
+                                                                    <div class="card-body">
+                                                                        <div class="row">
+                                                                            <div class="col-4">
+                                                                                <p class="mb-0">Jenis :</p>
+                                                                                <h4>{{strtoupper($k['kinerja_portofolio']['transaksi']['jenis_transaksi'])}}</h4>
+                                                                            </div>
+                                                                            <div class="col-4">
+                                                                                <p class="mb-0">Tanggal :</p>
+                                                                                <h4>{{$k['kinerja_portofolio']['transaksi']['tanggal']}}</h4>
+                                                                            </div>
+                                                                            <div class="col-4">
+                                                                                <p class="mb-0">Sekuritas :</p>
+                                                                                <h4>{{$k['kinerja_portofolio']['transaksi']['sekuritas_id'] ?? '-'}}</h4>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-4">
+                                                                                <p class="mb-0">Volume :</p>
+                                                                                <h4 class="mb-0">{{number_format($k['kinerja_portofolio']['transaksi']['volume'], 0, ',', '.')}}</h4>
+                                                                            </div>
+                                                                            <div class="col-4">
+                                                                                <p class="mb-0">Harga :</p>
+                                                                                <h4 class="mb-0">{{number_format($k['kinerja_portofolio']['transaksi']['harga'], 0, ',', '.')}}</h4>
+                                                                            </div>
+                                                                            <div class="col-4">
+                                                                                <p class="mb-0">Total :</p>
+                                                                                <h4 class="mb-0">{{number_format($k['kinerja_portofolio']['transaksi']['harga'], 0, ',', '.')}}</h4>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            @endforeach
+                                                        @endif
+                                                    @endif
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+                                                Batal
+                                            </a>
+                                            <button type="submit" class="btn btn-success ms-auto">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                                                Simpan
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End of Modal Info -->
                             @else
                             <tr>
                                 <td style="width:1%" class="text-center">{{$loop->iteration - 1}}</td>
                                 <td style="width:1%"><span class="avatar avatar-xs" style="background-image: url({{$index['aset']['info']}}); --tblr-avatar-size:1.3rem;"></span></td>
                                 <td style="width:6%">{{$index['aset']['nama']}}</td>
                                 <td class="text-end">{{ number_format($index['volume'], 0, ',', '.')}}</td>
-                                <td class="text-end"hidden>{{ number_format($index['avg_price'], 0, ',', '.')}}</td>
                                 <td class="text-end">{{ number_format($index['cur_price'], 0, ',', '.')}}</td>
-                                <td class="text-end" hidden>{{ number_format($index['volume'] * $index['cur_price'] , 0, ',', '.')}}</td>
-                                <td class="text-end">{{ number_format($index['kinerja_portofolio']['valuasi_saat_ini'], 0, ',', '.')}}</td>
-                                <td class="text-end">-</td>
-                                <td class="text-end">0.00%</td>
-                                <td class="text-end" hidden>1</td>
-                                <td class="text-end" hidden>1</td>
+                                <td class="text-end">{{ number_format($index['valuasi'] , 0, ',', '.')}}</td>
+                                <td class="text-end">{{ number_format($index['p/l'] , 0, ',', '.')}}</td>
+                                <td class="text-end">{{ number_format($index['p/l%'] , 0, ',', '.')}}%</td>
                                 <td style="width:1%" class="text-center">
-                                    <span class="btn-group" role="group">
-                                        <a href="#" class="btn btn-sm btn-secondary w-100 btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="History">
-                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-history"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 8l0 4l2 2" /><path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5" /></svg>
-                                        </a>
-                                        <a href="#" class="btn btn-sm btn-success w-100 btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Buy">
-                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 17h-11v-14h-2" /><path d="M6 5l14 1l-1 7h-13" /></svg>
-                                        </a>
-                                        <a href="#" class="btn btn-sm btn-danger w-100 btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Sell">
-                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
-                                        </a>
-                                    </span>
+                                    <a href="" class=""  title="Info" data-bs-toggle="modal" data-bs-target="#modal-info-{{$index['aset']['id']}}">
+                                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-menu-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 6l16 0" /><path d="M4 12l16 0" /><path d="M4 18l16 0" /></svg>
+                                        </span>
+                                    </a>
                                 </td>
                             </tr>
+
+                            <!-- Modal Info -->
+                            <div class="modal modal-blur fade" id="modal-info-{{$index['aset']['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">{{$index['aset']['nama']}} <span class="text-muted">- {{$index['aset']['deskripsi']}}</span></h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h4 class="mb-2">Informasi Aset :</h4>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <p class="mb-0 text-muted">Volume :</p>
+                                                    <h4>{{number_format($index['volume'], 0, ',', '.')}}</h4>
+                                                </div>
+                                                <div class="col-4">
+                                                    <p class="mb-0 text-muted">Avg. Price :</p>
+                                                    <h4>{{number_format($index['avg_price'], 0, ',', '.')}}</h4>
+                                                </div>
+                                                <div class="col-4">
+                                                    <p class="mb-0 text-muted">Cur. Price :</p>
+                                                    <h4>{{number_format($index['cur_price'], 0, ',', '.')}}</h4>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <p class="mb-0 text-muted">Modal :</p>
+                                                    <h4>{{number_format($index['modal'], 0, ',', '.')}}</h4>
+                                                </div>
+                                                <div class="col-4">
+                                                    <p class="mb-0 text-muted">Valuation :</p>
+                                                    <h4>{{number_format($index['valuasi'], 0, ',', '.')}}</h4>
+                                                </div>
+                                                <div class="col-4">
+                                                    <p class="mb-0 text-muted">P/L :</p>
+                                                    <h4>{{number_format($index['p/l'], 0, ',', '.')}}</h4>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <p class="mb-0 text-muted">P/L(%) :</p>
+                                                    <h4>{{number_format($index['p/l%'], 0, ',', '.')}}%</h4>
+                                                </div>
+                                                <div class="col-4">
+                                                    <p class="mb-0 text-muted">Fund Alloc :</p>
+                                                    <h4>{{number_format($index['fund_alloc'], 0, ',', '.')}}%</h4>
+                                                </div>
+                                                <div class="col-4">
+                                                    <p class="mb-0 text-muted">Value Effect :</p>
+                                                    <h4>{{number_format($index['value_effect'], 0, ',', '.')}}%</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h4>Riwayat Transaksi :</h4>
+                                            @if($filteredData->isNotEmpty())
+                                                @foreach($filteredData as $item => $key)
+                                                    @if($item == $index['aset']['id'])
+                                                        @if($key->isNotEmpty())
+                                                        @foreach($key as $k)
+                                                                <div class="card mb-3 
+                                                                    @if($k['kinerja_portofolio']['transaksi']['jenis_transaksi'] == 'beli') bg-teal-lt
+                                                                    @elseif($k['kinerja_portofolio']['transaksi']['jenis_transaksi'] == 'jual') bg-red-lt
+                                                                    @else bg-primary-lt
+                                                                    @endif">
+                                                                    <div class="card-body">
+                                                                        <div class="row">
+                                                                            <div class="col-4">
+                                                                                <p class="mb-0">Jenis :</p>
+                                                                                <h4>{{strtoupper($k['kinerja_portofolio']['transaksi']['jenis_transaksi'])}}</h4>
+                                                                            </div>
+                                                                            <div class="col-4">
+                                                                                <p class="mb-0">Tanggal :</p>
+                                                                                <h4>{{$k['kinerja_portofolio']['transaksi']['tanggal']}}</h4>
+                                                                            </div>
+                                                                            <div class="col-4">
+                                                                                <p class="mb-0">Sekuritas :</p>
+                                                                                <h4>{{$k['kinerja_portofolio']['transaksi']['sekuritas_id'] ?? '-'}}</h4>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-4">
+                                                                                <p class="mb-0">Volume :</p>
+                                                                                <h4 class="mb-0">{{number_format($k['kinerja_portofolio']['transaksi']['volume'], 0, ',', '.')}}</h4>
+                                                                            </div>
+                                                                            <div class="col-4">
+                                                                                <p class="mb-0">Harga :</p>
+                                                                                <h4 class="mb-0">{{number_format($k['kinerja_portofolio']['transaksi']['harga'], 0, ',', '.')}}</h4>
+                                                                            </div>
+                                                                            <div class="col-4">
+                                                                                <p class="mb-0">Total :</p>
+                                                                                <h4 class="mb-0">{{number_format($k['kinerja_portofolio']['transaksi']['harga'], 0, ',', '.')}}</h4>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            @endforeach
+                                                        @endif
+                                                    @endif
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+                                                Batal
+                                            </a>
+                                            <button type="submit" class="btn btn-success ms-auto">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                                                Simpan
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End of Modal Info -->
                            @endif
                            @endforeach
                            @else
@@ -209,7 +418,6 @@
                 @csrf
                 <div class="modal-body">
                     <div class="row">
-                        
                         <div class="col-lg-3">
                             <div class="mb-3">
                                 <label class="form-label required">Jenis Transaksi:</label>
@@ -227,7 +435,7 @@
                                 <select name="id_saham" type="text" class="form-select" id="select-people" value="" required>
                                     <option value="" selected>Pilih Saham</option>
                                     @foreach ($filteredAsetData as $saham)
-                                    <option value="{{$saham['nama']}}" data-custom-properties="<span class='avatar avatar-xs' style='background-image: url({{ $saham['info'] }})'></span>"> {{$saham['nama']}}</option>
+                                    <option value="{{$saham['id']}}" data-custom-properties="<span class='avatar avatar-xs' style='background-image: url({{ $saham['info'] }})'></span>"> {{$saham['nama']}}</option>
                                    @endforeach
                                    
                                 </select>
@@ -304,7 +512,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="form-floating mb-3">
-                                <input type="text" id="ihsgendlabel" name="ihsgendlabel" value="{{ $filteredHistorisData && !$filteredHistorisData->isEmpty() ? number_format($filteredHistorisData->where('bulan', $currentMonth)->first()['ihsg_end'], 0, ',', '.') : '0' }}" class="form-control text-strong text-success border-success mt-2" autocomplete="off" readonly>
+                                <input type="text" id="ihsgendlabel" name="ihsgendlabel" value="{{ $filteredHistorisData && !$filteredHistorisData->isEmpty() && !$filteredHistorisData->where('bulan', $currentMonth)->isEmpty() ? number_format($filteredHistorisData->where('bulan', $currentMonth)->first()['ihsg_end'], 0, ',', '.') : '0' }}" class="form-control text-strong text-success border-success mt-2" autocomplete="off" readonly>
                                 <label for="ihsgendlabel" class="form-label text-black">IHSG End {{ \Carbon\Carbon::create($currentMonth)->locale('id')->translatedFormat('F') }} :</label>
                             </div>
                         </div>
@@ -360,6 +568,9 @@
         </div>
     </div>
 </div>
+
+
+
 <script>
     function formatNumberPorto(num) {
         const parts = num.toString().split(".");
@@ -436,6 +647,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.addEventListener('DOMContentLoaded', function() {
         const spinner = document.getElementById("spinner");
         const pageContent = document.getElementById("page-content");
+        const editButtons = document.querySelectorAll('.btn-kategori');
         const pageTitle = document.getElementById("page-title");
 
         // Hide spinner and show page content when fully loaded
@@ -443,6 +655,31 @@ document.addEventListener("DOMContentLoaded", function () {
             spinner.style.display = "none";
             pageContent.style.display = "block";
             pageTitle.style.display = "block";
+        });
+
+        editButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const id = this.getAttribute('data-id');
+                const id_kategori_pengeluaran = this.getAttribute('data-id-kategori-pengeluaran');
+                const nama = this.getAttribute('data-nama');
+                const anggaran = this.getAttribute('data-anggaran');
+                const periode = this.getAttribute('data-periode');
+                const tersisa = this.getAttribute('data-tersisa');
+                const jumlah = this.getAttribute('data-jumlah');
+                const overspend = this.getAttribute('data-overspend');
+
+                console.log(nama);
+                
+                document.getElementById('id_' + id).value = id;
+                document.getElementById('id_kategori_pengeluaran_edit_' + id).value = id_kategori_pengeluaran;
+                document.getElementById('jumlah1_edit_' + id).value = anggaran;
+                document.getElementById('jumlah_edit_' + id).value = formatNumber(anggaran);
+                document.getElementById('jumlah_anggaran_' + id).value = 'Rp. ' + formatNumber(jumlah);
+                document.getElementById('jumlah_tersisa_' + id).value = 'Rp. ' + formatNumber(tersisa);
+                document.getElementById('jumlah_overspend_' + id).value = 'Rp. ' + formatNumber(overspend);
+                document.getElementById('periodeedit_' + id).value = periode;
+                document.getElementById('modaledittitle_' + id).textContent = ' "' + nama + '" ';
+            });
         });
     });
 </script>

@@ -436,6 +436,20 @@
 			}
 			toastr.error("{{ Session::get('error') }}",);
 		@endif
+		@if (Session::has('warning'))
+			toastr.options = {
+				"closeButton" : true,
+				"progressBar" : true,
+			}
+			toastr.warning("{{ Session::get('warning') }}",);
+		@endif
+		@if (Session::has('info'))
+			toastr.options = {
+				"closeButton" : true,
+				"progressBar" : true,
+			}
+			toastr.info("{{ Session::get('info') }}",);
+		@endif
     </script>
 
 	<script>

@@ -198,7 +198,7 @@
                         <h4>Riwayat Dana</h4>
                     </div>
                     <div class="col-6 text-muted text-end">
-                        <h4>Total : Rp. {{ number_format($saldo, 0, ',', '.') }} </h4>
+                        <h4>Total : <span class="text-black">Rp. {{ number_format($saldo, 0, ',', '.') }}</span> </h4>
                     </div>
                 </div>
                 <div class="table-responsive">

@@ -57,6 +57,8 @@ class SaldoController extends Controller
             return redirect()->route('portofolio-mutasi-dana')->with('success', $response["message"]);
         } else if (!empty($response["errors"])) {
             return back()->with('error', $response["message"]);
+        } else if ($response['status'] == 'warning') {
+            return back()->with('warning', $response["message"]);
         } else {
             return back()->with('error', $response["message"]);
         }
