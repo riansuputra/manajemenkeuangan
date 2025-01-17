@@ -387,7 +387,52 @@ class PortofolioController extends Controller
         }
     }
 
+    public function updateHarga(Request $request)
+    {
+        // dd($request);
+        $input = array(
+            'user_id' => $request->auth['user']['id'],
+            'id_aset' => $request->id_aset,
+            'updateHarga1' => $request->updateHarga1,
+        );
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'x-api-key' => env('API_KEY'),
+            'Authorization' => 'Bearer ' . $request->auth['token'],
+            'user-type' => $request->auth['user_type'],
+        ])->post(env('API_URL') . '/update-price', $input);
+
+        if($response->status() == 200){
+            // $this->updateAuthCookie($request->auth, $response['auth']);
+            return redirect()->route('portofolio')->with('success',$response["message"]);
+        }else if(!empty($response["errors"])){
+            return back()->with('error',$response["message"]);
+        }else{
+            return back()->with('error',$response["message"]);
+        }
+
+    }
+
     public function store(Request $request)
+    {
+        $jenisTransaksi = $request->input('jenis_transaksi');
+
+        if ($jenisTransaksi === 'beli') {
+            return $this->storeBeli($request);
+        } elseif ($jenisTransaksi === 'jual') {
+            return $this->storeJual($request);
+        } elseif ($jenisTransaksi === 'dividen') {
+            return $this->storeKeluar($request);
+        }
+
+        return response()->json([
+            'auth' => $request->auth,
+            'status' => 'error',
+            'message' => 'Jenis Transaksi tidak valid.',
+        ], 400);
+    }
+
+    private function storeBeli(Request $request)
     {
         // dd($request);
         $input = array(
@@ -416,6 +461,79 @@ class PortofolioController extends Controller
         }
 
     }
+
+    private function storeJual(Request $request)
+    {
+        dd($request);
+        $input = array(
+            'user_id' => $request->auth['user']['id'],
+            'volume' => $request->jumlahlembar1,
+            'tanggal' => $request->tanggal,
+            'harga' => $request->jumlah1,
+            'jenis_transaksi' => $request->jenis_transaksi,
+            'aset_id' => $request->aset_id,
+        );
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'x-api-key' => env('API_KEY'),
+            'Authorization' => 'Bearer ' . $request->auth['token'],
+            'user-type' => $request->auth['user_type'],
+        ])->post(env('API_URL') . '/store-jual', $input);
+
+        if($response->status() == 201){
+            // $this->updateAuthCookie($request->auth, $response['auth']);
+            return redirect()->route('portofolio')->with('success',$response["message"]);
+        }else if(!empty($response["errors"])){
+            return back()->with('error',$response["message"]);
+        }else{
+            return back()->with('error',$response["message"]);
+        }
+
+    }
+
+    public function updateHargaReal(Request $request)
+    {
+        // dd($request);
+        try {
+            $request->validate([
+                'id_aset' => 'required',
+                'nama_aset' => 'required',
+            ]);
+            $response = Http::acceptJson()
+                ->withHeaders([
+                    'X-API-KEY' => config('goapi.apikey')
+                ])->withoutVerifying()->get('https://api.goapi.io/stock/idx/prices?symbols='.$request->nama_aset)->json();
+
+            $hargaTerkini = $response['data']['results'][0]['close'];
+            $idAset = $request->id_aset;
+            // dd($hargaTerkini);
+            if($response['status'] == 'success'){
+                // $this->updateAuthCookie($request->auth, $response['auth']);
+                return redirect()->route('portofolio')->with('success',$response["message"])->with('open_modal', $idAset)->with('harga_terkini', $hargaTerkini);
+            }else if(!empty($response["errors"])){
+                return back()->with('error',$response["message"]);
+            }else{
+                return back()->with('error',$response["message"]);
+            }
+        } catch (Exception $e) {
+            if ($e instanceof ValidationException) {
+                return response()->json([
+                    'message' => $e->getMessage(),
+                    'auth' => $request->auth,
+                    'errors' => $e->validator->errors(),
+                ], Response::HTTP_BAD_REQUEST);
+            } else {
+                Log::error('Error in index method: ' . $e->getMessage());
+                return response()->json([
+                    'message' => $e->getMessage(),
+                    'auth' => $request->auth
+                ], Response::HTTP_BAD_REQUEST);
+            }
+        }
+
+        
+    }
+
 
     public function show(Portofolio $portofolio)
     {

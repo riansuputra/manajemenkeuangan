@@ -34,13 +34,14 @@ class PengaturanController extends Controller
         $responses = Http::pool(fn (Pool $pool) => [
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/category-request'),
         ]);
+        // dd($responses[0]->json());
 
 
         // dd($responses->collect());
     
         if ($responses[0]->successful()) {
            
-            $categoryRequestData = collect($responses[0]->json()['data']['categoryRequest'])
+            $categoryRequestData = collect($responses[0]->json()['data']['permintaan'])
                         ->sortByDesc('created_at')
                         ->values()
                         ->all();

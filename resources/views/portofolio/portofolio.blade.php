@@ -99,9 +99,6 @@
                                 <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($sortedHistorisData['ihsg_end'] ?? 0, 0, ',', '.')}}</h5>
                             </a>
                         </div>
-                        
-                       
-                        
                     </div>
                 </div>
             </div>
@@ -135,7 +132,7 @@
                                 <td class="text-end fw-bold" colspan="2">{{number_format($index['cur_price'], 0, ',', '.')}}</td>
                                 <td class="text-end fw-bold">{{ number_format($index['kinerja_portofolio']['valuasi_saat_ini'], 0, ',', '.')}}</td>
                                 <td class="text-end fw-bold">-</td>
-                                <td class="text-end fw-bold">0.00%</td>
+                                <td class="text-end fw-bold">0%</td>
                                 <td style="width:1%" class="text-center">
                                     <a href="" class=""  title="Info" data-bs-toggle="modal" data-bs-target="#modal-info-{{$index['aset']['id']}}">
                                         <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -246,15 +243,6 @@
                                                 @endforeach
                                             @endif
                                         </div>
-                                        <div class="modal-footer">
-                                            <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
-                                                Batal
-                                            </a>
-                                            <button type="submit" class="btn btn-success ms-auto">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                                                Simpan
-                                            </button>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -265,7 +253,16 @@
                                 <td style="width:1%"><span class="avatar avatar-xs" style="background-image: url({{$index['aset']['info']}}); --tblr-avatar-size:1.3rem;"></span></td>
                                 <td style="width:6%">{{$index['aset']['nama']}}</td>
                                 <td class="text-end">{{ number_format($index['volume'], 0, ',', '.')}}</td>
-                                <td class="text-end">{{ number_format($index['cur_price'], 0, ',', '.')}}</td>
+                                <td class="text-end">
+                                    {{ number_format($index['cur_price'], 0, ',', '.')}}
+
+                                    <a href="" class="ms-2"  title="Info" data-bs-toggle="modal" data-bs-target="#modal-price-{{$index['aset']['id']}}">
+                                        <span class="avatar avatar-xs">
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-menu-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 6l16 0" /><path d="M4 12l16 0" /><path d="M4 18l16 0" /></svg>
+                                        </span>
+                                    </a>
+
+                                </td>
                                 <td class="text-end">{{ number_format($index['valuasi'] , 0, ',', '.')}}</td>
                                 <td class="text-end">{{ number_format($index['p/l'] , 0, ',', '.')}}</td>
                                 <td class="text-end">{{ number_format($index['p/l%'] , 0, ',', '.')}}%</td>
@@ -277,6 +274,56 @@
                                     </a>
                                 </td>
                             </tr>
+
+                            <!-- Modal Update Price -->
+                            <div class="modal modal-blur fade" id="modal-price-{{$index['aset']['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">{{$index['aset']['nama']}} <span class="text-muted"> - Update Harga</span></h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <form id="update-harga-form-{{ $index['aset']['id'] }}" action="{{ route('portofolio-update-harga') }}" method="post" autocomplete="off">
+                                            @csrf
+                                            <div class="modal-body">
+                                                <input type="hidden" name="id_aset" value="{{ $index['aset']['id'] }}">
+                                                <input type="hidden" name="nama_aset" value="{{ $index['aset']['nama'] }}">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="mb-3">
+                                                            <label class="form-label required">Harga: </label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-text">
+                                                                    Rp.
+                                                                </span>
+                                                                <input type="text" id="updateHarga-{{ $index['aset']['id'] }}" name="updateHarga" class="form-control text-end" autocomplete="off" placeholder="{{ number_format($index['cur_price'], 0, ',', '.')}}">
+                                                                <input type="text" id="updateHarga1-{{ $index['aset']['id'] }}" name="updateHarga1" class="form-control text-end" autocomplete="off" hidden>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="mb-3">
+                                                        <a href="{{ route('portofolio-update-harga-real', ['id_aset' => $index['aset']['id'], 'nama_aset' => $index['aset']['nama']]) }}"  class="btn btn-secondary w-100">
+                                                                Gunakan Harga Terkini
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-success ms-auto">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                                                    Simpan
+                                                </button>
+                                            </div>
+                                        </form>	
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End of Modal Update Price -->
 
                             <!-- Modal Info -->
                             <div class="modal modal-blur fade" id="modal-info-{{$index['aset']['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
@@ -379,15 +426,6 @@
                                                     @endif
                                                 @endforeach
                                             @endif
-                                        </div>
-                                        <div class="modal-footer">
-                                            <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
-                                                Batal
-                                            </a>
-                                            <button type="submit" class="btn btn-success ms-auto">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                                                Simpan
-                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -449,7 +487,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <div class="mb-3">
                                 <label class="form-label required">Jumlah Lembar: </label>
                                 <div class="input-group">
@@ -458,7 +496,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <div class="mb-3">
                                 <label class="form-label required">Harga: </label>
                                 <div class="input-group">
@@ -471,10 +509,12 @@
                                 
                             </div>
                         </div>
-                        <div class="col-lg-12">
-                            <div>
-                                <label class="form-label">Deskripsi</label>
-                                <textarea class="form-control" rows="3"></textarea>
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label class="form-label">&nbsp </label>
+                                <a href="{{ route('portofolio-update-harga-real') }}"  class="btn btn-secondary w-100">
+                                    Gunakan Harga Terkini
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -532,23 +572,23 @@
                             </div>
                         </div>
                         <input type="number" id="tahun" name="tahun" value="{{$selectedYear}}" hidden>
+                        
                         <div class="col-lg-4">
                             <div class="mb-3">
-                                <label class="form-label">IHSG Start: </label>
+                                <label class="form-label">IHSG End: </label>
                                 <div class="input-group">
-                                    <input type="text" id="ihsgstart" name="ihsgstart" class="form-control text-end" autocomplete="off" placeholder="0" required>
-                                    <input type="text" id="ihsgstart1" name="ihsgstart1" class="form-control text-end" autocomplete="off" hidden>
+                                    <input type="text" id="ihsgend" name="ihsgend" class="form-control text-end" autocomplete="off" placeholder="{{ $filteredHistorisData && !$filteredHistorisData->isEmpty() && !$filteredHistorisData->where('bulan', $currentMonth)->isEmpty() ? number_format($filteredHistorisData->where('bulan', $currentMonth)->first()['ihsg_end'], 0, ',', '.') : '0' }}" required>
+                                    <input type="text" id="ihsgend1" name="ihsgend1" class="form-control text-end" autocomplete="off" hidden>
                                 </div>
                                 
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="mb-3">
-                                <label class="form-label">IHSG End: </label>
-                                <div class="input-group">
-                                    <input type="text" id="ihsgend" name="ihsgend" class="form-control text-end" autocomplete="off" placeholder="0" required>
-                                    <input type="text" id="ihsgend1" name="ihsgend1" class="form-control text-end" autocomplete="off" hidden>
-                                </div>
+                                <label class="form-label">&nbsp </label>
+                                <a href="{{ route('portofolio-update-harga-real') }}"  class="btn btn-secondary w-100">
+                                    Gunakan Harga Terkini
+                                </a>
                                 
                             </div>
                         </div>
@@ -604,13 +644,30 @@
         updateFormattedNumberPorto('ihsgend', 'ihsgend1', 'ihsgend');
     });
 
+    document.getElementById('jumlahlembar').addEventListener('input', function() {
+        updateFormattedNumberPorto('jumlahlembar', 'jumlahlembar1', 'jumlahlembar');
+    });
+
     document.getElementById('ihsgstart').addEventListener('input', function() {
         updateFormattedNumberPorto('ihsgstart', 'ihsgstart1', 'ihsgstart');
     });
 
-    document.getElementById('jumlahlembar').addEventListener('input', function() {
-        updateFormattedNumberPorto('jumlahlembar', 'jumlahlembar1', 'jumlahlembar');
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Menambahkan event listener untuk setiap input yang sesuai
+        // Menambahkan event listener input untuk setiap input harga dengan ID dinamis
+        var hargaInputs = document.querySelectorAll('[id^="updateHarga-"]');  // Pilih semua elemen input yang ID-nya diawali dengan "updateHarga-"
+        
+        hargaInputs.forEach(function(inputElement) {
+            inputElement.addEventListener('input', function() {
+                var elementId = inputElement.id;
+                var inputId = 'updateHarga1-' + inputElement.id.split('-')[1];  // Menyesuaikan ID dinamis untuk input lainnya
+                var dataAttribute = elementId.split('-')[1];  // Ambil ID aset dari elemen ID
+                updateFormattedNumberPorto(elementId, inputId, dataAttribute);
+            });
+        });
     });
+
 </script>
                      
 <script src="{{url('dist/libs/tom-select/dist/js/tom-select.base.min.js?1684106062')}}" defer></script>
@@ -643,6 +700,45 @@ document.addEventListener("DOMContentLoaded", function () {
 // @formatter:on
 </script>
   
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        @if(session('open_modal'))
+            var modalId = 'modal-price-{{ session('open_modal') }}';
+            var modalElement = document.getElementById(modalId);
+
+            if (modalElement) {
+                var modal = new bootstrap.Modal(modalElement);
+                modal.show();
+
+                // Perbarui input harga dengan data terbaru
+                var hargaInput = modalElement.querySelector('#updateHarga-{{ session('open_modal') }}');
+                var hargaInput1 = modalElement.querySelector('#updateHarga1-{{ session('open_modal') }}');
+                var hargaTerkini = "{{ session('harga_terkini', 0) }}";
+
+                if (hargaInput) {
+                    var formattedHarga = "{{ number_format(session('harga_terkini', 0), 0, ',', '.') }}";
+                    hargaInput.value = formattedHarga;
+                    if (hargaInput1) {
+                        hargaInput1.value = hargaTerkini;
+                    }
+                    hargaInput.addEventListener('input', function() {
+                        updateFormattedNumberPorto(
+                            'updateHarga-{{ session('open_modal') }}',
+                            'updateHarga1-{{ session('open_modal') }}',
+                            'updateHarga-{{ session('open_modal') }}'
+                        );
+                    });
+                }
+            }
+        @endif
+        document.querySelectorAll('updateHarga').addEventListener('input', function() {
+            updateFormattedNumberPorto('updateHarga', 'updateHarga1', 'updateHarga');
+        });
+    });
+</script>
+
+
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const spinner = document.getElementById("spinner");
@@ -683,4 +779,5 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 </script>
+
 @endsection
