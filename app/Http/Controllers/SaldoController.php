@@ -51,7 +51,7 @@ class SaldoController extends Controller
         // dd($input, $request);
 
         $response = Http::withHeaders($this->getHeaders($request))->post(env('API_URL') . '/topup', $input);
-
+        // dd($response->json());
         if ($response->status() == 201) {
             $this->updateAuthCookie($request->auth, $response['auth']);
             return redirect()->route('portofolio-mutasi-dana')->with('success', $response["message"]);

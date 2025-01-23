@@ -61,7 +61,7 @@ class PortofolioController extends Controller
                     return $portofolio['aset']['id'] ?? 'Unknown Aset';
                 })->map(function ($asetGroup) {
                     return $asetGroup->sortByDesc(function ($portofolio) {
-                        return Carbon::parse($portofolio['kinerja_portofolio']['transaksi']['tanggal']);
+                        return Carbon::parse($portofolio['kinerja_portofolio']['transaksi']['updated_at']);
                     })->first();
                 });
             });
@@ -129,7 +129,7 @@ class PortofolioController extends Controller
                 return $item;
             });
 
-            // dd($sortData);
+            // dd($sortedData);
 
 
             return view('portofolio.portofolio', [
@@ -464,7 +464,7 @@ class PortofolioController extends Controller
 
     private function storeJual(Request $request)
     {
-        dd($request);
+        // dd($request);
         $input = array(
             'user_id' => $request->auth['user']['id'],
             'volume' => $request->jumlahlembar1,
@@ -503,13 +503,26 @@ class PortofolioController extends Controller
                 ->withHeaders([
                     'X-API-KEY' => config('goapi.apikey')
                 ])->withoutVerifying()->get('https://api.goapi.io/stock/idx/prices?symbols='.$request->nama_aset)->json();
-
-            $hargaTerkini = $response['data']['results'][0]['close'];
-            $idAset = $request->id_aset;
-            // dd($hargaTerkini);
+            
             if($response['status'] == 'success'){
                 // $this->updateAuthCookie($request->auth, $response['auth']);
-                return redirect()->route('portofolio')->with('success',$response["message"])->with('open_modal', $idAset)->with('harga_terkini', $hargaTerkini);
+                if(!empty($response['data']['results'])) {
+                    $hargaTerkini = $response['data']['results'][0]['close'];
+                    $idAset = $request->id_aset;
+                    // dd($hargaTerkini);
+                    if($idAset == 0) {
+                        return redirect()->route('portofolio')->with('success',$response["message"])->with('open_modal', 'ihsg')->with('harga_terkini', $hargaTerkini);
+
+                    } else {
+                        return redirect()->route('portofolio')->with('success',$response["message"])->with('open_modal', $idAset)->with('harga_terkini', $hargaTerkini);
+
+                    }
+                } else {
+                    $hargaTerkini = 0;
+                    $idAset = $request->id_aset;
+                    // dd($idAset);
+                    return redirect()->route('portofolio')->with('error', "Data harga terkini belum tersedia")->with('open_modal', $idAset)->with('harga_terkini', $hargaTerkini);
+                }
             }else if(!empty($response["errors"])){
                 return back()->with('error',$response["message"]);
             }else{

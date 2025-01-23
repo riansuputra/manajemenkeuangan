@@ -36,11 +36,11 @@
         	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
 		</a>
         <a href="{{ route('portofolio') }}" class="btn btn-warning d-none d-sm-inline-block">
-            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-file-spreadsheet"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M8 11h8v7h-8z" /><path d="M8 15h8" /><path d="M11 11v7" /></svg>        	
-          	Portofolio
+            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-history"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 8l0 4l2 2" /><path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5" /></svg>
+          	Riwayat Transaksi
       	</a>
         <a href="{{ route('portofolio') }}" class="btn btn-warning d-sm-none btn-icon" aria-label="Create new report">
-            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-file-spreadsheet"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M8 11h8v7h-8z" /><path d="M8 15h8" /><path d="M11 11v7" /></svg>
+            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-history"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 8l0 4l2 2" /><path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5" /></svg>
 		</a>
 	</div>
 </div>
@@ -111,73 +111,54 @@
                                 <th class="text-center">Jumlah</th>
                                 <th class="text-center">Harga Unit</th>
                                 <th class="text-center">Jumlah Unit</th>
-                                <th class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                        @if (!empty($mutasiDataGrup->toArray()))
-                        @foreach($mutasiDataGrup as $tahun => $bulanData)
-                            @foreach($bulanData as $bulan => $data)
-                                @php
-                                    $rowCount = count($data); // Menghitung jumlah item untuk bulan tersebut
-                                @endphp
-                                
-                                @foreach($data as $index => $item)
-                                    <tr>
-                                        @if($index == 0)
-                                            <td class="text-center" rowspan="{{ $rowCount }}">{{ $loop->parent->index + 1 }}</td>
-                                            <td class="text-center" rowspan="{{ $rowCount }}">
-                                                {{ \Carbon\Carbon::create($tahun, $bulan, 1)->locale('id')->translatedFormat('F') }}
-                                            </td>
-                                        @endif
-
-                                        <td class="text-center" style="width:5%">
-                                            @if($item['alur_dana'] > 0)
-                                            <a href="" class="btn btn-sm btn-success btn-pill ms-auto">
-                                                Masuk
-                                            </a>
-                                            @elseif ($item['alur_dana'] < 0)
-                                            <a href="" class="btn btn-sm btn-danger btn-pill ms-auto">
-                                                Keluar
-                                            </a>
-                                            @else
-                                            <a href="" class="btn btn-sm btn-primary btn-pill ms-auto">
-                                                Dividen
-                                            </a>
-                                            @endif
-                                        </td>
-
-
-                                        <td>
-                                            <div class="row">
-                                                <div class="col-auto">
-                                                    <span>Rp.</span>
-                                                </div>
-                                                <div class="col text-end">
-                                                    <span>{{ number_format($item['alur_dana'], 0, ',', '.') }}</span>
-                                                </div>
-                                            </div>
-                                        </td>
-
-                                        <td class="text-center">{{number_format($item['harga_unit_saat_ini'], 0, ',', '.')}}</td>
-                                        <td class="text-center">{{number_format($item['jumlah_unit_penyertaan'], 0, ',', '.')}}</td>
-
-                                        <td style="width:1%" class="text-center">
-                                            <span class="btn-group" role="group">
-                                                <a href="" class="btn btn-sm btn-warning w-100 btn-icon"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="">
-                                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
-                                                </a>
-                                                <a href="" class="btn btn-sm btn-danger w-100 btn-icon"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="">
-                                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
-                                                </a>
-                                            </span>
-                                        </td>
-                                    </tr>
+                            @if (!empty($mutasiDataGrup->toArray()))
+                                @foreach($mutasiDataGrup as $tahun => $bulanData)
+                                    @foreach($bulanData as $bulan => $data)
+                                        @php
+                                            $rowCount = count($data); // Menghitung jumlah item untuk bulan tersebut
+                                        @endphp
+                                        @foreach($data as $index => $item)
+                                            <tr>
+                                                @if($index == 0)
+                                                    <td class="text-center" rowspan="{{ $rowCount }}">{{ $loop->parent->index + 1 }}</td>
+                                                    <td class="text-center" rowspan="{{ $rowCount }}">
+                                                        {{ \Carbon\Carbon::create($tahun, $bulan, 1)->locale('id')->translatedFormat('F') }}
+                                                    </td>
+                                                @endif
+                                                <td class="text-center" style="width:5%">
+                                                    @if($item['alur_dana'] > 0)
+                                                        <a class="btn btn-sm btn-success btn-pill ms-auto">
+                                                            Masuk
+                                                        </a>
+                                                    @elseif ($item['alur_dana'] < 0)
+                                                        <a class="btn btn-sm btn-danger btn-pill ms-auto">
+                                                            Keluar
+                                                        </a>
+                                                    @else
+                                                        <a class="btn btn-sm btn-primary btn-pill ms-auto">
+                                                            Dividen
+                                                        </a>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <div class="row">
+                                                        <div class="col-auto">
+                                                            <span>Rp.</span>
+                                                        </div>
+                                                        <div class="col text-end">
+                                                            <span>{{ number_format($item['alur_dana'], 0, ',', '.') }}</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">{{number_format($item['harga_unit_saat_ini'], 0, ',', '.')}}</td>
+                                                <td class="text-center">{{number_format($item['jumlah_unit_penyertaan'], 0, ',', '.')}}</td>
+                                            </tr>
+                                        @endforeach
                                     @endforeach
                                 @endforeach
-                            @endforeach
                             @else
                                 <tr>
                                     <td class="text-center" colspan="7">Belum ada mutasi dana.</td>
@@ -189,7 +170,6 @@
             </div>
         </div>
     </div>
-
     <div class="col-lg-12">
         <div class="card mt-3">
             <div class="card-body card-body-scrollable" style="max-height: 400px">
@@ -203,13 +183,12 @@
                 </div>
                 <div class="table-responsive">
                     <table class="table table-bordered table-vcenter table-striped">
-                    <thead>
+                        <thead>
                             <tr>
                                 <th class="text-center">No</th>
                                 <th class="text-center">Tanggal</th>
                                 <th class="text-center">Jenis</th>
                                 <th class="text-center">Jumlah</th>
-                                <th class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -230,11 +209,11 @@
                                             @endif
                                             <td class="text-center" style="width:5%">
                                                 @if ($data['saldo'] > 0)
-                                                    <a href="" class="btn btn-sm btn-success btn-pill ms-auto">Masuk</a>
+                                                    <a class="btn btn-sm btn-success btn-pill ms-auto">Masuk</a>
                                                 @elseif ($data['saldo'] < 0)
-                                                    <a href="" class="btn btn-sm btn-danger btn-pill ms-auto">Keluar</a>
+                                                    <a class="btn btn-sm btn-danger btn-pill ms-auto">Keluar</a>
                                                 @else
-                                                    <a href="" class="btn btn-sm btn-primary btn-pill ms-auto">Dividen</a>
+                                                    <a class="btn btn-sm btn-primary btn-pill ms-auto">Dividen</a>
                                                 @endif
                                             </td>
                                             <td>
@@ -247,25 +226,14 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td class="text-center" style="width:1%">
-                                                <span class="btn-group" role="group">
-                                                    <a href="" class="btn btn-sm btn-warning w-100 btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="">
-                                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
-                                                    </a>
-                                                    <a href="" class="btn btn-sm btn-danger w-100 btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="">
-                                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
-                                                    </a>
-                                                </span>
-                                            </td>
                                         </tr>
                                     @endforeach
                                 @endforeach
-                                @else
-                                    <tr>
-                                        <td class="text-center" colspan="5">Belum ada riwayat dana.</td>
-                                    </tr>
-                                @endif
-
+                            @else
+                                <tr>
+                                    <td class="text-center" colspan="5">Belum ada riwayat dana.</td>
+                                </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>
@@ -332,18 +300,12 @@
         </div>
     </div>
 </div>
-             
-                          
-<script src="{{url('dist/libs/tom-select/dist/js/tom-select.base.min.js?1684106062')}}" defer></script>
-  
-  
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const spinner = document.getElementById("spinner");
+        const spinner = document.getElementById('spinner');
         const pageContent = document.getElementById("page-content");
         const pageTitle = document.getElementById("page-title");
 
-        // Hide spinner and show page content when fully loaded
         window.addEventListener("load", function() {
             spinner.style.display = "none";
             pageContent.style.display = "block";

@@ -86,7 +86,6 @@
                             <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format(($sortedHistorisData['yield_ihsg'] ?? 0) , 2, ',', '.') }}%
                             </h5>
                         </div>
-                       
                         <div class="col-3">
                             <a href="" title="click to edit" data-bs-toggle="modal" data-bs-target="#modal-ihsg">
                                 <h5 class="mt-0 mb-0 pt-0 pb-2">IHSG Start </h5>
@@ -104,7 +103,6 @@
             </div>
         </div>
     </div>
-    
     <div class="col-lg-12">
         <div class="card mt-3">
             <div class="card-body">
@@ -141,97 +139,41 @@
                                     </a>
                                 </td>
                             </tr>
-                            <!-- Modal Info -->
+                            <!-- Modal Info Kas -->
                             <div class="modal modal-blur fade" id="modal-info-{{$index['aset']['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
                                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title">{{$index['aset']['nama']}} <span class="text-muted">- {{$index['aset']['deskripsi']}}</span></h5>
+                                            <h5 class="modal-title">{{$index['aset']['nama']}} <span class="text-muted"></span></h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <h4 class="mb-2">Informasi Aset :</h4>
-                                            <div class="row">
-                                                <div class="col-4">
-                                                    <p class="mb-0 text-muted">Volume :</p>
-                                                    <h4>{{number_format($index['volume'], 0, ',', '.')}}</h4>
-                                                </div>
-                                                <div class="col-4">
-                                                    <p class="mb-0 text-muted">Avg. Price :</p>
-                                                    <h4>{{number_format($index['avg_price'], 0, ',', '.')}}</h4>
-                                                </div>
-                                                <div class="col-4">
-                                                    <p class="mb-0 text-muted">Cur. Price :</p>
-                                                    <h4>{{number_format($index['cur_price'], 0, ',', '.')}}</h4>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-4">
-                                                    <p class="mb-0 text-muted">Modal :</p>
-                                                    <h4>{{number_format($index['modal'], 0, ',', '.')}}</h4>
-                                                </div>
-                                                <div class="col-4">
-                                                    <p class="mb-0 text-muted">Valuation :</p>
-                                                    <h4>{{number_format($index['valuasi'], 0, ',', '.')}}</h4>
-                                                </div>
-                                                <div class="col-4">
-                                                    <p class="mb-0 text-muted">P/L :</p>
-                                                    <h4>{{number_format($index['p/l'], 0, ',', '.')}}</h4>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-4">
-                                                    <p class="mb-0 text-muted">P/L(%) :</p>
-                                                    <h4>{{number_format($index['p/l%'], 0, ',', '.')}}%</h4>
-                                                </div>
-                                                <div class="col-4">
-                                                    <p class="mb-0 text-muted">Fund Alloc :</p>
-                                                    <h4>{{number_format($index['fund_alloc'], 0, ',', '.')}}%</h4>
-                                                </div>
-                                                <div class="col-4">
-                                                    <p class="mb-0 text-muted">Value Effect :</p>
-                                                    <h4>{{number_format($index['value_effect'], 0, ',', '.')}}%</h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-body">
-                                            <h4>Riwayat Transaksi :</h4>
+                                            <h4>Riwayat Kas :</h4>
                                             @if($filteredData->isNotEmpty())
                                                 @foreach($filteredData as $item => $key)
                                                     @if($item == $index['aset']['id'])
                                                         @if($key->isNotEmpty())
-                                                        @foreach($key as $k)
+                                                            @foreach($key as $k)
+                                                                @php
+                                                                    $harga = $k['kinerja_portofolio']['transaksi']['harga'];
+                                                                @endphp
                                                                 <div class="card mb-3 
-                                                                    @if($k['kinerja_portofolio']['transaksi']['jenis_transaksi'] == 'beli') bg-teal-lt
-                                                                    @elseif($k['kinerja_portofolio']['transaksi']['jenis_transaksi'] == 'jual') bg-red-lt
+                                                                    @if($harga > 0) bg-teal-lt
+                                                                    @elseif($harga < 0) bg-red-lt
                                                                     @else bg-primary-lt
                                                                     @endif">
                                                                     <div class="card-body">
                                                                         <div class="row">
                                                                             <div class="col-4">
                                                                                 <p class="mb-0">Jenis :</p>
-                                                                                <h4>{{strtoupper($k['kinerja_portofolio']['transaksi']['jenis_transaksi'])}}</h4>
+                                                                                <h4>{{$k['kinerja_portofolio']['transaksi']['deskripsi']}}</h4>
                                                                             </div>
                                                                             <div class="col-4">
                                                                                 <p class="mb-0">Tanggal :</p>
-                                                                                <h4>{{$k['kinerja_portofolio']['transaksi']['tanggal']}}</h4>
-                                                                            </div>
-                                                                            <div class="col-4">
-                                                                                <p class="mb-0">Sekuritas :</p>
-                                                                                <h4>{{$k['kinerja_portofolio']['transaksi']['sekuritas_id'] ?? '-'}}</h4>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="row">
-                                                                            <div class="col-4">
-                                                                                <p class="mb-0">Volume :</p>
-                                                                                <h4 class="mb-0">{{number_format($k['kinerja_portofolio']['transaksi']['volume'], 0, ',', '.')}}</h4>
+                                                                                <h4>{{\Carbon\Carbon::parse($k['kinerja_portofolio']['transaksi']['tanggal'])->format('d-m-Y')}}</h4>
                                                                             </div>
                                                                             <div class="col-4">
                                                                                 <p class="mb-0">Harga :</p>
-                                                                                <h4 class="mb-0">{{number_format($k['kinerja_portofolio']['transaksi']['harga'], 0, ',', '.')}}</h4>
-                                                                            </div>
-                                                                            <div class="col-4">
-                                                                                <p class="mb-0">Total :</p>
                                                                                 <h4 class="mb-0">{{number_format($k['kinerja_portofolio']['transaksi']['harga'], 0, ',', '.')}}</h4>
                                                                             </div>
                                                                         </div>
@@ -246,7 +188,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- End of Modal Info -->
+                            <!-- End of Modal Info Kas -->
                             @else
                             <tr>
                                 <td style="width:1%" class="text-center">{{$loop->iteration - 1}}</td>
@@ -325,7 +267,7 @@
                             </div>
                             <!-- End of Modal Update Price -->
 
-                            <!-- Modal Info -->
+                            <!-- Modal Info Aset -->
                             <div class="modal modal-blur fade" id="modal-info-{{$index['aset']['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
                                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                                     <div class="modal-content">
@@ -398,7 +340,7 @@
                                                                             </div>
                                                                             <div class="col-4">
                                                                                 <p class="mb-0">Tanggal :</p>
-                                                                                <h4>{{$k['kinerja_portofolio']['transaksi']['tanggal']}}</h4>
+                                                                                <h4>{{\Carbon\Carbon::parse($k['kinerja_portofolio']['transaksi']['tanggal'])->format('d-m-Y')}}</h4>
                                                                             </div>
                                                                             <div class="col-4">
                                                                                 <p class="mb-0">Sekuritas :</p>
@@ -558,7 +500,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <div class="mb-3">
                                 <label class="form-label required">Bulan: </label>
                                 <select name="bulan" id="bulan" class="form-select" required>
@@ -573,7 +515,18 @@
                         </div>
                         <input type="number" id="tahun" name="tahun" value="{{$selectedYear}}" hidden>
                         
-                        <div class="col-lg-4">
+                        
+                        <div class="col-lg-3">
+                            <div class="mb-3">
+                                <label class="form-label">IHSG Start: </label>
+                                <div class="input-group">
+                                    <input type="text" id="ihsgstart" name="ihsgstart" class="form-control text-end" autocomplete="off" placeholder="{{ $filteredHistorisData && !$filteredHistorisData->isEmpty() && !$filteredHistorisData->where('bulan', $currentMonth)->isEmpty() ? number_format($filteredHistorisData->where('bulan', $currentMonth)->first()['ihsg_start'], 0, ',', '.') : '0' }}" required>
+                                    <input type="text" id="ihsgstart1" name="ihsgstart1" class="form-control text-end" autocomplete="off" hidden>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
                             <div class="mb-3">
                                 <label class="form-label">IHSG End: </label>
                                 <div class="input-group">
@@ -583,16 +536,14 @@
                                 
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <div class="mb-3">
                                 <label class="form-label">&nbsp </label>
-                                <a href="{{ route('portofolio-update-harga-real') }}"  class="btn btn-secondary w-100">
-                                    Gunakan Harga Terkini
+                                <a href="{{ route('portofolio-update-harga-real', ['id_aset' => '0', 'nama_aset' => 'COMPOSITE']) }}"  class="btn btn-secondary w-100">
+                                    Harga Terkini
                                 </a>
-                                
                             </div>
                         </div>
-                        
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -601,7 +552,7 @@
                     </a>
                     <button type="submit" class="btn btn-success ms-auto">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                        SImpan
+                        Simpan
                     </button>
                 </div>
             </form>	
@@ -707,6 +658,7 @@ document.addEventListener("DOMContentLoaded", function () {
             var modalElement = document.getElementById(modalId);
 
             if (modalElement) {
+                console.log('Opening modal:', modalId);
                 var modal = new bootstrap.Modal(modalElement);
                 modal.show();
 
@@ -729,15 +681,36 @@ document.addEventListener("DOMContentLoaded", function () {
                         );
                     });
                 }
-            }
+            } 
         @endif
-        document.querySelectorAll('updateHarga').addEventListener('input', function() {
-            updateFormattedNumberPorto('updateHarga', 'updateHarga1', 'updateHarga');
-        });
     });
 </script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        @if(session('open_modal') === 'ihsg')
+            var modalElement = document.getElementById('modal-ihsg');
+            if (modalElement) {
+                var modal = new bootstrap.Modal(modalElement);
+                modal.show();
 
+                // Masukkan nilai harga terkini ke input
+                var hargaTerkini = "{{ session('harga_terkini', 0) }}";
+                var formattedHarga = new Intl.NumberFormat('id-ID').format(hargaTerkini);
+
+                var inputIHSGEnd = modalElement.querySelector('#ihsgend');
+                var inputIHSGEndHidden = modalElement.querySelector('#ihsgend-hidden');
+
+                if (inputIHSGEnd) {
+                    inputIHSGEnd.value = formattedHarga;
+                }
+                if (inputIHSGEndHidden) {
+                    inputIHSGEndHidden.value = hargaTerkini;
+                }
+            }
+        @endif
+    });
+</script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
