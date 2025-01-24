@@ -120,8 +120,8 @@ class PortofolioController extends Controller
                 $valuasi = $item['valuasi'];
             
                 // Fund Allocation dan Value Effect
-                $fundAlloc = $totalModal > 0 ? round(($modal / $totalModal) * 100) : 0;
-                $valueEffect = $totalValuasi > 0 ? round(($valuasi / $totalValuasi) * 100) : 0;
+                $fundAlloc = $totalModal > 0 ? ($modal / $totalModal) * 100 : 0;
+                $valueEffect = $totalValuasi > 0 ? ($valuasi / $totalValuasi) * 100 : 0;
             
                 $item['fund_alloc'] = $fundAlloc;
                 $item['value_effect'] = $valueEffect;
@@ -471,7 +471,7 @@ class PortofolioController extends Controller
             'tanggal' => $request->tanggal,
             'harga' => $request->jumlah1,
             'jenis_transaksi' => $request->jenis_transaksi,
-            'aset_id' => $request->aset_id,
+            'aset_id' => $request->id_saham,
         );
         $response = Http::withHeaders([
             'Accept' => 'application/json',
@@ -498,6 +498,7 @@ class PortofolioController extends Controller
             $request->validate([
                 'id_aset' => 'required',
                 'nama_aset' => 'required',
+                'tipe' => 'nullable',
             ]);
             $response = Http::acceptJson()
                 ->withHeaders([
@@ -509,13 +510,14 @@ class PortofolioController extends Controller
                 if(!empty($response['data']['results'])) {
                     $hargaTerkini = $response['data']['results'][0]['close'];
                     $idAset = $request->id_aset;
-                    // dd($hargaTerkini);
-                    if($idAset == 0) {
+                    $tipe = $request->tipe;
+                    // dd($tipe);
+                    if($tipe == 'portofolio') {
+                        return redirect()->route('portofolio')->with('success',$response["message"])->with('id_aset', $idAset)->with('open_modal', 'portofolio')->with('harga_terkini', $hargaTerkini);
+                    } else if($tipe == 'ihsg') {
                         return redirect()->route('portofolio')->with('success',$response["message"])->with('open_modal', 'ihsg')->with('harga_terkini', $hargaTerkini);
-
                     } else {
                         return redirect()->route('portofolio')->with('success',$response["message"])->with('open_modal', $idAset)->with('harga_terkini', $hargaTerkini);
-
                     }
                 } else {
                     $hargaTerkini = 0;
@@ -543,8 +545,6 @@ class PortofolioController extends Controller
                 ], Response::HTTP_BAD_REQUEST);
             }
         }
-
-        
     }
 
 

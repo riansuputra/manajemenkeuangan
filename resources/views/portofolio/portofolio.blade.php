@@ -128,7 +128,7 @@
                                 <td class="text-center"></td>
                                 <td class="fw-bold text-center" colspan="2">KAS</td>
                                 <td class="text-end fw-bold" colspan="2">{{number_format($index['cur_price'], 0, ',', '.')}}</td>
-                                <td class="text-end fw-bold">{{ number_format($index['kinerja_portofolio']['valuasi_saat_ini'], 0, ',', '.')}}</td>
+                                <td class="text-end fw-bold">{{ number_format($index['cur_price'], 0, ',', '.')}}</td>
                                 <td class="text-end fw-bold">-</td>
                                 <td class="text-end fw-bold">0%</td>
                                 <td style="width:1%" class="text-center">
@@ -146,6 +146,23 @@
                                         <div class="modal-header">
                                             <h5 class="modal-title">{{$index['aset']['nama']}} <span class="text-muted"></span></h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h4 class="mb-2">Informasi Kas :</h4>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <p class="mb-0 text-muted">Valuation :</p>
+                                                    <h4>{{number_format($index['valuasi'], 0, ',', '.')}}</h4>
+                                                </div>
+                                                <div class="col-4">
+                                                    <p class="mb-0 text-muted">Fund Alloc :</p>
+                                                    <h4>{{number_format($index['fund_alloc'], 0, ',', '.')}}%</h4>
+                                                </div>
+                                                <div class="col-4">
+                                                    <p class="mb-0 text-muted">Value Effect :</p>
+                                                    <h4>{{number_format($index['value_effect'], 0, ',', '.')}}%</h4>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="modal-body">
                                             <h4>Riwayat Kas :</h4>
@@ -200,7 +217,7 @@
 
                                     <a href="" class="ms-2"  title="Info" data-bs-toggle="modal" data-bs-target="#modal-price-{{$index['aset']['id']}}">
                                         <span class="avatar avatar-xs">
-                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-menu-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 6l16 0" /><path d="M4 12l16 0" /><path d="M4 18l16 0" /></svg>
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
                                         </span>
                                     </a>
 
@@ -247,7 +264,7 @@
                                                 <div class="row">
                                                     <div class="col-lg-12">
                                                         <div class="mb-3">
-                                                        <a href="{{ route('portofolio-update-harga-real', ['id_aset' => $index['aset']['id'], 'nama_aset' => $index['aset']['nama']]) }}"  class="btn btn-secondary w-100">
+                                                        <a href="{{ route('portofolio-update-harga-real', ['id_aset' => $index['aset']['id'], 'nama_aset' => $index['aset']['nama'], 'tipe' => 'price']) }}"  class="btn btn-secondary w-100">
                                                                 Gunakan Harga Terkini
                                                             </a>
                                                         </div>
@@ -261,7 +278,6 @@
                                                 </button>
                                             </div>
                                         </form>	
-                                    
                                     </div>
                                 </div>
                             </div>
@@ -369,6 +385,16 @@
                                                 @endforeach
                                             @endif
                                         </div>
+                                        <div class="modal-footer">
+                                            <a href="" type="submit" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-portofolio" data-jenis="beli" data-aset="{{ $index['aset']['id'] }}">
+                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-arrow-big-up"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.586 3l-6.586 6.586a2 2 0 0 0 -.434 2.18l.068 .145a2 2 0 0 0 1.78 1.089h2.586v7a2 2 0 0 0 2 2h4l.15 -.005a2 2 0 0 0 1.85 -1.995l-.001 -7h2.587a2 2 0 0 0 1.414 -3.414l-6.586 -6.586a2 2 0 0 0 -2.828 0z" /></svg>
+                                                Beli
+                                            </a>
+                                            <a href="" type="submit" class="btn btn-danger ms-auto" data-bs-toggle="modal" data-bs-target="#modal-portofolio" data-jenis="jual" data-aset="{{ $index['aset']['id'] }}">
+                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-arrow-big-down"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 2l-.15 .005a2 2 0 0 0 -1.85 1.995v6.999l-2.586 .001a2 2 0 0 0 -1.414 3.414l6.586 6.586a2 2 0 0 0 2.828 0l6.586 -6.586a2 2 0 0 0 .434 -2.18l-.068 -.145a2 2 0 0 0 -1.78 -1.089l-2.586 -.001v-6.999a2 2 0 0 0 -2 -2h-4z" /></svg>
+                                                Jual
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -401,8 +427,8 @@
                         <div class="col-lg-3">
                             <div class="mb-3">
                                 <label class="form-label required">Jenis Transaksi:</label>
-                                <select name="jenis_transaksi" class="form-select" required>
-                                    <option value="" selected disabled>Pilih Jenis</option>
+                                <select name="jenis_transaksi" id="jenis_transaksi" class="form-select" required>
+                                    <option value="" selected >Pilih Jenis</option>
                                     <option value="beli">Beli</option>
                                     <option value="jual">Jual</option>
                                     <option value="dividen">Dividen</option>
@@ -429,7 +455,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <div class="mb-3">
                                 <label class="form-label required">Jumlah Lembar: </label>
                                 <div class="input-group">
@@ -438,25 +464,31 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-6">
                             <div class="mb-3">
                                 <label class="form-label required">Harga: </label>
-                                <div class="input-group">
-                                    <span class="input-group-text">
-                                        Rp.
-                                    </span>
-                                    <input type="text" id="jumlah" name="jumlah" class="form-control text-end" autocomplete="off" required placeholder="0">
-                                    <input type="text" id="jumlah1" name="jumlah1" class="form-control text-end" autocomplete="off" hidden>
+                                <div class="row g-2">
+                                    <div class="col">
+                                        <div class="input-group">
+                                            <span class="input-group-text">
+                                                Rp.
+                                            </span>
+                                            <input type="text" id="jumlah" name="jumlah" class="form-control text-end" autocomplete="off" required placeholder="0">
+                                            <input type="text" id="jumlah1" name="jumlah1" class="form-control text-end" autocomplete="off" hidden>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <a id="hargaTerkiniLink" class="btn btn-icon btn-primary" aria-label="Button" title="Gunakan Harga Terkini">
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-clock-dollar"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20.866 10.45a9 9 0 1 0 -7.815 10.488" /><path d="M12 7v5l1.5 1.5" /><path d="M21 15h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" /><path d="M19 21v1m0 -8v1" /></svg>    
+                                        </a>
+                                    </div>
                                 </div>
-                                
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <div class="mb-3">
-                                <label class="form-label">&nbsp </label>
-                                <a href="{{ route('portofolio-update-harga-real') }}"  class="btn btn-secondary w-100">
-                                    Gunakan Harga Terkini
-                                </a>
+                                <label class="form-label">Total :</label>
+                                <input type="text" id="total" name="total" class="form-control text-end" autocomplete="off" readonly placeholder="0">
                             </div>
                         </div>
                     </div>
@@ -489,7 +521,7 @@
                         <div class="col-lg-6">
                             <div class="form-floating mb-3">
                                 <input type="text" id="ihsgstartlabel" name="ihsgstartlabel" value="{{ $filteredHistorisData && !$filteredHistorisData->isEmpty() ? number_format($filteredHistorisData->first()['ihsg_start'], 0, ',', '.') : '0'  }}" class="form-control text-strong text-warning border-warning mt-2" autocomplete="off" readonly>
-                                <label for="ihsgstartlabel" class="form-label text-black">IHSG Start Sebelumnya :</label>
+                                <label for="ihsgstartlabel" class="form-label text-black">IHSG Start :</label>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -520,7 +552,7 @@
                             <div class="mb-3">
                                 <label class="form-label">IHSG Start: </label>
                                 <div class="input-group">
-                                    <input type="text" id="ihsgstart" name="ihsgstart" class="form-control text-end" autocomplete="off" placeholder="{{ $filteredHistorisData && !$filteredHistorisData->isEmpty() && !$filteredHistorisData->where('bulan', $currentMonth)->isEmpty() ? number_format($filteredHistorisData->where('bulan', $currentMonth)->first()['ihsg_start'], 0, ',', '.') : '0' }}" required>
+                                    <input type="text" id="ihsgstart" name="ihsgstart" class="form-control text-end" autocomplete="off"  placeholder="{{ $filteredHistorisData && !$filteredHistorisData->isEmpty() && !$filteredHistorisData->where('bulan', $currentMonth)->isEmpty() ? number_format($filteredHistorisData->where('bulan', $currentMonth)->first()['ihsg_start'], 0, ',', '.') : '0' }}" required>
                                     <input type="text" id="ihsgstart1" name="ihsgstart1" class="form-control text-end" autocomplete="off" hidden>
                                 </div>
                                 
@@ -539,7 +571,7 @@
                         <div class="col-lg-3">
                             <div class="mb-3">
                                 <label class="form-label">&nbsp </label>
-                                <a href="{{ route('portofolio-update-harga-real', ['id_aset' => '0', 'nama_aset' => 'COMPOSITE']) }}"  class="btn btn-secondary w-100">
+                                <a href="{{ route('portofolio-update-harga-real', ['id_aset' => '0', 'nama_aset' => 'COMPOSITE', 'tipe' => 'ihsg']) }}"   class="btn btn-secondary w-100">
                                     Harga Terkini
                                 </a>
                             </div>
@@ -560,7 +592,30 @@
     </div>
 </div>
 
+<script>
+    const selectPeople = document.getElementById('select-people');
+    const hargaTerkiniLink = document.getElementById('hargaTerkiniLink');
 
+    selectPeople.addEventListener('change', function() {
+        const selectedOption = selectPeople.selectedOptions[0];
+        const selectedSahamId = selectedOption.value;
+        const selectedSahamName = selectedOption.text;
+
+        if (selectedSahamId) {
+            // Correctly replace placeholders with actual values
+            const updatedHref = "{{ route('portofolio-update-harga-real') }}?id_aset=" + selectedSahamId + "&nama_aset=" + encodeURIComponent(selectedSahamName) + "&tipe=portofolio";
+
+            // Tampilkan di console untuk debugging
+            console.log("Selected ID Saham:", selectedSahamId);
+            console.log("Selected Nama Saham:", selectedSahamName);
+            console.log("Updated URL:", updatedHref);
+
+            hargaTerkiniLink.href = updatedHref;
+        } else {
+            hargaTerkiniLink.href = "#";
+        }
+    });
+</script>
 
 <script>
     function formatNumberPorto(num) {
@@ -614,7 +669,7 @@
                 var elementId = inputElement.id;
                 var inputId = 'updateHarga1-' + inputElement.id.split('-')[1];  // Menyesuaikan ID dinamis untuk input lainnya
                 var dataAttribute = elementId.split('-')[1];  // Ambil ID aset dari elemen ID
-                updateFormattedNumberPorto(elementId, inputId, dataAttribute);
+                updateFormattedNumberPorto(elementId, inputId, elementId);
             });
         });
     });
@@ -622,34 +677,14 @@
 </script>
                      
 <script src="{{url('dist/libs/tom-select/dist/js/tom-select.base.min.js?1684106062')}}" defer></script>
-  
+
 <script>
-// @formatter:off
-document.addEventListener("DOMContentLoaded", function () {
-    var el;
-    var modal;
-    window.TomSelect && (new TomSelect(el = document.getElementById('select-people'), {
-        copyClassesToDropdown: false,
-        dropdownParent: modal,
-        controlInput: '<input>',
-        render:{
-            item: function(data,escape) {
-                if( data.customProperties ){
-                    return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
-                }
-                return '<div>' + escape(data.text) + '</div>';
-            },
-            option: function(data,escape){
-                if( data.customProperties ){
-                    return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
-                }
-                return '<div>' + escape(data.text) + '</div>';
-            },
-        },
-    }));
-});
-// @formatter:on
+    document.addEventListener('DOMContentLoaded', function () {
+        
+    });
+
 </script>
+
   
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -696,19 +731,123 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // Masukkan nilai harga terkini ke input
                 var hargaTerkini = "{{ session('harga_terkini', 0) }}";
-                var formattedHarga = new Intl.NumberFormat('id-ID').format(hargaTerkini);
-
                 var inputIHSGEnd = modalElement.querySelector('#ihsgend');
-                var inputIHSGEndHidden = modalElement.querySelector('#ihsgend-hidden');
+                var inputIHSGEnd1 = modalElement.querySelector('#ihsgend1');
 
                 if (inputIHSGEnd) {
+                    var formattedHarga = "{{ number_format(session('harga_terkini', 0), 0, ',', '.') }}";
                     inputIHSGEnd.value = formattedHarga;
                 }
-                if (inputIHSGEndHidden) {
-                    inputIHSGEndHidden.value = hargaTerkini;
+                if (inputIHSGEnd1) {
+                    inputIHSGEnd1.value = hargaTerkini;
                 }
             }
         @endif
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var modalPortofolio = document.getElementById('modal-portofolio');
+        var tomSelectInstance = null;
+
+        // Inisialisasi TomSelect
+        window.TomSelect && (tomSelectInstance = new TomSelect('#select-people', {
+            copyClassesToDropdown: false,
+            render: {
+                item: function (data, escape) {
+                    if (data.customProperties) {
+                        return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
+                    }
+                    return '<div>' + escape(data.text) + '</div>';
+                },
+                option: function (data, escape) {
+                    if (data.customProperties) {
+                        return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
+                    }
+                    return '<div>' + escape(data.text) + '</div>';
+                }
+            }
+        }));
+
+        // Saat modal akan ditampilkan
+        modalPortofolio.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget; // Tombol yang memicu modal
+            var jenis = button.getAttribute('data-jenis');
+            var aset = button.getAttribute('data-aset');
+
+            // Atur jenis transaksi
+            var jenisInput = modalPortofolio.querySelector('#jenis_transaksi');
+            if (jenisInput) {
+                jenisInput.value = jenis || '';
+            }
+
+            // Atur aset menggunakan TomSelect API
+            if (tomSelectInstance) {
+                if (aset) {
+                    tomSelectInstance.setValue(aset); // Pilih aset jika ada
+                } else {
+                    tomSelectInstance.clear(); // Reset ke placeholder
+                }
+            }
+        });
+
+        @if(session('open_modal') === 'portofolio')
+            var modalElement = document.getElementById('modal-portofolio');
+            if (modalElement) {
+                var modal = new bootstrap.Modal(modalElement);
+                modal.show();
+
+                // Masukkan nilai harga terkini ke input
+                var hargaTerkini = "{{ session('harga_terkini', 0) }}";
+                var inputHarga = modalElement.querySelector('#jumlah');
+                var inputHarga1 = modalElement.querySelector('#jumlah1');
+                var idAset = "{{ session('id_aset', '') }}";
+                console.log(tomSelectInstance);
+                if (inputHarga) {
+                    var formattedHarga = "{{ number_format(session('harga_terkini', 0), 0, ',', '.') }}";
+                    inputHarga.value = formattedHarga;
+                }
+                if (inputHarga1) {
+                    inputHarga1.value = hargaTerkini;
+                }
+                
+                if (tomSelectInstance) {
+                    if (idAset) {
+                        tomSelectInstance.setValue(idAset); // Pilih aset jika ada
+                    } else {
+                        tomSelectInstance.clear(); // Reset ke placeholder
+                    }
+                }
+            }
+        @endif
+
+        const jumlahLembarInput = document.getElementById('jumlahlembar'); // Input dengan format ribuan
+        const jumlahInput = document.getElementById('jumlah'); // Input dengan format ribuan
+        const jumlahLembarHidden = document.getElementById('jumlahlembar1'); // Nilai tanpa format
+        const jumlahHidden = document.getElementById('jumlah1'); // Nilai tanpa format
+        const totalInput = document.getElementById('total'); // Input total yang akan diisi
+
+        // Fungsi untuk menghitung total
+        function calculateTotal() {
+            const jumlahLembar = parseFloat(jumlahLembarHidden.value) || 0; // Ambil nilai dari input hidden
+            const jumlah = parseFloat(jumlahHidden.value) || 0; // Ambil nilai dari input hidden
+            const total = jumlahLembar * jumlah;
+
+            // Update nilai total
+            totalInput.value = total.toLocaleString('id-ID'); // Format total ke ribuan
+        }
+
+        // Tambahkan event listener untuk mendeteksi perubahan nilai
+        jumlahLembarInput.addEventListener('input', function () {
+            jumlahLembarHidden.value = jumlahLembarInput.value.replace(/\./g, ''); // Sinkronisasi nilai ke hidden input
+            calculateTotal();
+        });
+
+        jumlahInput.addEventListener('input', function () {
+            jumlahHidden.value = jumlahInput.value.replace(/\./g, ''); // Sinkronisasi nilai ke hidden input
+            calculateTotal();
+        });
     });
 </script>
 
