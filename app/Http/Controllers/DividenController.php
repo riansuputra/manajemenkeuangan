@@ -26,8 +26,10 @@ class DividenController extends Controller
         $responses = Http::pool(fn (Pool $pool) => [
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/dividen'),
         ]);
+        // dd($responses);
         if ($responses[0]->successful()){
             $dividenData = $responses[0]->json()['data']['dividen'];
+            // dd($dividenData);
             return view('dividen.index', [
                 'user' => $request->auth['user'],
                 'dividenData' => $dividenData,

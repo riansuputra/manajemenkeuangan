@@ -56,7 +56,7 @@
         <div class="col-sm-12 col-lg-8">
             <div class="card">
                 <div class="table-responsive">
-                    <table class="table table-vcenter table-striped table-bordered">
+                    <table class="table table-vcenter table-bordered">
                         <thead>
                             <tr>
                                 <th class="text-center w-1">No.</th>
