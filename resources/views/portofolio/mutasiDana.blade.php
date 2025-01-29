@@ -195,7 +195,7 @@
                             @if (!empty($saldoData))
                                 @php
                                     $sortedGroupedSaldoData = collect($saldoData)->groupBy('tanggal'); // Mengelompokkan data berdasarkan tanggal
-                                    $groupedSaldoData = $sortedGroupedSaldoData->sortKeysDesc();
+                                    $groupedSaldoData = $sortedGroupedSaldoData;
                                 @endphp
                                 @foreach ($groupedSaldoData as $tanggal => $dataGroup)
                                     @php

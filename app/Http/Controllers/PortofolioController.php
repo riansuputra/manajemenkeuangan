@@ -94,13 +94,13 @@ class PortofolioController extends Controller
 
             $sortedData = $firstSortedData->map(function ($item) {
                 $volume = $item['volume'];
-                $avgPrice = $item['avg_price'] ?? 0;
+                $avgPrice = $item['avg_price'] ?? $item['cur_price'];
                 $curPrice = $item['cur_price'] ?? 0;
     
                 $modal = $volume * $avgPrice;
                 $valuasi = $volume * $curPrice;
                 $profitLoss = $valuasi - $modal;
-                $profitLossPercent = $modal > 0 ? ($profitLoss / $modal) * 100 : 0;
+                $profitLossPercent = $modal > 0 ? round(($profitLoss / $modal) * 100, 2) : 0;
     
                 // Tambahkan informasi baru ke dalam data
                 $item['modal'] = $modal;
@@ -110,6 +110,7 @@ class PortofolioController extends Controller
     
                 return $item;
             });
+
 
             // Hitung Total Modal dan Valuasi untuk Fund Alloc dan Value Effect
             $totalModal = $sortedData->sum('modal');
@@ -129,7 +130,7 @@ class PortofolioController extends Controller
                 return $item;
             });
 
-            // dd($sortedData);
+            // dd($filteredHistorisData);
 
 
             return view('portofolio.portofolio', [

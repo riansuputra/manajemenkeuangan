@@ -40,7 +40,7 @@
                         </div>
                     </div>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-vcenter table-striped" style="--tblr-table-striped-bg: #f6f8fb;">
+                        <table class="table table-bordered table-vcenter">
                             <thead>
                                 <tr>
                                     <th class="text-center">Tahun</th>
@@ -53,7 +53,7 @@
                                 @foreach($historisByYear as $tahun => $data)
                                 <tr>
                                     <td style="width:5%" class="text-center">{{ $tahun }}</td>
-                                    <td class="text-center">{{ $data['yield'] !== null ? number_format($data['yield']* 100, 2, ',', '.') . '%' : '-' }}</td>
+                                    <td class="text-center">{{ $data['yield'] !== null ? number_format($data['yield'], 2, ',', '.') . '%' : '-' }}</td>
                                     <td class="text-center">{{ $data['yield_ihsg'] !== null ? number_format($data['yield_ihsg'], 2, ',', '.') . '%' : '-' }}</td>
                                 </tr>
                                 @endforeach
@@ -80,7 +80,7 @@
                         </div>
                     </div>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-vcenter table-striped" style="--tblr-table-striped-bg: #f6f8fb;">
+                        <table class="table table-bordered table-vcenter">
                             <thead>
                                 <tr>
                                     <th class="text-center">Bulan</th>
@@ -93,7 +93,7 @@
                                 @foreach($groupedByMonth as $bulan => $data)
                                 <tr>
                                     <td style="width:5%">{{ \Carbon\Carbon::create()->month($bulan)->locale('id')->translatedFormat('F') }}</td>
-                                    <td class="text-center">{{ $data['yield'] !== null ? number_format($data['yield']* 100, 2, ',', '.') . '%' : '-' }}</td>
+                                    <td class="text-center">{{ $data['yield'] !== null ? number_format($data['yield'], 2, ',', '.') . '%' : '-' }}</td>
                                     <td class="text-center">{{ $data['yield_ihsg'] !== null ? number_format($data['yield_ihsg'], 2, ',', '.') . '%' : '-' }}</td>
                                 </tr>
                                 @endforeach
@@ -156,7 +156,7 @@
             seriesData.labels.push(`${year}-${monthFormatted}`);
 
             // Format nilai yield tanpa pembulatan
-            const yieldValue = parseFloat(data.yield) * 100; // Konversi ke persen
+            const yieldValue = parseFloat(data.yield); // Konversi ke persen
             const yieldFormatted = yieldValue.toString() + '%';
 
             // Format nilai yield_ihsg tanpa pembulatan

@@ -78,7 +78,7 @@
                     <div class="row">
                         <div class="col-3">
                             <h5 class="mt-0 mb-0 pt-0 pb-2">Yield :</h5>   
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format(($sortedHistorisData['yield'] ?? 0) * 100, 2, ',', '.') }}%
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format(($sortedHistorisData['yield'] ?? 0), 2, ',', '.') }}%
                             </h5>   
                         </div>
                         <div class="col-3">
@@ -107,7 +107,7 @@
         <div class="card mt-3">
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-vcenter table-striped" style="--tblr-table-striped-bg: #f6f8fb;">
+                    <table class="table table-bordered table-vcenter">
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
@@ -130,7 +130,7 @@
                                 <td class="text-end fw-bold" colspan="2">{{number_format($index['cur_price'], 0, ',', '.')}}</td>
                                 <td class="text-end fw-bold">{{ number_format($index['cur_price'], 0, ',', '.')}}</td>
                                 <td class="text-end fw-bold">-</td>
-                                <td class="text-end fw-bold">0%</td>
+                                <td class="text-end fw-bold">0,00%</td>
                                 <td style="width:1%" class="text-center">
                                     <a href="" class=""  title="Info" data-bs-toggle="modal" data-bs-target="#modal-info-{{$index['aset']['id']}}">
                                         <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -223,8 +223,8 @@
 
                                 </td>
                                 <td class="text-end">{{ number_format($index['valuasi'] , 0, ',', '.')}}</td>
-                                <td class="text-end">{{ number_format($index['p/l'] , 0, ',', '.')}}</td>
-                                <td class="text-end">{{ number_format($index['p/l%'] , 0, ',', '.')}}%</td>
+                                <td class="text-end">{{ $index['p/l'] == 0 ? '-' : number_format($index['p/l'] , 0, ',', '.')}}</td>
+                                <td class="text-end">{{ number_format($index['p/l%'] , 2, ',', '.')}}%</td>
                                 <td style="width:1%" class="text-center">
                                     <a href="" class=""  title="Info" data-bs-toggle="modal" data-bs-target="#modal-info-{{$index['aset']['id']}}">
                                         <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -313,23 +313,24 @@
                                                     <h4>{{number_format($index['modal'], 0, ',', '.')}}</h4>
                                                 </div>
                                                 <div class="col-4">
-                                                    <p class="mb-0 text-muted">Valuation :</p>
-                                                    <h4>{{number_format($index['valuasi'], 0, ',', '.')}}</h4>
-                                                </div>
-                                                <div class="col-4">
                                                     <p class="mb-0 text-muted">P/L :</p>
                                                     <h4>{{number_format($index['p/l'], 0, ',', '.')}}</h4>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-4">
-                                                    <p class="mb-0 text-muted">P/L(%) :</p>
-                                                    <h4>{{number_format($index['p/l%'], 0, ',', '.')}}%</h4>
                                                 </div>
                                                 <div class="col-4">
                                                     <p class="mb-0 text-muted">Fund Alloc :</p>
                                                     <h4>{{number_format($index['fund_alloc'], 0, ',', '.')}}%</h4>
                                                 </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <p class="mb-0 text-muted">Valuation :</p>
+                                                    <h4>{{number_format($index['valuasi'], 0, ',', '.')}}</h4>
+                                                </div>
+                                                <div class="col-4">
+                                                    <p class="mb-0 text-muted">P/L(%) :</p>
+                                                    <h4>{{number_format($index['p/l%'], 2, ',', '.')}}%</h4>
+                                                </div>
+                                                
                                                 <div class="col-4">
                                                     <p class="mb-0 text-muted">Value Effect :</p>
                                                     <h4>{{number_format($index['value_effect'], 0, ',', '.')}}%</h4>
@@ -441,7 +442,7 @@
                                 <select name="id_saham" type="text" class="form-select" id="select-people" value="" required>
                                     <option value="" selected>Pilih Saham</option>
                                     @foreach ($filteredAsetData as $saham)
-                                    <option value="{{$saham['id']}}" data-custom-properties="<span class='avatar avatar-xs' style='background-image: url({{ $saham['info'] }})'></span>"> {{$saham['nama']}}</option>
+                                    <option value="{{$saham['id']}}" data-custom-properties="<span class='avatar avatar-xs' style='background-image: url({{ $saham['info'] }})'></span>"> {{$saham['nama']}} - {{$saham['deskripsi']}}</option>
                                    @endforeach
                                    
                                 </select>
@@ -457,14 +458,14 @@
                     <div class="row">
                         <div class="col-lg-3">
                             <div class="mb-3">
-                                <label class="form-label required">Jumlah Lembar: </label>
+                                <label class="form-label required">Volume: </label>
                                 <div class="input-group">
                                     <input type="text" id="jumlahlembar" name="jumlahlembar" class="form-control text-end" autocomplete="off" placeholder="0" required >
                                     <input type="text" id="jumlahlembar1" name="jumlahlembar1" class="form-control text-end" autocomplete="off" hidden>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-5">
                             <div class="mb-3">
                                 <label class="form-label required">Harga: </label>
                                 <div class="row g-2">
@@ -485,10 +486,15 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <div class="mb-3">
                                 <label class="form-label">Total :</label>
-                                <input type="text" id="total" name="total" class="form-control text-end" autocomplete="off" readonly placeholder="0">
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        Rp.
+                                    </span>
+                                    <input type="text" id="total" name="total" class="form-control text-end" autocomplete="off" readonly placeholder="0">
+                                </div>
                             </div>
                         </div>
                     </div>

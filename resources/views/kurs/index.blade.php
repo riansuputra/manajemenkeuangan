@@ -62,7 +62,7 @@
                                 <th class="text-center w-1">No.</th>
                                 <th class="text-center" colspan="2">Mata Uang</th>
                                 <th class="text-center w-2">Kode</th>
-                                <th class="text-center">Nilai Dalam Rupiah (IDR)</th>
+                                <th class="text-center">Nilai Dalam Rupiah</th>
                             </tr>
                         </thead>
                         <tbody>

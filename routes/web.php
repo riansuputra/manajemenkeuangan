@@ -16,6 +16,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LanguageController;
 use Barryvdh\DomPDF\Facade\Pdf;
 
+Route::middleware(['throttle:100,1'])->group(function() {
+
 Route::middleware([App\Http\Middleware\GuestMiddleware::class])->group(function()
 {
     Route::get('/register',[AuthController::class,'registerPage'])->name('registerPage');
@@ -121,4 +123,5 @@ Route::middleware([App\Http\Middleware\UserMiddleware::class])->group(function()
 
 Route::get('/test', function () {
     return view('catatan.indexUmum');
+});
 });

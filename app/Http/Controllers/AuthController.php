@@ -53,7 +53,7 @@ class AuthController extends Controller
             'Accept' => 'application/json',
             'x-api-key' => env('API_KEY')
         ])->post(env('API_URL')."/login", $input);
-
+        // dd($response->json());
         if ($response->status() == 200) {
             Cookie::queue('auth', serialize($response['auth']));
             return redirect()->route('dashboard')->with('success', 'Login Berhasil');
