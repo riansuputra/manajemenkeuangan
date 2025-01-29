@@ -10,6 +10,7 @@ use App\Http\Controllers\SaldoController;
 use App\Http\Controllers\PortofolioController;
 use App\Http\Controllers\PinjamanController;
 use App\Http\Controllers\PengaturanController;
+use App\Http\Controllers\DividenController;
 use App\Http\Controllers\KursController;
 use App\Http\Controllers\InvestasiController;
 use App\Http\Controllers\AdminController;
@@ -92,7 +93,8 @@ Route::middleware([App\Http\Middleware\UserMiddleware::class])->group(function()
     Route::get('/investasi-target-bulanan', [InvestasiController::class, 'targetBulanan'])->name('investasi-target-bulanan');
 
     Route::get('/kurs', [KursController::class, 'index'])->name('kurs');
-    Route::get('/berita', [PortofolioController::class, 'berita'])->name('portofolioStore');
+    Route::get('/dividen', [DividenController::class, 'index'])->name('dividen');
+    Route::get('/berita', [PortofolioController::class, 'berita'])->name('berita');
 
     Route::get('/pinjaman', [PinjamanController::class, 'index'])->name('pinjaman');
     Route::get('/pinjaman-bunga-tetap', [PinjamanController::class, 'bungaTetap'])->name('bungaTetap');

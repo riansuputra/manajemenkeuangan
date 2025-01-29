@@ -199,16 +199,27 @@
                       					</span>
 									</a>
                   				</li>
-								<li class="nav-item {{ url()->current() == url('/kurs') ? 'active' : '' }}" >
-                    				<a class="nav-link" href="/kurs">
+								<li class="nav-item dropdown {{ url()->current() == url('/kurs') ? 'active' : '' }} {{ url()->current() == url('/berita') ? 'active' : '' }} {{ url()->current() == url('/dividen') ? 'active' : '' }}" >
+                    				<a class="nav-link dropdown-toggle" href="" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
                       					<span class="nav-link-icon d-md-none d-lg-inline-block">
-										  	<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-file-spreadsheet"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M8 11h8v7h-8z" /><path d="M8 15h8" /><path d="M11 11v7" /></svg>
+										  	<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-file-info"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M11 14h1v4h1" /><path d="M12 11h.01" /></svg>
                       					</span>
                       					<span class="nav-link-title">
-                        					Kurs
+                        					Info
                       					</span>
                     				</a>
-                  				</li>
+                    				<div class="dropdown-menu">
+										<a class="dropdown-item" href="{{ url('/berita') }}">
+						  					Berita
+										</a>
+                          				<a class="dropdown-item" href="{{ url('/kurs') }}">
+                            				Kurs
+                          				</a>
+										  <a class="dropdown-item" href="{{ url('/dividen') }}">
+                            				Dividen
+                          				</a>
+                    				</div>
+								</li>
 				  				<li class="nav-item dropdown {{ url()->current() == url('/pinjaman-bunga-efektif') ? 'active' : '' }} {{ url()->current() == url('/pinjaman-bunga-tetap') ? 'active' : '' }}" >
                     				<a class="nav-link dropdown-toggle" href="" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
                       					<span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -245,7 +256,7 @@
                           				</a>
                     				</div>
 								</li>
-				  				<li class="nav-item dropdown {{ url()->current() == url('/portofolio') ? 'active' : '' }} {{ url()->current() == url('/portofolio-mutasi-dana') ? 'active' : '' }} {{ url()->current() == url('/portofolio-historis') ? 'active' : '' }} {{ url()->current() == url('/berita') ? 'active' : '' }}" >
+				  				<li class="nav-item dropdown {{ url()->current() == url('/portofolio') ? 'active' : '' }} {{ url()->current() == url('/portofolio-mutasi-dana') ? 'active' : '' }} {{ url()->current() == url('/portofolio-historis') ? 'active' : '' }} " >
                     				<a class="nav-link dropdown-toggle" href="" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
                       					<span class="nav-link-icon d-md-none d-lg-inline-block">
 										  	<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-file-spreadsheet"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M8 11h8v7h-8z" /><path d="M8 15h8" /><path d="M11 11v7" /></svg>
@@ -263,9 +274,6 @@
                           				</a>
                           				<a class="dropdown-item" href="{{ url('/portofolio-historis') }}">
                             				Historis
-                          				</a>
-						  				<a class="dropdown-item" href="{{ url('/berita') }}">
-                            				Berita
                           				</a>
                     				</div>
                   				</li>

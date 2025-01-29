@@ -51,23 +51,19 @@
             <div class="card bg-teal-lt">
                 <div class="card-body pb-0 mb-0">
                     <div class="row">
-                        <div class="col-3">
+                        <div class="col-4">
                             <h5 class="mt-0 mb-0 pt-0 pb-2">Harga Unit :</h5>
                             <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($mutasiDataFilter['harga_unit_saat_ini'] ?? 0, 0, ',', '.' )}}</h5>
                         </div>
-                        <div class="col-3">
+                        <div class="col-4">
                             <h5 class="mt-0 mb-0 pt-0 pb-2">Jumlah/Unit :</h5>
                             <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($mutasiDataFilter['jumlah_unit_penyertaan'] ?? 0, 0, ',', '.' )}}</h5>
                         </div>
-                        <div class="col-3">
-                            <h5 class="mt-0 mb-0 pt-0 pb-2">Valuasi :</h5>
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($kinerjaDataFilter['valuasi_saat_ini'] ?? 0, 0, ',', '.' )}}</h5>
+                        <div class="col-4">
+                            <h5 class="mt-0 mb-0 pt-0 pb-2">Yield :</h5>   
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format(($sortedHistorisData['yield'] ?? 0), 2, ',', '.') }}%
+                            </h5>   
                         </div>
-                        <div class="col-3">
-                            <h5 class="mt-0 mb-0 pt-0 pb-2">Modal :</h5>   
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($mutasiDataFilter['modal'] ?? 0, 0, ',', '.' )}}</h5>   
-                        </div>
-                        
                     </div>
                 </div>
             </div>
@@ -76,27 +72,22 @@
             <div class="card bg-primary-lt">
                 <div class="card-body pb-0 mb-0">
                     <div class="row">
-                        <div class="col-3">
-                            <h5 class="mt-0 mb-0 pt-0 pb-2">Yield :</h5>   
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format(($sortedHistorisData['yield'] ?? 0), 2, ',', '.') }}%
-                            </h5>   
-                        </div>
-                        <div class="col-3">
-                            <h5 class="mt-0 mb-0 pt-0 pb-2">Yield IHSG :</h5>
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format(($sortedHistorisData['yield_ihsg'] ?? 0) , 2, ',', '.') }}%
-                            </h5>
-                        </div>
-                        <div class="col-3">
+                        <div class="col-4">
                             <a href="" title="click to edit" data-bs-toggle="modal" data-bs-target="#modal-ihsg">
                                 <h5 class="mt-0 mb-0 pt-0 pb-2">IHSG Start </h5>
                                 <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($sortedHistorisData['ihsg_start'] ?? 0, 0, ',', '.' )}}</h5>
                             </a>
                         </div>
-                        <div class="col-3">
+                        <div class="col-4">
                             <a href="" title="click to edit" data-bs-toggle="modal" data-bs-target="#modal-ihsg">
                                 <h5 class="mt-0 mb-0 pt-0 pb-2">IHSG End </h5>
                                 <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($sortedHistorisData['ihsg_end'] ?? 0, 0, ',', '.')}}</h5>
                             </a>
+                        </div>
+                        <div class="col-4">
+                            <h5 class="mt-0 mb-0 pt-0 pb-2">Yield IHSG :</h5>
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format(($sortedHistorisData['yield_ihsg'] ?? 0) , 2, ',', '.') }}%
+                            </h5>
                         </div>
                     </div>
                 </div>
@@ -207,7 +198,7 @@
                             </div>
                             <!-- End of Modal Info Kas -->
                             @else
-                            <tr>
+                            <tr class="@if($index['volume'] == 0) bg-muted text-white @endif">
                                 <td style="width:1%" class="text-center">{{$loop->iteration - 1}}</td>
                                 <td style="width:1%"><span class="avatar avatar-xs" style="background-image: url({{$index['aset']['info']}}); --tblr-avatar-size:1.3rem;"></span></td>
                                 <td style="width:6%">{{$index['aset']['nama']}}</td>
@@ -215,7 +206,7 @@
                                 <td class="text-end">
                                     {{ number_format($index['cur_price'], 0, ',', '.')}}
 
-                                    <a href="" class="ms-2"  title="Info" data-bs-toggle="modal" data-bs-target="#modal-price-{{$index['aset']['id']}}">
+                                    <a href="" class="ms-2"  title="Update Harga" data-bs-toggle="modal" data-bs-target="#modal-price-{{$index['aset']['id']}}">
                                         <span class="avatar avatar-xs">
                                             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
                                         </span>
@@ -223,8 +214,8 @@
 
                                 </td>
                                 <td class="text-end">{{ number_format($index['valuasi'] , 0, ',', '.')}}</td>
-                                <td class="text-end">{{ $index['p/l'] == 0 ? '-' : number_format($index['p/l'] , 0, ',', '.')}}</td>
-                                <td class="text-end">{{ number_format($index['p/l%'] , 2, ',', '.')}}%</td>
+                                <td class="text-end @if($index['p/l'] < 0) text-danger @elseif($index['p/l'] > 0) text-success @endif">{{ $index['p/l'] == 0 ? '-' : number_format($index['p/l'] , 0, ',', '.')}}</td>
+                                <td class="text-end @if($index['p/l'] < 0) text-danger @elseif($index['p/l%'] > 0) text-success @endif">{{ number_format($index['p/l%'] , 2, ',', '.')}}%</td>
                                 <td style="width:1%" class="text-center">
                                     <a href="" class=""  title="Info" data-bs-toggle="modal" data-bs-target="#modal-info-{{$index['aset']['id']}}">
                                         <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -233,7 +224,7 @@
                                     </a>
                                 </td>
                             </tr>
-
+                            
                             <!-- Modal Update Price -->
                             <div class="modal modal-blur fade" id="modal-price-{{$index['aset']['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
                                 <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
@@ -314,7 +305,7 @@
                                                 </div>
                                                 <div class="col-4">
                                                     <p class="mb-0 text-muted">P/L :</p>
-                                                    <h4>{{number_format($index['p/l'], 0, ',', '.')}}</h4>
+                                                    <h4 class="@if($index['p/l'] < 0) text-danger @elseif($index['p/l'] > 0) text-success @endif">{{number_format($index['p/l'], 0, ',', '.')}}</h4>
                                                 </div>
                                                 <div class="col-4">
                                                     <p class="mb-0 text-muted">Fund Alloc :</p>
@@ -328,7 +319,7 @@
                                                 </div>
                                                 <div class="col-4">
                                                     <p class="mb-0 text-muted">P/L(%) :</p>
-                                                    <h4>{{number_format($index['p/l%'], 2, ',', '.')}}%</h4>
+                                                    <h4 class="@if($index['p/l'] < 0) text-danger @elseif($index['p/l'] > 0) text-success @endif">{{number_format($index['p/l%'], 2, ',', '.')}}%</h4>
                                                 </div>
                                                 
                                                 <div class="col-4">
@@ -402,6 +393,13 @@
                             <!-- End of Modal Info -->
                            @endif
                            @endforeach
+                           <tr class="fw-bold">
+                                <td colspan="5" class="text-center">TOTAL</td>
+                                <td class="text-end">{{ number_format($sortedData->sum('valuasi'), 0, ',', '.') }}</td>
+                                <td class="text-end @if($sortedData->sum('p/l') < 0) text-danger @elseif($sortedData->sum('p/l') > 0) text-success @endif">{{ $sortedData->sum('p/l') == 0 ? '-' : number_format($sortedData->sum('p/l'), 0, ',', '.') }}</td>
+                                <td class="text-end @if(($sortedData->sum('p/l') / $sortedData->sum('modal')) < 0) text-danger @elseif(($sortedData->sum('p/l') / $sortedData->sum('modal')) > 0) text-success @endif">{{ number_format(($sortedData->sum('p/l') / $sortedData->sum('modal')) * 100, 2, ',', '.') }}%</td>
+                                <td></td>
+                            </tr>
                            @else
                             <tr>
                                 <td colspan="12" class="text-center">Tidak ada data yang tersedia.</td>
