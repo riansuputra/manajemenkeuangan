@@ -58,6 +58,8 @@ Route::middleware([App\Http\Middleware\AdminMiddleware::class])->group(function(
     Route::post('/category-requests/{id}/reject', [AdminController::class, 'reject'])->name('categoryReject');
 
     Route::get('/kurs-admin', [AdminController::class, 'kurs'])->name('kurs-admin');
+    Route::post('/dividen-store', [DividenController::class, 'store'])->name('dividenStore');
+    Route::get('/dividen-admin', [AdminController::class, 'dividen'])->name('dividen-admin');
     Route::get('/user', [AdminController::class, 'user'])->name('user-admin');
 
 });

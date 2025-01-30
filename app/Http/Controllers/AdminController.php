@@ -110,6 +110,36 @@ class AdminController extends Controller
         
     }
 
+    public function dividen(Request $request)
+    {
+        $responses = Http::pool(fn (Pool $pool) => [
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/dividen'),
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/aset'),
+        ]);
+
+        if ($responses[0]->successful() && $responses[1]->successful()) {
+            $dividenData = $responses[0]->json()['data']['dividen'];
+            $asetData = $responses[1]->json()['data']['aset'];
+
+            $asetData = collect($asetData)->filter(function ($aset) {
+                return $aset['tipe_aset'] === 'saham';
+            })->values();
+
+            $dividenData = collect($dividenData)->sortBy('ex_date')->values()->all();
+            $lastUpdate = collect($dividenData)->max('updated_at');
+            
+            return view('admin.dividen.index', [
+                'admin' => $request->auth['admin'],
+                'dividenData' => $dividenData,
+                'asetData' => $asetData,
+                'lastUpdate' => $lastUpdate,
+            ]);
+        } else {
+            abort(500, 'Failed to fetch data from API');
+        }
+        
+    }
+
     public function user(Request $request)
     {
         $responses = Http::pool(fn (Pool $pool) => [

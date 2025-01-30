@@ -29,10 +29,13 @@ class DividenController extends Controller
         // dd($responses);
         if ($responses[0]->successful()){
             $dividenData = $responses[0]->json()['data']['dividen'];
+            $dividenData = collect($dividenData)->sortBy('ex_date')->values()->all();
+            $lastUpdate = collect($dividenData)->max('updated_at');
             // dd($dividenData);
             return view('dividen.index', [
                 'user' => $request->auth['user'],
                 'dividenData' => $dividenData,
+                'lastUpdate' => $lastUpdate,
             ]);
         } else {
             abort(500, 'Failed to fetch data from API');
@@ -46,20 +49,21 @@ class DividenController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request);
         $input = [
-            'user_id' => $request->auth['user']['id'], 
-            'emiten' => $request->emiten,
-            'dividen_per_saham' => $request->dividen_per_saham,
-            'dividen_yield' => $request->dividen_yield,
+            'aset_id' => $request->id_saham,
+            'dividen' => $request->jumlah1,
+            'ex_date' => $request->ex_date,
             'cum_date' => $request->cum_date,
             'payment_date' => $request->payment_date,
+            'recording_date' => $request->recording_date,
         ];
     
         $response = Http::withHeaders($this->getHeaders($request))
-                        ->post(env('API_URL') . '/catatan', $input);
+                        ->post(env('API_URL') . '/dividen', $input);
     
         if ($response->status() == 201) {
-            return redirect()->route('catatanUmum')->with('success', $response->json()['message'] ?? 'Data berhasil disimpan');
+            return redirect()->route('dividen-admin')->with('success', $response->json()['message'] ?? 'Data berhasil disimpan');
         } elseif ($response->failed() && $response->json('errors')) {
             return back()->withErrors($response->json()['errors'])->withInput();
         } else {

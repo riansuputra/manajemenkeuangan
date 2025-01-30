@@ -248,7 +248,7 @@
                 </a>
               </li>
 
-              <li class="nav-item dropdown">
+              <li class="nav-item dropdown {{ url()->current() == url('/dividen-admin') ? 'active' : '' }}">
                 <a class="nav-link dropdown-toggle show" href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="false" >
                   <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" /><path d="M12 12l8 -4.5" /><path d="M12 12l0 9" /><path d="M12 12l-8 -4.5" /><path d="M16 5.25l-8 4.5" /></svg>
@@ -260,7 +260,7 @@
                 <div class="dropdown-menu show">
                   <div class="dropdown-menu-columns">
                     <div class="dropdown-menu-column">
-                      <a class="dropdown-item" href="./accordion.html">
+                      <a class="dropdown-item active" href="{{url('/dividen-admin')}}">
                         Dividen Saham
                       </a>
                       <!-- <div class="dropend">
@@ -480,6 +480,46 @@
     <!-- Tabler Core -->
     <script src="{{asset('js/tabler.min.js?1684106062')}}" defer></script>
     <script src="{{asset('js/demo.min.js?1684106062')}}" defer></script>
+	<script>
+		function formatNumber(num) {
+    const parts = num.toString().split(",");
+    const integerPart = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    const decimalPart = parts.length > 1 ? "," + parts[1] : "";
+    return integerPart + decimalPart;
+}
+
+function updateFormattedNumber() {
+    var inputElement = document.getElementById('jumlah');
+    var rawValue = inputElement.value.replace(/[^0-9,]/g, ''); // Hanya angka dan koma yang diperbolehkan
+    
+    // Pastikan hanya ada satu koma
+    let commaCount = (rawValue.match(/,/g) || []).length;
+    if (commaCount > 1) {
+        rawValue = rawValue.replace(/,(?=.*,)/g, ''); // Hapus semua koma kecuali yang terakhir
+    }
+
+    var formattedValue = formatNumber(rawValue); 
+    inputElement.value = formattedValue; 
+    inputElement.setAttribute('data-value', getUnformattedValue()); 
+    setUnformattedValueToInput(); 
+}
+
+function setUnformattedValueToInput() {
+    var unformattedValue = getUnformattedValue(); 
+    var inputElement = document.getElementById('jumlah1');
+    inputElement.value = unformattedValue; 
+}
+
+function getUnformattedValue() {
+    var inputElement = document.getElementById('jumlah');
+    var rawValue = inputElement.value;
+    var unformattedValue = rawValue.replace(/\./g, '').replace(',', '.'); // Ubah titik jadi kosong, koma jadi titik
+    return unformattedValue;
+}
+
+document.getElementById('jumlah').addEventListener('input', updateFormattedNumber);
+
+	</script>
     <script>
       // @formatter:off
       document.addEventListener("DOMContentLoaded", function () {
