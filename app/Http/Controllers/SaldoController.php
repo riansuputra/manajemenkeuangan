@@ -41,11 +41,13 @@ class SaldoController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         $input = array(
             'user_id' => $request->auth['user']['id'],
             'tanggal' => $request->tanggal,
             'tipe_saldo' => $request->tipe_saldo,
             'saldo' => $request->jumlah1,
+            'aset_id' => $request->id_saham,
         );
 
         // dd($input, $request);

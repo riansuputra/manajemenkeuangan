@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Category Requests')
+@section('title', 'Permintaan Kategori Admin')
 
 @section('page-title')
 <div class="col">
@@ -18,21 +18,22 @@
 <div class="container-xl">
 	<div class="col-12">
 		<div class="card">
+			<div class="card-body">
 			<div class="table-responsive">
-				<table class="table table-vcenter table-mobile-md card-table">
+				<table class="table table-vcenter table-bordered table-mobile-md">
 					<thead>
 						<tr>
 							<th class="text-center">No.</th>
-							<th >Category Name</th>
-							<th  >Type</th>
-							<th  >User Id</th>
-							<th >Admin Id</th>
-							<th >Status</th>
+							<th>Nama Kategori</th>
+							<th>Tipe</th>
+							<th>UserId - Email</th>
+							<th>AdminId - Email</th>
+							<th>Status</th>
 							<th class="w-1"></th>
                         </tr>
 					</thead>
 					<tbody>
-						@foreach($categoryRequestData as $data)
+						@foreach($permintaan as $data)
                         <tr>
 							<td class="w-1">{{$loop->iteration}}.</td>
                           	<td>
@@ -74,24 +75,24 @@
 							@endif
 							<td class="text-muted" >
 								@if($data['status'] == 'pending')
-									<span class="badge bg-warning me-2"></span>{{$data['status']}}
+									<span class="badge bg-warning me-2"></span>{{ucwords($data['status'])}}
 								@elseif($data['status'] == 'rejected')
-									<span class="badge bg-danger me-2"></span>{{$data['status']}}
+									<span class="badge bg-danger me-2"></span>{{ucwords($data['status'])}}
 								@elseif($data['status'] == 'approved')
-									<span class="badge bg-success me-2"></span>{{$data['status']}}
+									<span class="badge bg-success me-2"></span>{{ucwords($data['status'])}}
 								@endif
 							</td>
 							<td class="w-1">
 								<div class="btn-list flex-nowrap">
 									@if($data['status'] == 'pending')
-									<form action="{{ route('categoryApprove', ['id'=> $data['id']]) }}" method="post" autocomplete="off">
+									<form action="{{ route('permintaanApprove', ['id'=> $data['id']]) }}" method="post" autocomplete="off">
                 						@csrf
 										<input type="text" id="id" name="id" value="{{ $data['id'] }}" hidden>
 										<button type="submit" class="btn btn-outline-success btn-icon">
 											<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg>
 										</button>
 									</form>
-									<form action="{{ route('categoryReject', ['id'=> $data['id']]) }}" method="post" autocomplete="off">
+									<form action="{{ route('permintaanReject', ['id'=> $data['id']]) }}" method="post" autocomplete="off">
 										@csrf
 										<input type="text" id="id" name="id" value="{{ $data['id'] }}" hidden>
 										<button type="submit" class="btn btn-outline-danger btn-icon">
@@ -121,6 +122,7 @@
 					</tbody>
 				</table>
 			</div>
+		</div>
 		</div>
 	</div>
 </div>

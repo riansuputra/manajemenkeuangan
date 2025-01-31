@@ -28,17 +28,20 @@ class PortofolioController extends Controller
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/historis'),
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/mutasi-dana'),
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/kinerja-portofolio'),
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/transaksi'),
         ]);
 
-        if ($responses[0]->successful() && $responses[1]->successful() && $responses[2]->successful() && $responses[3]->successful()){
+        if ($responses[0]->successful() && $responses[1]->successful() && $responses[2]->successful() && $responses[3]->successful() && $responses[4]->successful() && $responses[5]->successful()){
             $asetData = $responses[0]->json()['data']['aset'];
             $portoData = $responses[1]->json()['data']['portofolio'];
             $historisData = $responses[2]->json()['data']['historis'];
             $mutasiData = $responses[3]->json()['data']['mutasi_dana'];
             $kinerjaData = $responses[4]->json()['data']['kinerja'];
+            $transaksiData = $responses[5]->json()['data']['transaksi'];
             
             $portoData = collect($portoData);
-            // dd($portoData);
+            $transaksiData = collect($transaksiData);
+            // dd($transaksiData);
 
             $filteredAsetData = collect($asetData)->filter(function ($aset) {
                 return $aset['tipe_aset'] === 'saham';
@@ -52,6 +55,17 @@ class PortofolioController extends Controller
                     return $portofolio['aset']['id'] ?? 'Unknown Aset';
                 });
             });
+
+            $groupedDataTran = $transaksiData->groupBy(function ($transaksi) {
+                $tanggal = $transaksi['tanggal'] ?? null;
+                return $tanggal ? Carbon::parse($tanggal)->year : 'Unknown Year';
+            })->map(function ($yearGroup) {
+                return $yearGroup->groupBy(function ($transaksi) {
+                    return $transaksi['aset']['id'] ?? 'Unknown Aset';
+                });
+            });
+
+            // dd($groupedDataTran);
 
             $sortData = $portoData->groupBy(function ($portofolio) {
                 $tanggal = $portofolio['kinerja_portofolio']['transaksi']['tanggal'] ?? null;
@@ -73,6 +87,9 @@ class PortofolioController extends Controller
             
             $filteredData = $groupedData->get($selectedYear, collect([])); 
             $firstSortedData = $sortData->get($selectedYear, collect([])); 
+            $filteredDataTran = $groupedDataTran->get($selectedYear, collect([])); 
+
+            // dd($filteredDataTran);
 
             $filteredHistorisData = collect($historisData)->filter(function ($item) use ($selectedYear) {
                 return $item['tahun'] == $selectedYear;
@@ -130,7 +147,7 @@ class PortofolioController extends Controller
                 return $item;
             });
 
-            // dd($filteredHistorisData);
+            // dd($filteredData);
 
 
             return view('portofolio.portofolio', [
@@ -146,6 +163,7 @@ class PortofolioController extends Controller
                 'filteredHistorisData' => $filteredHistorisData,
                 'mutasiDataFilter' => $mutasiDataFilter,
                 'kinerjaDataFilter' => $kinerjaDataFilter,
+                'filteredDataTran' => $filteredDataTran,
             ]);
         } else {
             abort(500, 'Failed to fetch data from API');
@@ -159,11 +177,39 @@ class PortofolioController extends Controller
         $responses = Http::pool(fn (Pool $pool) => [
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/mutasi-dana'),
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/saldo'),
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/portofolio'),
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/aset'),
         ]);
 
-        if ($responses[0]->successful() && $responses[1]->successful()){
+        if ($responses[0]->successful() && $responses[1]->successful() && $responses[2]->successful() && $responses[3]->successful()){
             $mutasiData = $responses[0]->json()['data']['mutasi_dana'];
             $saldoData = $responses[1]->json()['data']['saldo'];
+            $portoData = $responses[2]->json()['data']['portofolio'];
+            $asetData = $responses[3]->json()['data']['aset'];
+            
+
+            $portoData = collect($portoData);
+
+            $filteredAsetData = collect($asetData)->filter(function ($aset) {
+                return $aset['tipe_aset'] === 'saham';
+            })->values();
+
+            // dd($filteredAsetData);
+
+            $sortData = $portoData->groupBy(function ($portofolio) {
+                $tanggal = $portofolio['kinerja_portofolio']['transaksi']['tanggal'] ?? null;
+                return $tanggal ? Carbon::parse($tanggal)->year : 'Unknown Year';
+            })->map(function ($yearGroup) {
+                return $yearGroup->groupBy(function ($portofolio) {
+                    return $portofolio['aset']['id'] ?? 'Unknown Aset';
+                })->map(function ($asetGroup) {
+                    return $asetGroup->sortByDesc(function ($portofolio) {
+                        return Carbon::parse($portofolio['kinerja_portofolio']['transaksi']['updated_at']);
+                    })->first();
+                });
+            });
+
+            // dd($sortData);
 
             $saldo = collect($saldoData)->sum('saldo');
 
@@ -224,6 +270,7 @@ class PortofolioController extends Controller
                 'firstMutasiDana' => $firstMutasiDana,
                 'uniqueYears' => $uniqueYears,
                 'selectedYear' => $selectedYear,
+                'sortData' => $sortData,
             ]);
         } else {
             abort(500, 'Failed to fetch data from API');
@@ -372,6 +419,7 @@ class PortofolioController extends Controller
 
     public function dividen(Request $request)
     {
+        // dd($request);
         $responses = Http::pool(fn (Pool $pool) => [
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/dividen'),
         ]);

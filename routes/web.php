@@ -53,9 +53,9 @@ Route::middleware([App\Http\Middleware\AdminMiddleware::class])->group(function(
     Route::get('/admin', [AdminController::class, 'index'])->name('admin-layout');
     Route::get('/dashboard-admin', [AdminController::class, 'dashboard'])->name('admin-dashboard');
 
-    Route::get('/categories-request', [AdminController::class, 'categoryRequests'])->name('categoryRequests');
-    Route::post('/category-requests/{id}/approve', [AdminController::class, 'approve'])->name('categoryApprove');
-    Route::post('/category-requests/{id}/reject', [AdminController::class, 'reject'])->name('categoryReject');
+    Route::get('/permintaan-kategori-admin', [AdminController::class, 'permintaanKategoriAdmin'])->name('permintaanKategoriAdmin');
+    Route::post('/permintaan-kategori/{id}/approve', [AdminController::class, 'approve'])->name('permintaanApprove');
+    Route::post('/permintaan-kategori/{id}/reject', [AdminController::class, 'reject'])->name('permintaanReject');
 
     Route::get('/kurs-admin', [AdminController::class, 'kurs'])->name('kurs-admin');
     Route::post('/dividen-store', [DividenController::class, 'store'])->name('dividenStore');
@@ -104,8 +104,8 @@ Route::middleware([App\Http\Middleware\UserMiddleware::class])->group(function()
     Route::get('/pinjaman-bunga-efektif', [PinjamanController::class, 'bungaEfektif'])->name('bungaEfektif');
 
     Route::get('/pengaturan', [PengaturanController::class, 'index'])->name('settings');
-    Route::get('/category-request', [PengaturanController::class, 'categoryRequestIndex'])->name('categoryRequest');
-    Route::post('/category-store', [PengaturanController::class, 'store'])->name('categoryStore');
+    Route::get('/permintaan-kategori', [PengaturanController::class, 'indexPermintaanKategori'])->name('permintaanKategori');
+    Route::post('/permintaan-kategori-store', [PengaturanController::class, 'storePermintaanKategori'])->name('permintaanKategoriStore');
 
     Route::get('/portofolio', [PortofolioController::class, 'portofolio'])->name('portofolio');
     Route::post('/portofolio-store', [PortofolioController::class, 'store'])->name('portofolioStore');

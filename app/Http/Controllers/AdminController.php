@@ -42,7 +42,7 @@ class AdminController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function categoryRequests(Request $request)
+    public function permintaanKategoriAdmin(Request $request)
     {
         // dd($request);
         // dd($request->auth['user_type']);
@@ -54,17 +54,17 @@ class AdminController extends Controller
         // dd($responses);
     
         if ($responses[0]->successful()) {
-            $categoryRequestData = collect($responses[0]->json()['data']['PermintaanKategori'])
+            $permintaan = collect($responses[0]->json()['data']['PermintaanKategori'])
                         ->sortByDesc('created_at')
                         ->values()
                         ->all();
 
-            // dd($categoryRequestData);
+            // dd($permintaan);
 
             return view('admin.kategori.index', [
             'admin' => $request->auth['admin'],
 
-                'categoryRequestData' => $categoryRequestData,
+                'permintaan' => $permintaan,
             ]);
         } else {
             abort(500, 'Failed to fetch data from API');
@@ -162,17 +162,17 @@ class AdminController extends Controller
     
 
     public function approve(Request $request, $id) {
-        // dd($id);
+        // dd($request, $id);
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'x-api-key' => env('API_KEY'),
             'Authorization' => 'Bearer ' . $request->auth['token'],
             'user-type' => $request->auth['user_type'],
-        ])->post(env('API_URL') . '/category-requests/'.$id.'/approve');
+        ])->post(env('API_URL') . '/permintaan-kategori/'.$id.'/approve');
 
         if ($response->status() == 201) {
             $this->updateAuthCookie($request->auth, $response['auth']);
-            return redirect()->route('categoryRequests')->with('success', $response["message"]);
+            return redirect()->route('permintaanKategoriAdmin')->with('success', $response["message"]);
         } else if (!empty($response["errors"])) {
             return back()->with('error', $response["message"]);
         } else {
@@ -187,12 +187,12 @@ class AdminController extends Controller
             'x-api-key' => env('API_KEY'),
             'Authorization' => 'Bearer ' . $request->auth['token'],
             'user-type' => $request->auth['user_type'],
-        ])->post(env('API_URL') . '/category-requests/'.$id.'/reject');
+        ])->post(env('API_URL') . '/permintaan-kategori/'.$id.'/reject');
         
 
         if ($response->status() == 201) {
             $this->updateAuthCookie($request->auth, $response['auth']);
-            return redirect()->route('categoryRequests')->with('success', $response["message"]);
+            return redirect()->route('permintaanKategoriAdmin')->with('success', $response["message"]);
         } else if (!empty($response["errors"])) {
             return back()->with('error', $response["message"]);
         } else {

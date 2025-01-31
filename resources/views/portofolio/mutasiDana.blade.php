@@ -272,7 +272,27 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-12">
+                        <div class="col-lg-6" id="saham-field" style="display: none;">
+                            <div class="mb-3">
+                                <label class="form-label required">Pilih Saham:</label>
+                                <select name="id_saham" class="form-select" id="select-people" required>
+                                    <option value="" selected disabled>Pilih Saham</option>
+                                    @if($sortData->isNotEmpty())
+                                        @foreach($sortData as $key => $index)
+                                            @foreach($index as $dex)
+                                                @if ($loop->first)
+                                                @else
+                                                    <option value="{{$dex['aset']['id']}}">{{$dex['aset']['nama']}} - {{$dex['aset']['deskripsi']}}</option>
+                                                @endif
+                                            @endforeach
+                                        @endforeach
+                                    @else
+                                    <option value="" disabled>Belum terdapat data saham</option>
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-12" id="jumlah-field">
                             <div class="mb-3">
                                 <label class="form-label required">Jumlah </label>
                                 <div class="input-group">
@@ -311,6 +331,29 @@
             pageContent.style.display = "block";
             pageTitle.style.display = "block";
         });
+
+        let tipeSaldo = document.getElementById("tipe_saldo");
+    let sahamField = document.getElementById("saham-field");
+    let jumlahField = document.getElementById("jumlah-field");
+    let selectSaham = document.getElementById("select-people");
+
+    tipeSaldo.addEventListener("change", function() {
+        if (this.value === "dividen") {
+            sahamField.style.display = "block";  // Show "Pilih Saham"
+            selectSaham.removeAttribute("disabled"); // Enable field
+            selectSaham.setAttribute("required", "true"); // Make required
+            
+            jumlahField.classList.remove("col-lg-12");
+            jumlahField.classList.add("col-lg-6");  // Change to col-lg-6
+        } else {
+            sahamField.style.display = "none";  // Hide "Pilih Saham"
+            selectSaham.setAttribute("disabled", "true"); // Disable field
+            selectSaham.removeAttribute("required"); // Remove required
+            
+            jumlahField.classList.remove("col-lg-6");
+            jumlahField.classList.add("col-lg-12");  // Change to col-lg-12
+        }
+    });
     });
 </script>
 @endsection

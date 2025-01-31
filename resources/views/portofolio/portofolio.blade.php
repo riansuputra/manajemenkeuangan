@@ -330,43 +330,44 @@
                                         </div>
                                         <div class="modal-body">
                                             <h4>Riwayat Transaksi :</h4>
-                                            @if($filteredData->isNotEmpty())
-                                                @foreach($filteredData as $item => $key)
+                                            @if($filteredDataTran->isNotEmpty())
+                                                @foreach($filteredDataTran as $item => $key)
                                                     @if($item == $index['aset']['id'])
                                                         @if($key->isNotEmpty())
                                                         @foreach($key as $k)
                                                                 <div class="card mb-3 
-                                                                    @if($k['kinerja_portofolio']['transaksi']['jenis_transaksi'] == 'beli') bg-teal-lt
-                                                                    @elseif($k['kinerja_portofolio']['transaksi']['jenis_transaksi'] == 'jual') bg-red-lt
+                                                                    @if($k['jenis_transaksi'] == 'beli') bg-teal-lt
+                                                                    @elseif($k['jenis_transaksi'] == 'jual') bg-red-lt
+                                                                    @elseif($k['jenis_transaksi'] == 'dividen') bg-primary-lt
                                                                     @else bg-primary-lt
                                                                     @endif">
                                                                     <div class="card-body">
                                                                         <div class="row">
                                                                             <div class="col-4">
                                                                                 <p class="mb-0">Jenis :</p>
-                                                                                <h4>{{strtoupper($k['kinerja_portofolio']['transaksi']['jenis_transaksi'])}}</h4>
+                                                                                <h4>{{strtoupper($k['jenis_transaksi'])}}</h4>
                                                                             </div>
                                                                             <div class="col-4">
                                                                                 <p class="mb-0">Tanggal :</p>
-                                                                                <h4>{{\Carbon\Carbon::parse($k['kinerja_portofolio']['transaksi']['tanggal'])->format('d-m-Y')}}</h4>
+                                                                                <h4>{{\Carbon\Carbon::parse($k['tanggal'])->format('d-m-Y')}}</h4>
                                                                             </div>
                                                                             <div class="col-4">
                                                                                 <p class="mb-0">Sekuritas :</p>
-                                                                                <h4>{{$k['kinerja_portofolio']['transaksi']['sekuritas_id'] ?? '-'}}</h4>
+                                                                                <h4>{{$k['sekuritas_id'] ?? '-'}}</h4>
                                                                             </div>
                                                                         </div>
                                                                         <div class="row">
                                                                             <div class="col-4">
                                                                                 <p class="mb-0">Volume :</p>
-                                                                                <h4 class="mb-0">{{number_format($k['kinerja_portofolio']['transaksi']['volume'], 0, ',', '.')}}</h4>
+                                                                                <h4 class="mb-0">{{number_format($k['volume'], 0, ',', '.')}}</h4>
                                                                             </div>
                                                                             <div class="col-4">
                                                                                 <p class="mb-0">Harga :</p>
-                                                                                <h4 class="mb-0">{{number_format($k['kinerja_portofolio']['transaksi']['harga'], 0, ',', '.')}}</h4>
+                                                                                <h4 class="mb-0">{{number_format($k['harga'], 0, ',', '.')}}</h4>
                                                                             </div>
                                                                             <div class="col-4">
                                                                                 <p class="mb-0">Total :</p>
-                                                                                <h4 class="mb-0">{{number_format($k['kinerja_portofolio']['transaksi']['harga'], 0, ',', '.')}}</h4>
+                                                                                <h4 class="mb-0">{{number_format($k['harga'], 0, ',', '.')}}</h4>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -430,7 +431,6 @@
                                     <option value="" selected >Pilih Jenis</option>
                                     <option value="beli">Beli</option>
                                     <option value="jual">Jual</option>
-                                    <option value="dividen">Dividen</option>
                                 </select>
                             </div>
                         </div>
