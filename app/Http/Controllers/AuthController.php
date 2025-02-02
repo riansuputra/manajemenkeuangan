@@ -85,7 +85,7 @@ class AuthController extends Controller
 
         if ($response->status() == 200) {
             Cookie::queue('auth', serialize($response['auth']));
-            return redirect()->route('admin-layout')->with('success', 'Login Berhasil');
+            return redirect()->route('admin-dashboard')->with('success', 'Login Berhasil');
         } else if (!empty($response["message"]) && !empty($response["errors"])) {
             return back()->with('error', $response["message"])->withErrors($response["errors"])->withInput($input);
         } else if (!empty($response["message"])) {

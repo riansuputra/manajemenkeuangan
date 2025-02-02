@@ -54,7 +54,7 @@ class AdminController extends Controller
         // dd($responses);
     
         if ($responses[0]->successful()) {
-            $permintaan = collect($responses[0]->json()['data']['PermintaanKategori'])
+            $permintaan = collect($responses[0]->json()['data']['permintaan'])
                         ->sortByDesc('created_at')
                         ->values()
                         ->all();
