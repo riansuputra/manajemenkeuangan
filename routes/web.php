@@ -55,7 +55,7 @@ Route::middleware([App\Http\Middleware\AdminMiddleware::class])->group(function(
 
     Route::get('/permintaan-kategori-admin', [AdminController::class, 'permintaanKategoriAdmin'])->name('permintaanKategoriAdmin');
     Route::post('/permintaan-kategori/{id}/approve', [AdminController::class, 'approve'])->name('permintaanApprove');
-    Route::post('/permintaan-kategori/{id}/reject', [AdminController::class, 'reject'])->name('permintaanReject');
+    Route::post('/permintaan-kategori/reject', [AdminController::class, 'reject'])->name('permintaanReject');
 
     Route::get('/kurs-admin', [AdminController::class, 'kurs'])->name('kurs-admin');
     Route::post('/dividen-store', [DividenController::class, 'store'])->name('dividenStore');

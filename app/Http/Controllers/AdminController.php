@@ -44,34 +44,78 @@ class AdminController extends Controller
      */
     public function permintaanKategoriAdmin(Request $request)
     {
-        // dd($request);
-        // dd($request->auth['user_type']);
-
+        // Mengambil data dari API
         $responses = Http::pool(fn (Pool $pool) => [
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/permintaan-kategori-admin'),
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/kategori-pribadi'),
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/kategori-pengeluaran'),
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/kategori-pemasukan'),
         ]);
 
-        // dd($responses);
-    
-        if ($responses[0]->successful()) {
+        // Memeriksa apakah respon berhasil
+        if ($responses[0]->successful() && $responses[1]->successful() && $responses[2]->successful() && $responses[3]->successful()) {
+            // Mengambil data permintaan
             $permintaan = collect($responses[0]->json()['data']['permintaan'])
                         ->sortByDesc('created_at')
                         ->values()
                         ->all();
 
-            // dd($permintaan);
+            // Mengambil dan mengubah struktur kategori pribadi
+            $kategoriPribadi = collect($responses[1]->json()['data']['kategori_pribadi'])
+                ->map(function ($item) {
+                    return [
+                        'nama_kategori' => $item['nama_kategori'],
+                        'tipe' => 'pribadi', // Menandakan tipe kategori pribadi
+                        'cakupan' => 'personal', // Cakupan kategori pribadi
+                        'created_at' => $item['created_at'] ?? null, // Menambahkan created_at
+                    ];
+                });
 
+           
+
+            // Mengambil dan mengubah struktur kategori pengeluaran
+            $kategoriPengeluaran = collect($responses[2]->json()['data']['kategori_pengeluaran'])
+                ->map(function ($item) {
+                    return [
+                        'nama_kategori' => $item['nama_kategori_pengeluaran'], // Pastikan key yang sesuai
+                        'tipe' => 'pengeluaran', // Menandakan tipe kategori pengeluaran
+                        'cakupan' => 'global', // Cakupan kategori pengeluaran
+                        'created_at' => $item['created_at'] ?? null, // Menambahkan created_at
+                    ];
+                });
+
+                 // Mengambil dan mengubah struktur kategori pemasukan
+            $kategoriPemasukan = collect($responses[3]->json()['data']['kategori_pemasukan'])
+            ->map(function ($item) {
+                return [
+                    'nama_kategori' => $item['nama_kategori_pemasukan'], // Pastikan key yang sesuai
+                    'tipe' => 'pemasukan', // Menandakan tipe kategori pemasukan
+                    'cakupan' => 'global', // Cakupan kategori pemasukan
+                    'created_at' => $item['created_at'] ?? null, // Menambahkan created_at
+                ];
+            });
+
+            // Menggabungkan semua kategori
+            $allKategori = $kategoriPribadi->merge($kategoriPemasukan)->merge($kategoriPengeluaran);
+
+            // Urutkan berdasarkan created_at secara descending
+            $allKategori = $allKategori->sortByDesc('created_at')->values();
+
+            // Menampilkan hasil debug (opsional)
+            // dd($allKategori);
+
+            // Menampilkan view dengan data yang telah diproses
             return view('admin.kategori.index', [
-            'admin' => $request->auth['admin'],
-
+                'admin' => $request->auth['admin'],
                 'permintaan' => $permintaan,
+                'allKategori' => $allKategori, // Menambahkan semua kategori ke dalam view
             ]);
         } else {
             abort(500, 'Failed to fetch data from API');
         }
-
-        
     }
+
+
 
     public function kurs(Request $request)
     {
@@ -180,15 +224,20 @@ class AdminController extends Controller
         }
     }
 
-    public function reject(Request $request, $id) {
-        // dd($id);
+    public function reject(Request $request) {
+        // dd($request);
+
+        $input = array(
+            'id' => $request->id,
+            'message' => $request->message,
+        );
+
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'x-api-key' => env('API_KEY'),
             'Authorization' => 'Bearer ' . $request->auth['token'],
             'user-type' => $request->auth['user_type'],
-        ])->post(env('API_URL') . '/permintaan-kategori/'.$id.'/reject');
-        
+        ])->post(env('API_URL') . '/permintaan-kategori/reject', $input);
 
         if ($response->status() == 201) {
             $this->updateAuthCookie($request->auth, $response['auth']);

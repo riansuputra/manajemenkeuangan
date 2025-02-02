@@ -72,7 +72,6 @@
                                 <th class="text-center">Cakupan</th>
                                 <th class="text-center">Status</th>
                                 <th class="text-center">Pesan</th>
-                                <th class="text-center"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -87,13 +86,6 @@
 									<span class="badge  @if(($kategori['status']) == 'pending') bg-warning @elseif(($kategori['status']) == 'approved') bg-success @elseif(($kategori['status']) == 'rejected') bg-danger @endif me-2"></span>{{ucwords($kategori['status'])}}
 								</td>
 								<td class="@if (empty($kategori['message'])) text-center @else text @endif" style="width:5%">{{$kategori['message'] ?? '-'}}</td>
-								<td style="width:1%" class="text-center">
-                                    <a href="" class=""  title="Info" data-bs-toggle="modal" data-bs-target="#modal-info">
-                                        <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-menu-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 6l16 0" /><path d="M4 12l16 0" /><path d="M4 18l16 0" /></svg>
-                                        </span>
-                                    </a>
-                                </td>
 							</tr>
 							@endforeach
 							@else
