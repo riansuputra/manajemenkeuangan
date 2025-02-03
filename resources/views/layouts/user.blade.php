@@ -294,11 +294,17 @@
                     						</span>
                   						</a>
                   						<div class="dropdown-menu">
-                    						<a class="dropdown-item" href="{{ route('lang.switch', ['lang' => 'en']) }}">
+										  <form action="{{ url('language/en') }}" method="GET">
+    <button type="submit">English</button>
+</form>
+<form action="{{ url('language/id') }}" method="GET">
+    <button type="submit"><h1>{{ __('messages.welcome') }}</h1></button>
+</form>
+                    						<a class="dropdown-item" href="{{ url('language/en') }}">
 					  							<span class="flag flag-country-us"></span>
 												&nbsp English
                     						</a>
-											<a class="dropdown-item" href="{{ route('lang.switch', ['lang' => 'id']) }}">
+											<a class="dropdown-item" href="{{ url('language/id') }}">
 					  							<span class="flag flag-country-id"></span>
                       							&nbsp Indonesia
                     						</a>

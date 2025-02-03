@@ -17,10 +17,8 @@ class SetLocale
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Ambil locale dari session dan set
         $locale = Session::get('locale', config('app.locale'));
-
-        // Set locale aplikasi
+        
         App::setLocale($locale);
 
         return $next($request);

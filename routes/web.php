@@ -18,7 +18,16 @@ use App\Http\Controllers\LanguageController;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 Route::middleware(['throttle:100,1'])->group(function() {
-    Route::get('lang/{lang}', [App\Http\Controllers\LanguageController::class, 'switch'])->name('lang.switch');
+    Route::get('/language/{locale}', function ($locale) {
+        if (in_array($locale, ['en', 'id'])) {
+            session(['locale' => $locale]);
+            app()->setLocale($locale);
+            // dd(file_exists(resource_path('lang/id/messages.php')));
+
+            // dd(app()->getLocale());  // Periksa locale yang aktif
+        }
+        return redirect('/dashboard');  // Redirect ke halaman utama tanpa membawa query string
+    });
 
 Route::middleware([App\Http\Middleware\GuestMiddleware::class])->group(function()
 {
