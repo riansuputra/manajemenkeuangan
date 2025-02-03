@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Permintaan Kategori Admin')
+@section('title', 'Permintaan Kategori')
 
 @section('page-title')
 <div class="col">

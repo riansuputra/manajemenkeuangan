@@ -18,6 +18,7 @@ use App\Http\Controllers\LanguageController;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 Route::middleware(['throttle:100,1'])->group(function() {
+    Route::get('lang/{lang}', [App\Http\Controllers\LanguageController::class, 'switch'])->name('lang.switch');
 
 Route::middleware([App\Http\Middleware\GuestMiddleware::class])->group(function()
 {
@@ -34,6 +35,7 @@ Route::middleware([App\Http\Middleware\GuestMiddleware::class])->group(function(
 
 Route::middleware([App\Http\Middleware\AdminUserMiddleware::class])->group(function()
 {
+    Route::get('lang/{lang}', [App\Http\Controllers\LanguageController::class, 'switch'])->name('lang.switch');
     Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
     Route::post('/dashboard-filter',[DashboardController::class,'filter'])->name('dashboard-filter');
     Route::post('/mutasi-filter',[PortofolioController::class,'filterMutasi'])->name('mutasi-filter');
@@ -58,6 +60,11 @@ Route::middleware([App\Http\Middleware\AdminMiddleware::class])->group(function(
     Route::post('/permintaan-kategori/reject', [AdminController::class, 'reject'])->name('permintaanReject');
 
     Route::get('/kurs-admin', [AdminController::class, 'kurs'])->name('kurs-admin');
+    Route::get('/kurs-store', [AdminController::class, 'kursStore'])->name('kursStore-admin');
+
+    Route::get('/berita-admin', [AdminController::class, 'berita'])->name('berita-admin');
+    Route::get('/berita-store', [AdminController::class, 'beritaStore'])->name('beritaStore-admin');
+
     Route::post('/dividen-store', [DividenController::class, 'store'])->name('dividenStore');
     Route::get('/dividen-admin', [AdminController::class, 'dividen'])->name('dividen-admin');
     Route::get('/user', [AdminController::class, 'user'])->name('user-admin');
@@ -66,7 +73,6 @@ Route::middleware([App\Http\Middleware\AdminMiddleware::class])->group(function(
 
 Route::middleware([App\Http\Middleware\UserMiddleware::class])->group(function()
 {
-
     Route::get('/catatan-keuangan', [CatatanController::class, 'index'])->name('catatanHarian');
     Route::post('/catatan-keuangan', [CatatanController::class, 'store'])->name('catatan');
     Route::post('/catatan-filter',[CatatanController::class,'filter'])->name('catatan-filter');

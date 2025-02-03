@@ -76,10 +76,14 @@ class AdminController extends Controller
             // Mengambil dan mengubah struktur kategori pengeluaran
             $kategoriPengeluaran = collect($responses[2]->json()['data']['kategori_pengeluaran'])
                 ->map(function ($item) {
+                    $cakupan = 'global';
+                    if($item['user_id'] != null) {
+                        $cakupan = 'personal';
+                    }
                     return [
                         'nama_kategori' => $item['nama_kategori_pengeluaran'], // Pastikan key yang sesuai
                         'tipe' => 'pengeluaran', // Menandakan tipe kategori pengeluaran
-                        'cakupan' => 'global', // Cakupan kategori pengeluaran
+                        'cakupan' => $cakupan, // Cakupan kategori pengeluaran
                         'created_at' => $item['created_at'] ?? null, // Menambahkan created_at
                     ];
                 });
@@ -87,10 +91,14 @@ class AdminController extends Controller
                  // Mengambil dan mengubah struktur kategori pemasukan
             $kategoriPemasukan = collect($responses[3]->json()['data']['kategori_pemasukan'])
             ->map(function ($item) {
+                $cakupan = 'global';
+                    if($item['user_id'] != null) {
+                        $cakupan = 'personal';
+                    }
                 return [
                     'nama_kategori' => $item['nama_kategori_pemasukan'], // Pastikan key yang sesuai
                     'tipe' => 'pemasukan', // Menandakan tipe kategori pemasukan
-                    'cakupan' => 'global', // Cakupan kategori pemasukan
+                    'cakupan' => $cakupan, // Cakupan kategori pemasukan
                     'created_at' => $item['created_at'] ?? null, // Menambahkan created_at
                 ];
             });
@@ -152,6 +160,63 @@ class AdminController extends Controller
             abort(500, 'Failed to fetch data from API');
         }
         
+    }
+
+    public function kursStore(Request $request)
+    {
+        $response = Http::withHeaders($this->getHeaders($request))->post(env('API_URL') . '/kurs');
+        // dd($response->json());
+        if ($response->status() == 201) {
+            $this->updateAuthCookie($request->auth, $response['auth']);
+            return redirect()->route('kurs-admin')->with('success', $response["message"]);
+        } else if (!empty($response["errors"])) {
+            return back()->with('error', $response["message"]);
+        } else if ($response['status'] == 'warning') {
+            return back()->with('warning', $response["message"]);
+        } else {
+            return back()->with('error', $response["message"]);
+        }
+    }
+
+    public function berita(Request $request)
+    {
+        $responses = Http::pool(fn (Pool $pool) => [
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/berita'),
+        ]);
+
+        if ($responses[0]->successful()) {
+            $beritaData = $responses[0]->json()['data']['berita'];
+
+            $beritaData = collect($beritaData)->sortByDesc('tanggal_terbit');
+
+            $update = collect($beritaData)->sortByDesc('updated_at')->first()['updated_at'] ?? now();
+            $update = \Carbon\Carbon::parse($update)->timezone('Asia/Makassar')->format('Y-m-d H:i:s');
+            
+            return view('admin.berita.index', [
+                'admin' => $request->auth['admin'],
+                'beritaData' => $beritaData,
+                'update' => $update,
+            ]);
+        } else {
+            abort(500, 'Failed to fetch data from API');
+        }
+        
+    }
+
+    public function beritaStore(Request $request)
+    {
+        $response = Http::withHeaders($this->getHeaders($request))->get(env('API_URL') . '/berita/store');
+        // dd($response->json());
+        if ($response->status() == 201) {
+            $this->updateAuthCookie($request->auth, $response['auth']);
+            return redirect()->route('berita-admin')->with('success', $response["message"]);
+        } else if (!empty($response["errors"])) {
+            return back()->with('error', $response["message"]);
+        } else if ($response['status'] == 'warning') {
+            return back()->with('warning', $response["message"]);
+        } else {
+            return back()->with('error', $response["message"]);
+        }
     }
 
     public function dividen(Request $request)

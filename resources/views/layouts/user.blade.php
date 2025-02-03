@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ session('locale', config('app.locale')) }}">
 
 <head>
 	<meta charset="utf-8"/>
@@ -294,11 +294,11 @@
                     						</span>
                   						</a>
                   						<div class="dropdown-menu">
-                    						<a class="dropdown-item" href="https://github.com/sponsors/codecalm" target="_blank" rel="noopener">
+                    						<a class="dropdown-item" href="{{ route('lang.switch', ['lang' => 'en']) }}">
 					  							<span class="flag flag-country-us"></span>
 												&nbsp English
                     						</a>
-											<a class="dropdown-item" href="https://github.com/sponsors/codecalm" target="_blank" rel="noopener">
+											<a class="dropdown-item" href="{{ route('lang.switch', ['lang' => 'id']) }}">
 					  							<span class="flag flag-country-id"></span>
                       							&nbsp Indonesia
                     						</a>

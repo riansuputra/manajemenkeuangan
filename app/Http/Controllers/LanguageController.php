@@ -10,15 +10,16 @@ class LanguageController extends Controller
 {
     public function switch($lang)
     {
-        // Validate the language
+        // Validasi bahasa yang dipilih
         $lang = in_array($lang, ['en', 'id']) ? $lang : 'en';
 
-        // Set the locale
+        // Set locale
         App::setLocale($lang);
 
-        // Store the locale in session
+        // Simpan locale di session
         Session::put('locale', $lang);
 
+        // Kembali ke halaman sebelumnya
         return redirect()->back();
     }
 }

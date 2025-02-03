@@ -25,8 +25,8 @@
 						<div class="col">
 							<div class="card-body">
 								<p class="text-primary">{{$berita['nama_penerbit']}} <span class="text-black">/</span> <span class="text-muted">{{ \Carbon\Carbon::parse($berita['tanggal_terbit'])->locale('id')->translatedFormat('l, d F Y H:i') }}</span></p>
-								<h3 class="card-title">{{$berita['judul']}}</h3>
-								<p class="text-muted ">{{$berita['deskripsi']}}</p>
+								<h3 class="card-title text-truncate">{{$berita['judul']}}</h3>
+								<p class="text-muted text-truncate" style="max-width:;">{{$berita['deskripsi']}}</p>
 							</div>
 						</div>
 					</div>

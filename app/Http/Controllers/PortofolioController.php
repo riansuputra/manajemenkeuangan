@@ -403,6 +403,7 @@ class PortofolioController extends Controller
 
         if ($responses[0]->successful()){
             $beritaData = $responses[0]->json()['data']['berita'];
+            $beritaData = collect($beritaData)->sortByDesc('tanggal_terbit');
 
             $update = collect($beritaData)->sortByDesc('updated_at')->first()['updated_at'] ?? now();
             $update = \Carbon\Carbon::parse($update)->timezone('Asia/Makassar')->format('Y-m-d H:i:s');

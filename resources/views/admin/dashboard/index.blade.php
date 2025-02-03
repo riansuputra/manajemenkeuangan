@@ -33,7 +33,6 @@
 										<div class="ms-auto lh-1">
 											<div class="dropdown">
 												<a class="text-muted">
-													
 												</a>
 											</div>
 										</div>
@@ -176,6 +175,8 @@
 	</div>
 </div>
 
+<input type="text" id="jumlah1" name="jumlah1" class="form-control text-end" autocomplete="off" hidden>
+<input type="text" id="jumlah" name="jumlah" class="form-control text-end" autocomplete="off" placeholder="0" hidden>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {

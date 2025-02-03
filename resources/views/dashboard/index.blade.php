@@ -5,7 +5,10 @@
 @section('page-title')
 <div class="col-auto me-auto d-print-none">
     <h2 class="page-title">
-        Dashboard
+        {{ __('messages.welcome') }}
+        {{ session('locale', config('app.locale')) }}
+        <p>Locale saat ini: {{ session('locale') }}</p>
+
     </h2>
 </div>
 <div class="col-auto d-print-none" >
