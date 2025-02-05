@@ -69,7 +69,7 @@ class AuthController extends Controller
 
     public function loginAdminPage()
     {
-        return view('autentikasi.loginAdmin');
+        return view('autentikasi.login_admin');
     }    
 
     public function loginAdmin(Request $request)

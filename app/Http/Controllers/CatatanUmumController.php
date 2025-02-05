@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use Illuminate\Http\Client\Pool;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Pagination\Paginator;
-use Carbon\Carbon;
-use Illuminate\Http\Client\Pool;
 
 class CatatanUmumController extends Controller
 {
@@ -28,18 +28,13 @@ class CatatanUmumController extends Controller
         ]);
         if ($responses[0]->successful()){
             $catatanData = $responses[0]->json()['data']['catatan'];
-            return view('catatan.indexUmum', [
+            return view('catatan.umum', [
                 'user' => $request->auth['user'],
                 'catatanData' => $catatanData,
             ]);
         } else {
             abort(500, 'Failed to fetch data from API');
         }
-    }
-
-    public function create(Request $request)
-    {
-        //
     }
 
     public function store(Request $request)
@@ -62,16 +57,6 @@ class CatatanUmumController extends Controller
         } else {
             return back()->with('error', $response->json()['message'] ?? 'Terjadi kesalahan pada server')->withInput();
         }
-    }
-
-    public function show(string $id)
-    {
-        //
-    }
-
-    public function edit(string $id)
-    {
-        //
     }
 
     public function update(Request $request, string $id)

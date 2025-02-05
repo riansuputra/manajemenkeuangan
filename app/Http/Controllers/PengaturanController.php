@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Http;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Pagination\Paginator;
 use Carbon\Carbon;
 use Illuminate\Http\Client\Pool;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
 class PengaturanController extends Controller
 {
@@ -21,22 +21,12 @@ class PengaturanController extends Controller
         ];
     }
 
-
-    public function index()
-    {
-        
-    }
-
     public function indexPermintaanKategori(Request $request)
     {
         $responses = Http::pool(fn (Pool $pool) => [
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/permintaan-kategori'),
         ]);
-        // dd($responses[0]->json());
-
-
-        // dd($responses->collect());
-    
+        
         if ($responses[0]->successful()) {
            
             $permintaan = collect($responses[0]->json()['data']['permintaan'])
@@ -44,8 +34,7 @@ class PengaturanController extends Controller
                         ->values()
                         ->all();
 
-
-            return view('pengaturan.permintaanKategori', [
+            return view('pengaturan.permintaan_kategori', [
                 'user' => $request->auth['user'],
                 'permintaan' => $permintaan,
             ]);
@@ -54,21 +43,8 @@ class PengaturanController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function storePermintaanKategori(Request $request)
     {
-
-        // dd($request);
         $input = array(
             'user_id' => $request->auth['user']['id'],
             'nama_kategori' => $request->nama_kategori,
@@ -91,37 +67,5 @@ class PengaturanController extends Controller
         } else {
             return back()->with('error', $response["message"]);
         }
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }

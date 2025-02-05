@@ -45,91 +45,7 @@
 						</a>
 						Smart Finance
             		</h1>
-
             		<div class="navbar-nav flex-row order-md-last">
-              			<div class="d-none d-md-flex">
-                			<a href="?theme=dark" class="nav-link px-0 hide-theme-dark text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Enable dark mode" data-bs-original-title="Enable dark mode">
-                  				<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"></path></svg>
-                			</a>
-                			<a href="?theme=light" class="nav-link px-0 hide-theme-light" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Enable light mode" data-bs-original-title="Enable light mode">
-                  				<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"></path></svg>
-                			</a>
-                			<div class="nav-item dropdown d-none d-md-flex me-3">
-	                  			<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-end dropdown-menu-card">
-                    				<div class="card">
-                      					<div class="card-header">
-                        					<h3 class="card-title">Last updates</h3>
-                      					</div>
-                      					<div class="list-group list-group-flush list-group-hoverable">
-                        					<div class="list-group-item">
-                          						<div class="row align-items-center">
-                            						<div class="col-auto"><span class="status-dot status-dot-animated bg-red d-block"></span></div>
-                            						<div class="col text-truncate">
-                              							<a href="#" class="text-body d-block">Example 1</a>
-														<div class="d-block text-muted text-truncate mt-n1">
-															Change deprecated html tags to text decoration classes (#29604)
-														</div>
-													</div>
-                            						<div class="col-auto">
-                              							<a href="#" class="list-group-item-actions">
-                                							<svg xmlns="http://www.w3.org/2000/svg" class="icon text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path></svg>
-                              							</a>
-                            						</div>
-                          						</div>
-                        					</div>
-                        					<div class="list-group-item">
-												<div class="row align-items-center">
-													<div class="col-auto"><span class="status-dot d-block"></span></div>
-													<div class="col text-truncate">
-														<a href="#" class="text-body d-block">Example 2</a>
-														<div class="d-block text-muted text-truncate mt-n1">
-															justify-content:between ⇒ justify-content:space-between (#29734)
-														</div>
-													</div>
-                            						<div class="col-auto">
-                              							<a href="#" class="list-group-item-actions show">
-                                							<svg xmlns="http://www.w3.org/2000/svg" class="icon text-yellow" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path></svg>
-                              							</a>
-                            						</div>
-                          						</div>
-                        					</div>
-                        					<div class="list-group-item">
-                          						<div class="row align-items-center">
-                            						<div class="col-auto"><span class="status-dot d-block"></span></div>
-                            						<div class="col text-truncate">
-                              							<a href="#" class="text-body d-block">Example 3</a>
-                              							<div class="d-block text-muted text-truncate mt-n1">
-                                							Update change-version.js (#29736)
-                              							</div>
-                            						</div>
-                            						<div class="col-auto">
-                              							<a href="#" class="list-group-item-actions">
-                                							<svg xmlns="http://www.w3.org/2000/svg" class="icon text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path></svg>
-                              							</a>
-                            						</div>
-                          						</div>
-                        					</div>
-											<div class="list-group-item">
-                          						<div class="row align-items-center">
-													<div class="col-auto"><span class="status-dot status-dot-animated bg-green d-block"></span></div>
-                            						<div class="col text-truncate">
-                              							<a href="#" class="text-body d-block">Example 4</a>
-                              							<div class="d-block text-muted text-truncate mt-n1">
-                                							Regenerate package-lock.json (#29730)
-                              							</div>
-                            						</div>
-                            						<div class="col-auto">
-                              							<a href="#" class="list-group-item-actions">
-                                							<svg xmlns="http://www.w3.org/2000/svg" class="icon text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path></svg>
-                              							</a>
-                            						</div>
-                          						</div>
-                        					</div>
-                      					</div>
-                    				</div>
-                  				</div>
-                			</div>
-              			</div>
               			<div class="nav-item dropdown">
                 			<a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
                   				<span class="avatar avatar-sm" style="background-image: url(./static/avatars/000m.jpg)"></span>
@@ -187,9 +103,11 @@
                     				</a>
                             		<div class="dropdown-menu">
               							<a class="dropdown-item" href="{{ url('/catatan-keuangan') }}">
+										  	<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-inline me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M14.8 9a2 2 0 0 0 -1.8 -1h-2a2 2 0 1 0 0 4h2a2 2 0 1 1 0 4h-2a2 2 0 0 1 -1.8 -1" /><path d="M12 7v10" /></svg>
                             				Keuangan
                           				</a>
 						  				<a class="dropdown-item" href="{{ url('/catatan-umum') }}">
+										  	<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-inline me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h11a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-11a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1m3 0v18" /><path d="M13 8l2 0" /><path d="M13 12l2 0" /></svg>
                             				Umum
                           				</a>
                   				</li>
@@ -209,97 +127,104 @@
 										  	<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-file-info"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M11 14h1v4h1" /><path d="M12 11h.01" /></svg>
                       					</span>
                       					<span class="nav-link-title">
-                        					Info
+                        					Informasi
                       					</span>
                     				</a>
                     				<div class="dropdown-menu">
 										<a class="dropdown-item" href="{{ url('/berita') }}">
+											<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-inline me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M16 6h3a1 1 0 0 1 1 1v11a2 2 0 0 1 -4 0v-13a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1v12a3 3 0 0 0 3 3h11" /><path d="M8 8l4 0" /><path d="M8 12l4 0" /><path d="M8 16l4 0" /></svg>
 						  					Berita
 										</a>
                           				<a class="dropdown-item" href="{{ url('/kurs') }}">
-                            				Kurs
+										  <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-inline me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 18m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M19 6m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M19 8v5a5 5 0 0 1 -5 5h-3l3 -3m0 6l-3 -3" /><path d="M5 16v-5a5 5 0 0 1 5 -5h3l-3 -3m0 6l3 -3" /></svg>
+                            				Nilai Tukar
                           				</a>
 										  <a class="dropdown-item" href="{{ url('/dividen') }}">
+										  	<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-inline me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 21l18 0" /><path d="M3 10l18 0" /><path d="M5 6l7 -3l7 3" /><path d="M4 10l0 11" /><path d="M20 10l0 11" /><path d="M8 14l0 3" /><path d="M12 14l0 3" /><path d="M16 14l0 3" /></svg>
                             				Dividen
                           				</a>
                     				</div>
 								</li>
-				  				<li class="nav-item dropdown {{ url()->current() == url('/pinjaman-bunga-efektif') ? 'active' : '' }} {{ url()->current() == url('/pinjaman-bunga-tetap') ? 'active' : '' }}" >
+				  				<li class="nav-item dropdown 
+									{{ url()->current() == url('/investasi-lumpsum') ? 'active' : '' }} 
+									{{ url()->current() == url('/investasi-bulanan') ? 'active' : '' }} 
+									{{ url()->current() == url('/investasi-target-bulanan') ? 'active' : '' }}
+									{{ url()->current() == url('/investasi-target-lumpsum') ? 'active' : '' }}
+									{{ url()->current() == url('/portofolio') ? 'active' : '' }} 
+									{{ url()->current() == url('/portofolio-mutasi-dana') ? 'active' : '' }}
+									{{ url()->current() == url('/portofolio-historis') ? 'active' : '' }} 
+									{{ url()->current() == url('/pinjaman-bunga-efektif') ? 'active' : '' }} 
+									{{ url()->current() == url('/pinjaman-bunga-tetap') ? 'active' : '' }}">
                     				<a class="nav-link dropdown-toggle" href="" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
                       					<span class="nav-link-icon d-md-none d-lg-inline-block">
-					  						<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 9m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z"></path><path d="M14 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path><path d="M17 9v-2a2 2 0 0 0 -2 -2h-10a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h2"></path></svg>
+										  	<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-category-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 4h6v6h-6z" /><path d="M4 14h6v6h-6z" /><path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /><path d="M7 7m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /></svg>
                       					</span>
                       					<span class="nav-link-title">
-                        					Simulasi Pinjaman
+                        					Simulasi
                       					</span>
                     				</a>
                     				<div class="dropdown-menu">
-						  				<a class="dropdown-item" href="{{ url('/pinjaman-bunga-efektif') }}">
-							  				Bunga Efektif
-										</a>
-										<a class="dropdown-item" href="{{ url('/pinjaman-bunga-tetap') }}">
-							  				Bunga Tetap
-										</a>
-                    				</div>
-                  				</li>
-				  				<li class="nav-item dropdown {{ url()->current() == url('/investasi-lumpsum') ? 'active' : '' }} {{ url()->current() == url('/investasi-bulanan') ? 'active' : '' }} {{ url()->current() == url('/investasi-target-bulanan') ? 'active' : '' }} {{ url()->current() == url('/investasi-target-lumpsum') ? 'active' : '' }}" >
-                    				<a class="nav-link dropdown-toggle" href="" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
-                      					<span class="nav-link-icon d-md-none d-lg-inline-block">
-					  						<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M3 3v18h18"></path><path d="M20 18v3"></path><path d="M16 16v5"></path><path d="M12 13v8"></path><path d="M8 16v5"></path><path d="M3 11c6 0 5 -5 9 -5s3 5 9 5"></path></svg>
-                      					</span>
-                      					<span class="nav-link-title">
-                        					Simulasi Investasi
-                      					</span>
-                    				</a>
-                    				<div class="dropdown-menu">
-										<a class="dropdown-item" href="{{ url('/investasi-bulanan') }}">
-						  					Bulanan
-										</a>
-                          				<a class="dropdown-item" href="{{ url('/investasi-lumpsum') }}">
-                            				Lumpsum
-                          				</a>
+										<div class="dropend">
+											<a class="dropdown-item dropdown-toggle" href="#sidebar-error" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
+												<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M3 3v18h18"></path><path d="M20 18v3"></path><path d="M16 16v5"></path><path d="M12 13v8"></path><path d="M8 16v5"></path><path d="M3 11c6 0 5 -5 9 -5s3 5 9 5"></path></svg>
+													Investasi
+											</a>
+											<div class="dropdown-menu">
+												<a href="{{ url('/investasi-bulanan') }}" class="dropdown-item">
+													Bulanan
+												</a>
+												<a href="{{ url('/investasi-lumpsum') }}" class="dropdown-item">
+													Lumpsum
+												</a>
+											</div>
+										</div>
+										<div class="dropend">
+											<a class="dropdown-item dropdown-toggle" href="#sidebar-error" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
+												<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 9m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z"></path><path d="M14 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path><path d="M17 9v-2a2 2 0 0 0 -2 -2h-10a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h2"></path></svg>
+													Pinjaman
+											</a>
+											<div class="dropdown-menu">
+												<a href="{{ url('/pinjaman-bunga-efektif') }}" class="dropdown-item">
+													Bunga Efektif (Anuitas)
+												</a>
+												<a href="{{ url('/pinjaman-bunga-tetap') }}" class="dropdown-item">
+													Bunga Tetap (Flat)
+												</a>
+											</div>
+										</div>
+										<div class="dropend">
+											<a class="dropdown-item dropdown-toggle" href="#sidebar-error" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
+												<svg xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-inline me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M8 11h8v7h-8z" /><path d="M8 15h8" /><path d="M11 11v7" /></svg>
+													Portofolio
+											</a>
+											<div class="dropdown-menu">
+												<a href="{{ url('/portofolio') }}" class="dropdown-item">
+													Portofolio
+												</a>
+												<a href="{{ url('/portofolio-mutasi-dana') }}" class="dropdown-item">
+													Mutasi Dana
+												</a>
+												<a href="{{ url('/portofolio-historis') }}" class="dropdown-item">
+													Historis
+												</a>
+											</div>
+										</div>
                     				</div>
 								</li>
-				  				<li class="nav-item dropdown {{ url()->current() == url('/portofolio') ? 'active' : '' }} {{ url()->current() == url('/portofolio-mutasi-dana') ? 'active' : '' }} {{ url()->current() == url('/portofolio-historis') ? 'active' : '' }} " >
-                    				<a class="nav-link dropdown-toggle" href="" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
-                      					<span class="nav-link-icon d-md-none d-lg-inline-block">
-										  	<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-file-spreadsheet"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M8 11h8v7h-8z" /><path d="M8 15h8" /><path d="M11 11v7" /></svg>
-                      					</span>
-                      					<span class="nav-link-title">
-                        					Simulasi Portofolio
-                      					</span>
-                    				</a>
-									<div class="dropdown-menu">
-										<a class="dropdown-item" href="{{ url('/portofolio') }}">
-						  					Portofolio
-										</a>
-                          				<a class="dropdown-item" href="{{ url('/portofolio-mutasi-dana') }}">
-                            				Mutasi Dana
-                          				</a>
-                          				<a class="dropdown-item" href="{{ url('/portofolio-historis') }}">
-                            				Historis
-                          				</a>
-                    				</div>
-                  				</li>
 							</ul>
 							<div class="my-md-0 flex-grow-1 flex-md-grow-0 order-last order-md-last">
               					<ul class="navbar-nav" style="min-height: 0rem">
                 					<li class="nav-item dropdown">
                   						<a class="nav-link dropdown-toggle" href="" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
                     						<span class="nav-link-icon d-md-none d-lg-inline-block">
-                      							<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-language"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5h7" /><path d="M9 3v2c0 4.418 -2.239 8 -5 8" /><path d="M5 9c0 2.144 2.952 3.908 6.7 4" /><path d="M12 20l4 -9l4 9" /><path d="M19.1 18h-6.2" /></svg>
+												<span class="flag @if((session('locale', config('app.locale'))) == 'en') flag-country-us
+													@elseif((session('locale', config('app.locale'))) == 'id')  flag-country-id @endif nav-link-icon d-md-none d-lg-inline-block"></span>
                     						</span>
                     						<span class="nav-link-title">
                       							Bahasa
                     						</span>
                   						</a>
                   						<div class="dropdown-menu">
-										  <form action="{{ url('language/en') }}" method="GET">
-    <button type="submit">English</button>
-</form>
-<form action="{{ url('language/id') }}" method="GET">
-    <button type="submit"><h1>{{ __('messages.welcome') }}</h1></button>
-</form>
                     						<a class="dropdown-item" href="{{ url('language/en') }}">
 					  							<span class="flag flag-country-us"></span>
 												&nbsp English
@@ -308,6 +233,27 @@
 					  							<span class="flag flag-country-id"></span>
                       							&nbsp Indonesia
                     						</a>
+                  						</div>
+                					</li>
+									<li class="nav-item dropdown">
+                  						<a class="nav-link dropdown-toggle" href="" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
+                    						<span class="nav-link-icon d-md-none d-lg-inline-block">
+												<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon text-yellow hide-theme-light"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 1.992a10 10 0 1 0 9.236 13.838c.341 -.82 -.476 -1.644 -1.298 -1.31a6.5 6.5 0 0 1 -6.864 -10.787l.077 -.08c.551 -.63 .113 -1.653 -.758 -1.653h-.266l-.068 -.006l-.06 -.002z" /></svg>
+												<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon text-warning hide-theme-dark"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 19a1 1 0 0 1 .993 .883l.007 .117v1a1 1 0 0 1 -1.993 .117l-.007 -.117v-1a1 1 0 0 1 1 -1z" /><path d="M18.313 16.91l.094 .083l.7 .7a1 1 0 0 1 -1.32 1.497l-.094 -.083l-.7 -.7a1 1 0 0 1 1.218 -1.567l.102 .07z" /><path d="M7.007 16.993a1 1 0 0 1 .083 1.32l-.083 .094l-.7 .7a1 1 0 0 1 -1.497 -1.32l.083 -.094l.7 -.7a1 1 0 0 1 1.414 0z" /><path d="M4 11a1 1 0 0 1 .117 1.993l-.117 .007h-1a1 1 0 0 1 -.117 -1.993l.117 -.007h1z" /><path d="M21 11a1 1 0 0 1 .117 1.993l-.117 .007h-1a1 1 0 0 1 -.117 -1.993l.117 -.007h1z" /><path d="M6.213 4.81l.094 .083l.7 .7a1 1 0 0 1 -1.32 1.497l-.094 -.083l-.7 -.7a1 1 0 0 1 1.217 -1.567l.102 .07z" /><path d="M19.107 4.893a1 1 0 0 1 .083 1.32l-.083 .094l-.7 .7a1 1 0 0 1 -1.497 -1.32l.083 -.094l.7 -.7a1 1 0 0 1 1.414 0z" /><path d="M12 2a1 1 0 0 1 .993 .883l.007 .117v1a1 1 0 0 1 -1.993 .117l-.007 -.117v-1a1 1 0 0 1 1 -1z" /><path d="M12 7a5 5 0 1 1 -4.995 5.217l-.005 -.217l.005 -.217a5 5 0 0 1 4.995 -4.783z" /></svg>
+                    						</span>
+                    						<span class="nav-link-title">
+                      							Tema
+                    						</span>
+                  						</a>
+                  						<div class="dropdown-menu">
+										  	<a href="{{ url()->current() }}?theme=dark" class="dropdown-item" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Enable dark mode" data-bs-original-title="Enable dark mode">
+											  	<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon text-yellow"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 1.992a10 10 0 1 0 9.236 13.838c.341 -.82 -.476 -1.644 -1.298 -1.31a6.5 6.5 0 0 1 -6.864 -10.787l.077 -.08c.551 -.63 .113 -1.653 -.758 -1.653h-.266l-.068 -.006l-.06 -.002z" /></svg>
+													&nbsp Dark
+											</a>
+											<a href="{{ url()->current() }}?theme=light" class="dropdown-item" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Enable light mode" data-bs-original-title="Enable light mode">
+												<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon text-warning"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 19a1 1 0 0 1 .993 .883l.007 .117v1a1 1 0 0 1 -1.993 .117l-.007 -.117v-1a1 1 0 0 1 1 -1z" /><path d="M18.313 16.91l.094 .083l.7 .7a1 1 0 0 1 -1.32 1.497l-.094 -.083l-.7 -.7a1 1 0 0 1 1.218 -1.567l.102 .07z" /><path d="M7.007 16.993a1 1 0 0 1 .083 1.32l-.083 .094l-.7 .7a1 1 0 0 1 -1.497 -1.32l.083 -.094l.7 -.7a1 1 0 0 1 1.414 0z" /><path d="M4 11a1 1 0 0 1 .117 1.993l-.117 .007h-1a1 1 0 0 1 -.117 -1.993l.117 -.007h1z" /><path d="M21 11a1 1 0 0 1 .117 1.993l-.117 .007h-1a1 1 0 0 1 -.117 -1.993l.117 -.007h1z" /><path d="M6.213 4.81l.094 .083l.7 .7a1 1 0 0 1 -1.32 1.497l-.094 -.083l-.7 -.7a1 1 0 0 1 1.217 -1.567l.102 .07z" /><path d="M19.107 4.893a1 1 0 0 1 .083 1.32l-.083 .094l-.7 .7a1 1 0 0 1 -1.497 -1.32l.083 -.094l.7 -.7a1 1 0 0 1 1.414 0z" /><path d="M12 2a1 1 0 0 1 .993 .883l.007 .117v1a1 1 0 0 1 -1.993 .117l-.007 -.117v-1a1 1 0 0 1 1 -1z" /><path d="M12 7a5 5 0 1 1 -4.995 5.217l-.005 -.217l.005 -.217a5 5 0 0 1 4.995 -4.783z" /></svg>
+													&nbsp Light
+											</a>
                   						</div>
                 					</li>
               					</ul>

@@ -259,7 +259,7 @@ class PortofolioController extends Controller
             $lastMutasiDana = collect($mutasiData)->last();
             $firstMutasiDana = collect($mutasiData)->first();
 
-            return view('portofolio.mutasiDana', [
+            return view('portofolio.mutasi_dana', [
                 'user' => $request->auth['user'],
                 'mutasiData' => $mutasiData,
                 'mutasiDataGrup' => $mutasiDataGrup,
@@ -408,7 +408,7 @@ class PortofolioController extends Controller
             $update = collect($beritaData)->sortByDesc('updated_at')->first()['updated_at'] ?? now();
             $update = \Carbon\Carbon::parse($update)->timezone('Asia/Makassar')->format('Y-m-d H:i:s');
 
-            return view('berita.berita', [
+            return view('berita.index', [
                 'user' => $request->auth['user'],
                 'beritaData' => $beritaData,
                 'update' => $update,

@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Http;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Pagination\Paginator;
 use Carbon\Carbon;
 use Illuminate\Http\Client\Pool;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
 class AnggaranController extends Controller
 {
@@ -91,16 +91,16 @@ class AnggaranController extends Controller
 
             switch ($view) {
                 case 'week':
-                    $viewName = 'anggaran.anggaranWeek';
+                    $viewName = 'anggaran.week';
                     break;
                 case 'month':
-                    $viewName = 'anggaran.anggaranMonth';
+                    $viewName = 'anggaran.month';
                     break;
                 case 'year':
-                    $viewName = 'anggaran.anggaranYear';
+                    $viewName = 'anggaran.year';
                     break;
                 default:
-                    $viewName = 'anggaran.anggaranWeek';
+                    $viewName = 'anggaran.week';
                     break;
             }
 
@@ -174,16 +174,6 @@ class AnggaranController extends Controller
         } else {
             return back()->with('error', $response["message"]);
         }
-    }
-
-    public function show(string $id)
-    {
-        //
-    }
-
-    public function edit(string $id)
-    {
-        //
     }
 
     public function update(Request $request, string $id)

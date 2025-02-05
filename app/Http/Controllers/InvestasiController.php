@@ -6,9 +6,6 @@ use Illuminate\Http\Request;
 
 class InvestasiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function lumpsum(Request $request)
     {
         $date = now()->format('d/m/Y');
@@ -30,7 +27,7 @@ class InvestasiController extends Controller
     public function targetLumpsum(Request $request)
     {
         $date = now()->format('d/m/Y');
-        return view('investasi.lumpsumTarget', [
+        return view('investasi.lumpsum_target', [
             'user' => $request->auth['user'],
             'date' => $date,
         ]);  
@@ -39,57 +36,9 @@ class InvestasiController extends Controller
     public function targetBulanan(Request $request)
     {
         $date = now()->format('d/m/Y');
-        return view('investasi.bulananTarget', [
+        return view('investasi.bulanan_target', [
             'user' => $request->auth['user'],
             'date' => $date,
         ]);  
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }

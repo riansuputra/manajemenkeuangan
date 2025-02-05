@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use Illuminate\Http\Client\Pool;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Pagination\Paginator;
-use Carbon\Carbon;
-use Illuminate\Http\Client\Pool;
 
 class DividenController extends Controller
 {
@@ -42,11 +42,6 @@ class DividenController extends Controller
         }
     }
 
-    public function create()
-    {
-        //
-    }
-
     public function store(Request $request)
     {
         // dd($request);
@@ -70,17 +65,6 @@ class DividenController extends Controller
             return back()->with('error', $response->json()['message'] ?? 'Terjadi kesalahan pada server')->withInput();
         }
     }
-
-    public function show(string $id)
-    {
-        //
-    }
-
-    public function edit(string $id)
-    {
-        //
-    }
-
  
     public function update(Request $request, string $id)
     {
@@ -103,7 +87,6 @@ class DividenController extends Controller
             return back()->with('error', $response->json()['message'] ?? 'Terjadi kesalahan pada server')->withInput();
         }
     }
-
   
     public function destroy(Request $request, string $id)
     {
