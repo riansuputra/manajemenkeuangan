@@ -67,6 +67,31 @@ class AuthController extends Controller
         return back()->with('error', 'Gagal masuk, coba lagi nanti.')->withErrors($response['errors'])->withInput($input);
     }
 
+    public function lupaPassword(Request $request)
+    {
+        $input = array(
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+            'konfirmasiPassword' => $request->konfirmasiPassword,
+        );
+
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'x-api-key' => env('API_KEY'),
+        ])->post(env('API_URL')."/register", $input);
+
+        if($response->status() == 201){
+            return redirect()->route('loginPage')->with('success','Berhasil registrasi');
+            
+        }else{
+            $errors = $response->json('errors') ?? [];
+            $message = $response->json('message') ?? 'Gagal registrasi.';
+
+            return back()->withErrors($errors)->with('error', $message)->withInput($input);
+        }
+    }
+
     public function loginAdminPage()
     {
         return view('autentikasi.login_admin');

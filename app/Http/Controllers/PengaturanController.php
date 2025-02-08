@@ -68,4 +68,93 @@ class PengaturanController extends Controller
             return back()->with('error', $response["message"]);
         }
     }
+
+    public function indexInformasiAkun(Request $request)
+    {
+        $responses = Http::pool(fn (Pool $pool) => [
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/permintaan-kategori'),
+        ]);
+        if ($responses[0]->successful()) {
+           
+            $permintaan = collect($responses[0]->json()['data']['permintaan'])
+                        ->sortByDesc('created_at')
+                        ->values()
+                        ->all();
+            
+
+            return view('pengaturan.informasi_akun', [
+                'user' => $request->auth['user'],
+                'permintaan' => $permintaan,
+            ]);
+        } else {
+            abort(500, 'Failed to fetch data from API');
+        }
+    }
+
+    public function indexTentang(Request $request)
+    {
+        return view('pengaturan.tentang', [
+            'user' => $request->auth['user'],
+        ]);
+    }
+
+    public function destroyPortofolio(Request $request)
+    {
+        $response = Http::withHeaders($this->getHeaders($request))
+                        ->delete(env('API_URL') . '/hapus-portofolio');
+
+        if ($response->status() == 200) {
+            $this->updateAuthCookie($request->auth, $response['auth']);
+            return redirect()->route('informasiAkun')->with('success', $response["message"]);
+        } else {
+            return back()->with('error', $response["message"]);
+        }
+    }
+
+    public function destroyKeuangan(Request $request)
+    {
+        $response = Http::withHeaders($this->getHeaders($request))
+                        ->delete(env('API_URL') . '/hapus-keuangan');
+
+        if ($response->status() == 200) {
+            $this->updateAuthCookie($request->auth, $response['auth']);
+            return redirect()->route('informasiAkun')->with('success', $response["message"]);
+        } else {
+            return back()->with('error', $response["message"]);
+        }
+    }
+
+    public function destroyCatatan(Request $request)
+    {
+        $response = Http::withHeaders($this->getHeaders($request))
+                        ->delete(env('API_URL') . '/hapus-catatan');
+
+        if ($response->status() == 200) {
+            $this->updateAuthCookie($request->auth, $response['auth']);
+            return redirect()->route('informasiAkun')->with('success', $response["message"]);
+        } else {
+            return back()->with('error', $response["message"]);
+        }
+    }
+
+    public function updateUser(Request $request)
+    {
+        // dd($request);
+        $input = [
+            'alamat' => $request->alamat,
+            'no_telp' => $request->no_telp,
+        ];
+    
+        $response = Http::withHeaders($this->getHeaders($request))
+                        ->post(env('API_URL') . '/update/', $input);
+    
+        if ($response->status() == 200) {
+            $this->updateAuthCookie($request->auth, $response['auth']);
+            return redirect()->route('informasiAkun')->with('success', $response->json()['message'] ?? 'Data berhasil diubah');
+        } elseif ($response->failed() && $response->json('errors')) {
+            return back()->withErrors($response->json()['errors'])->withInput();
+        } else {
+            return back()->with('error', $response->json()['message'] ?? 'Terjadi kesalahan pada server')->withInput();
+        }
+    }
 }

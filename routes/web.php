@@ -77,6 +77,7 @@ Route::middleware(['throttle:100,1'])->group(function() {
         Route::post('/dividen-store', [DividenController::class, 'store'])->name('dividenStore');
         Route::get('/dividen-admin', [AdminController::class, 'dividen'])->name('dividen-admin');
         Route::get('/user', [AdminController::class, 'user'])->name('user-admin');
+        Route::post('/update-password', [AuthController::class, 'updatePassword'])->name('updatePassword');
 
     });
 
@@ -137,7 +138,14 @@ Route::middleware(['throttle:100,1'])->group(function() {
 
         Route::post('/saldo-store', [SaldoController::class, 'store'])->name('saldoStore');
 
+        Route::get('/informasi-akun', [PengaturanController::class, 'indexInformasiAkun'])->name('informasiAkun');
+        Route::delete('/hapus-portofolio', [PengaturanController::class, 'destroyPortofolio'])->name('hapusPorto');
+        Route::delete('/hapus-keuangan', [PengaturanController::class, 'destroyKeuangan'])->name('hapusKeuangan');
+        Route::delete('/hapus-catatan', [PengaturanController::class, 'destroyCatatan'])->name('hapusCatatan');
+        Route::post('/update', [PengaturanController::class, 'updateUser'])->name('updateUser');
+        Route::get('/tentang', [PengaturanController::class, 'indexTentang'])->name('tentang');
         // Route::get('/histori', [PortofolioController::class, 'historis'])->name('portofolio-historis');
+
     });
 
     Route::get('/test', function () {

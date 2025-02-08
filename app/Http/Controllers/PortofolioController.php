@@ -173,6 +173,7 @@ class PortofolioController extends Controller
     public function mutasiDana(Request $request)
     {
         $filterValue = session('filterValue');
+        $date = now()->format('d/m/Y');
 
         $responses = Http::pool(fn (Pool $pool) => [
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/mutasi-dana'),
@@ -271,6 +272,7 @@ class PortofolioController extends Controller
                 'uniqueYears' => $uniqueYears,
                 'selectedYear' => $selectedYear,
                 'sortData' => $sortData,
+                'date' => $date,
             ]);
         } else {
             abort(500, 'Failed to fetch data from API');

@@ -35,13 +35,13 @@
         <a href="" class="btn btn-success d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-saldo">
         	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
 		</a>
-        <a href="{{ route('portofolio') }}" class="btn btn-warning d-none d-sm-inline-block">
-            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-history"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 8l0 4l2 2" /><path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5" /></svg>
-          	Riwayat Transaksi
-      	</a>
-        <a href="{{ route('portofolio') }}" class="btn btn-warning d-sm-none btn-icon" aria-label="Create new report">
-            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-history"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 8l0 4l2 2" /><path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5" /></svg>
-		</a>
+        <button class="btn btn-primary d-none d-sm-inline-block" id="printModalToPdf">
+            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
+          	Cetak PDF
+        </button>
+        <button class="btn btn-primary d-sm-none btn-icon" id="printModalToPdf">
+            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
+        </button>
 	</div>
 </div>
 @endsection
@@ -55,15 +55,15 @@
                     <div class="row">
                         <div class="col-4">
                             <h5 class="mt-0 mb-0 pt-0 pb-2">Valuasi Awal</h5>
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($firstMutasiDana['modal'] ?? 0, 0, ',', '.') }}</h5>
+                            <h5 id="valuasi_awal" class="mt-0 mb-1 pt-0 pb-2">{{ number_format($firstMutasiDana['modal'] ?? 0, 0, ',', '.') }}</h5>
                         </div>
                         <div class="col-4">
                             <h5 class="mt-0 mb-0 pt-0 pb-2">Harga Unit Awal</h5>
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($firstMutasiDana['harga_unit'] ?? 0, 0, ',', '.') }}</h5>
+                            <h5 id="unit_awal" class="mt-0 mb-1 pt-0 pb-2">{{ number_format($firstMutasiDana['harga_unit'] ?? 0, 0, ',', '.') }}</h5>
                         </div>
                         <div class="col-4">
                             <h5 class="mt-0 mb-0 pt-0 pb-2">Jumlah Unit Awal</h5>
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($firstMutasiDana['jumlah_unit_penyertaan'] ?? 0, 0, ',', '.') }}</h5>
+                            <h5 id="jumlah_awal" class="mt-0 mb-1 pt-0 pb-2">{{ number_format($firstMutasiDana['jumlah_unit_penyertaan'] ?? 0, 0, ',', '.') }}</h5>
                         </div>
                     </div>
                 </div>
@@ -75,15 +75,15 @@
                     <div class="row">
                         <div class="col-4">
                             <h5 class="mt-0 mb-0 pt-0 pb-2">Valuasi Saat Ini</h5>
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($saldo ?? 0, 0, ',', '.') }}</h5>
+                            <h5 id="valuasi_saatini" class="mt-0 mb-1 pt-0 pb-2">{{ number_format($saldo ?? 0, 0, ',', '.') }}</h5>
                         </div>
                         <div class="col-4">
                             <h5 class="mt-0 mb-0 pt-0 pb-2">Harga Unit Saat Ini</h5>
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($lastMutasiDana['harga_unit_saat_ini'] ?? 0, 0, ',', '.') }}</h5>
+                            <h5 id="unit_saatini" class="mt-0 mb-1 pt-0 pb-2">{{ number_format($lastMutasiDana['harga_unit_saat_ini'] ?? 0, 0, ',', '.') }}</h5>
                         </div>
                         <div class="col-4">
                             <h5 class="mt-0 mb-0 pt-0 pb-2">Jumlah Unit Saat Ini</h5>
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($lastMutasiDana['jumlah_unit_penyertaan'] ?? 0, 0, ',', '.') }}</h5>
+                            <h5 id="jumlah_saatini" class="mt-0 mb-1 pt-0 pb-2">{{ number_format($lastMutasiDana['jumlah_unit_penyertaan'] ?? 0, 0, ',', '.') }}</h5>
                         </div>
                     </div>
                 </div>
@@ -101,8 +101,9 @@
                         <h4>{{$selectedYear}}</h4>
                     </div>
                 </div>
+               
                 <div class="table-responsive">
-                    <table class="table table-bordered table-vcenter table-striped">
+                    <table class="table table-bordered table-vcenter table-striped" >
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
@@ -181,8 +182,11 @@
                         <h4>Total : <span class="text-black">Rp. {{ number_format($saldo, 0, ',', '.') }}</span> </h4>
                     </div>
                 </div>
+                <div class="mb-3">
+                    <input type="text" id="searchInput2" class="form-control" placeholder="Cari data riwayat dana...">
+                </div>
                 <div class="table-responsive">
-                    <table class="table table-bordered table-vcenter table-striped">
+                    <table class="table table-bordered table-vcenter table-striped" id="dataTable2">
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
@@ -241,6 +245,48 @@
         </div>
     </div>
 </div>
+
+<table class="table table-bordered table-vcenter table-striped" >
+    <thead>
+        <tr>
+            <th class="text-center">No</th>
+            <th class="text-center">Bulan</th>
+            <th class="text-center">Alur Dana</th>
+            <th class="text-center">Jumlah</th>
+            <th class="text-center">Harga Unit</th>
+            <th class="text-center">Jumlah Unit</th>
+        </tr>
+    </thead>
+    <tbody id="tableMutasi">
+        @if (!empty($mutasiDataGrup->toArray()))
+            @foreach($mutasiDataGrup as $tahun => $bulanData)
+                @foreach($bulanData as $bulan => $data)
+                    @foreach($data as $index => $item)
+                        <tr>
+                                <td class="text-center"">{{ $loop->parent->index + 1 }}</td>
+                                <td class="">{{ \Carbon\Carbon::create($tahun, $bulan, 1)->locale('id')->translatedFormat('F') }}</td>
+                                @if($item['alur_dana'] > 0)
+                                <td class="text-center">Masuk</td>
+                                @elseif ($item['alur_dana'] < 0)
+                                <td class="text-center">Keluar</td>                                     
+                                @else
+                                <td class="text-center">Dividen</td>
+                                @endif
+                            <td>Rp.<span>{{ number_format($item['alur_dana'], 0, ',', '.') }}</span></td>
+                            <td class="text-center">{{number_format($item['harga_unit_saat_ini'], 0, ',', '.')}}</td>
+                            <td class="text-center">{{number_format($item['jumlah_unit_penyertaan'], 0, ',', '.')}}</td>
+                        </tr>
+                    @endforeach
+                @endforeach
+            @endforeach
+        @else
+            <tr>
+                <td class="text-center" colspan="7">Belum ada mutasi dana.</td>
+            </tr>
+        @endif
+    </tbody>
+</table>
+
 <!-- Modal Saldo -->
 <div class="modal modal-blur fade" id="modal-saldo" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-md modal-dialog-centered" role="document">
@@ -355,5 +401,173 @@
         }
     });
     });
+</script>
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		function searchTable(tableId, inputId) {
+			let input = document.getElementById(inputId).value.toLowerCase();  // Get the input value
+			let rows = document.querySelectorAll(`#${tableId} tbody tr`);  // Get all rows from the table
+			let noDataRow = document.querySelector(`#${tableId} .no-data-row`);  // Get the "no data" row
+			let hasVisibleRow = false;
+
+			rows.forEach((row) => {
+				let text = row.innerText.toLowerCase();  // Get text content of the row
+				let isVisible = text.includes(input);  // Check if the row should be visible
+
+				row.style.display = isVisible ? "" : "none";  // Show or hide the row based on the search
+
+				if (isVisible) {
+					hasVisibleRow = true;  // If a visible row is found, set hasVisibleRow to true
+				}
+			});
+
+			// If no visible rows are found, show the "no data found" row, otherwise hide it
+			if (noDataRow) {
+				if (!hasVisibleRow && input.trim() !== "") {
+					// If there are no matching rows and search input is not empty
+					noDataRow.style.display = "";
+				} else {
+					// Otherwise hide the "no data found" row
+					noDataRow.style.display = "none";
+				}
+			}
+		}
+
+		
+
+        // Event listeners for each search input
+		document.getElementById("searchInput2").addEventListener("input", function() {
+			searchTable("dataTable2", "searchInput2");
+		});
+
+        document.getElementById('printModalToPdf').addEventListener('click', function () {
+            console.log("Button clicked");
+
+            const userName = @json($user['name']);
+            const userEmail = @json($user['email']);
+            const currentDate = @json($date); 
+
+            const valuasiAwal = document.getElementById('valuasi_awal').textContent.trim();
+            const unitAwal = document.getElementById('unit_awal').textContent.trim();
+            const jumlahAwal = document.getElementById('jumlah_awal').textContent.trim();
+            const valuasiSaatIni = document.getElementById('valuasi_saatini').textContent.trim();
+            const unitSaatIni = document.getElementById('unit_saatini').textContent.trim();
+            const jumlahSaatIni = document.getElementById('jumlah_saatini').textContent.trim();
+            // console.log(valuasiAwal, unitAwal, jumlahAwal, valuasiSaatIni, unitSaatIni, jumlahSaatIni);
+            const summaryData = [
+                ': ' + valuasiAwal,
+                ': ' + unitAwal,
+                ': ' + jumlahAwal + '\n\n',
+                ': ' + valuasiSaatIni,
+                ': ' + unitSaatIni,
+                ': ' + jumlahSaatIni + '\n\n',
+            ];
+            
+            const tableBodyMutasi = document.getElementById('tableMutasi');
+            const tableRowsMutasi = Array.from(tableBodyMutasi.querySelectorAll('tr'));
+
+            console.log(tableBodyMutasi);
+            console.log(tableRowsMutasi);
+            
+            const pdfTableBody = [
+                [{ text: 'No', style: 'tableHeader' }, { text: 'Bulan', style: 'tableHeader' }, { text: 'Alur Dana', style: 'tableHeader' }, { text: 'Jumlah', style: 'tableHeader' }, { text: 'Harga Unit', style: 'tableHeader' }, { text: 'Jumlah Unit', style: 'tableHeader' },]
+            ];
+            
+            tableRowsMutasi.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                pdfTableBody.push([
+                    cells[0].textContent, 
+                    cells[1].textContent, 
+                    cells[2].textContent,  
+                    cells[3].textContent,  
+                    cells[4].textContent,  
+                    cells[5].textContent,  
+                ]);
+            });
+            
+            const docDefinition = {
+                content: [
+                    {
+                        alignment: 'justify',
+                        columns: [
+                            {
+                                text: [`${userName}\n`, { text: userEmail, bold: false, color: 'gray' }],
+                                bold: true
+                            },
+                            {
+                                text: [`${currentDate}\nSmart Finance`],
+                                style: ['alignRight'],
+                                color: 'gray',
+                            }
+                        ]
+                    },
+                    {
+                        text: '\nMutasi Dana\n\n',
+                        style: 'header',
+                        alignment: 'center'
+                    },
+                    {
+                        columns: [
+                            {
+                                stack: [
+                                    {
+                                        ul: [
+                                            'Valuasi Awal',
+                                            'Harga Unit Awal',
+                                            'Jml Unit Awal',
+                                            'Valuasi Saat Ini',
+                                            'Harga Unit Saat Ini',
+                                            'Jml Unit Saat Ini',
+                                        ]
+                                    },
+                                ]
+                            },
+                            {
+                                stack: summaryData,
+                            },
+                            '',
+                            '',
+                        ]
+                    },
+                    {
+                        style: 'tableExample',
+                        table: {
+                            headerRows: 1,
+                            widths: [50, '*', '*', '*', '*', '*'], 
+                            body: pdfTableBody 
+                        },
+                        alignment: 'center',
+                        layout: {
+				fillColor: function (rowIndex, node, columnIndex) {
+					return (rowIndex % 2 === 0) ? '#CEEFFD' : null;
+				}
+			}
+                    },
+                ],
+                styles: {
+                    header: {
+                        fontSize: 18,
+                        bold: true,
+                        alignment: 'justify',
+                    },
+                    alignRight: {
+                        alignment: 'right'
+                    },
+                    tableExample: {
+                        margin: [0, 5, 0, 15]
+                    },
+                    tableHeader: {
+                        bold: true,
+                        fontSize: 12,
+                        color: 'black'
+                    }
+                },
+                defaultStyle: {
+                    columnGap: 20
+                }
+            };
+            pdfMake.createPdf(docDefinition).open();
+        });
+	});
 </script>
 @endsection

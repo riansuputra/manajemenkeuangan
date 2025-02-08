@@ -9,6 +9,17 @@
     </h2>
     <div class="text-muted mt-1">Terakhir diperbarui pada <span class="text-black">{{\Carbon\Carbon::parse($update)->locale('id')->translatedFormat('l, d F Y H:i')}}</span> UTC+8</div>
 </div>
+<div class="col-auto ms-auto d-print-none">
+	<div class="btn-list">
+		<a href="" class="btn btn-primary d-none d-sm-inline-block">
+            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
+          	Cetak PDF
+      	</a>
+        <a href="" class="btn btn-primary d-sm-none btn-icon">
+            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
+		</a>
+	</div>
+</div>
 @endsection
 
 @section('content')
@@ -55,42 +66,47 @@
         </div>
         <div class="col-sm-12 col-lg-8">
             <div class="card">
-                <div class="table-responsive">
-                    <table class="table table-vcenter table-bordered">
-                        <thead>
-                            <tr>
-                                <th class="text-center w-1">No.</th>
-                                <th class="text-center" colspan="2">Mata Uang</th>
-                                <th class="text-center w-2">Kode</th>
-                                <th class="text-center">Nilai Dalam Rupiah</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($kursData as $kurs)
-                            <tr>
-                                <td>{{$kurs['id']}}</td>
-                                <td class="w-1"><span class="flag flag-country-{{$kurs['ikon']}}"></span></td>
-                                <td class="text-muted">{{$kurs['nama_mata_uang']}}</td>
-                                <td class="text-muted">{{$kurs['kode_mata_uang']}}</td>
-                                <td class="w-5">
-                                    <div class="row">
-                                        <div class="col-auto">Rp.</div>
-                                        <div class="col text-end">
-                                            {{ number_format(preg_replace('/[^\d]/', '', $kurs['nilai_tukar']), 0, '.', '.') }}
-                                        @if(str_starts_with($kurs['nilai_tukar'], '+'))
-                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="green"  class="icon icon-tabler icons-tabler-filled icon-tabler-caret-up"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11.293 7.293a1 1 0 0 1 1.32 -.083l.094 .083l6 6l.083 .094l.054 .077l.054 .096l.017 .036l.027 .067l.032 .108l.01 .053l.01 .06l.004 .057l.002 .059l-.002 .059l-.005 .058l-.009 .06l-.01 .052l-.032 .108l-.027 .067l-.07 .132l-.065 .09l-.073 .081l-.094 .083l-.077 .054l-.096 .054l-.036 .017l-.067 .027l-.108 .032l-.053 .01l-.06 .01l-.057 .004l-.059 .002h-12c-.852 0 -1.297 -.986 -.783 -1.623l.076 -.084l6 -6z" /></svg>
-                                        @elseif(str_starts_with($kurs['nilai_tukar'], '-'))
-                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="red"  class="icon icon-tabler icons-tabler-filled icon-tabler-caret-down"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 9c.852 0 1.297 .986 .783 1.623l-.076 .084l-6 6a1 1 0 0 1 -1.32 .083l-.094 -.083l-6 -6l-.083 -.094l-.054 -.077l-.054 -.096l-.017 -.036l-.027 -.067l-.032 -.108l-.01 -.053l-.01 -.06l-.004 -.057v-.118l.005 -.058l.009 -.06l.01 -.052l.032 -.108l.027 -.067l.07 -.132l.065 -.09l.073 -.081l.094 -.083l.077 -.054l.096 -.054l.036 -.017l.067 -.027l.108 -.032l.053 -.01l.06 -.01l.057 -.004l12.059 -.002z" /></svg>
-                                        @else
-                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="red"  class="icon icon-tabler icons-tabler-filled icon-tabler-caret-down"><path stroke="none" d="M0 0h24v24H0z" fill="none"/></svg>
-                                        @endif
+                <div class="card-body">
+                    <div class="mb-3">
+                        <input type="text" id="searchInput1" class="form-control" placeholder="Cari data kurs...">
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-vcenter table-bordered" id="dataTable1">
+                            <thead>
+                                <tr>
+                                    <th class="text-center w-1">No.</th>
+                                    <th class="text-center" colspan="2">Mata Uang</th>
+                                    <th class="text-center w-2">Kode</th>
+                                    <th class="text-center">Nilai Dalam Rupiah</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($kursData as $kurs)
+                                <tr>
+                                    <td>{{$kurs['id']}}</td>
+                                    <td class="w-1"><span class="flag flag-country-{{$kurs['ikon']}}"></span></td>
+                                    <td class="text-muted">{{$kurs['nama_mata_uang']}}</td>
+                                    <td class="text-muted">{{$kurs['kode_mata_uang']}}</td>
+                                    <td class="w-5">
+                                        <div class="row">
+                                            <div class="col-auto">Rp.</div>
+                                            <div class="col text-end">
+                                                {{ number_format(preg_replace('/[^\d]/', '', $kurs['nilai_tukar']), 0, '.', '.') }}
+                                            @if(str_starts_with($kurs['nilai_tukar'], '+'))
+                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="green"  class="icon icon-tabler icons-tabler-filled icon-tabler-caret-up"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11.293 7.293a1 1 0 0 1 1.32 -.083l.094 .083l6 6l.083 .094l.054 .077l.054 .096l.017 .036l.027 .067l.032 .108l.01 .053l.01 .06l.004 .057l.002 .059l-.002 .059l-.005 .058l-.009 .06l-.01 .052l-.032 .108l-.027 .067l-.07 .132l-.065 .09l-.073 .081l-.094 .083l-.077 .054l-.096 .054l-.036 .017l-.067 .027l-.108 .032l-.053 .01l-.06 .01l-.057 .004l-.059 .002h-12c-.852 0 -1.297 -.986 -.783 -1.623l.076 -.084l6 -6z" /></svg>
+                                            @elseif(str_starts_with($kurs['nilai_tukar'], '-'))
+                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="red"  class="icon icon-tabler icons-tabler-filled icon-tabler-caret-down"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 9c.852 0 1.297 .986 .783 1.623l-.076 .084l-6 6a1 1 0 0 1 -1.32 .083l-.094 -.083l-6 -6l-.083 -.094l-.054 -.077l-.054 -.096l-.017 -.036l-.027 -.067l-.032 -.108l-.01 -.053l-.01 -.06l-.004 -.057v-.118l.005 -.058l.009 -.06l.01 -.052l.032 -.108l.027 -.067l.07 -.132l.065 -.09l.073 -.081l.094 -.083l.077 -.054l.096 -.054l.036 -.017l.067 -.027l.108 -.032l.053 -.01l.06 -.01l.057 -.004l12.059 -.002z" /></svg>
+                                            @else
+                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="red"  class="icon icon-tabler icons-tabler-filled icon-tabler-caret-down"><path stroke="none" d="M0 0h24v24H0z" fill="none"/></svg>
+                                            @endif
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -187,5 +203,42 @@
         disableSameCurrency(); 
         calculateConversion(); 
     };
+</script>
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		function searchTable(tableId, inputId) {
+			let input = document.getElementById(inputId).value.toLowerCase();  // Get the input value
+			let rows = document.querySelectorAll(`#${tableId} tbody tr`);  // Get all rows from the table
+			let noDataRow = document.querySelector(`#${tableId} .no-data-row`);  // Get the "no data" row
+			let hasVisibleRow = false;
+
+			rows.forEach((row) => {
+				let text = row.innerText.toLowerCase();  // Get text content of the row
+				let isVisible = text.includes(input);  // Check if the row should be visible
+
+				row.style.display = isVisible ? "" : "none";  // Show or hide the row based on the search
+
+				if (isVisible) {
+					hasVisibleRow = true;  // If a visible row is found, set hasVisibleRow to true
+				}
+			});
+
+			// If no visible rows are found, show the "no data found" row, otherwise hide it
+			if (noDataRow) {
+				if (!hasVisibleRow && input.trim() !== "") {
+					// If there are no matching rows and search input is not empty
+					noDataRow.style.display = "";
+				} else {
+					// Otherwise hide the "no data found" row
+					noDataRow.style.display = "none";
+				}
+			}
+		}
+
+		// Event listeners for each search input
+		document.getElementById("searchInput1").addEventListener("input", function() {
+			searchTable("dataTable1", "searchInput1");
+		});
+	});
 </script>
 @endsection

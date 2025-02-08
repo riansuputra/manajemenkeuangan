@@ -9,6 +9,17 @@
     </h2>
     <div class="text-muted mt-1">Terakhir diperbarui pada <span class="text-black">{{\Carbon\Carbon::parse($lastUpdate)->locale('id')->translatedFormat('l, d F Y H:i')}}</span> UTC+8</div>
 </div>
+<div class="col-auto ms-auto d-print-none">
+	<div class="btn-list">
+        <a href="" class="btn btn-primary d-none d-sm-inline-block">
+            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
+          	Cetak PDF
+      	</a>
+        <a href="" class="btn btn-primary d-sm-none btn-icon">
+            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
+		</a>
+	</div>
+</div>
 @endsection
 
 @section('content')
@@ -17,8 +28,11 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
+                    <div class="mb-3">
+                        <input type="text" id="searchInput1" class="form-control" placeholder="Cari data dividen...">
+                    </div>
                     <div class="table-responsive">
-                        <table class="table table-vcenter table-bordered">
+                        <table class="table table-vcenter table-bordered" id="dataTable1">
                             <thead>
                                 <tr>
                                     <th class="text-center w-1">No.</th>
@@ -77,5 +91,43 @@
 			pageTitle.style.display = "block";
 		});
     });
+</script>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		function searchTable(tableId, inputId) {
+			let input = document.getElementById(inputId).value.toLowerCase();  // Get the input value
+			let rows = document.querySelectorAll(`#${tableId} tbody tr`);  // Get all rows from the table
+			let noDataRow = document.querySelector(`#${tableId} .no-data-row`);  // Get the "no data" row
+			let hasVisibleRow = false;
+
+			rows.forEach((row) => {
+				let text = row.innerText.toLowerCase();  // Get text content of the row
+				let isVisible = text.includes(input);  // Check if the row should be visible
+
+				row.style.display = isVisible ? "" : "none";  // Show or hide the row based on the search
+
+				if (isVisible) {
+					hasVisibleRow = true;  // If a visible row is found, set hasVisibleRow to true
+				}
+			});
+
+			// If no visible rows are found, show the "no data found" row, otherwise hide it
+			if (noDataRow) {
+				if (!hasVisibleRow && input.trim() !== "") {
+					// If there are no matching rows and search input is not empty
+					noDataRow.style.display = "";
+				} else {
+					// Otherwise hide the "no data found" row
+					noDataRow.style.display = "none";
+				}
+			}
+		}
+
+		// Event listeners for each search input
+		document.getElementById("searchInput1").addEventListener("input", function() {
+			searchTable("dataTable1", "searchInput1");
+		});
+	});
 </script>
 @endsection
