@@ -246,7 +246,7 @@
     </div>
 </div>
 
-<table class="table table-bordered table-vcenter table-striped" >
+<table class="table table-bordered table-vcenter table-striped" hidden>
     <thead>
         <tr>
             <th class="text-center">No</th>

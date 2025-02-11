@@ -38,7 +38,7 @@
 										</div>
 									</div>
                             		<div class="h2 m-0 text-muted">
-										11
+										{{$userData}}
                             		</div>
                           		</div>
                         	</div>
@@ -56,7 +56,7 @@
                           		</div>
                           		<div class="col">
 								  	<div class="d-flex align-items-center">
-										<div class="text-muted">User Online</div>
+										<div class="text-muted">Total Transaksi Portofolio</div>
 										<div class="ms-auto lh-1">
 											<div class="dropdown">
 												<a class="text-muted">
@@ -66,7 +66,7 @@
 										</div>
 									</div>
                             		<div class="h2 m-0 text-green">
-										3
+										{{$transaksiData}}
                             		</div>
                           		</div>
                         	</div>
@@ -93,7 +93,7 @@
 										</div>
 									</div>
 									<div class="h2 m-0 text-red">
-										52
+										{{$totalCat[0]['total_catatan']}}
                             		</div>
                           		</div>
                         	</div>
@@ -120,7 +120,7 @@
 										</div>
 									</div>
 									<div class="h2 m-0 text-yellow">
-										2
+										{{$permintaanData}}
                             		</div>
                           		</div>
                         	</div>
@@ -154,24 +154,6 @@
 			</div>
 		</div>
 		
-		<div class="col-lg-6">
-			<div class="card">
-					<div class="card-body">
-					<h3 class="card-title text-muted mb-5">Tren Saldo</h3>
-					<div id="chart-tren-saldo" class="chart-lg" style="min-height: 240px;"></div>
-				</div>
-			</div>
-		</div>
-
-        <div class="col-lg-6">
-			<div class="card">
-					<div class="card-body">
-					<h3 class="card-title text-muted mb-5">User Online</h3>
-					<div id="chart-jumlah-pengguna-online" class="chart-lg" style="min-height: 240px;"></div>
-				</div>
-			</div>
-		</div>
-		
 	</div>
 </div>
 
@@ -180,281 +162,303 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        // Dummy data for pemasukan (income)
-        const pemasukanData = [
-            { kategori: "Gaji", total_jumlah: 5000000 },
-            { kategori: "Uang Saku", total_jumlah: 2000000 },
-            { kategori: "Bonus", total_jumlah: 1000000 },
-            { kategori: "Investasi", total_jumlah: 3000000 },
-        ];
-
-        const seriesData = pemasukanData.map((stat, index) => {
-            const value = parseFloat(stat.total_jumlah);
-            const greenShades = [
-                "rgb(0, 255, 0)",
-                "rgb(50, 205, 50)",
-                "rgb(0, 128, 0)",
-                "rgb(34, 139, 34)",
-                "rgb(0, 100, 0)",
-            ];
-            const color = greenShades[index % greenShades.length];
-            const rgbaColor = color.replace(')', ', 0.8)').replace('rgb', 'rgba');
-            return {
-                value: value,
-                color: rgbaColor,
-            };
-        });
-
-        const labelsData = pemasukanData.map(stat => stat.kategori);
-
-        window.ApexCharts && (new ApexCharts(document.getElementById('chart-demo-pie'), {
-            chart: {
-                type: "donut",
-                fontFamily: 'inherit',
-                height: 150,
-                sparkline: { enabled: true },
-                animations: { enabled: true },
-            },
-            series: seriesData.map(data => data.value),
-            labels: labelsData,
-            fill: { opacity: 1 },
-            colors: seriesData.map(data => data.color),
-            legend: {
-                show: true,
-                position: 'right',
-                markers: { width: 10, height: 10, radius: 100 },
-                itemMargin: { horizontal: 2, vertical: 2 },
-            },
-            tooltip: {
-                theme: 'dark',
-                y: { formatter: function(val) { return 'Rp. ' + formatNumber(val); } },
-                fillSeriesColor: false,
-            },
-        })).render();
-    });
-</script>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Dummy data for pengeluaran (expenses)
-        const pengeluaranData = [
-            { kategori: "Makanan", total_jumlah: 2000000 },
-            { kategori: "Kesehatan & Olahraga", total_jumlah: 1500000 },
-            { kategori: "Tagihan", total_jumlah: 2500000 },
-            { kategori: "Minuman", total_jumlah: 1800000 },
-        ];
-
-        const seriesData = pengeluaranData.map((stat, index) => {
-            const value = parseFloat(stat.total_jumlah);
-            const redShades = [
-                "rgb(255, 0, 0)",
-                "rgb(220, 20, 60)",
-                "rgb(178, 34, 34)",
-                "rgb(139, 0, 0)",
-                "rgb(205, 92, 92)",
-            ];
-            const color = redShades[index % redShades.length];
-            const rgbaColor = color.replace(')', ', 0.8)').replace('rgb', 'rgba');
-            return {
-                value: value,
-                color: rgbaColor,
-            };
-        });
-
-        const labelsData = pengeluaranData.map(stat => stat.kategori);
-
-        window.ApexCharts && (new ApexCharts(document.getElementById('chart-demo-pie#2'), {
-            chart: {
-                type: "donut",
-                fontFamily: 'inherit',
-                height: 150,
-                sparkline: { enabled: true },
-                animations: { enabled: true },
-            },
-            series: seriesData.map(data => data.value),
-            labels: labelsData,
-            fill: { opacity: 1 },
-            colors: seriesData.map(data => data.color),
-            legend: {
-                show: true,
-                position: 'right',
-                markers: { width: 10, height: 10, radius: 100 },
-                itemMargin: { horizontal: 2, vertical: 2 },
-            },
-            tooltip: {
-                theme: 'dark',
-                y: { formatter: function(val) { return 'Rp. ' + formatNumber(val); } },
-                fillSeriesColor: false,
-            },
-        })).render();
-    });
-</script>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Dummy data for semua data (all data: pemasukan vs pengeluaran)
-        const semuaData = [
-            { jenis: "Pemasukan", total_jumlah: 10000000 },
-            { jenis: "Pengeluaran", total_jumlah: 7800000 },
-        ];
-
-        const seriesData = semuaData.map((stat, index) => {
-            const value = parseFloat(stat.total_jumlah);
-            const redShades = [
-                "rgb(0, 255, 0)", // Green for income
-                "rgb(255, 0, 0)", // Red for expenses
-            ];
-            const color = redShades[index % redShades.length];
-            const rgbaColor = color.replace(')', ', 0.8)').replace('rgb', 'rgba');
-            return {
-                value: value,
-                color: rgbaColor,
-            };
-        });
-
-        const labelsData = semuaData.map(stat => stat.jenis);
-
-        window.ApexCharts && (new ApexCharts(document.getElementById('chart-demo-pie#3'), {
-            chart: {
-                type: "donut",
-                fontFamily: 'inherit',
-                height: 150,
-                sparkline: { enabled: true },
-                animations: { enabled: true },
-            },
-            series: seriesData.map(data => data.value),
-            labels: labelsData,
-            fill: { opacity: 1 },
-            colors: seriesData.map(data => data.color),
-            legend: {
-                show: true,
-                position: 'right',
-                markers: { width: 10, height: 10, radius: 100 },
-                itemMargin: { horizontal: 2, vertical: 2 },
-            },
-            tooltip: {
-                theme: 'dark',
-                y: { formatter: function(val) { return 'Rp. ' + formatNumber(val); } },
-                fillSeriesColor: false,
-            },
-        })).render();
-    });
-</script>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Data dummy untuk jumlah pengguna online
-        var dates = ["2024-11-15", "2024-11-16", "2024-11-17", "2024-11-18", "2024-11-19", "2024-11-20", "2024-11-21"];
-        var usersOnline = [5, 7, 1, 0, 3, 2, 4];
-
-        window.ApexCharts && (new ApexCharts(document.getElementById('chart-jumlah-pengguna-online'), {
-            chart: {
-                type: "line",
-                fontFamily: 'inherit',
-                height: 240,
-                parentHeightOffset: 0,
-                toolbar: {
-                    show: false,
+        const pemasukanData = @json($groupedDataPemasukan);
+        console.log(Array.isArray(pemasukanData));
+        if (Array.isArray(pemasukanData) && pemasukanData.length > 0) {
+            const seriesData = pemasukanData.map((stat, index) => {
+                const value = parseFloat(stat['total_jumlah']);
+                const greenShades = [
+                    "rgb(0, 255, 0)",       
+                    "rgb(50, 205, 50)",     
+                    "rgb(0, 128, 0)",       
+                    "rgb(34, 139, 34)",     
+                    "rgb(0, 100, 0)",       
+                ];
+                const color = greenShades[index % greenShades.length];                 
+                const rgbaColor = color.replace(')', ', 0.8)').replace('rgb', 'rgba');
+                return {
+                    value: value,
+                    color: rgbaColor
+                };
+            });
+            
+            const labelsData = pemasukanData.map(stat => stat['kategori']);
+            console.log("Pemasukan Series Data:", seriesData);
+            console.log("Pemasukan Labels Data:", labelsData);
+            window.ApexCharts && (new ApexCharts(document.getElementById('chart-demo-pie'), {
+                chart: {
+                    type: "donut",
+                    fontFamily: 'inherit',
+                    height: 150,
+                    sparkline: {
+                        enabled: true
+                    },
+                    animations: {
+                        enabled: true
+                    },
                 },
-                animations: {
-                    enabled: false
+                series: seriesData.map(data => data.value),
+                labels: labelsData,
+                fill: {
+                    opacity: 1,
+                },
+                colors: seriesData.map(data => data.color),
+                legend: {
+                    show: true,
+                    position: 'right',
+                    offsetY: 0,
+                    markers: {
+                        width: 10,
+                        height: 10,
+                        radius: 100,
+                    },
+                    itemMargin: {
+                        horizontal: 2,
+                        vertical: 2
+                    },
+                },
+                tooltip: {
+                    theme: 'dark',
+                    y: {
+                        formatter: function(val) {
+                            return 'Rp. ' + formatNumber(val);
+                        },
+                    },
+                    fillSeriesColor: false
+                },
+            })).render();
+        } else {
+            console.error("Pemasukan data is not an object:", pemasukanData);
+
+            window.ApexCharts && (new ApexCharts(document.getElementById('chart-demo-pie'), {
+                chart: {
+                    type: "donut",
+                    fontFamily: 'inherit',
+                    height: 150,
+                    sparkline: {
+                        enabled: true
+                    },
+                    animations: {
+                        enabled: true
+                    },
+                },
+                series: [], // Empty series
+                labels: [], // No labels
+                noData: {
+                    text: "Tidak ada data.",
+                    align: 'center',
+                    verticalAlign: 'middle',
+                    style: {
+                        color: '#999',
+                        fontSize: '14px',
+                        fontFamily: 'inherit'
+                    }
                 }
-            },
-            stroke: {
-                width: 2,
-                curve: "smooth",
-            },
-            series: [{
-                name: "Pengguna Online",
-                data: usersOnline
-            }],
-            tooltip: {
-                theme: 'dark',
-                y: {
-                    formatter: function(val) {
-                        return val + ' pengguna';
-                    },
-                },
-            },
-            xaxis: {
-                type: 'datetime',
-                categories: dates,
-                labels: {
-                    format: 'dd MMM',
-                },
-            },
-            yaxis: {
-                labels: {
-                    formatter: function(val) {
-                        return val + ' pengguna';
-                    },
-                },
-            },
-            colors: ["#1e90ff"],
-            grid: {
-                strokeDashArray: 4,
-            },
-        })).render();
+            })).render();
+        }
     });
 </script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        // Data dummy untuk tren saldo
-        var dates = ["2024-11-15", "2024-11-16", "2024-11-17", "2024-11-18", "2024-11-19", "2024-11-20", "2024-11-21"];
-        var balances = [150000, 175000, 200000, 180000, 220000, 250000, 1000000];
+        const pengeluaranData = @json($groupedDataPengeluaran);
+        console.log(Array.isArray(pengeluaranData));
+        if (Array.isArray(pengeluaranData) && pengeluaranData.length > 0) {
+            const seriesData = pengeluaranData.map((stat, index) => {
+                const value = parseFloat(stat['total_jumlah']);
+                const redShades = [
+                    "rgb(255, 0, 0)",      
+                    "rgb(220, 20, 60)",    
+                    "rgb(178, 34, 34)",    
+                    "rgb(139, 0, 0)",      
+                    "rgb(205, 92, 92)",    
+                ];
+                const color = redShades[index % redShades.length];
+                
+                const rgbaColor = color.replace(')', ', 0.8)').replace('rgb', 'rgba');
+                
+                return {
+                    value: value,
+                    color: rgbaColor
+                };
+            });
+            
+            const labelsData = pengeluaranData.map(stat => stat['kategori']);
+            
+            console.log("Pengeluaran Series Data:", seriesData);
+            console.log("Pengeluaran Labels Data:", labelsData);
 
-        window.ApexCharts && (new ApexCharts(document.getElementById('chart-tren-saldo'), {
-            chart: {
-                type: "area",
-                fontFamily: 'inherit',
-                height: 240,
-                parentHeightOffset: 0,
-                toolbar: {
-                    show: false,
+            window.ApexCharts && (new ApexCharts(document.getElementById('chart-demo-pie#2'), {
+                chart: {
+                    type: "donut",
+                    fontFamily: 'inherit',
+                    height: 150,
+                    sparkline: {
+                        enabled: true
+                    },
+                    animations: {
+                        enabled: true
+                    },
                 },
-                animations: {
-                    enabled: false
+                series: seriesData.map(data => data.value),
+                labels: labelsData,
+                fill: {
+                    opacity: 1,
+                },
+                colors: seriesData.map(data => data.color), 
+                legend: {
+                    show: true,
+                    position: 'right',
+                    offsetY: 0,
+                    markers: {
+                        width: 10,
+                        height: 10,
+                        radius: 100,
+                    },
+                    itemMargin: {
+                        horizontal: 2,
+                        vertical: 2
+                    },
+                },
+                tooltip: {
+                    theme: 'dark',
+                    y: {
+                        formatter: function(val) {
+                            return 'Rp. ' + formatNumber(val);
+                        },
+                    },
+                    fillSeriesColor: false
+                },
+            })).render();
+        } else {
+            console.error("Pemasukan data is not an object:", pengeluaranData);
+
+            window.ApexCharts && (new ApexCharts(document.getElementById('chart-demo-pie#2'), {
+                chart: {
+                    type: "donut",
+                    fontFamily: 'inherit',
+                    height: 150,
+                    sparkline: {
+                        enabled: true
+                    },
+                    animations: {
+                        enabled: true
+                    },
+                },
+                series: [], // Empty series
+                labels: [], // No labels
+                noData: {
+                    text: "Tidak ada data.",
+                    align: 'center',
+                    verticalAlign: 'middle',
+                    style: {
+                        color: '#999',
+                        fontSize: '14px',
+                        fontFamily: 'inherit'
+                    }
                 }
-            },
-            stroke: {
-                width: 2,
-                curve: "smooth",
-            },
-            series: [{
-                name: "Jumlah Saldo",
-                data: balances
-            }],
-            tooltip: {
-                theme: 'dark',
-                y: {
-                    formatter: function(val) {
-                        return 'Rp. ' + val.toLocaleString("id-ID");
-                    },
-                },
-            },
-            xaxis: {
-                type: 'datetime',
-                categories: dates,
-                labels: {
-                    format: 'dd MMM',
-                },
-            },
-            yaxis: {
-                labels: {
-                    formatter: function(val) {
-                        return 'Rp. ' + val.toLocaleString("id-ID");
-                    },
-                },
-            },
-            colors: ["#34a853"],
-            grid: {
-                strokeDashArray: 4,
-            },
-        })).render();
+            })).render();
+        }
     });
 </script>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const semuaData = @json($groupedData);
+        console.log(Array.isArray(semuaData));
+        if (Array.isArray(semuaData) && semuaData.length > 0) {
+            const seriesData = Object.values(semuaData).map((stat, index) => {
+                const value = parseFloat(stat['total_jumlah']);
+                const redShades = [
+                    "rgb(0, 255, 0)",     
+                    "rgb(255, 0, 0)",     
+                ];
+                const color = redShades[index % redShades.length]; 
+                
+                const rgbaColor = color.replace(')', ', 0.8)').replace('rgb', 'rgba');
+                
+                return {
+                    value: value,
+                    color: rgbaColor
+                };
+            });
+            
+            const labelsData = semuaData.map(stat => stat['jenis']);
+            console.log("Pemasukan Series Data:", seriesData);
+            console.log("Pemasukan Labels Data:", labelsData);
 
+            window.ApexCharts && (new ApexCharts(document.getElementById('chart-demo-pie#3'), {
+                chart: {
+                    type: "donut",
+                    fontFamily: 'inherit',
+                    height: 150,
+                    sparkline: {
+                        enabled: true
+                    },
+                    animations: {
+                        enabled: true
+                    },
+                },
+                series: seriesData.map(data => data.value),
+                labels: labelsData,
+                fill: {
+                    opacity: 1,
+                },
+                colors: seriesData.map(data => data.color), 
+                legend: {
+                    show: true,
+                    position: 'right',
+                    offsetY: 0,
+                    markers: {
+                        width: 10,
+                        height: 10,
+                        radius: 100,
+                    },
+                    itemMargin: {
+                        horizontal: 2,
+                        vertical: 2
+                    },
+                },
+                tooltip: {
+                    theme: 'dark',
+                    y: {
+                        formatter: function(val) {
+                            return 'Rp. ' + formatNumber(val);
+                        },
+                    },
+                    fillSeriesColor: false
+                },
+            })).render();
+        } else {
+            console.error("Pemasukan data is not an object:", semuaData);
+
+            window.ApexCharts && (new ApexCharts(document.getElementById('chart-demo-pie#3'), {
+                chart: {
+                    type: "donut",
+                    fontFamily: 'inherit',
+                    height: 150,
+                    sparkline: {
+                        enabled: true
+                    },
+                    animations: {
+                        enabled: true
+                    },
+                },
+                series: [], // Empty series
+                labels: [], // No labels
+                noData: {
+                    text: "Tidak ada data.",
+                    align: 'center',
+                    verticalAlign: 'middle',
+                    style: {
+                        color: '#999',
+                        fontSize: '14px',
+                        fontFamily: 'inherit'
+                    }
+                }
+            })).render();
+        }
+    });
+</script>
 
 @endsection

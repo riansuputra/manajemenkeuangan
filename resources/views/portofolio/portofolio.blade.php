@@ -356,7 +356,7 @@
                                                                             </div>
                                                                             <div class="col-4">
                                                                                 <p class="mb-0">Sekuritas :</p>
-                                                                                <h4>{{$k['sekuritas_id'] ?? '-'}}</h4>
+                                                                                <h4>{{$k['sekuritas']['nama_sekuritas'] ?? '-'}}</h4>
                                                                             </div>
                                                                         </div>
                                                                         <div class="row">
@@ -437,7 +437,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-9">
                             <div class="mb-3">
                                 <label class="form-label required">Pilih Saham:</label>
                                 <select name="id_saham" type="text" class="form-select" id="select-people" value="" required>
@@ -449,15 +449,9 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-3">
-                            <div class="mb-3">
-                                <label class="form-label required">Tanggal: </label>
-                                <input type="date" name="tanggal" id="tanggal" class="form-control" min="{{ now()->format('Y-m-d') }}"  value="{{ now()->format('Y-m-d') }}">
-                            </div>
-                        </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <div class="mb-3">
                                 <label class="form-label required">Volume: </label>
                                 <div class="input-group">
@@ -466,7 +460,27 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-5">
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label class="form-label required">Tanggal: </label>
+                                <input type="date" name="tanggal" id="tanggal" class="form-control" min="{{ now()->format('Y-m-d') }}"  value="{{ now()->format('Y-m-d') }}">
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label class="form-label">Sekuritas: </label>
+                                <select name="sekuritas" class="form-select" id="sekuritas" value="">
+                                    <option value="" selected>Pilih Sekuritas</option>
+                                    @foreach ($sekuritasData as $data)
+                                    <option value="{{$data['id']}}"> {{$data['nama_sekuritas']}}</option>
+                                   @endforeach
+                                   
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
                             <div class="mb-3">
                                 <label class="form-label required">Harga: </label>
                                 <div class="row g-2">
@@ -487,7 +501,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-6">
                             <div class="mb-3">
                                 <label class="form-label">Total :</label>
                                 <div class="input-group">

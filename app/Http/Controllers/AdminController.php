@@ -33,10 +33,85 @@ class AdminController extends Controller
 
     public function dashboard(Request $request)
     {
-        // dd($request->auth['admin']);
-        return view('admin.dashboard.index', [
-            'admin' => $request->auth['admin'],
+        // Mengambil data dari API
+        $responses = Http::pool(fn (Pool $pool) => [
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/user'),
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/permintaan-kategori-admin'),
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/pemasukan'),
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/pengeluaran'),
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/transaksi-all'),
         ]);
+        // Memeriksa apakah respon berhasil
+        if ($responses[0]->successful() && $responses[1]->successful() && $responses[2]->successful() && $responses[3]->successful() && $responses[4]->successful()) {
+            
+            $userData = collect($responses[0]->json()['data']['user'])->count();
+            $permintaanData = collect($responses[1]->json()['data']['permintaan'])->count();
+            $pemasukanData = collect($responses[2]->json()['data']['pemasukan']);
+            $pengeluaranData = collect($responses[3]->json()['data']['pengeluaran']);
+            $transaksiData = collect($responses[4]->json()['data']['transaksi'])->count();
+            // dd($userData, $permintaanData, $transaksiData);
+            
+            $catMerge = $pemasukanData->merge($pengeluaranData);
+            $catTotal = $catMerge->count();
+
+            $pengeluaranData = collect($responses[3]->json()['data']['pengeluaran']);
+
+            // Mengelompokkan data berdasarkan kategori pengeluaran
+            $groupedPengeluaran = $pengeluaranData->groupBy('kategori_pengeluaran.nama_kategori_pengeluaran')->map(function ($group) {
+                return [
+                    'kategori' => $group->first()['kategori_pengeluaran']['nama_kategori_pengeluaran'],
+                    'total_jumlah' => $group->sum('jumlah'),
+                    'jumlah_catatan' => $group->count(),
+                ];
+            })->values();
+
+            $groupedDataPengeluaran = $groupedPengeluaran->toArray();
+            // dd($groupedData);
+            $groupedPemasukan = $pemasukanData->groupBy('kategori_pemasukan.nama_kategori_pemasukan')->map(function ($group) {
+                return [
+                    'kategori' => $group->first()['kategori_pemasukan']['nama_kategori_pemasukan'],
+                    'total_jumlah' => $group->sum('jumlah'),
+                    'jumlah_catatan' => $group->count(),
+                ];
+            })->values();
+
+            $groupedDataPemasukan = $groupedPemasukan->toArray();
+
+            $groupedData = collect([
+                [
+                    'jenis' => 'Pemasukan',
+                    'total_jumlah' => $groupedPemasukan->sum('total_jumlah'),
+                ],
+                [
+                    'jenis' => 'Pengeluaran',
+                    'total_jumlah' => $groupedPengeluaran->sum('total_jumlah'),
+                ],
+            ]);
+
+            $totalCat = collect([
+                [
+                    'total_catatan' => $groupedPemasukan->sum('jumlah_catatan') + $groupedPengeluaran->sum('jumlah_catatan'),
+                ]
+            ]);
+            
+            // dd($groupedData);
+            
+
+          
+            
+            return view('admin.dashboard.index', [
+                'admin' => $request->auth['admin'],
+                'userData' => $userData,
+                'permintaanData' => $permintaanData,
+                'transaksiData' => $transaksiData,
+                'groupedData' => $groupedData,
+                'groupedDataPemasukan' => $groupedDataPemasukan,
+                'groupedDataPengeluaran' => $groupedDataPengeluaran,
+                'totalCat' => $totalCat,
+            ]);
+        } else {
+            abort(500, 'Failed to fetch data from API');
+        }
     }
 
     /**

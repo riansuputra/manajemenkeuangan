@@ -29,15 +29,18 @@ class PortofolioController extends Controller
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/mutasi-dana'),
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/kinerja-portofolio'),
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/transaksi'),
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/sekuritas'),
         ]);
 
-        if ($responses[0]->successful() && $responses[1]->successful() && $responses[2]->successful() && $responses[3]->successful() && $responses[4]->successful() && $responses[5]->successful()){
+        if ($responses[0]->successful() && $responses[1]->successful() && $responses[2]->successful() && $responses[3]->successful() 
+            && $responses[4]->successful() && $responses[5]->successful() && $responses[6]->successful()){
             $asetData = $responses[0]->json()['data']['aset'];
             $portoData = $responses[1]->json()['data']['portofolio'];
             $historisData = $responses[2]->json()['data']['historis'];
             $mutasiData = $responses[3]->json()['data']['mutasi_dana'];
             $kinerjaData = $responses[4]->json()['data']['kinerja'];
             $transaksiData = $responses[5]->json()['data']['transaksi'];
+            $sekuritasData = $responses[6]->json()['data']['sekuritas'];
             
             $portoData = collect($portoData);
             $transaksiData = collect($transaksiData);
@@ -164,6 +167,7 @@ class PortofolioController extends Controller
                 'mutasiDataFilter' => $mutasiDataFilter,
                 'kinerjaDataFilter' => $kinerjaDataFilter,
                 'filteredDataTran' => $filteredDataTran,
+                'sekuritasData' => $sekuritasData,
             ]);
         } else {
             abort(500, 'Failed to fetch data from API');
@@ -495,6 +499,7 @@ class PortofolioController extends Controller
             'harga' => $request->jumlah1,
             'jenis_transaksi' => $request->jenis_transaksi,
             'aset_id' => $request->id_saham,
+            'sekuritas' => $request->sekuritas,
         );
         $response = Http::withHeaders([
             'Accept' => 'application/json',
@@ -524,6 +529,7 @@ class PortofolioController extends Controller
             'harga' => $request->jumlah1,
             'jenis_transaksi' => $request->jenis_transaksi,
             'aset_id' => $request->id_saham,
+            'sekuritas' => $request->sekuritas,
         );
         $response = Http::withHeaders([
             'Accept' => 'application/json',
