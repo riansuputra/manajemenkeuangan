@@ -468,8 +468,8 @@
                         </div>
                         <div class="col-lg-4">
                             <div class="mb-3">
-                                <label class="form-label">Sekuritas: </label>
-                                <select name="sekuritas" class="form-select" id="sekuritas" value="">
+                                <label class="form-label required">Sekuritas: </label>
+                                <select name="sekuritas" class="form-select" id="sekuritas" value="" required>
                                     <option value="" selected>Pilih Sekuritas</option>
                                     @foreach ($sekuritasData as $data)
                                     <option value="{{$data['id']}}"> {{$data['nama_sekuritas']}}</option>

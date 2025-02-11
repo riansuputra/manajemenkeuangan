@@ -42,7 +42,7 @@
                             <select class="form-select" id="select1"  required>
                                 <option value="1" data-name="Indonesian Rupiah (IDR)">IDR</option>
                                 @foreach ($kursData as $kurs)
-                                <option value="{{ toRawValue($kurs['nilai_tukar']) }}" data-name="{{ $kurs['mata_uang'] }}">
+                                <option value="{{ toRawValue($kurs['nilai_tukar']) }}" data-name="{{ $kurs['mata_uang'] }}" data-kode="{{ $kurs['kode_mata_uang'] }}" data-simbol="{{ $kurs['simbol'] }}">
                                     {{ $kurs['kode_mata_uang'] }}
                                 </option>
                                 @endforeach
@@ -54,12 +54,17 @@
                             <select class="form-select" id="select2" required>
                                 <option value="1" data-name="Indonesian Rupiah (IDR)">IDR</option>
                                 @foreach ($kursData as $kurs)
-                                <option value="{{ toRawValue($kurs['nilai_tukar']) }}" data-name="{{ $kurs['mata_uang'] }}">
+                                <option value="{{ toRawValue($kurs['nilai_tukar']) }}" data-name="{{ $kurs['mata_uang'] }}" data-kode="{{ $kurs['kode_mata_uang'] }}" data-simbol="{{ $kurs['simbol'] }}">
                                     {{ $kurs['kode_mata_uang'] }}
                                 </option>
                                 @endforeach
                             </select>
                         </div>
+                        <label class="form-label mt-3">
+                            <span id="currencyFrom"></span>
+                            <span>=</span>
+                            <span id="currencyTo"></span>
+                        </label>
                     </div>
                 </div>
             </div>
@@ -203,6 +208,40 @@
         disableSameCurrency(); 
         calculateConversion(); 
     };
+
+    function updateExchangeRateLabel() {
+        const selectedOption1 = select1.options[select1.selectedIndex];
+        const selectedOption2 = select2.options[select2.selectedIndex];
+
+        // Ambil kode mata uang dari dataset, jika tidak ada (karena IDR tidak ada di tabel), set sebagai "IDR"
+        const currencyFrom = selectedOption1.dataset.kode || "IDR";
+        const symbolFrom = selectedOption1.dataset.simbol || "Rp.";
+        const currencyTo = selectedOption2.dataset.kode || "IDR";
+        const symbolTo = selectedOption2.dataset.simbol || "Rp.";
+        const rate1 = parseFloat(select1.value);
+        const rate2 = parseFloat(select2.value);
+
+        if (rate1 && rate2) {
+            const conversionRate = (1 * rate1) / rate2;
+            document.getElementById('currencyFrom').textContent = `${symbolFrom} 1 ${currencyFrom}`;
+            document.getElementById('currencyTo').textContent = `${symbolTo} ${formatNumber(conversionRate.toFixed(2))} ${currencyTo}`;
+        }
+    }
+
+
+    // Panggil fungsi saat terjadi perubahan pada select
+    select1.addEventListener('change', updateExchangeRateLabel);
+    select2.addEventListener('change', updateExchangeRateLabel);
+
+    // Panggil fungsi saat halaman dimuat
+    window.onload = () => {
+        select1.selectedIndex = 1;
+        select2.value = "1";
+        disableSameCurrency();
+        calculateConversion();
+        updateExchangeRateLabel();
+    };
+
 </script>
 <script>
 	document.addEventListener('DOMContentLoaded', function () {

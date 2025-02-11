@@ -30,6 +30,7 @@ class KursController extends Controller
 
         if ($responses[0]->successful()) {
             $kursData = $responses[0]->json()['data']['kurs'];
+            // dd($kursData);
 
             $ikonMapping = [
                 'AUD' => 'au', 'CAD' => 'ca', 'CHF' => 'ch', 'CNY' => 'cn',
@@ -38,12 +39,21 @@ class KursController extends Controller
                 'PHP' => 'ph', 'SGD' => 'sg', 'THB' => 'th', 'USD' => 'us'
             ];
 
+            $simbolMapping = [
+                'AUD' => 'A$', 'CAD' => 'C$', 'CHF' => 'SFr.', 'CNY' => '¥',
+                'EUR' => '€', 'GBP' => '£', 'HKD' => '$', 'INR' => '₹',
+                'JPY' => '¥', 'KRW' => '₩', 'MYR' => 'RM', 'NZD' => '$',
+                'PHP' => '₱', 'SGD' => 'S$', 'THB' => '฿', 'USD' => '$'
+            ];
+
             foreach ($kursData as &$kurs) {
                 $parts = explode('(', rtrim($kurs['mata_uang'], ')'));
                 $kurs['nama_mata_uang'] = trim($parts[0]); 
                 $kurs['kode_mata_uang'] = trim($parts[1] ?? '');
                 $kurs['ikon'] = $ikonMapping[$kurs['kode_mata_uang']] ?? 'default';
+                $kurs['simbol'] = $simbolMapping[$kurs['kode_mata_uang']] ?? 'default';
             }
+            // dd($kursData);
 
             $update = collect($kursData)->sortByDesc('updated_at')->first()['updated_at'] ?? now();
             $update = \Carbon\Carbon::parse($update)->timezone('Asia/Makassar')->format('Y-m-d H:i:s');
