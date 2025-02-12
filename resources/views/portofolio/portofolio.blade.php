@@ -289,7 +289,7 @@
                                             <h4 class="mb-2">Informasi Aset :</h4>
                                             <div class="row">
                                                 <div class="col-4">
-                                                    <p class="mb-0 text-muted">Volume :</p>
+                                                    <p class="mb-0 text-muted">Jml Lembar :</p>
                                                     <h4>{{number_format($index['volume'], 0, ',', '.')}}</h4>
                                                 </div>
                                                 <div class="col-4">
@@ -453,7 +453,7 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="mb-3">
-                                <label class="form-label required">Volume: </label>
+                                <label class="form-label required">Jumlah Lembar: </label>
                                 <div class="input-group">
                                     <input type="text" id="jumlahlembar" name="jumlahlembar" class="form-control text-end" autocomplete="off" placeholder="0" required >
                                     <input type="text" id="jumlahlembar1" name="jumlahlembar1" class="form-control text-end" autocomplete="off" hidden>

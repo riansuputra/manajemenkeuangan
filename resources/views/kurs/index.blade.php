@@ -62,7 +62,7 @@
                         </div>
                         <label class="form-label mt-3">
                             <span id="currencyFrom"></span>
-                            <span>=</span>
+                            <span class="text-muted">=</span>
                             <span id="currencyTo"></span>
                         </label>
                     </div>

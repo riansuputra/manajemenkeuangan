@@ -155,9 +155,6 @@
 									{{ url()->current() == url('/investasi-bulanan') ? 'active' : '' }} 
 									{{ url()->current() == url('/investasi-target-bulanan') ? 'active' : '' }}
 									{{ url()->current() == url('/investasi-target-lumpsum') ? 'active' : '' }}
-									{{ url()->current() == url('/portofolio') ? 'active' : '' }} 
-									{{ url()->current() == url('/portofolio-mutasi-dana') ? 'active' : '' }}
-									{{ url()->current() == url('/portofolio-historis') ? 'active' : '' }} 
 									{{ url()->current() == url('/pinjaman-bunga-efektif') ? 'active' : '' }} 
 									{{ url()->current() == url('/pinjaman-bunga-tetap') ? 'active' : '' }}">
                     				<a class="nav-link dropdown-toggle" href="" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
@@ -213,7 +210,7 @@
 											<svg xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-inline me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M8 11h8v7h-8z" /><path d="M8 15h8" /><path d="M11 11v7" /></svg>
 						  					Portofolio
 										</a>
-                          				<a class="dropdown-item" href="{{ url('/portofoio-mutasi-dana') }}">
+                          				<a class="dropdown-item" href="{{ url('/portofolio-mutasi-dana') }}">
 										  	<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-inline me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 9m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z" /><path d="M14 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 9v-2a2 2 0 0 0 -2 -2h-10a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h2" /></svg>
                             				Mutasi Dana
                           				</a>
