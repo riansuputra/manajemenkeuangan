@@ -7,15 +7,15 @@
 	<h2 class="page-title">
         Kurs
     </h2>
-    <div class="text-muted mt-1">Terakhir diperbarui pada <span class="text-black">{{\Carbon\Carbon::parse($update)->locale('id')->translatedFormat('l, d F Y H:i')}}</span> UTC+8</div>
+    <div class="text-muted mt-1">Terakhir diperbarui pada <span class="text-black" id="update">{{\Carbon\Carbon::parse($update)->locale('id')->translatedFormat('l, d F Y H:i')}}</span> UTC+8</div>
 </div>
 <div class="col-auto ms-auto d-print-none">
 	<div class="btn-list">
-		<a href="" class="btn btn-primary d-none d-sm-inline-block">
+		<a href="" class="btn btn-primary d-none d-sm-inline-block" id="printModalToPdf">
             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
           	Cetak PDF
       	</a>
-        <a href="" class="btn btn-primary d-sm-none btn-icon">
+        <a href="" class="btn btn-primary d-sm-none btn-icon" id="printModalToPdf">
             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
 		</a>
 	</div>
@@ -117,6 +117,28 @@
         </div>
     </div>
 </div>
+
+<table class="table table-vcenter table-bordered" hidden>
+    <thead>
+        <tr>
+            <th class="text-center w-1">No.</th>
+            <th class="text-center" colspan="2">Mata Uang</th>
+            <th class="text-center w-2">Kode</th>
+            <th class="text-center">Nilai Dalam Rupiah</th>
+        </tr>
+    </thead>
+    <tbody id="modalTableBody">
+        @foreach($kursData as $kurs)
+        <tr>
+            <td>{{$kurs['id']}}</td>
+            <td class="text-muted">{{$kurs['nama_mata_uang']}}</td>
+            <td class="text-muted">{{$kurs['simbol']}}</td>
+            <td class="text-muted">{{$kurs['kode_mata_uang']}}</td>
+            <td class="w-5">Rp. {{ number_format(preg_replace('/[^\d]/', '', $kurs['nilai_tukar']), 0, '.', '.') }}</td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
@@ -279,5 +301,106 @@
 			searchTable("dataTable1", "searchInput1");
 		});
 	});
+</script>
+
+<script>
+    document.getElementById('printModalToPdf').addEventListener('click', function () {
+            console.log("Button clicked");
+
+            const userName = @json($user['name']);
+            const userEmail = @json($user['email']);
+            const currentDate = @json($date); 
+
+            const update = document.getElementById('update').textContent.trim();
+
+            const Data = [
+                ': ' + update,
+            ];
+            
+            const modalTableBody = document.getElementById('modalTableBody');
+            const tableRows = Array.from(modalTableBody.querySelectorAll('tr'));
+            
+            const pdfTableBody = [
+                [{ text: 'No', style: 'tableHeader' }, 
+                { text: 'Mata Uang', style: 'tableHeader' }, 
+                { text: 'Simbol', style: 'tableHeader' }, 
+                { text: 'Kode', style: 'tableHeader' }, 
+                { text: 'Nilai Dalam Rupiah', style: 'tableHeader' },]
+            ];
+            
+            tableRows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                pdfTableBody.push([
+                    { text: cells[0].textContent, alignment: 'center' }, 
+                    { text: cells[1].textContent, alignment: 'left' }, 
+                    { text: cells[2].textContent, alignment: 'center' }, 
+                    { text: cells[3].textContent, alignment: 'center' }, 
+                    { text: cells[4].textContent, alignment: 'right' }, 
+                ]);
+            });
+            
+            const docDefinition = {
+                content: [
+                    {
+                        alignment: 'justify',
+                        columns: [
+                            {
+                                text: [`${userName}\n`, { text: userEmail, bold: false, color: 'gray' }],
+                                bold: true
+                            },
+                            {
+                                text: [`${currentDate}\nSmart Finance`],
+                                style: ['alignRight'],
+                                color: 'gray',
+                            }
+                        ]
+                    },
+                    {
+                        text: '\nKurs\n\n',
+                        style: 'header',
+                        alignment: 'center'
+                    },
+                    {
+                        text: 'Terakhir Diperbarui ' + Data + 'UTC+8\n',
+                    },
+                    {
+                        style: 'tableExample',
+                        table: {
+                            headerRows: 1,
+                            widths: [50, '*', 50, 50, '*'], 
+                            body: pdfTableBody 
+                        },
+                        alignment: 'center',
+                        layout: {
+				fillColor: function (rowIndex, node, columnIndex) {
+					return (rowIndex % 2 === 0) ? '#CEEFFD' : null;
+				}
+			}
+                    },
+                ],
+                styles: {
+                    header: {
+                        fontSize: 18,
+                        bold: true,
+                        alignment: 'justify',
+                    },
+                    alignRight: {
+                        alignment: 'right'
+                    },
+                    tableExample: {
+                        margin: [0, 5, 0, 15]
+                    },
+                    tableHeader: {
+                        bold: true,
+                        fontSize: 12,
+                        color: 'black'
+                    }
+                },
+                defaultStyle: {
+                    columnGap: 20
+                }
+            };
+            pdfMake.createPdf(docDefinition).open();
+        });
 </script>
 @endsection

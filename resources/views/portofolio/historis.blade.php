@@ -135,7 +135,7 @@
     </div>
 </div>    
 
-<table class="table table-bordered table-vcenter">
+<table class="table table-bordered table-vcenter" hidden>
     <thead>
         <tr>
             <th class="text-center">Tahun</th>
@@ -160,7 +160,7 @@
     </tbody>
 </table>
 
-<table class="table table-bordered table-vcenter">
+<table class="table table-bordered table-vcenter" hidden>
     <thead>
         <tr>
             <th class="text-center">Bulan</th>
