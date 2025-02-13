@@ -28,11 +28,11 @@
 </div>
 <div class="col-auto ms-auto d-print-none">
 	<div class="btn-list">
-		<a href="" class="btn btn-primary d-none d-sm-inline-block">
+		<a href="" class="btn btn-primary d-none d-sm-inline-block"  id="printModalToPdf">
             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
           	Cetak PDF
       	</a>
-        <a href="" class="btn btn-primary d-sm-none btn-icon">
+        <a href="" class="btn btn-primary d-sm-none btn-icon"  id="printModalToPdf">
             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
 		</a>
 	</div>
@@ -135,6 +135,56 @@
     </div>
 </div>    
 
+<table class="table table-bordered table-vcenter">
+    <thead>
+        <tr>
+            <th class="text-center">Tahun</th>
+            <th class="text-center">Yield</th>
+            <th class="text-center">Yield IHSG</th>
+        </tr>
+    </thead>
+    <tbody id="tableTahun">
+        @if(!empty($historisByYear->toArray()))
+        @foreach($historisByYear as $tahun => $data)
+        <tr>
+            <td style="width:5%" class="text-center">{{ $tahun }}</td>
+            <td class="text-center">{{ $data['yield'] !== null ? number_format($data['yield'], 2, ',', '.') . '%' : '-' }}</td>
+            <td class="text-center">{{ $data['yield_ihsg'] !== null ? number_format($data['yield_ihsg'], 2, ',', '.') . '%' : '-' }}</td>
+        </tr>
+        @endforeach
+        @else
+        <tr>
+            <td class="text-center" colspan="3">Belum ada riwayat tahunan.</td>
+        </tr>
+        @endif
+    </tbody>
+</table>
+
+<table class="table table-bordered table-vcenter">
+    <thead>
+        <tr>
+            <th class="text-center">Bulan</th>
+            <th class="text-center">Yield</th>
+            <th class="text-center">Yield IHSG</th>
+        </tr>
+    </thead>
+    <tbody id="tableBulan">
+        @if(!empty($historisByYear->toArray()))
+        @foreach($groupedByMonth as $bulan => $data)
+        <tr>
+            <td style="width:5%">{{ \Carbon\Carbon::create()->month($bulan)->locale('id')->translatedFormat('F') }}</td>
+            <td class="text-center">{{ $data['yield'] !== null ? number_format($data['yield'], 2, ',', '.') . '%' : '-' }}</td>
+            <td class="text-center">{{ $data['yield_ihsg'] !== null ? number_format($data['yield_ihsg'], 2, ',', '.') . '%' : '-' }}</td>
+        </tr>
+        @endforeach
+        @else
+        <tr>
+            <td class="text-center" colspan="3">Belum ada riwayat bulanan.</td>
+        </tr>
+        @endif
+    </tbody>
+</table>
+
 <script src="{{url('dist/libs/tom-select/dist/js/tom-select.base.min.js?1684106062')}}" defer></script>
   
 <script>
@@ -155,6 +205,11 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
     const groupedByMonth = @json($groupedByMonth);
+
+    const selectedLocale = @json(app()->getLocale()); // Ambil bahasa dari aplikasi
+
+    const formatter = new Intl.DateTimeFormat(selectedLocale, { month: "long" });
+
     const seriesData = {
         labels: [],
         yield: [],
@@ -162,22 +217,18 @@
     };
 
     for (const [month, data] of Object.entries(groupedByMonth)) {
-            const year = @json($selectedYear);
-            const monthFormatted = month.padStart(2, '0');
-            seriesData.labels.push(`${year}-${monthFormatted}`);
+        const monthIndex = parseInt(month) - 1; // Konversi ke index (0-11)
+        const monthName = formatter.format(new Date(2000, monthIndex, 1)); // Format bulan berdasarkan locale
+        seriesData.labels.push(monthName);
 
-            // Format nilai yield tanpa pembulatan
-            const yieldValue = parseFloat(data.yield); // Konversi ke persen
-            const yieldFormatted = yieldValue.toString() + '%';
+        // Format nilai yield tanpa pembulatan
+        const yieldValue = parseFloat(data.yield); // Konversi ke persen
+        seriesData.yield.push(yieldValue);
 
-            // Format nilai yield_ihsg tanpa pembulatan
-            const yieldIhsgValue = data.yield_ihsg !== null 
-                ? parseFloat(data.yield_ihsg).toString() + '%' 
-                : '-';
-
-            seriesData.yield.push(yieldFormatted);
-            seriesData.yield_ihsg.push(yieldIhsgValue);
-        }
+        // Format nilai yield_ihsg tanpa pembulatan
+        const yieldIhsgValue = data.yield_ihsg !== null ? parseFloat(data.yield_ihsg) : null;
+        seriesData.yield_ihsg.push(yieldIhsgValue);
+    }
 
     // Konfigurasi ApexCharts
     window.ApexCharts && (new ApexCharts(document.getElementById('chart-social-referrals'), {
@@ -202,10 +253,11 @@
             xaxis: { lines: { show: true } }
         },
         xaxis: {
-            labels: { padding: 0 },
-            tooltip: { enabled: false },
-            categories: seriesData.labels,
-            type: 'datetime'
+            categories: seriesData.labels, // Nama bulan dinamis
+            labels: {
+                padding: 4,
+                style: { fontSize: "12px" }
+            }
         },
         yaxis: {
             labels: {
@@ -229,6 +281,132 @@
     })).render();
 });
 
+</script>
+
+<script>
+    document.getElementById('printModalToPdf').addEventListener('click', function () {
+            console.log("Button clicked");
+
+            const userName = @json($user['name']);
+            const userEmail = @json($user['email']);
+            const currentDate = @json($date); 
+
+            const modalTableTahun = document.getElementById('tableTahun');
+            const modalTableBulan = document.getElementById('tableBulan');
+            const tableRowsTahun = Array.from(modalTableTahun.querySelectorAll('tr'));
+            const tableRowsBulan = Array.from(modalTableBulan.querySelectorAll('tr'));
+            
+            const pdfTableTahun = [
+                [{ text: 'Bulan', style: 'tableHeader' }, 
+                { text: 'Yield', style: 'tableHeader' },
+                { text: 'Yield IHSG', style: 'tableHeader' },]
+            ];
+
+            const pdfTableBulan = [
+                [{ text: 'Bulan', style: 'tableHeader' }, 
+                { text: 'Yield', style: 'tableHeader' }, 
+                { text: 'Yield IHSG', style: 'tableHeader' },]
+            ];
+            
+            tableRowsTahun.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                pdfTableTahun.push([
+                    cells[0].textContent, 
+                    cells[1].textContent, 
+                    cells[2].textContent,  
+                ]);
+            });
+
+            tableRowsBulan.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                pdfTableBulan.push([
+                    cells[0].textContent, 
+                    cells[1].textContent, 
+                    cells[2].textContent,  
+                ]);
+            });
+
+            
+            const docDefinition = {
+    content: [
+        // First row with two tables
+        {
+                        alignment: 'justify',
+                        columns: [
+                            {
+                                text: [`${userName}\n`, { text: userEmail, bold: false, color: 'gray' }],
+                                bold: true
+                            },
+                            {
+                                text: [`${currentDate}\nSmart Finance`],
+                                style: ['alignRight'],
+                                color: 'gray',
+                            }
+                        ]
+                    },
+                    {
+                        text: '\Historis\n\n',
+                        style: 'header',
+                        alignment: 'center'
+                    },
+        {
+            columns: [
+                // First Table (adjust widths to fit in page)
+                {
+                    style: 'tableExample',
+                    table: {
+                        headerRows: 1,
+                        widths: ['*', '*', '*'],  // Use '*' for flexible widths
+                        body: pdfTableTahun,
+                    },
+                },
+                // Second Table (next to the first table in the same row)
+                {
+                    style: 'tableExample',
+                    table: {
+                        headerRows: 1,
+                        widths: ['*', '*', '*'],  // Use '*' for flexible widths
+                        body: pdfTableBulan,
+                    },
+                }
+            ]
+        }
+    ],
+    styles: {
+        tableExample: {
+            margin: [0, 5, 0, 15]  // Adds margin between tables
+        },
+        header: {
+                        fontSize: 18,
+                        bold: true,
+                        alignment: 'justify',
+                    },
+                    alignRight: {
+                        alignment: 'right'
+                    },
+                    tableExample: {
+                        margin: [0, 5, 0, 15]
+                    },
+                    tableHeader: {
+                        bold: true,
+                        fontSize: 12,
+                        color: 'black',
+                        fillColor: '#CEEFFD',
+                    },
+    },
+    defaultStyle: {
+        columnGap: 20
+    },
+    pageOrientation: 'landscape'  // Optional: Set page orientation to landscape for more space
+};
+
+const pdfFilename = "my_generated_report.pdf";
+
+// Create and open the PDF
+pdfMake.createPdf(docDefinition).open(pdfFilename);
+
+
+        });
 </script>
 
 

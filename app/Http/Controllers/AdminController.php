@@ -343,16 +343,58 @@ class AdminController extends Controller
         
     }
 
+    public function storeKategori(Request $request)
+    {
+        $url = match ($request->tipe) {
+            'pengeluaran' => '/kategori-pengeluaran',
+            'pemasukan' => '/kategori-pemasukan',
+            default => null,
+        };
+
+        if (!$url) {
+            return back()->with('error', 'Tipe kategori tidak valid.');
+        }
+
+        $input = [
+            $request->tipe === 'pengeluaran' ? 'nama_kategori_pengeluaran' : 'nama_kategori_pemasukan'
+            => $request->nama_kategori,
+        ];
+
+        $apiUrl = env('API_URL') . $url;
+        $headers = [
+            'Accept' => 'application/json',
+            'x-api-key' => env('API_KEY'),
+            'Authorization' => 'Bearer ' . $request->auth['token'],
+            'user-type' => $request->auth['user_type'],
+        ];
+
+        $response = Http::withHeaders($headers)->post($apiUrl, $input);
+
+        if ($response->status() == 201) {
+            $this->updateAuthCookie($request->auth, $response['auth']);
+            return redirect()->route('permintaanKategoriAdmin')->with('success', $response["message"]);
+        }
+
+        return back()->with('error', $response["message"] ?? 'Terjadi kesalahan.');
+    }
+
+
     
 
-    public function approve(Request $request, $id) {
-        // dd($request, $id);
+    public function approve(Request $request) {
+        // dd($request);
+        $input = array(
+            'id' => $request->id,
+            'scope' => $request->scope,
+            'message' => $request->message,
+        );
+
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'x-api-key' => env('API_KEY'),
             'Authorization' => 'Bearer ' . $request->auth['token'],
             'user-type' => $request->auth['user_type'],
-        ])->post(env('API_URL') . '/permintaan-kategori/'.$id.'/approve');
+        ])->post(env('API_URL') . '/permintaan-kategori/approve', $input);
 
         if ($response->status() == 201) {
             $this->updateAuthCookie($request->auth, $response['auth']);

@@ -26,7 +26,7 @@ Route::middleware(['throttle:100,1'])->group(function() {
 
             // dd(app()->getLocale());  // Periksa locale yang aktif
         }
-        return redirect('/dashboard');  // Redirect ke halaman utama tanpa membawa query string
+        return redirect()->back();  // Redirect ke halaman utama tanpa membawa query string
     });
 
     Route::middleware([App\Http\Middleware\GuestMiddleware::class])->group(function()
@@ -65,7 +65,8 @@ Route::middleware(['throttle:100,1'])->group(function() {
         Route::get('/dashboard-admin', [AdminController::class, 'dashboard'])->name('admin-dashboard');
 
         Route::get('/permintaan-kategori-admin', [AdminController::class, 'permintaanKategoriAdmin'])->name('permintaanKategoriAdmin');
-        Route::post('/permintaan-kategori/{id}/approve', [AdminController::class, 'approve'])->name('permintaanApprove');
+        Route::post('/kategori-store', [AdminController::class, 'storeKategori'])->name('kategoriStore');
+        Route::post('/permintaan-kategori/approve', [AdminController::class, 'approve'])->name('permintaanApprove');
         Route::post('/permintaan-kategori/reject', [AdminController::class, 'reject'])->name('permintaanReject');
 
         Route::get('/kurs-admin', [AdminController::class, 'kurs'])->name('kurs-admin');

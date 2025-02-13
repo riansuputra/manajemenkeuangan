@@ -11,6 +11,17 @@
         Permintaan Kategori
     </h2>
 </div>
+<div class="col-auto ms-auto d-print-none">
+	<div class="btn-list">
+        <a href="" class="btn btn-success d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-kategori">
+        	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+            Tambah Kategori
+		</a>
+        <a href="" class="btn btn-success d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-kategori">
+        	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+		</a>
+	</div>
+</div>
 @endsection
 
 @section('content')
@@ -79,13 +90,9 @@
 								<td class="w-1">
 									<div class="btn-list flex-nowrap">
 										@if($data['status'] == 'pending')
-										<form action="{{ route('permintaanApprove', ['id'=> $data['id']]) }}" method="post" autocomplete="off">
-											@csrf
-											<input type="text" id="id" name="id" value="{{ $data['id'] }}" hidden>
-											<button type="submit" class="btn btn-outline-success btn-icon">
-												<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg>
-											</button>
-										</form>
+										<a href="" class="btn btn-outline-success btn-icon" data-bs-toggle="modal" data-bs-target="#modal-approve-{{$data['id']}}">
+											<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg>
+										</a>
 										<a href="" class="btn btn-outline-danger btn-icon" data-bs-toggle="modal" data-bs-target="#modal-message-{{$data['id']}}">
 											<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg>
 										</a>
@@ -108,8 +115,51 @@
 								</td>
 							</tr>
 
-							<!-- Modal Reject Message -->
-                            <div class="modal modal-blur fade" id="modal-message-{{$data['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
+							<!-- Modal Approve Message -->
+                            <div class="modal modal-blur fade" id="modal-approve-{{$data['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">{{$data['nama_kategori']}}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <form action="{{ route('permintaanApprove', ['id'=> $data['id']]) }}" method="post" autocomplete="off">
+                                            @csrf
+                                            <div class="modal-body">
+                                                <input type="hidden" name="id" value="{{ $data['id'] }}">
+                                                <div class="row">
+													<div class="col-lg-12">
+														<div class="mb-3">
+															<label class="form-label required">Cakupan Approve:</label>
+															<select class="form-select" name="scope" id="scope" required>
+																<option value="global" @if($data['scope'] == 'global') selected @endif>Global</option>
+																<option value="personal" @if($data['scope'] == 'personal') selected @endif>Personal</option>
+															</select>
+														</div>
+													</div>
+                                                    <div class="col-lg-12">
+                                                        <div class="mb-3">
+                                                            <label class="form-label required">Pesan: </label>
+                                                            <div class="input-group">
+                                                                <input type="text" id="message" name="message" class="form-control" autocomplete="off" placeholder="Ketik Pesan..." required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-success ms-auto">
+													<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg>
+                                                    Terima
+                                                </button>
+                                            </div>
+                                        </form>	
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End of Modal Approve Message -->
+							 <!-- Modal Reject Message -->
+							 <div class="modal modal-blur fade" id="modal-message-{{$data['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
                                 <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -123,9 +173,9 @@
                                                 <div class="row">
                                                     <div class="col-lg-12">
                                                         <div class="mb-3">
-                                                            <label class="form-label required">Pesan Penolakan: </label>
+                                                            <label class="form-label required">Pesan : </label>
                                                             <div class="input-group">
-                                                                <input type="text" id="message" name="message" class="form-control" autocomplete="off" placeholder="Ketik Pesan Penolakan..." required>
+                                                                <input type="text" id="message" name="message" class="form-control" autocomplete="off" placeholder="Ketik Pesan..." required>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -207,6 +257,51 @@
 		</div>
 	</div>
 </div>
+
+<!-- Modal Approve Message -->
+<div class="modal modal-blur fade" id="modal-kategori" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Tambah Kategori</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<form action="{{ route('kategoriStore') }}" method="post" autocomplete="off">
+				@csrf
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="mb-3">
+								<label class="form-label required">Nama Kategori: </label>
+								<div class="input-group">
+									<input type="text" id="nama_kategori" name="nama_kategori" class="form-control" autocomplete="off" placeholder="Masukkan Nama Kategori..." required>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-12">
+							<div class="mb-3">
+								<label class="form-label required">Pilih Jenis:</label>
+								<select class="form-select" name="tipe" id="tipe" required>
+									<option value="" selected disabled>Pilih Jenis</option>
+									<option value="pengeluaran">Pengeluaran</option>
+									<option value="pemasukan">Pemasukan</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-success ms-auto">
+						<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg>
+						Simpan
+					</button>
+				</div>
+			</form>	
+		</div>
+	</div>
+</div>
+<!-- End of Modal Approve Message -->
+
 <input type="text" id="jumlah1" name="jumlah1" class="form-control text-end" autocomplete="off" hidden>
 <input type="text" id="jumlah" name="jumlah" class="form-control text-end" autocomplete="off" placeholder="0" hidden>
 

@@ -287,6 +287,45 @@
     </tbody>
 </table>
 
+<table class="table table-bordered table-vcenter table-striped" hidden>
+    <thead>
+        <tr>
+            <th class="text-center">No</th>
+            <th class="text-center">Tanggal</th>
+            <th class="text-center">Jenis</th>
+            <th class="text-center">Jumlah</th>
+        </tr>
+    </thead>
+    <tbody id="tableRiwayat">
+        @if (!empty($saldoData))
+            @php
+                $sortedGroupedSaldoData = collect($saldoData)->groupBy('tanggal'); // Mengelompokkan data berdasarkan tanggal
+                $groupedSaldoData = $sortedGroupedSaldoData;
+            @endphp
+            @foreach ($groupedSaldoData as $tanggal => $dataGroup)
+                @foreach ($dataGroup as $index => $data)
+                    <tr>
+                        <td class="text-center"">{{ $loop->parent->index + 1 }}</td>
+                        <td >{{ \Carbon\Carbon::parse($tanggal)->locale('id')->translatedFormat('d F Y') }}</td>
+                        @if ($data['saldo'] > 0)
+                        <td class="text-center">Masuk</td>
+                        @elseif ($data['saldo'] < 0)
+                        <td class="text-center">Keluar</td>
+                        @else
+                        <td class="text-center">Dividen</td>
+                        @endif
+                        <td>Rp. {{ number_format($data['saldo'], 0, ',', '.') }}</td>
+                    </tr>
+                @endforeach
+            @endforeach
+        @else
+            <tr>
+                <td class="text-center" colspan="5">Belum ada riwayat dana.</td>
+            </tr>
+        @endif
+    </tbody>
+</table>
+
 <!-- Modal Saldo -->
 <div class="modal modal-blur fade" id="modal-saldo" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-md modal-dialog-centered" role="document">
@@ -366,6 +405,8 @@
         </div>
     </div>
 </div>
+
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const spinner = document.getElementById('spinner');
@@ -464,26 +505,100 @@
             ];
             
             const tableBodyMutasi = document.getElementById('tableMutasi');
+            const tableBodyRiwayat = document.getElementById('tableRiwayat');
             const tableRowsMutasi = Array.from(tableBodyMutasi.querySelectorAll('tr'));
+            const tableRowsRiwayat = Array.from(tableBodyRiwayat.querySelectorAll('tr'));
 
             console.log(tableBodyMutasi);
             console.log(tableRowsMutasi);
+
+            console.log(tableBodyRiwayat);
+            console.log(tableRowsRiwayat);
+
             
             const pdfTableBody = [
-                [{ text: 'No', style: 'tableHeader' }, { text: 'Bulan', style: 'tableHeader' }, { text: 'Alur Dana', style: 'tableHeader' }, { text: 'Jumlah', style: 'tableHeader' }, { text: 'Harga Unit', style: 'tableHeader' }, { text: 'Jumlah Unit', style: 'tableHeader' },]
+                [{ text: 'No', style: 'tableHeader', alignment: 'center' }, 
+                { text: 'Bulan', style: 'tableHeader', alignment: 'center' }, 
+                { text: 'Alur Dana', style: 'tableHeader', alignment: 'center' }, 
+                { text: 'Jumlah', style: 'tableHeader', alignment: 'center' }, 
+                { text: 'Harga Unit', style: 'tableHeader', alignment: 'center' }, 
+                { text: 'Jumlah Unit', style: 'tableHeader', alignment: 'center' }]
+            ];
+
+            const pdfTableBodyRiwayat = [
+                [{ text: 'No', style: 'tableHeader', alignment: 'center' }, 
+                { text: 'Tanggal', style: 'tableHeader', alignment: 'center' }, 
+                { text: 'Jenis', style: 'tableHeader', alignment: 'center' }, 
+                { text: 'Jumlah', style: 'tableHeader', alignment: 'center' }]
             ];
             
-            tableRowsMutasi.forEach(row => {
-                const cells = row.querySelectorAll('td');
-                pdfTableBody.push([
-                    cells[0].textContent, 
-                    cells[1].textContent, 
-                    cells[2].textContent,  
-                    cells[3].textContent,  
-                    cells[4].textContent,  
-                    cells[5].textContent,  
-                ]);
-            });
+
+// Track the previous values to simulate rowspan
+let lastNo = null;
+let lastMonth = null;
+
+tableRowsMutasi.forEach(row => {
+    const cells = row.querySelectorAll('td');
+    let currentNo = cells[0].textContent;
+    let currentMonth = cells[1].textContent;
+
+    pdfTableBody.push([
+        lastNo === currentNo ? '' : { text: currentNo, alignment: 'center' },  // Merge "No"
+        lastMonth === currentMonth ? '' : { text: currentMonth, alignment: 'left' },  // Merge "Bulan"
+        { text: cells[2].textContent, alignment: 'center' },  // "Alur Dana" aligned left
+        { text: cells[3].textContent, alignment: 'right' },  // "Jumlah" aligned right
+        { text: cells[4].textContent, alignment: 'right' },  // "Harga Unit" aligned right
+        { text: cells[5].textContent, alignment: 'right' },  // "Jumlah Unit" aligned right
+    ]);
+
+    lastNo = currentNo;
+    lastMonth = currentMonth;
+});
+
+tableRowsRiwayat.forEach(row => {
+    const cells = row.querySelectorAll('td');
+    let currentNo = cells[0].textContent;
+    let currentMonth = cells[1].textContent;
+
+    console.log(cells[0].textContent, cells[1].textContent, cells[2].textContent, cells[3].textContent)
+
+    pdfTableBodyRiwayat.push([
+        lastNo === currentNo ? '' : { text: currentNo, alignment: 'center' },  // Merge "No"
+        lastMonth === currentMonth ? '' : { text: currentMonth, alignment: 'left' },  // Merge "Bulan"
+        { text: cells[2].textContent, alignment: 'center' },  // "Alur Dana" aligned left
+        { text: cells[3].textContent, alignment: 'right' },  // "Jumlah" aligned right
+    ]);
+
+    lastNo = currentNo;
+    lastMonth = currentMonth;
+});
+
+const mergedRows = [];
+const mergedCols = [];
+
+// Loop through `pdfTableBody` and identify merged rows & columns
+for (let rowIndex = 1; rowIndex < pdfTableBody.length; rowIndex++) {
+    // Check for merged rows based on duplicate values in the first column
+    if (pdfTableBody[rowIndex][0] === pdfTableBody[rowIndex - 1][0]) {
+        mergedRows.push(rowIndex);
+    }
+    // Check for merged columns based on duplicate values in the second column
+    if (pdfTableBody[rowIndex][1] === pdfTableBody[rowIndex - 1][1]) {
+        mergedCols.push(rowIndex);
+    }
+}
+
+for (let rowIndex = 1; rowIndex < pdfTableBodyRiwayat.length; rowIndex++) {
+    // Check for merged rows based on duplicate values in the first column
+    if (pdfTableBodyRiwayat[rowIndex][0] === pdfTableBodyRiwayat[rowIndex - 1][0]) {
+        mergedRows.push(rowIndex);
+    }
+    // Check for merged columns based on duplicate values in the second column
+    if (pdfTableBodyRiwayat[rowIndex][1] === pdfTableBodyRiwayat[rowIndex - 1][1]) {
+        mergedCols.push(rowIndex);
+    }
+}
+
             
             const docDefinition = {
                 content: [
@@ -514,10 +629,10 @@
                                         ul: [
                                             'Valuasi Awal',
                                             'Harga Unit Awal',
-                                            'Jml Unit Awal',
+                                            'Jml Unit Awal\n\n',
                                             'Valuasi Saat Ini',
                                             'Harga Unit Saat Ini',
-                                            'Jml Unit Saat Ini',
+                                            'Jml Unit Saat Ini\n',
                                         ]
                                     },
                                 ]
@@ -537,11 +652,23 @@
                             body: pdfTableBody 
                         },
                         alignment: 'center',
-                        layout: {
-				fillColor: function (rowIndex, node, columnIndex) {
-					return (rowIndex % 2 === 0) ? '#CEEFFD' : null;
-				}
-			}
+
+                    },
+
+                    {
+                        text: '\nRiwayat Dana\n\n',
+                        style: 'header',
+                        alignment: 'center'
+                    },
+                    {
+                        style: 'tableExample',
+                        table: {
+                            headerRows: 1,
+                            widths: [50, '*', '*', '*'], 
+                            body: pdfTableBodyRiwayat 
+                        },
+                        alignment: 'center',
+
                     },
                 ],
                 styles: {
@@ -559,7 +686,8 @@
                     tableHeader: {
                         bold: true,
                         fontSize: 12,
-                        color: 'black'
+                        color: 'black',
+                        fillColor: '#CEEFFD',
                     }
                 },
                 defaultStyle: {

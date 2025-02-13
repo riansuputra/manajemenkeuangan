@@ -313,6 +313,7 @@ class PortofolioController extends Controller
 
     public function historisStore(Request $request)
     {
+
         $input = array(
             'user_id' => $request->auth['user']['id'],
             'tahun' => $request->tahun, 
@@ -336,6 +337,8 @@ class PortofolioController extends Controller
 
     public function historis(Request $request)
     {
+        $date = now()->format('d/m/Y');
+
         $filterValue = session('filterValue');
         
         $responses = Http::pool(fn (Pool $pool) => [
@@ -395,6 +398,7 @@ class PortofolioController extends Controller
                 'selectedYear' => $selectedYear,
                 'groupedByMonth' => $groupedByMonth,
                 'historisByYear' => $historisByYear,
+                'date' => $date,
             ]);
         } else {
             abort(500, 'Failed to fetch data from API');
