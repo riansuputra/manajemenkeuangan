@@ -23,6 +23,8 @@ class DividenController extends Controller
 
     public function index(Request $request)
     {
+        $date = now()->format('d/m/Y');
+
         $responses = Http::pool(fn (Pool $pool) => [
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/dividen'),
         ]);
@@ -36,6 +38,7 @@ class DividenController extends Controller
                 'user' => $request->auth['user'],
                 'dividenData' => $dividenData,
                 'lastUpdate' => $lastUpdate,
+                'date' => $date,
             ]);
         } else {
             abort(500, 'Failed to fetch data from API');

@@ -361,7 +361,7 @@
                         alignment: 'center'
                     },
                     {
-                        text: 'Terakhir Diperbarui ' + Data + 'UTC+8\n',
+                        text: 'Terakhir Diperbarui ' + Data + ' UTC+8\n',
                     },
                     {
                         style: 'tableExample',
