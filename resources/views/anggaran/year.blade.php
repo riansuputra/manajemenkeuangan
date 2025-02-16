@@ -124,6 +124,7 @@
                                             </div>
                                             <form action="{{ route('updateAnggaran', ['id'=> $data['id']]) }}" method="post" autocomplete="off">
                                                 @csrf
+                                                <div class="modal-status bg-warning"></div>
                                                 <div class="modal-body">
                                                     <div class="row mb-2">
                                                         <div class="col-lg-4">
@@ -201,7 +202,7 @@
                                             <div class="modal-body text-center py-4">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.24 3.957l-8.422 14.06a1.989 1.989 0 0 0 1.7 2.983h16.845a1.989 1.989 0 0 0 1.7 -2.983l-8.423 -14.06a1.989 1.989 0 0 0 -3.4 0z" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
                                                 <h3>Konfirmasi Penghapusan</h3>
-                                                <div class="text-muted">Apakah anda yakin ingin menghapus anggaran ini?</div>
+                                                <div class="">Apakah anda yakin ingin menghapus anggaran ini?</div>
                                             </div>
                                             <div class="modal-footer">
                                                 <div class="w-100">
@@ -259,6 +260,7 @@
             </div>
             <form action="{{ route('anggaranstore') }}" method="post" autocomplete="off">
                 @csrf
+                <div class="modal-status bg-success"></div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-4">
@@ -357,8 +359,6 @@
                 const jumlah = this.getAttribute('data-jumlah');
                 const overspend = this.getAttribute('data-overspend');
 
-                console.log(nama);
-                
                 document.getElementById('id_' + id).value = id;
                 document.getElementById('id_kategori_pengeluaran_edit_' + id).value = id_kategori_pengeluaran;
                 document.getElementById('jumlah1_edit_' + id).value = anggaran;

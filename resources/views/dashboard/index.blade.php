@@ -1,14 +1,11 @@
 @extends('layouts.user')
 
-@section('title', 'Dashboard')
+@section('title', __('messages.dashboard'))
 
 @section('page-title')
 <div class="col-auto me-auto d-print-none">
     <h2 class="page-title">
-        {{ __('messages.welcome') }}
-        {{ session('locale', config('app.locale')) }}
-        <p>Locale saat ini: {{ session('locale') }}</p>
-
+        {{ __('messages.dashboard') }}
     </h2>
 </div>
 <div class="col-auto d-print-none" >
@@ -57,21 +54,19 @@
                         	<div class="row align-items-center">
                           		<div class="col-auto">
                             		<span class="bg-primary text-white avatar">
-										<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M5 3m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z"></path><path d="M9 7l6 0"></path><path d="M9 11l6 0"></path><path d="M9 15l4 0"></path></svg>
+                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-moneybag"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9.5 3h5a1.5 1.5 0 0 1 1.5 1.5a3.5 3.5 0 0 1 -3.5 3.5h-1a3.5 3.5 0 0 1 -3.5 -3.5a1.5 1.5 0 0 1 1.5 -1.5z" /><path d="M4 17v-1a8 8 0 1 1 16 0v1a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z" /></svg>
                             		</span>
                           		</div>
                           		<div class="col">
 								  	<div class="d-flex align-items-center">
-										<div class="text-muted">Total Saldo</div>
+										<div class="">Total Saldo</div>
 										<div class="ms-auto lh-1">
 											<div class="dropdown">
-												<a class="text-muted">
-													{{$summary['catTotal']}} Catatan
-												</a>
+                                                {{$summary['catTotal']}} Catatan
 											</div>
 										</div>
 									</div>
-                            		<div class="h2 m-0 text-muted">
+                            		<div class="h2 m-0">
 										Rp. {{ number_format(floatval($summary['saldo']), 0, ',', '.')}}
                             		</div>
                           		</div>
@@ -85,18 +80,15 @@
                         	<div class="row align-items-center">
                           		<div class="col-auto">
                             		<span class="bg-green text-white avatar">
-									<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M14.8 9a2 2 0 0 0 -1.8 -1h-2a2 2 0 1 0 0 4h2a2 2 0 1 1 0 4h-2a2 2 0 0 1 -1.8 -1"></path><path d="M12 7v10"></path></svg>
-                            			
+									    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M14.8 9a2 2 0 0 0 -1.8 -1h-2a2 2 0 1 0 0 4h2a2 2 0 1 1 0 4h-2a2 2 0 0 1 -1.8 -1"></path><path d="M12 7v10"></path></svg>
                             		</span>
                           		</div>
                           		<div class="col">
 								  	<div class="d-flex align-items-center">
-										<div class="text-muted">Total Pemasukan</div>
+										<div class="">Total Pemasukan</div>
 										<div class="ms-auto lh-1">
 											<div class="dropdown">
-												<a class="text-muted">
-													{{$summary['catPemasukan']}} Catatan
-												</a>
+                                                {{$summary['catPemasukan']}} Catatan
 											</div>
 										</div>
 									</div>
@@ -116,14 +108,13 @@
                             		<span class="bg-red text-white avatar">
                             			<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart-dollar"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 19a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M13 17h-7v-14h-2" /><path d="M6 5l14 1l-.575 4.022m-4.925 2.978h-8.5" /><path d="M21 15h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" /><path d="M19 21v1m0 -8v1" /></svg>
                             		</span>
-									
                           		</div>
                           		<div class="col">
 								  	<div class="d-flex align-items-center">
-										<div class="text-muted">Total Pengeluaran</div>
+										<div class="">Total Pengeluaran</div>
 										<div class="ms-auto lh-1">
 											<div class="dropdown">
-												<a class="text-muted">{{$summary['catPengeluaran']}} Catatan</a>
+												{{$summary['catPengeluaran']}} Catatan
 											</div>
 										</div>
 									</div>
@@ -140,7 +131,7 @@
 		<div class="col-lg-4">
 			<div class="card">
 					<div class="card-body">
-					<h3 class="card-title text-muted">All Record</h3>
+					<h3 class="card-title ">All Record</h3>
 					<div id="chart-demo-pie#3" class="chart-lg mb-2" style="height: 130px;"></div>
 				</div>
 			</div>
@@ -148,7 +139,7 @@
 		<div class="col-lg-4">
 			<div class="card">
 					<div class="card-body">
-					<h3 class="card-title text-muted">Pemasukan</h3>
+					<h3 class="card-title ">Pemasukan</h3>
 					<div id="chart-demo-pie" class="chart-lg mb-2" style="height: 130px;"></div>
 				</div>
 			</div>
@@ -156,16 +147,15 @@
 		<div class="col-lg-4">
 			<div class="card">
 					<div class="card-body">
-					<h3 class="card-title text-muted">Pengeluaran</h3>
+					<h3 class="card-title ">Pengeluaran</h3>
 					<div id="chart-demo-pie#2" class="chart-lg mb-2" style="height: 130px;"></div>
 				</div>
 			</div>
 		</div>
-		
 		<div class="col-lg-6">
 			<div class="card">
 					<div class="card-body">
-					<h3 class="card-title text-muted mb-5">Tren Saldo</h3>
+					<h3 class="card-title  mb-5">Tren Saldo</h3>
 					<div id="chart-completion-tasks-3" class="chart-lg" style="min-height: 240px;"></div>
 				</div>
 			</div>
@@ -173,70 +163,69 @@
 		<div class="col-lg-6">
 			<div class="card">
 				<div class="card-body" style="flex:0;">
-
-					<h3 class="card-title text-muted">Catatan Terakhir</h3>
+					<h3 class="card-title ">Catatan Terakhir</h3>
 				</div>
 				<div class="card-table table-responsive">
                     <table class="table table-vcenter">
                       	<tbody>
 							@foreach ($sortedData->take(4) as $catatan)
-							@if (isset($catatan['kategori_pemasukan_id']))
-							<tr style="height:70px">
-								<td class="w-1">
-									<span class="bg-green text-white avatar">
-										<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M14.8 9a2 2 0 0 0 -1.8 -1h-2a2 2 0 1 0 0 4h2a2 2 0 1 1 0 4h-2a2 2 0 0 1 -1.8 -1"></path><path d="M12 7v10"></path></svg>
-									</span>
-								</td>
-								<td class="td-truncate">
-									<div class="text-truncate text-green">
-										{{$catatan['kategori_pemasukan']['nama_kategori_pemasukan']}}
-									</div>
-									<div class="text-truncate text-muted">
-									@if (isset($catatan['catatan']))
-										{{$catatan['catatan']}}
-									@else
-										(Tanpa catatan)
-									@endif
-									</div>
-								</td>
-								<td class="text-nowrap text-muted">
-									<div class="text-end text-green">
-										+Rp. {{ number_format(floatval($catatan['jumlah']), 0, ',', '.')}}
-									</div>
-									<div class="text-end text-muted">
-										{{ date('d/m/Y', strtotime($catatan['tanggal'])) }}
-									</div>
-								</td>
-							</tr>
-							@elseif (isset($catatan['kategori_pengeluaran_id']))
-							<tr style="height:70px">
-								<td class="w-1">
-									<span class="bg-red text-white avatar">
-										<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart-dollar"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 19a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M13 17h-7v-14h-2" /><path d="M6 5l14 1l-.575 4.022m-4.925 2.978h-8.5" /><path d="M21 15h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" /><path d="M19 21v1m0 -8v1" /></svg>
-									</span>
-								</td>
-								<td class="td-truncate">
-									<div class="text-truncate text-red">
-										{{$catatan['kategori_pengeluaran']['nama_kategori_pengeluaran']}}
-									</div>
-									<div class="text-truncate text-muted">
-									@if (isset($catatan['catatan']))
-										{{$catatan['catatan']}}
-									@else
-                                        (Tanpa catatan)
-									@endif
-									</div>
-								</td>
-								<td class="text-nowrap text-muted">
-									<div class="text-end text-red">
-										-Rp. {{ number_format(floatval($catatan['jumlah']), 0, ',', '.')}}
-									</div>
-									<div class="text-end text-muted">
-										{{ date('d/m/Y', strtotime($catatan['tanggal'])) }}
-									</div>
-								</td>
-							</tr>
-							@endif
+							    @if (isset($catatan['kategori_pemasukan_id']))
+                                    <tr style="height:70px">
+                                        <td class="w-1">
+                                            <span class="bg-green text-white avatar">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M14.8 9a2 2 0 0 0 -1.8 -1h-2a2 2 0 1 0 0 4h2a2 2 0 1 1 0 4h-2a2 2 0 0 1 -1.8 -1"></path><path d="M12 7v10"></path></svg>
+                                            </span>
+                                        </td>
+                                        <td class="td-truncate">
+                                            <div class="text-truncate text-green">
+                                                {{$catatan['kategori_pemasukan']['nama_kategori_pemasukan']}}
+                                            </div>
+                                            <div class="text-truncate ">
+                                            @if (isset($catatan['catatan']))
+                                                {{$catatan['catatan']}}
+                                            @else
+                                                (Tanpa catatan)
+                                            @endif
+                                            </div>
+                                        </td>
+                                        <td class="text-nowrap ">
+                                            <div class="text-end text-green">
+                                                +Rp. {{ number_format(floatval($catatan['jumlah']), 0, ',', '.')}}
+                                            </div>
+                                            <div class="text-end ">
+                                                {{ date('d/m/Y', strtotime($catatan['tanggal'])) }}
+                                            </div>
+                                        </td>
+                                    </tr>
+							    @elseif (isset($catatan['kategori_pengeluaran_id']))
+                                    <tr style="height:70px">
+                                        <td class="w-1">
+                                            <span class="bg-red text-white avatar">
+                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart-dollar"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 19a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M13 17h-7v-14h-2" /><path d="M6 5l14 1l-.575 4.022m-4.925 2.978h-8.5" /><path d="M21 15h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" /><path d="M19 21v1m0 -8v1" /></svg>
+                                            </span>
+                                        </td>
+                                        <td class="td-truncate">
+                                            <div class="text-truncate text-red">
+                                                {{$catatan['kategori_pengeluaran']['nama_kategori_pengeluaran']}}
+                                            </div>
+                                            <div class="text-truncate ">
+                                            @if (isset($catatan['catatan']))
+                                                {{$catatan['catatan']}}
+                                            @else
+                                                (Tanpa catatan)
+                                            @endif
+                                            </div>
+                                        </td>
+                                        <td class="text-nowrap ">
+                                            <div class="text-end text-red">
+                                                -Rp. {{ number_format(floatval($catatan['jumlah']), 0, ',', '.')}}
+                                            </div>
+                                            <div class="text-end ">
+                                                {{ date('d/m/Y', strtotime($catatan['tanggal'])) }}
+                                            </div>
+                                        </td>
+                                    </tr>
+							    @endif
                         	@endforeach
 						</tbody>
                     </table>
@@ -246,6 +235,7 @@
 	</div>
 </div>
 
+{{-- Script untuk loader dan filter --}}
 <script>
 	document.addEventListener("DOMContentLoaded", function() {
     	const jenisSelect = document.getElementById("jenisFilter");
@@ -280,7 +270,6 @@
                 pilihanDiv.appendChild(inputWeek);
                 if (filterValue) {
                     inputWeek.value = filterValue;
-                    
                 }
                 pilihanDiv.hidden = false;
                 inputStartDate.hidden = true;
@@ -295,7 +284,6 @@
                 pilihanDiv.appendChild(inputMonth);
                 if (filterValue) {
                     inputMonth.value = filterValue;
-                    
                 }
                 pilihanDiv.hidden = false;
                 inputStartDate.hidden = true;
@@ -314,7 +302,6 @@
                 pilihanDiv.appendChild(inputYear);
                 if (filterValue) {
                     inputYear.value = filterValue;
-                    
                 } else {
                     inputYear.value = "2024";
                 }
@@ -352,7 +339,6 @@
 
                     if (option.value === filterValue) {
                         option.selected = true;
-                        
                     }
                     selectKisaran.add(option);
                 });
@@ -384,6 +370,7 @@
     });
 </script>
 
+{{-- Script untuk chart all record --}}
 <script>
     // @formatter:off
     document.addEventListener("DOMContentLoaded", function () {
@@ -404,7 +391,7 @@
                         enabled: false
                     },
                 },
-                series: [], // Kosongkan data
+                series: [], 
                 noData: {
                     text: "Tidak ada data.",
                     align: 'center',
@@ -418,7 +405,7 @@
             })).render();
 
         } else {
-            // Jika ada data, buat chart seperti biasa
+            
             window.ApexCharts && (new ApexCharts(document.getElementById('chart-completion-tasks-3'), {
                 chart: {
                     type: "line",
@@ -502,11 +489,7 @@
     // @formatter:on
 </script>
 
-<script>
-    console.log("Pemasukan Data:", @json($groupedPemasukanData));
-    console.log("Pengeluaran Data:", @json($groupedPengeluaranData));
-</script>
-
+{{-- Script untuk chart pemasukan --}}
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const pemasukanData = @json($groupedPemasukanData);
@@ -529,8 +512,6 @@
             });
             
             const labelsData = Object.values(pemasukanData).map(stat => stat['kategori']);
-            console.log("Pemasukan Series Data:", seriesData);
-            console.log("Pemasukan Labels Data:", labelsData);
             window.ApexCharts && (new ApexCharts(document.getElementById('chart-demo-pie'), {
                 chart: {
                     type: "donut",
@@ -574,7 +555,6 @@
                 },
             })).render();
         } else {
-            console.error("Pemasukan data is not an object:", pemasukanData);
 
             window.ApexCharts && (new ApexCharts(document.getElementById('chart-demo-pie'), {
                 chart: {
@@ -588,8 +568,8 @@
                         enabled: true
                     },
                 },
-                series: [], // Empty series
-                labels: [], // No labels
+                series: [], 
+                labels: [], 
                 noData: {
                     text: "Tidak ada data.",
                     align: 'center',
@@ -605,6 +585,7 @@
     });
 </script>
 
+{{-- Script untuk chart pengeluaran --}}
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const pengeluaranData = @json($groupedPengeluaranData);
@@ -630,10 +611,6 @@
             });
             
             const labelsData = Object.values(pengeluaranData).map(stat => stat['kategori']);
-            
-            console.log("Pemasukan Series Data:", seriesData);
-            console.log("Pemasukan Labels Data:", labelsData);
-
             window.ApexCharts && (new ApexCharts(document.getElementById('chart-demo-pie#2'), {
                 chart: {
                     type: "donut",
@@ -677,8 +654,6 @@
                 },
             })).render();
         } else {
-            console.error("Pemasukan data is not an object:", pengeluaranData);
-
             window.ApexCharts && (new ApexCharts(document.getElementById('chart-demo-pie#2'), {
                 chart: {
                     type: "donut",
@@ -691,8 +666,8 @@
                         enabled: true
                     },
                 },
-                series: [], // Empty series
-                labels: [], // No labels
+                series: [], 
+                labels: [], 
                 noData: {
                     text: "Tidak ada data.",
                     align: 'center',
@@ -708,6 +683,7 @@
     });
 </script>
 
+{{-- Script untuk chart tren saldo --}}
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const semuaData = @json($groupedSemuaData);
@@ -729,9 +705,6 @@
             });
             
             const labelsData = Object.values(semuaData).map(stat => stat['jenis']);
-            console.log("Pemasukan Series Data:", seriesData);
-            console.log("Pemasukan Labels Data:", labelsData);
-
             window.ApexCharts && (new ApexCharts(document.getElementById('chart-demo-pie#3'), {
                 chart: {
                     type: "donut",
@@ -775,8 +748,6 @@
                 },
             })).render();
         } else {
-            console.error("Pemasukan data is not an object:", semuaData);
-
             window.ApexCharts && (new ApexCharts(document.getElementById('chart-demo-pie#3'), {
                 chart: {
                     type: "donut",
@@ -789,8 +760,8 @@
                         enabled: true
                     },
                 },
-                series: [], // Empty series
-                labels: [], // No labels
+                series: [], 
+                labels: [], 
                 noData: {
                     text: "Tidak ada data.",
                     align: 'center',

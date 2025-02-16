@@ -5,10 +5,10 @@
 @section('page-title')
 <div class="col">
 	<h2 class="page-title">
-			Berita
+		Berita
 	</h2>
 </div>
-<div class="text-muted mt-1">Terakhir diperbarui pada <span class="text-black">{{\Carbon\Carbon::parse($update)->locale('id')->translatedFormat('l, d F Y H:i')}}</span> UTC+8</div>
+<div class="text-muted mt-1">Terakhir diperbarui pada {{\Carbon\Carbon::parse($update)->locale('id')->translatedFormat('l, d F Y H:i')}} UTC+8</div>
 @endsection
 
 @section('content')
@@ -24,9 +24,9 @@
 						</div>
 						<div class="col">
 							<div class="card-body">
-								<p class="text-primary">{{$berita['nama_penerbit']}} <span class="text-black">/</span> <span class="text-muted">{{ \Carbon\Carbon::parse($berita['tanggal_terbit'])->locale('id')->translatedFormat('l, d F Y H:i') }}</span></p>
+								<p class="text-primary">{{$berita['nama_penerbit']}}  <span class="text-muted">/ {{ \Carbon\Carbon::parse($berita['tanggal_terbit'])->locale('id')->translatedFormat('l, d F Y H:i') }}</span></p>
 								<h3 class="card-title text-truncate">{{$berita['judul']}}</h3>
-								<p class="text-muted text-truncate" style="max-width:;">{{$berita['deskripsi']}}</p>
+								<p class=" text-truncate" style="max-width:;">{{$berita['deskripsi']}}</p>
 							</div>
 						</div>
 					</div>
@@ -36,7 +36,7 @@
 		@endforeach
 	</div>
 </div>
-<!-- End of Modal Detail -->
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
 <script>
@@ -46,9 +46,9 @@
 		const pageTitle = document.getElementById("page-title");
 
 		window.addEventListener("load", function() {
-				spinner.style.display = "none";
-				pageContent.style.display = "block";
-				pageTitle.style.display = "block";
+			spinner.style.display = "none";
+			pageContent.style.display = "block";
+			pageTitle.style.display = "block";
 		});
 	});
 </script>

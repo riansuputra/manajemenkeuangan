@@ -163,7 +163,7 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const pemasukanData = @json($groupedDataPemasukan);
-        console.log(Array.isArray(pemasukanData));
+        
         if (Array.isArray(pemasukanData) && pemasukanData.length > 0) {
             const seriesData = pemasukanData.map((stat, index) => {
                 const value = parseFloat(stat['total_jumlah']);
@@ -183,8 +183,8 @@
             });
             
             const labelsData = pemasukanData.map(stat => stat['kategori']);
-            console.log("Pemasukan Series Data:", seriesData);
-            console.log("Pemasukan Labels Data:", labelsData);
+            
+            
             window.ApexCharts && (new ApexCharts(document.getElementById('chart-demo-pie'), {
                 chart: {
                     type: "donut",
@@ -242,8 +242,8 @@
                         enabled: true
                     },
                 },
-                series: [], // Empty series
-                labels: [], // No labels
+                series: [], 
+                labels: [], 
                 noData: {
                     text: "Tidak ada data.",
                     align: 'center',
@@ -262,7 +262,7 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const pengeluaranData = @json($groupedDataPengeluaran);
-        console.log(Array.isArray(pengeluaranData));
+        
         if (Array.isArray(pengeluaranData) && pengeluaranData.length > 0) {
             const seriesData = pengeluaranData.map((stat, index) => {
                 const value = parseFloat(stat['total_jumlah']);
@@ -285,8 +285,8 @@
             
             const labelsData = pengeluaranData.map(stat => stat['kategori']);
             
-            console.log("Pengeluaran Series Data:", seriesData);
-            console.log("Pengeluaran Labels Data:", labelsData);
+            
+            
 
             window.ApexCharts && (new ApexCharts(document.getElementById('chart-demo-pie#2'), {
                 chart: {
@@ -345,8 +345,8 @@
                         enabled: true
                     },
                 },
-                series: [], // Empty series
-                labels: [], // No labels
+                series: [], 
+                labels: [], 
                 noData: {
                     text: "Tidak ada data.",
                     align: 'center',
@@ -365,7 +365,7 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const semuaData = @json($groupedData);
-        console.log(Array.isArray(semuaData));
+        
         if (Array.isArray(semuaData) && semuaData.length > 0) {
             const seriesData = Object.values(semuaData).map((stat, index) => {
                 const value = parseFloat(stat['total_jumlah']);
@@ -384,8 +384,8 @@
             });
             
             const labelsData = semuaData.map(stat => stat['jenis']);
-            console.log("Pemasukan Series Data:", seriesData);
-            console.log("Pemasukan Labels Data:", labelsData);
+            
+            
 
             window.ApexCharts && (new ApexCharts(document.getElementById('chart-demo-pie#3'), {
                 chart: {
@@ -444,8 +444,8 @@
                         enabled: true
                     },
                 },
-                series: [], // Empty series
-                labels: [], // No labels
+                series: [], 
+                labels: [], 
                 noData: {
                     text: "Tidak ada data.",
                     align: 'center',

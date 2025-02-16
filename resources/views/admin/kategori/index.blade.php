@@ -62,17 +62,17 @@
 								</td>
 								<td>
 									<div class="font-weight-medium">{{\Illuminate\Support\Str::limit($data['user']['name'], 50, '...')}}</div>
-									<div class="text-muted"><a href="#" class="text-reset">{{$data['user_id']}} - {{\Illuminate\Support\Str::limit($data['user']['email'], 50, '...')}}</a></div>
+									<div class="text-muted"><a href="" class="text-reset">{{$data['user_id']}} - {{\Illuminate\Support\Str::limit($data['user']['email'], 50, '...')}}</a></div>
 								</td>
 								@if(isset($data['admin_id']))
 									<td>
 										<div class="font-weight-medium">{{\Illuminate\Support\Str::limit($data['admin']['name'], 50, '...')}}</div>
-										<div class="text-muted"><a href="#" class="text-reset">{{$data['admin_id']}} - {{\Illuminate\Support\Str::limit($data['admin']['email'], 50, '...')}}</a></div>
+										<div class="text-muted"><a href="" class="text-reset">{{$data['admin_id']}} - {{\Illuminate\Support\Str::limit($data['admin']['email'], 50, '...')}}</a></div>
 									</td>
 								@else
 									<td class="">
 										<div class="font-weight-medium">-</div>
-										<div class="text-muted"><a href="#" class="text-reset">-</a></div>
+										<div class="text-muted"><a href="" class="text-reset">-</a></div>
 									</td>
 								@endif
 								<td class="text-muted">
@@ -97,17 +97,17 @@
 											<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg>
 										</a>
 										@elseif($data['status'] == 'rejected')
-											<button href="#" class="btn btn-outline-success btn-icon" disabled>
+											<button href="" class="btn btn-outline-success btn-icon" disabled>
 												<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg>
 											</button>
-											<button href="#" class="btn btn-danger btn-icon" disabled>
+											<button href="" class="btn btn-danger btn-icon" disabled>
 												<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg>
 											</button>
 										@elseif($data['status'] == 'approved')
-											<button href="#" class="btn btn-success btn-icon" disabled>
+											<button href="" class="btn btn-success btn-icon" disabled>
 												<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg>
 											</button>
-											<button href="#" class="btn btn-outline-danger btn-icon" disabled>
+											<button href="" class="btn btn-outline-danger btn-icon" disabled>
 												<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg>
 											</button>
 										@endif
@@ -308,35 +308,35 @@
 <script>
 	document.addEventListener('DOMContentLoaded', function () {
 		function searchTable(tableId, inputId) {
-			let input = document.getElementById(inputId).value.toLowerCase();  // Get the input value
-			let rows = document.querySelectorAll(`#${tableId} tbody tr`);  // Get all rows from the table
-			let noDataRow = document.querySelector(`#${tableId} .no-data-row`);  // Get the "no data" row
+			let input = document.getElementById(inputId).value.toLowerCase();  
+			let rows = document.querySelectorAll(`#${tableId} tbody tr`);  
+			let noDataRow = document.querySelector(`#${tableId} .no-data-row`);  
 			let hasVisibleRow = false;
 
 			rows.forEach((row) => {
-				let text = row.innerText.toLowerCase();  // Get text content of the row
-				let isVisible = text.includes(input);  // Check if the row should be visible
+				let text = row.innerText.toLowerCase();  
+				let isVisible = text.includes(input);  
 
-				row.style.display = isVisible ? "" : "none";  // Show or hide the row based on the search
+				row.style.display = isVisible ? "" : "none";  
 
 				if (isVisible) {
-					hasVisibleRow = true;  // If a visible row is found, set hasVisibleRow to true
+					hasVisibleRow = true;  
 				}
 			});
 
-			// If no visible rows are found, show the "no data found" row, otherwise hide it
+			
 			if (noDataRow) {
 				if (!hasVisibleRow && input.trim() !== "") {
-					// If there are no matching rows and search input is not empty
+					
 					noDataRow.style.display = "";
 				} else {
-					// Otherwise hide the "no data found" row
+					
 					noDataRow.style.display = "none";
 				}
 			}
 		}
 
-		// Event listeners for each search input
+		
 		document.getElementById("searchInput1").addEventListener("input", function() {
 			searchTable("dataTable1", "searchInput1");
 		});

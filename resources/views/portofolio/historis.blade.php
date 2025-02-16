@@ -285,7 +285,6 @@
 
 <script>
     document.getElementById('printModalToPdf').addEventListener('click', function () {
-            console.log("Button clicked");
 
             const userName = @json($user['name']);
             const userEmail = @json($user['email']);
@@ -400,10 +399,9 @@
     pageOrientation: 'landscape'  // Optional: Set page orientation to landscape for more space
 };
 
-const pdfFilename = "my_generated_report.pdf";
 
 // Create and open the PDF
-pdfMake.createPdf(docDefinition).open(pdfFilename);
+pdfMake.createPdf(docDefinition).open();
 
 
         });

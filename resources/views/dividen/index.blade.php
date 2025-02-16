@@ -7,7 +7,7 @@
 	<h2 class="page-title">
         Dividen
     </h2>
-    <div class="text-muted mt-1">Terakhir diperbarui pada <span class="text-black" id="update">{{\Carbon\Carbon::parse($lastUpdate)->locale('id')->translatedFormat('l, d F Y H:i')}}</span> UTC+8</div>
+    <div class="text-muted mt-1">Terakhir diperbarui pada <span class="" id="update">{{\Carbon\Carbon::parse($lastUpdate)->locale('id')->translatedFormat('l, d F Y H:i')}}</span> UTC+8</div>
 </div>
 <div class="col-auto ms-auto d-print-none">
 	<div class="btn-list">
@@ -129,35 +129,35 @@
 <script>
 	document.addEventListener('DOMContentLoaded', function () {
 		function searchTable(tableId, inputId) {
-			let input = document.getElementById(inputId).value.toLowerCase();  // Get the input value
-			let rows = document.querySelectorAll(`#${tableId} tbody tr`);  // Get all rows from the table
-			let noDataRow = document.querySelector(`#${tableId} .no-data-row`);  // Get the "no data" row
+			let input = document.getElementById(inputId).value.toLowerCase();  
+			let rows = document.querySelectorAll(`#${tableId} tbody tr`);  
+			let noDataRow = document.querySelector(`#${tableId} .no-data-row`);  
 			let hasVisibleRow = false;
 
 			rows.forEach((row) => {
-				let text = row.innerText.toLowerCase();  // Get text content of the row
-				let isVisible = text.includes(input);  // Check if the row should be visible
+				let text = row.innerText.toLowerCase();  
+				let isVisible = text.includes(input);  
 
-				row.style.display = isVisible ? "" : "none";  // Show or hide the row based on the search
+				row.style.display = isVisible ? "" : "none";  
 
 				if (isVisible) {
-					hasVisibleRow = true;  // If a visible row is found, set hasVisibleRow to true
+					hasVisibleRow = true;  
 				}
 			});
 
-			// If no visible rows are found, show the "no data found" row, otherwise hide it
+			
 			if (noDataRow) {
 				if (!hasVisibleRow && input.trim() !== "") {
-					// If there are no matching rows and search input is not empty
+					
 					noDataRow.style.display = "";
 				} else {
-					// Otherwise hide the "no data found" row
+					
 					noDataRow.style.display = "none";
 				}
 			}
 		}
 
-		// Event listeners for each search input
+		
 		document.getElementById("searchInput1").addEventListener("input", function() {
 			searchTable("dataTable1", "searchInput1");
 		});
@@ -165,7 +165,6 @@
 </script>
 <script>
     document.getElementById('printModalToPdf').addEventListener('click', function () {
-            console.log("Button clicked");
 
             const userName = @json($user['name']);
             const userEmail = @json($user['email']);
@@ -220,7 +219,7 @@
                         ]
                     },
                     {
-                        text: '\nKurs\n\n',
+                        text: '\Dividen\n\n',
                         style: 'header',
                         alignment: 'center'
                     },
@@ -263,7 +262,7 @@
                 defaultStyle: {
                     columnGap: 20
                 },
-                pageOrientation: 'landscape'  // Optional: Set page orientation to landscape for more space
+                pageOrientation: 'landscape'  
             };
             pdfMake.createPdf(docDefinition).open();
         });

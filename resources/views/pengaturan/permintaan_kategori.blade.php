@@ -48,8 +48,9 @@
 						<div class="col-lg-3">
 							<div class="mb-3">
 								<label class="form-label">&nbsp</label>
-								<button type="submit" class="btn btn-primary w-100">
-									Submit
+								<button type="submit" class="btn btn-success w-100">
+									<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+									Simpan
 								</button>
 							</div>
 						</div>
@@ -82,7 +83,7 @@
 								<td class=" fw-bold @if(($kategori['tipe_kategori']) == 'pengeluaran') text-danger @else text-success @endif" style="width:1%">{{ucwords($kategori['tipe_kategori'])}}</td>
 								<td class="" style="width:5%">{{$kategori['nama_kategori']}}</td>
 								<td class=" fw-bold" style="width:1%">{{ucwords($kategori['scope'])}}</td>
-								<td class="text-muted " style="width:1%">
+								<td class=" " style="width:1%">
 									<span class="badge  @if(($kategori['status']) == 'pending') bg-warning @elseif(($kategori['status']) == 'approved') bg-success @elseif(($kategori['status']) == 'rejected') bg-danger @endif me-2"></span>{{ucwords($kategori['status'])}}
 								</td>
 								<td class="@if (empty($kategori['message'])) text-center @else text @endif" style="width:5%">{{$kategori['message'] ?? '-'}}</td>
@@ -108,7 +109,6 @@
 	const pageContent = document.getElementById("page-content");
 	const pageTitle = document.getElementById("page-title");
 
-	// Hide spinner and show page content when fully loaded
 	window.addEventListener("load", function() {
 		spinner.style.display = "none";
 		pageContent.style.display = "block";

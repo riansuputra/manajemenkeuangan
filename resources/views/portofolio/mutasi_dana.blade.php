@@ -482,7 +482,6 @@
 		});
 
         document.getElementById('printModalToPdf').addEventListener('click', function () {
-            console.log("Button clicked");
 
             const userName = @json($user['name']);
             const userEmail = @json($user['email']);
@@ -494,7 +493,6 @@
             const valuasiSaatIni = document.getElementById('valuasi_saatini').textContent.trim();
             const unitSaatIni = document.getElementById('unit_saatini').textContent.trim();
             const jumlahSaatIni = document.getElementById('jumlah_saatini').textContent.trim();
-            // console.log(valuasiAwal, unitAwal, jumlahAwal, valuasiSaatIni, unitSaatIni, jumlahSaatIni);
             const summaryData = [
                 ': ' + valuasiAwal,
                 ': ' + unitAwal,
@@ -509,11 +507,6 @@
             const tableRowsMutasi = Array.from(tableBodyMutasi.querySelectorAll('tr'));
             const tableRowsRiwayat = Array.from(tableBodyRiwayat.querySelectorAll('tr'));
 
-            console.log(tableBodyMutasi);
-            console.log(tableRowsMutasi);
-
-            console.log(tableBodyRiwayat);
-            console.log(tableRowsRiwayat);
 
             
             const pdfTableBody = [
@@ -560,7 +553,6 @@ tableRowsRiwayat.forEach(row => {
     let currentNo = cells[0].textContent;
     let currentMonth = cells[1].textContent;
 
-    console.log(cells[0].textContent, cells[1].textContent, cells[2].textContent, cells[3].textContent)
 
     pdfTableBodyRiwayat.push([
         lastNo === currentNo ? '' : { text: currentNo, alignment: 'center' },  // Merge "No"

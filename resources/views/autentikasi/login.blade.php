@@ -50,7 +50,7 @@
 			</form>
 		</div>
 	</div>
-	<div class="text-center text-muted mt-3">
+	<div class="text-center mt-3">
 		Anda belum memiliki akun? 
 		<a href="{{ url('register') }}" tabindex="-1">Daftar</a>
 	</div>

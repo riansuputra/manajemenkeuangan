@@ -12,7 +12,7 @@
 	<div class="btn-list">
 		<a href="" class="btn btn-success d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-catatan">
         	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-          	Tambah Catatan
+          	    Tambah Catatan
       	</a>
 		<a href="" class="btn btn-success d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-catatan" aria-label="Create new report">
 			<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
@@ -25,7 +25,7 @@
 <div class="container-xl">
     <div class="row">
         <div class="col-12 col-md-6 col-lg">
-            <h3 class="mb-0 text-muted">Belum Dikerjakan</h3>
+            <h3 class="mb-0 ">Belum Dikerjakan</h3>
             <hr class="mt-2 mb-3">
             <div class="mb-4">
                 <div class="row row-cards">
@@ -47,12 +47,12 @@
                                 <div>{!! $catatan['catatan'] !!}</div>
                                 <div class="mt-4">
                                     <div class="row">
-                                        <div class="col text-muted">
+                                        <div class="col ">
                                             <h5>
                                                 {{\Carbon\Carbon::parse($catatan['updated_at'])->locale('id')->translatedFormat('d/m/Y H:i')}}
                                             </h5>
                                         </div>
-                                        <div class="col-auto text-muted">
+                                        <div class="col-auto ">
                                             <a class="nav-link"  data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
                                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
                                                 <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-dots"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
@@ -81,7 +81,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Modal hapus catatan -->
+                        {{-- Modal hapus catatan --}}
                         <div class="modal modal-blur fade" id="modal-delete{{$catatan['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
                                 <div class="modal-content">
@@ -90,7 +90,7 @@
                                     <div class="modal-body text-center py-4">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.24 3.957l-8.422 14.06a1.989 1.989 0 0 0 1.7 2.983h16.845a1.989 1.989 0 0 0 1.7 -2.983l-8.423 -14.06a1.989 1.989 0 0 0 -3.4 0z" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
                                         <h3>Konfirmasi Penghapusan</h3>
-                                        <div class="text-muted">Apakah anda yakin ingin menghapus catatan ini?</div>
+                                        <div class="">Apakah anda yakin ingin menghapus catatan ini?</div>
                                     </div>
                                     <div class="modal-footer">
                                         <div class="w-100">
@@ -114,8 +114,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- End of modal hapus catatan -->
-                        <!-- Modal edit catatan -->
+                        {{-- Modal edit catatan --}}
                         <div class="modal modal-blur fade" id="modal-edit{{$catatan['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                                 <div class="modal-content">
@@ -123,6 +122,7 @@
                                         <h5 class="modal-title">Edit Catatan</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
+                                    <div class="modal-status bg-warning"></div>
                                     <div class="modal-body">
                                         <form action="{{route('updateCatatanUmum', ['id'=> $catatan['id']])}}" method="post" autocomplete="off">
                                         @csrf
@@ -153,9 +153,7 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
-                                        Batal
-                                        </a>
+                                        <button type="button" class="me-auto btn" data-bs-dismiss="modal">Batal</button>
                                         <button type="submit" class="btn btn-success ms-auto">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
                                             Simpan Perubahan
@@ -165,17 +163,16 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- End of modal edit catatan -->
                     </div>
                     @endforeach
                 @else
-                    <div class="col-12 text-muted">Tidak ada catatan.</div>
+                    <div class="col-12 ">Tidak ada catatan.</div>
                 @endif
                 </div>
             </div>
         </div>
         <div class="col-12 col-md-6 col-lg">
-            <h3 class="mb-0 text-muted">Sedang Dikerjakan</h3>
+            <h3 class="mb-0 ">Sedang Dikerjakan</h3>
             <hr class="mt-2 mb-3">
             <div class="mb-4">
                 <div class="row row-cards">
@@ -197,12 +194,12 @@
                                 <div>{!! $catatan['catatan'] !!}</div>
                                 <div class="mt-4">
                                     <div class="row">
-                                        <div class="col text-muted">
+                                        <div class="col ">
                                             <h5>
                                                 {{\Carbon\Carbon::parse($catatan['updated_at'])->locale('id')->translatedFormat('d/m/Y H:i')}}
                                             </h5>
                                         </div>
-                                        <div class="col-auto text-muted">
+                                        <div class="col-auto ">
                                             <a class="nav-link"  data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
                                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
                                                 <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-dots"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
@@ -231,7 +228,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Modal hapus catatan -->
+                        {{-- Modal hapus catatan --}}
                         <div class="modal modal-blur fade" id="modal-delete{{$catatan['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
                                 <div class="modal-content">
@@ -240,7 +237,7 @@
                                     <div class="modal-body text-center py-4">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.24 3.957l-8.422 14.06a1.989 1.989 0 0 0 1.7 2.983h16.845a1.989 1.989 0 0 0 1.7 -2.983l-8.423 -14.06a1.989 1.989 0 0 0 -3.4 0z" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
                                         <h3>Konfirmasi Penghapusan</h3>
-                                        <div class="text-muted">Apakah anda yakin ingin menghapus catatan ini?</div>
+                                        <div class="">Apakah anda yakin ingin menghapus catatan ini?</div>
                                     </div>
                                     <div class="modal-footer">
                                         <div class="w-100">
@@ -264,8 +261,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- End of modal hapus catatan -->
-                        <!-- Modal edit catatan -->
+                        {{-- Modal edit catatan --}}
                         <div class="modal modal-blur fade" id="modal-edit{{$catatan['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                                 <div class="modal-content">
@@ -273,6 +269,7 @@
                                         <h5 class="modal-title">Edit Catatan</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
+                                    <div class="modal-status bg-warning"></div>
                                     <div class="modal-body">
                                         <form action="{{route('updateCatatanUmum', ['id'=> $catatan['id']])}}" method="post" autocomplete="off">
                                         @csrf
@@ -303,9 +300,7 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
-                                        Batal
-                                        </a>
+                                        <button type="button" class="me-auto btn" data-bs-dismiss="modal">Batal</button>
                                         <button type="submit" class="btn btn-success ms-auto">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
                                             Simpan Perubahan
@@ -315,17 +310,16 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- End of modal edit catatan -->
                     </div>
                     @endforeach
                 @else
-                    <div class="col-12 text-muted">Tidak ada catatan.</div>
+                    <div class="col-12 ">Tidak ada catatan.</div>
                 @endif
                 </div>
             </div>
         </div>
         <div class="col-12 col-md-6 col-lg">
-            <h3 class="mb-0 text-muted">Selesai</h3>
+            <h3 class="mb-0 ">Selesai</h3>
             <hr class="mt-2 mb-3">
             <div class="mb-4">
                 <div class="row row-cards">
@@ -347,12 +341,12 @@
                                 <div>{!! $catatan['catatan'] !!}</div>
                                 <div class="mt-4">
                                     <div class="row">
-                                        <div class="col text-muted">
+                                        <div class="col ">
                                             <h5>
                                                 {{\Carbon\Carbon::parse($catatan['updated_at'])->locale('id')->translatedFormat('d/m/Y H:i')}}
                                             </h5>
                                         </div>
-                                        <div class="col-auto text-muted">
+                                        <div class="col-auto ">
                                             <a class="nav-link"  data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
                                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
                                                 <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-dots"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
@@ -381,7 +375,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Modal hapus catatan -->
+                        {{-- Modal hapus catatan --}}
                         <div class="modal modal-blur fade" id="modal-delete{{$catatan['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
                                 <div class="modal-content">
@@ -390,7 +384,7 @@
                                     <div class="modal-body text-center py-4">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.24 3.957l-8.422 14.06a1.989 1.989 0 0 0 1.7 2.983h16.845a1.989 1.989 0 0 0 1.7 -2.983l-8.423 -14.06a1.989 1.989 0 0 0 -3.4 0z" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
                                         <h3>Konfirmasi Penghapusan</h3>
-                                        <div class="text-muted">Apakah anda yakin ingin menghapus catatan ini?</div>
+                                        <div class="">Apakah anda yakin ingin menghapus catatan ini?</div>
                                     </div>
                                     <div class="modal-footer">
                                         <div class="w-100">
@@ -414,8 +408,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- End of modal hapus catatan -->
-                        <!-- Modal edit catatan -->
+                        {{-- Modal edit catatan --}}
                         <div class="modal modal-blur fade" id="modal-edit{{$catatan['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                                 <div class="modal-content">
@@ -423,6 +416,7 @@
                                         <h5 class="modal-title">Edit Catatan</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
+                                    <div class="modal-status bg-warning"></div>
                                     <div class="modal-body">
                                         <form action="{{route('updateCatatanUmum', ['id'=> $catatan['id']])}}" method="post" autocomplete="off">
                                         @csrf
@@ -453,9 +447,7 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
-                                        Batal
-                                        </a>
+                                        <button type="button" class="me-auto btn" data-bs-dismiss="modal">Batal</button>
                                         <button type="submit" class="btn btn-success ms-auto">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
                                             Simpan Perubahan
@@ -465,17 +457,16 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- End of modal edit catatan -->
                     </div>
                     @endforeach
                 @else
-                    <div class="col-12 text-muted">Tidak ada catatan.</div>
+                    <div class="col-12 ">Tidak ada catatan.</div>
                 @endif
                 </div>
             </div>
         </div>
         <div class="col-12 col-md-6 col-lg">
-            <h3 class="mb-0 text-muted">Lainnya</h3>
+            <h3 class="mb-0 ">Lainnya</h3>
             <hr class="mt-2 mb-3">
             <div class="mb-4">
                 <div class="row row-cards">
@@ -497,12 +488,12 @@
                                 <div>{!! $catatan['catatan'] !!}</div>
                                 <div class="mt-4">
                                     <div class="row">
-                                        <div class="col text-muted">
+                                        <div class="col ">
                                             <h5>
                                                 {{\Carbon\Carbon::parse($catatan['updated_at'])->locale('id')->translatedFormat('d/m/Y H:i')}}
                                             </h5>
                                         </div>
-                                        <div class="col-auto text-muted">
+                                        <div class="col-auto ">
                                             <a class="nav-link"  data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
                                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
                                                     <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-dots"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
@@ -531,7 +522,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Modal hapus catatan -->
+                        {{-- Modal hapus catatan --}}
                         <div class="modal modal-blur fade" id="modal-delete{{$catatan['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
                                 <div class="modal-content">
@@ -540,7 +531,7 @@
                                     <div class="modal-body text-center py-4">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.24 3.957l-8.422 14.06a1.989 1.989 0 0 0 1.7 2.983h16.845a1.989 1.989 0 0 0 1.7 -2.983l-8.423 -14.06a1.989 1.989 0 0 0 -3.4 0z" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
                                         <h3>Konfirmasi Penghapusan</h3>
-                                        <div class="text-muted">Apakah anda yakin ingin menghapus catatan ini?</div>
+                                        <div class="">Apakah anda yakin ingin menghapus catatan ini?</div>
                                     </div>
                                     <div class="modal-footer">
                                         <div class="w-100">
@@ -564,8 +555,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- End of modal hapus catatan -->
-                        <!-- Modal edit catatan -->
+                        {{-- Modal edit catatan --}}
                         <div class="modal modal-blur fade" id="modal-edit{{$catatan['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                                 <div class="modal-content">
@@ -573,6 +563,7 @@
                                         <h5 class="modal-title">Edit Catatan</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
+                                    <div class="modal-status bg-warning"></div>
                                     <div class="modal-body">
                                         <form action="{{route('updateCatatanUmum', ['id'=> $catatan['id']])}}" method="post" autocomplete="off">
                                         @csrf
@@ -603,9 +594,7 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
-                                        Batal
-                                        </a>
+                                        <button type="button" class="me-auto btn" data-bs-dismiss="modal">Batal</button>
                                         <button type="submit" class="btn btn-success ms-auto">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
                                             Simpan Perubahan
@@ -615,11 +604,10 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- End of modal edit catatan -->
                     </div>
                     @endforeach
                 @else
-                    <div class="col-12 text-muted">Tidak ada catatan.</div>
+                    <div class="col-12 ">Tidak ada catatan.</div>
                 @endif
                 </div>
             </div>
@@ -627,7 +615,7 @@
     </div>
 </div>
 
-<!-- Modal tambah catatan -->
+{{-- Modal tambah catatan --}}
 <div class="modal modal-blur fade" id="modal-catatan" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -635,6 +623,7 @@
                 <h5 class="modal-title">Tambah Catatan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <div class="modal-status bg-success"></div>
             <div class="modal-body">
                 <form action="{{route('simpanCatatanUmum')}}" method="post" autocomplete="off">
 				@csrf
@@ -664,9 +653,7 @@
 				</div>
             </div>
             <div class="modal-footer">
-                <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
-                Batal
-                </a>
+                <button type="button" class="me-auto btn" data-bs-dismiss="modal">Batal</button>
                 <button type="submit" class="btn btn-success ms-auto">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
                         Simpan Catatan
@@ -676,9 +663,9 @@
         </div>
     </div>
 </div>
-<!-- End of modal tambah catatan -->
 
 <script src="{{ asset('dist/libs/tinymce/tinymce.min.js?1684106062')}}" defer></script>
+
 <script>
 	document.addEventListener("DOMContentLoaded", function () {
         function initializeTinyMCE(selector) {
@@ -742,12 +729,6 @@
                 const tipeEdit = modal.querySelector('.tipeedit');
                 const warnaInput = modal.querySelector('.warnaedit');
                 const catatanTextarea = modal.querySelector('.catatanedit');
-
-                console.log('ID:', id);
-                console.log('Judul:', judul);
-                console.log('Tipe:', tipe);
-                console.log('Warna:', warna);
-                console.log('Catatan:', catatan);
 
                 if (idInput) {
                     idInput.value = id;

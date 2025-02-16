@@ -31,7 +31,7 @@
 					
 				</div>
 				<span class="form-label-description">
-							<a href="./forgot-password.html">Lupa kata sandi?</a>
+							<a href="">Lupa kata sandi?</a>
 						</span>
 						<br>
 				<div class="form-footer mb-2">

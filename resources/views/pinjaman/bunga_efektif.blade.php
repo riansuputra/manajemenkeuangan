@@ -186,7 +186,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="me-auto btn" data-bs-dismiss="modal">Tutup</button>
+                <button type="button" class="me-auto btn" data-bs-dismiss="modal">Batal</button>
                 <button type="button" id="printModalToPdf" class="btn btn-primary">Cetak PDF</button>
             </div>
         </div>
@@ -532,7 +532,6 @@
         }
 
         document.getElementById('printModalToPdf').addEventListener('click', function () {
-            console.log("Button clicked");
 
             const userName = @json($user['name']);
             const userEmail = @json($user['email']);

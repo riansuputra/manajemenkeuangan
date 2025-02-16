@@ -142,7 +142,7 @@ Route::middleware(['throttle:100,1'])->group(function() {
         Route::get('/informasi-akun', [PengaturanController::class, 'indexInformasiAkun'])->name('informasiAkun');
         Route::delete('/hapus-portofolio', [PengaturanController::class, 'destroyPortofolio'])->name('hapusPorto');
         Route::delete('/hapus-keuangan', [PengaturanController::class, 'destroyKeuangan'])->name('hapusKeuangan');
-        Route::delete('/hapus-catatan', [PengaturanController::class, 'destroyCatatan'])->name('hapusCatatan');
+        Route::delete('/hapus-catatan', [PengaturanController::class, 'destroyCatatan'])->name('hapusCatatanInfo');
         Route::post('/update', [PengaturanController::class, 'updateUser'])->name('updateUser');
         Route::get('/tentang', [PengaturanController::class, 'indexTentang'])->name('tentang');
         // Route::get('/histori', [PortofolioController::class, 'historis'])->name('portofolio-historis');

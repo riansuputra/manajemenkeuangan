@@ -5,22 +5,19 @@
 	<meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <title>@yield('title') - Smart Finance</title>
-    <!-- CSS files -->
+	<title>@yield('title') - Smart Finance</title>
     <link href="{{ asset('css/tabler.min.css?1684106062') }}" rel="stylesheet"/>
     <link href="{{ asset('css/tabler-vendors.min.css?1684106062') }}" rel="stylesheet"/>
 	<link href="{{ asset('dist/css/demo.min.css?1684106062')}}" rel="stylesheet"/>
 	<link href="{{asset('dist/css/tabler-flags.min.css?1684106062')}}" rel="stylesheet"/>
 	<link rel="icon" type="image/png" href="{{ asset('img\logo_new.png') }}">
-
     <style>
 		@import url('https://rsms.me/inter/inter.css');
 		:root {
 			--tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
+		} body {
+			font-feature-settings: "cv03", "cv04", "cv11";
 		}
-		body {
-      		font-feature-settings: "cv03", "cv04", "cv11";
-      	}
     </style>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
@@ -33,7 +30,6 @@
 	<script src="{{ asset('dist/js/demo-theme.min.js?1684106062')}}"></script>
 	<div class="page">
 		<div class="sticky-top">
-
         	<header class="navbar navbar-expand-md sticky-top d-print-none bg-primary">
           		<div class="container-xl">
             		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,7 +44,7 @@
             		<div class="navbar-nav flex-row order-md-last">
               			<div class="nav-item dropdown">
                 			<a href="" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-                  				<span class="avatar avatar-sm text-primary">
+                   				<span class="avatar avatar-sm text-primary">
 								  	<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 2a5 5 0 1 1 -5 5l.005 -.217a5 5 0 0 1 4.995 -4.783z" /><path d="M14 14a5 5 0 0 1 5 5v1a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-1a5 5 0 0 1 5 -5h4z" /></svg>
 								</span>
                   				<div class="d-none d-xl-block ps-2">
@@ -56,7 +52,7 @@
 								  	<div class="mt-1 small text-white">{{$user['email']}}</div>
                   				</div>
 								<span class="icon text-white ps-1">
-								  <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-caret-down"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 9c.852 0 1.297 .986 .783 1.623l-.076 .084l-6 6a1 1 0 0 1 -1.32 .083l-.094 -.083l-6 -6l-.083 -.094l-.054 -.077l-.054 -.096l-.017 -.036l-.027 -.067l-.032 -.108l-.01 -.053l-.01 -.06l-.004 -.057v-.118l.005 -.058l.009 -.06l.01 -.052l.032 -.108l.027 -.067l.07 -.132l.065 -.09l.073 -.081l.094 -.083l.077 -.054l.096 -.054l.036 -.017l.067 -.027l.108 -.032l.053 -.01l.06 -.01l.057 -.004l12.059 -.002z" /></svg>
+								  	<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-caret-down"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 9c.852 0 1.297 .986 .783 1.623l-.076 .084l-6 6a1 1 0 0 1 -1.32 .083l-.094 -.083l-6 -6l-.083 -.094l-.054 -.077l-.054 -.096l-.017 -.036l-.027 -.067l-.032 -.108l-.01 -.053l-.01 -.06l-.004 -.057v-.118l.005 -.058l.009 -.06l.01 -.052l.032 -.108l.027 -.067l.07 -.132l.065 -.09l.073 -.081l.094 -.083l.077 -.054l.096 -.054l.036 -.017l.067 -.027l.108 -.032l.053 -.01l.06 -.01l.057 -.004l12.059 -.002z" /></svg>
 								</span>
                 			</a>
                 			<div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -81,7 +77,6 @@
             		</div>
           		</div>
         	</header>
-
         	<header class="navbar-expand-md">
           		<div class="navbar-collapse collapse" id="navbar-menu" style="">
             		<div class="navbar">
@@ -93,7 +88,7 @@
                         					<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l-2 0l9 -9l9 9l-2 0" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
 										</span>
                       					<span class="nav-link-title">
-                        					Dashboard
+										  	{{ __('messages.dashboard') }}
                       					</span>
 									</a>
                   				</li>
@@ -103,26 +98,27 @@
 											<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M5 3m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z"></path><path d="M9 7l6 0"></path><path d="M9 11l6 0"></path><path d="M9 15l4 0"></path></svg>
 										</span>
                       					<span class="nav-link-title">
-                        					Catatan
+										  	{{ __('messages.catatan') }}
                       					</span>
                     				</a>
                             		<div class="dropdown-menu">
               							<a class="dropdown-item" href="{{ url('/catatan-keuangan') }}">
 										  	<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-inline me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M14.8 9a2 2 0 0 0 -1.8 -1h-2a2 2 0 1 0 0 4h2a2 2 0 1 1 0 4h-2a2 2 0 0 1 -1.8 -1" /><path d="M12 7v10" /></svg>
-                            				Keuangan
+                            					Keuangan
                           				</a>
 						  				<a class="dropdown-item" href="{{ url('/catatan-umum') }}">
 										  	<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-inline me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h11a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-11a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1m3 0v18" /><path d="M13 8l2 0" /><path d="M13 12l2 0" /></svg>
-                            				Umum
+                            					Umum
                           				</a>
+									</div>
                   				</li>
 								<li class="nav-item {{ url()->current() == url('/anggaran-mingguan') ? 'active' : '' }} {{ url()->current() == url('/anggaran-bulanan') ? 'active' : '' }} {{ url()->current() == url('/anggaran-tahunan') ? 'active' : '' }}" >
-                    				<a class="nav-link" href="/anggaran-mingguan">
+                    				<a class="nav-link" href="{{ url('/anggaran-mingguan') }}">
                       					<span class="nav-link-icon d-md-none d-lg-inline-block">
 					  						<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M16 6m-5 0a5 3 0 1 0 10 0a5 3 0 1 0 -10 0"></path><path d="M11 6v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4"></path><path d="M11 10v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4"></path><path d="M11 14v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4"></path><path d="M7 9h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5"></path><path d="M5 15v1m0 -8v1"></path></svg>
                       					</span>
                       					<span class="nav-link-title">
-                        					Anggaran
+										  	{{ __('messages.anggaran') }}
                       					</span>
 									</a>
                   				</li>
@@ -131,22 +127,22 @@
                       					<span class="nav-link-icon d-md-none d-lg-inline-block">
 										  	<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-file-info"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M11 14h1v4h1" /><path d="M12 11h.01" /></svg>
                       					</span>
-                      					<span class="nav-link-title">
-                        					Informasi
+										<span class="nav-link-title">
+										  	{{ __('messages.informasi') }}
                       					</span>
                     				</a>
                     				<div class="dropdown-menu">
 										<a class="dropdown-item" href="{{ url('/berita') }}">
 											<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-inline me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M16 6h3a1 1 0 0 1 1 1v11a2 2 0 0 1 -4 0v-13a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1v12a3 3 0 0 0 3 3h11" /><path d="M8 8l4 0" /><path d="M8 12l4 0" /><path d="M8 16l4 0" /></svg>
-						  					Berita
+						  						Berita
 										</a>
                           				<a class="dropdown-item" href="{{ url('/kurs') }}">
-										  <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-inline me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 18m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M19 6m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M19 8v5a5 5 0 0 1 -5 5h-3l3 -3m0 6l-3 -3" /><path d="M5 16v-5a5 5 0 0 1 5 -5h3l-3 -3m0 6l3 -3" /></svg>
-                            				Kurs
+										  	<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-inline me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 18m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M19 6m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M19 8v5a5 5 0 0 1 -5 5h-3l3 -3m0 6l-3 -3" /><path d="M5 16v-5a5 5 0 0 1 5 -5h3l-3 -3m0 6l3 -3" /></svg>
+	                            				Kurs
                           				</a>
-										  <a class="dropdown-item" href="{{ url('/dividen') }}">
+										<a class="dropdown-item" href="{{ url('/dividen') }}">
 										  	<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-inline me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 21l18 0" /><path d="M3 10l18 0" /><path d="M5 6l7 -3l7 3" /><path d="M4 10l0 11" /><path d="M20 10l0 11" /><path d="M8 14l0 3" /><path d="M12 14l0 3" /><path d="M16 14l0 3" /></svg>
-                            				Dividen
+                            					Dividen
                           				</a>
                     				</div>
 								</li>
@@ -162,12 +158,12 @@
 										  	<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-category-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 4h6v6h-6z" /><path d="M4 14h6v6h-6z" /><path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /><path d="M7 7m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /></svg>
                       					</span>
                       					<span class="nav-link-title">
-                        					Simulasi
+										  	{{ __('messages.simulasi') }}
                       					</span>
                     				</a>
                     				<div class="dropdown-menu">
 										<div class="dropend">
-											<a class="dropdown-item dropdown-toggle" href="#sidebar-error" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
+											<a class="dropdown-item dropdown-toggle" href="" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
 												<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M3 3v18h18"></path><path d="M20 18v3"></path><path d="M16 16v5"></path><path d="M12 13v8"></path><path d="M8 16v5"></path><path d="M3 11c6 0 5 -5 9 -5s3 5 9 5"></path></svg>
 													Investasi
 											</a>
@@ -181,7 +177,7 @@
 											</div>
 										</div>
 										<div class="dropend">
-											<a class="dropdown-item dropdown-toggle" href="#sidebar-error" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
+											<a class="dropdown-item dropdown-toggle" href="" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
 												<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 9m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z"></path><path d="M14 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path><path d="M17 9v-2a2 2 0 0 0 -2 -2h-10a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h2"></path></svg>
 													Pinjaman
 											</a>
@@ -202,21 +198,21 @@
 										  	<svg xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-inline me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M8 11h8v7h-8z" /><path d="M8 15h8" /><path d="M11 11v7" /></svg>
                       					</span>
                       					<span class="nav-link-title">
-                        					Portofolio
+										  	{{ __('messages.portofolio') }}
                       					</span>
                     				</a>
                     				<div class="dropdown-menu">
 										<a class="dropdown-item" href="{{ url('/portofolio') }}">
 											<svg xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-inline me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M8 11h8v7h-8z" /><path d="M8 15h8" /><path d="M11 11v7" /></svg>
-						  					Portofolio
+							  					Portofolio
 										</a>
                           				<a class="dropdown-item" href="{{ url('/portofolio-mutasi-dana') }}">
 										  	<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-inline me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 9m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z" /><path d="M14 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 9v-2a2 2 0 0 0 -2 -2h-10a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h2" /></svg>
-                            				Mutasi Dana
+                            					Mutasi Dana
                           				</a>
 										  <a class="dropdown-item" href="{{ url('/portofolio-historis') }}">
 										  	<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-inline me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20.866 10.45a9 9 0 1 0 -7.815 10.488" /><path d="M12 7v5l1.5 1.5" /><path d="M21 15h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" /><path d="M19 21v1m0 -8v1" /></svg>
-                            				Historis
+                            					Historis
                           				</a>
                     				</div>
 								</li>
@@ -227,20 +223,21 @@
                   						<a class="nav-link dropdown-toggle" href="" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
                     						<span class="nav-link-icon d-md-none d-lg-inline-block">
 												<span class="flag @if((session('locale', config('app.locale'))) == 'en') flag-country-us
-													@elseif((session('locale', config('app.locale'))) == 'id')  flag-country-id @endif nav-link-icon d-md-none d-lg-inline-block"></span>
+													@elseif((session('locale', config('app.locale'))) == 'id')  flag-country-id @endif nav-link-icon d-md-none d-lg-inline-block">
+												</span>
                     						</span>
                     						<span class="nav-link-title">
-                      							Bahasa
+												{{ __('messages.bahasa') }}
                     						</span>
                   						</a>
                   						<div class="dropdown-menu">
                     						<a class="dropdown-item" href="{{ url('language/en') }}">
 					  							<span class="flag flag-country-us"></span>
-												&nbsp English
+													&nbsp English
                     						</a>
 											<a class="dropdown-item" href="{{ url('language/id') }}">
 					  							<span class="flag flag-country-id"></span>
-                      							&nbsp Indonesia
+                      								&nbsp Indonesia
                     						</a>
                   						</div>
                 					</li>
@@ -251,7 +248,7 @@
 												<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon text-warning hide-theme-dark"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 19a1 1 0 0 1 .993 .883l.007 .117v1a1 1 0 0 1 -1.993 .117l-.007 -.117v-1a1 1 0 0 1 1 -1z" /><path d="M18.313 16.91l.094 .083l.7 .7a1 1 0 0 1 -1.32 1.497l-.094 -.083l-.7 -.7a1 1 0 0 1 1.218 -1.567l.102 .07z" /><path d="M7.007 16.993a1 1 0 0 1 .083 1.32l-.083 .094l-.7 .7a1 1 0 0 1 -1.497 -1.32l.083 -.094l.7 -.7a1 1 0 0 1 1.414 0z" /><path d="M4 11a1 1 0 0 1 .117 1.993l-.117 .007h-1a1 1 0 0 1 -.117 -1.993l.117 -.007h1z" /><path d="M21 11a1 1 0 0 1 .117 1.993l-.117 .007h-1a1 1 0 0 1 -.117 -1.993l.117 -.007h1z" /><path d="M6.213 4.81l.094 .083l.7 .7a1 1 0 0 1 -1.32 1.497l-.094 -.083l-.7 -.7a1 1 0 0 1 1.217 -1.567l.102 .07z" /><path d="M19.107 4.893a1 1 0 0 1 .083 1.32l-.083 .094l-.7 .7a1 1 0 0 1 -1.497 -1.32l.083 -.094l.7 -.7a1 1 0 0 1 1.414 0z" /><path d="M12 2a1 1 0 0 1 .993 .883l.007 .117v1a1 1 0 0 1 -1.993 .117l-.007 -.117v-1a1 1 0 0 1 1 -1z" /><path d="M12 7a5 5 0 1 1 -4.995 5.217l-.005 -.217l.005 -.217a5 5 0 0 1 4.995 -4.783z" /></svg>
                     						</span>
                     						<span class="nav-link-title">
-                      							Tema
+												{{ __('messages.tema') }}
                     						</span>
                   						</a>
                   						<div class="dropdown-menu">
@@ -272,11 +269,10 @@
           		</div>
         	</header>
       	</div>
-		
       	<div class="page-wrapper">
 			<div class="container container-slim my-auto" id="spinner" style="display:block;">
 				<div class="text-center">
-					<div class="text-muted mb-3">Loading</div>
+					<div class=" mb-3">Loading</div>
 					<div class="progress progress-sm">
 						<div class="progress-bar progress-bar-indeterminate"></div>
 					</div>
@@ -285,7 +281,7 @@
         	<div class="page-header d-print-none" id="page-title" style="display:none;">
           		<div class="container-xl">
             		<div class="row g-2 align-items-center">
-              			@yield('page-title')
+						@yield('page-title')
             		</div>
           		</div>
 			</div>
@@ -294,8 +290,7 @@
 			</div>        
       	</div>
     </div>
-
-	<!-- Modal Tambah Catatan -->
+	{{-- Modal tambah catatan --}}
     <div class="modal modal-blur fade" id="modal-report" tabindex="-1" role="dialog" aria-hidden="true">
     	<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         	<div class="modal-content">
@@ -305,6 +300,7 @@
           		</div>
 		  		<form action="{{ route('catatan') }}" method="post" autocomplete="off">
 					@csrf
+					<div class="modal-status bg-success"></div>
           			<div class="modal-body">
             			<label class="form-label required">Pilih Jenis :</label>
             			<div class="form-selectgroup-boxes row mb-3">
@@ -353,8 +349,6 @@
               				<div class="col-lg-4">
                 				<div class="mb-3">
                   					<label class="form-label required">Kategori :</label>
-                  					
-									
 									<select id="kategori" name="kategori" class="form-select kategoriadd">
                                         <option value="" disabled selected>Pilih Kategori</option>
                                     </select>
@@ -375,22 +369,22 @@
             			</div>
           			</div>
           			<div class="modal-footer">
-	            		<a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
-              				Batal
-            			</a>
+						<button type="button" class="me-auto btn" data-bs-dismiss="modal">Batal</button>
 						<button type="submit" class="btn btn-success ms-auto">
               				<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-              				Simpan Catatan
+              					Simpan Catatan
 						</button>
           			</div>
 				</form>	
         	</div>
       	</div>
     </div>
-	<!-- End of Modal Tambah Catatan -->
+	{{-- Modal tambah catatan --}}
      
     <script src="{{ asset('dist/libs/apexcharts/dist/apexcharts.min.js?1684106062') }}" defer></script>
     <script src="{{ asset('js/tabler.min.js?1684106062') }}" defer></script>
+
+	{{-- Script untuk toast --}}
 	<script>
 		@if (Session::has('success'))
 			toastr.options = {
@@ -422,6 +416,7 @@
 		@endif
     </script>
 
+	{{-- Script untuk format angka ribuan --}}
 	<script>
 		function formatNumber(num) {
     		const parts = num.toString().split(".");
@@ -429,7 +424,6 @@
     		const decimalPart = parts.length > 1 ? "," + parts[1] : "";
     		return integerPart + decimalPart;
 		}
-
 		function updateFormattedNumber() {
 			var inputElement = document.getElementById('jumlah');
 			var rawValue = inputElement.value.replace(/\D/g, ''); 
@@ -438,22 +432,20 @@
 			inputElement.setAttribute('data-value', rawValue); 
 			setUnformattedValueToInput(); 
 		}
-
 		function setUnformattedValueToInput() {
 			var unformattedValue = getUnformattedValue(); 
 			var inputElement = document.getElementById('jumlah1');
 			inputElement.value = unformattedValue; 
 		}
-		
 		function getUnformattedValue() {
 			var inputElement = document.getElementById('jumlah');
 			var unformattedValue = inputElement.getAttribute('data-value') || ''; 
 			return unformattedValue;
 		}
-
 		document.getElementById('jumlah').addEventListener('input', updateFormattedNumber);
 	</script>
 
+	{{-- Script untuk load kategori --}}
 	<script>
 		document.addEventListener("DOMContentLoaded", function() {
     		const kategoriPemasukanData = @json($kategoriPemasukanData ?? []);

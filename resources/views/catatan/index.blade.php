@@ -12,16 +12,16 @@
 	<div class="btn-list">
 		<a href="" class="btn btn-success d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-report">
         	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-          	Tambah Catatan
+          		Tambah Catatan
       	</a>
 		<a href="" class="btn btn-success d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-report" aria-label="Create new report">
 			<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
 		</a>   
 		<a href="{{ url('/permintaan-kategori') }}" class="btn btn-primary d-none d-sm-inline-block">
 			<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-category"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4h6v6h-6z" /><path d="M14 4h6v6h-6z" /><path d="M4 14h6v6h-6z" /><path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /></svg>
-          	Tambah Kategori
+          		Tambah Kategori
       	</a>
-		<a href="" class="btn btn-primary d-sm-none btn-icon" >
+		<a href="{{ url('/permintaan-kategori') }}" class="btn btn-primary d-sm-none btn-icon" >
 			<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-category"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4h6v6h-6z" /><path d="M14 4h6v6h-6z" /><path d="M4 14h6v6h-6z" /><path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /></svg>
 		</a>       
 	</div>
@@ -31,7 +31,7 @@
 @section('content')
 <div class="container-xl">
 	<div class="row g-4">
-		<!-- Filter -->
+		{{-- Filter --}}
 		<div class="col-md-3">
 			<div class="input-icon mb-4">
 				<input type="text" value="" class="form-control" id="searchRecord" name="searchRecord" placeholder="Search…">
@@ -52,9 +52,9 @@
 				<div class="ms-4">
 					<div class="mb-2">
 						<select class="form-select category-select income-category" disabled>
-							<option value="" class="text-muted">Select Category</option>
+							<option value="" class="">Select Category</option>
 							@foreach($kategoriPemasukanData as $incomeCategory)
-							<option value="{{$incomeCategory['nama_kategori_pemasukan']}}income">{{$incomeCategory['nama_kategori_pemasukan']}}</option>
+								<option value="{{$incomeCategory['nama_kategori_pemasukan']}}income">{{$incomeCategory['nama_kategori_pemasukan']}}</option>
 							@endforeach
 						</select>
 					</div>
@@ -66,9 +66,9 @@
 				<div class="ms-4">
 					<div class="">
 						<select class="form-select category-select expense-category" disabled>
-							<option value="" class="text-muted">Select Category</option>
+							<option value="" class="">Select Category</option>
 							@foreach($kategoriPengeluaranData as $expenseCategory)
-							<option value="{{$expenseCategory['nama_kategori_pengeluaran']}}expense">{{$expenseCategory['nama_kategori_pengeluaran']}}</option>
+								<option value="{{$expenseCategory['nama_kategori_pengeluaran']}}expense">{{$expenseCategory['nama_kategori_pengeluaran']}}</option>
 							@endforeach
 						</select>
 					</div>
@@ -105,14 +105,12 @@
 					<div class="col-auto d-print-none mt-5 w-100" name="btnFilter" id="btnFilter">
 						<button type="submit" class="btn btn-primary w-100">
 							<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-filter-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11.18 20.274l-2.18 .726v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414v3" /><path d="M15 19l2 2l4 -4" /></svg>
-							Confirm changes
+								Confirm changes
 						</button>
 					</div>
 				</form>
 			</div>
 		</div>
-		<!-- Filter end -->
-		<!-- Catatan -->
 		<div class="col-md-9">
 			<div class="row row-cards">
 				<div class="space-y">
@@ -122,7 +120,7 @@
 								<div class="card">
 									<div class="card-body">
 										<div class="d-flex align-items-center mb-1">
-											<div class="subheader">Current Wallet Balance</div>
+											<div class="">Current Wallet Balance</div>
 										</div>
 										<div id ="current-balance" class="h3 text-strong">Rp. {{ number_format(floatval(1000000), 0, ',', '.')}}</div>
 									</div>
@@ -132,7 +130,7 @@
 								<div class="card">
 									<div class="card-body">
 										<div class="d-flex align-items-center mb-1">
-											<div class="subheader">Total Period Income</div>
+											<div class="">Total Period Income</div>
 										</div>
 										<div id="total-income" class="h3 text-green">+ Rp. {{ number_format(floatval(1000000), 0, ',', '.')}}</div>
 									</div>
@@ -142,7 +140,7 @@
 								<div class="card">
 									<div class="card-body">
 										<div class="d-flex align-items-center mb-1">
-											<div class="subheader">Total Period Expenses</div>
+											<div class="">Total Period Expenses</div>
 										</div>
 										<div id="total-expenses" class="h3 text-red">- Rp. {{ number_format(floatval(1000000), 0, ',', '.')}}</div>
 									</div>
@@ -215,7 +213,7 @@
 																		</span>
 																		<div class="row">
 																			<div class="col">
-																				<div class="list-inline list-inline-dots mb-0 text-muted d-sm-block d-none">
+																				<div class="list-inline list-inline-dots mb-0  d-sm-block d-none">
 																					<div class="list-inline-item">
 																						<svg xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="#00ff00"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-coin icon-inline"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M14.8 9a2 2 0 0 0 -1.8 -1h-2a2 2 0 1 0 0 4h2a2 2 0 1 1 0 4h-2a2 2 0 0 1 -1.8 -1" /><path d="M12 7v10" /></svg>
 																							<strong>{{$item['kategori_pemasukan']['nama_kategori_pemasukan']}}</strong>
@@ -230,7 +228,7 @@
 																						</div>
 																					@endif
 																				</div>
-																				<div class="list mb-0 text-muted d-block d-sm-none">
+																				<div class="list mb-0  d-block d-sm-none">
 																					<div class="list-item">
 																						<svg xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="#00ff00"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-coin icon-inline"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M14.8 9a2 2 0 0 0 -1.8 -1h-2a2 2 0 1 0 0 4h2a2 2 0 1 1 0 4h-2a2 2 0 0 1 -1.8 -1" /><path d="M12 7v10" /></svg>
 																							<strong>{{$item['kategori_pemasukan']['nama_kategori_pemasukan']}}</strong>
@@ -268,14 +266,14 @@
 																							data-tanggal="{{$item['tanggal']}}" 
 																							data-createdat="{{$item['created_at']}}" 
 																							data-catatan="{{$item['catatan']}}">
-																							Edit
+																								Edit
 																						</a>
 																						<a class="dropdown-item delete-btn" href=""
 																							data-bs-toggle="modal"
 																							data-bs-target="#modal-danger{{$item['id']}}" 
 																							data-id="{{$item['id']}}" 
 																							data-jenis="1">
-																							Delete
+																								Delete
 																						</a>
 																					</div>
 																				</div>
@@ -293,10 +291,10 @@
 																		</span>
 																		<div class="row">
 																			<div class="col">
-																				<div class="list-inline list-inline-dots mb-0 text-muted d-sm-block d-none">
+																				<div class="list-inline list-inline-dots mb-0  d-sm-block d-none">
 																					<div class="list-inline-item ">
 																						<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="#ff0000"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart-dollar icon-inline"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 19a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M13 17h-7v-14h-2" /><path d="M6 5l14 1l-.575 4.022m-4.925 2.978h-8.5" /><path d="M21 15h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" /><path d="M19 21v1m0 -8v1" /></svg>
-																							<strong>{{$item['kategori_pengeluaran']['nama_kategori_pengeluaran']}}</strong>
+																						<strong>{{$item['kategori_pengeluaran']['nama_kategori_pengeluaran']}}</strong>
 																					</div>
 																					@if(isset($item['catatan']))
 																						<div class="list-inline-item">
@@ -308,10 +306,10 @@
 																						</div>
 																					@endif
 																				</div>
-																				<div class="list mb-0 text-muted d-block d-sm-none">
+																				<div class="list mb-0  d-block d-sm-none">
 																					<div class="list-item">
 																						<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="#ff0000"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart-dollar icon-inline"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 19a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M13 17h-7v-14h-2" /><path d="M6 5l14 1l-.575 4.022m-4.925 2.978h-8.5" /><path d="M21 15h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" /><path d="M19 21v1m0 -8v1" /></svg>
-																							<strong>{{$item['kategori_pengeluaran']['nama_kategori_pengeluaran']}}</strong>
+																						<strong>{{$item['kategori_pengeluaran']['nama_kategori_pengeluaran']}}</strong>
 																					</div>
 																					@if(isset($item['catatan']))
 																						<div class="list-item mt-1">
@@ -346,14 +344,14 @@
 																							data-tanggal="{{$item['tanggal']}}" 
 																							data-createdat="{{$item['created_at']}}" 
 																							data-catatan="{{$item['catatan']}}">
-																							Edit
+																								Edit
 																						</a>
 																						<a class="dropdown-item delete-btn" href=""
 																							data-bs-toggle="modal"
 																							data-bs-target="#modal-danger{{$item['id']}}" 
 																							data-id="{{$item['id']}}" 
 																							data-jenis="2">
-																							Delete
+																								Delete
 																						</a>
 																					</div>
 																				</div>
@@ -390,6 +388,7 @@
 																<input type="text" name="jenisedit" id="jenisedit"class="form-control text-end jenisedit" autocomplete="off" hidden>
 																<input type="text" name="created_at" id="created_at{{$item['id']}}" class="form-control text-end created_at" autocomplete="off" hidden>
 														@endif
+															<div class="modal-status bg-warning"></div>
 															<div class="modal-body">
 																<label class="form-label required">Pilih Jenis :</label>
 																<div class="form-selectgroup-boxes row mb-3">
@@ -458,9 +457,7 @@
 																</div>
 															</div>
 															<div class="modal-footer">
-																<a href="" class="btn btn-link link-secondary" data-bs-dismiss="modal">
-																	Batal
-																</a>
+																<button type="button" class="me-auto btn" data-bs-dismiss="modal">Batal</button>
 																<button type="submit" class="btn btn-warning ms-auto">
 																	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
 																		Simpan Perubahan
@@ -482,7 +479,7 @@
 														<div class="modal-body text-center py-4">
 															<svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.24 3.957l-8.422 14.06a1.989 1.989 0 0 0 1.7 2.983h16.845a1.989 1.989 0 0 0 1.7 -2.983l-8.423 -14.06a1.989 1.989 0 0 0 -3.4 0z" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
 															<h3>Konfirmasi Penghapusan</h3>
-														<div class="text-muted">Apakah anda yakin ingin menghapus catatan ini?</div>
+														<div class="">Apakah anda yakin ingin menghapus catatan ini?</div>
 													</div>
 													<div class="modal-footer">
 														<div class="w-100">
@@ -529,6 +526,7 @@
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
+{{-- Script untuk format angka ribuan --}}
 <script>
 	function formatNumber1(num) {
 		return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -562,6 +560,7 @@
 	});
 </script>
 
+{{-- Script untuk filter --}}
 <script>
 	document.addEventListener("DOMContentLoaded", function() {
     	const jenisSelect = document.getElementById("jenisFilter");
@@ -680,7 +679,7 @@
 	});
 </script>
 
-
+{{-- Script untuk loader --}}
 <script>
     document.addEventListener('DOMContentLoaded', function () {
 		const spinner = document.getElementById("spinner");
@@ -715,6 +714,7 @@
     });
 </script>
 
+{{-- Script untuk modal edit --}}
 <script>
 	document.addEventListener("DOMContentLoaded", function() {
     	const editButtons = document.querySelectorAll('.edit-btn');
@@ -823,6 +823,7 @@
 	});
 </script>
 
+{{-- Script untuk trigger modal edit --}}
 <script>
     $(document).ready(function() {
         $('.edit-btn').click(function() {
@@ -835,6 +836,7 @@
     });
 </script>
 
+{{-- Script untuk edit style table --}}
 <script>
 	$(document).ready(function() {
 		var table = $('#table-harian').DataTable({
