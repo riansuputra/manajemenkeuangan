@@ -8,9 +8,20 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Log;
 class LanguageController extends Controller
 {
-    public function switch($locale)
+    public function switchId()
     {
-        if (in_array($locale, ['en', 'id'])) {
+        $locale = 'id';
+        if ($locale) {
+            session(['locale' => $locale]);
+            app()->setLocale($locale);
+        }
+        return redirect()->back();
+    }
+
+    public function switchEn()
+    {
+        $locale = 'en';
+        if ($locale) {
             session(['locale' => $locale]);
             app()->setLocale($locale);
         }

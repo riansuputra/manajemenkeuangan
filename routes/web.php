@@ -15,10 +15,10 @@ use App\Http\Controllers\PinjamanController;
 use App\Http\Controllers\PortofolioController;
 use App\Http\Controllers\SaldoController;
 
-
 Route::middleware(['throttle:100,1'])->group(function() {
     
-    Route::get('/bahasa/{locale}', [LanguageController::class, 'switch'])->name('lang.switch');
+    Route::get('/bahasa/id', [LanguageController::class, 'switchId'])->name('bahasa.id');
+    Route::get('/bahasa/en', [LanguageController::class, 'switchEn'])->name('bahasa.en');
     
     Route::middleware([App\Http\Middleware\GuestMiddleware::class])->group(function()
     {
@@ -37,26 +37,22 @@ Route::middleware(['throttle:100,1'])->group(function() {
 
     Route::middleware([App\Http\Middleware\AdminMiddleware::class])->group(function()
     {
-        
-        Route::get('/admin', [AdminController::class, 'index'])->name('admin-layout');
         Route::get('/dashboard-admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
-        Route::get('/permintaan-kategori-admin', [AdminController::class, 'permintaanKategoriAdmin'])->name('permintaanKategoriAdmin');
-        Route::post('/kategori-store', [AdminController::class, 'storeKategori'])->name('kategoriStore');
-        Route::post('/permintaan-kategori/approve', [AdminController::class, 'approve'])->name('permintaanApprove');
-        Route::post('/permintaan-kategori/reject', [AdminController::class, 'reject'])->name('permintaanReject');
+        Route::get('/permintaan-kategori/admin', [AdminController::class, 'permintaanKategoriAdmin'])->name('admin.permintaan.kategori');
+        Route::post('/kategori/store', [AdminController::class, 'storeKategori'])->name('admin.kategori.store');
+        Route::post('/permintaan-kategori/approve', [AdminController::class, 'approve'])->name('admin.permintaan.approve');
+        Route::post('/permintaan-kategori/reject', [AdminController::class, 'reject'])->name('admin.permintaan.reject');
 
-        Route::get('/kurs-admin', [AdminController::class, 'kurs'])->name('kurs-admin');
-        Route::get('/kurs-store', [AdminController::class, 'kursStore'])->name('kursStore-admin');
+        Route::get('/kurs/admin', [AdminController::class, 'kurs'])->name('admin.kurs');
+        Route::get('/kurs/store', [AdminController::class, 'kursStore'])->name('admin.kurs.store');
 
-        Route::get('/berita-admin', [AdminController::class, 'berita'])->name('berita-admin');
-        Route::get('/berita-store', [AdminController::class, 'beritaStore'])->name('beritaStore-admin');
+        Route::get('/berita/admin', [AdminController::class, 'berita'])->name('admin.berita');
+        Route::get('/berita/store', [AdminController::class, 'beritaStore'])->name('admin.berita.store');
 
-        Route::post('/dividen-store', [DividenController::class, 'store'])->name('dividenStore');
-        Route::get('/dividen-admin', [AdminController::class, 'dividen'])->name('dividen-admin');
-        Route::get('/user', [AdminController::class, 'user'])->name('user-admin');
-        Route::post('/update-password', [AuthController::class, 'updatePassword'])->name('updatePassword');
-
+        Route::get('/dividen/admin', [AdminController::class, 'dividen'])->name('admin.dividen');
+        Route::post('/dividen/store', [DividenController::class, 'store'])->name('admin.dividen.store');
+        Route::get('/user', [AdminController::class, 'user'])->name('admin.user');
     });
 
     Route::middleware([App\Http\Middleware\UserMiddleware::class])->group(function()
@@ -78,8 +74,8 @@ Route::middleware(['throttle:100,1'])->group(function() {
         Route::post('/catatan/umum', [CatatanUmumController::class, 'store'])->name('catatan.umum.store');
         Route::get('/catatan/umum/{id}', [CatatanUmumController::class, 'show'])->name('catatan.umum.detail');
         Route::get('/catatan/umum/{catatan}', [CatatanUmumController::class, 'edit'])->name('catatan.umum.hapus');
-        Route::post('/update/catatan/umum/{id}', [CatatanUmumController::class, 'update'])->name('catatan.umum');
-        Route::post('/delete/catatan/umum/{id}', [CatatanUmumController::class, 'destroy'])->name('catatan.umum');
+        Route::post('/update/catatan/umum/{id}', [CatatanUmumController::class, 'update'])->name('catatan.umum.update');
+        Route::post('/delete/catatan/umum/{id}', [CatatanUmumController::class, 'destroy'])->name('catatan.umum.hapus');
 
         Route::get('/anggaran/mingguan', [AnggaranController::class, 'index'])->name('anggaran.week')->defaults('view', 'week');
         Route::get('/anggaran/bulanan', [AnggaranController::class, 'index'])->name('anggaran.month')->defaults('view', 'month');

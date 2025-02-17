@@ -123,7 +123,7 @@
                                             <h5 class="modal-title">{{$data['nama_kategori']}}</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <form action="{{ route('permintaanApprove', ['id'=> $data['id']]) }}" method="post" autocomplete="off">
+                                        <form action="{{ route('admin.permintaan.approve', ['id'=> $data['id']]) }}" method="post" autocomplete="off">
                                             @csrf
                                             <div class="modal-body">
                                                 <input type="hidden" name="id" value="{{ $data['id'] }}">
@@ -166,7 +166,7 @@
                                             <h5 class="modal-title">{{$data['nama_kategori']}}</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <form action="{{ route('permintaanReject', ['id'=> $data['id']]) }}" method="post" autocomplete="off">
+                                        <form action="{{ route('admin.permintaan.reject', ['id'=> $data['id']]) }}" method="post" autocomplete="off">
                                             @csrf
                                             <div class="modal-body">
                                                 <input type="hidden" name="id" value="{{ $data['id'] }}">
@@ -266,7 +266,7 @@
 				<h5 class="modal-title">Tambah Kategori</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
-			<form action="{{ route('kategoriStore') }}" method="post" autocomplete="off">
+			<form action="{{ route('admin.kategori.store') }}" method="post" autocomplete="off">
 				@csrf
 				<div class="modal-body">
 					<div class="row">

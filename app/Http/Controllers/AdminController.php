@@ -243,7 +243,7 @@ class AdminController extends Controller
         // dd($response->json());
         if ($response->status() == 201) {
             $this->updateAuthCookie($request->auth, $response['auth']);
-            return redirect()->route('kurs-admin')->with('success', $response["message"]);
+            return redirect()->route('admin.kurs')->with('success', $response["message"]);
         } else if (!empty($response["errors"])) {
             return back()->with('error', $response["message"]);
         } else if ($response['status'] == 'warning') {
@@ -284,7 +284,7 @@ class AdminController extends Controller
         // dd($response->json());
         if ($response->status() == 201) {
             $this->updateAuthCookie($request->auth, $response['auth']);
-            return redirect()->route('berita-admin')->with('success', $response["message"]);
+            return redirect()->route('admin.berita')->with('success', $response["message"]);
         } else if (!empty($response["errors"])) {
             return back()->with('error', $response["message"]);
         } else if ($response['status'] == 'warning') {
@@ -372,7 +372,7 @@ class AdminController extends Controller
 
         if ($response->status() == 201) {
             $this->updateAuthCookie($request->auth, $response['auth']);
-            return redirect()->route('permintaanKategoriAdmin')->with('success', $response["message"]);
+            return redirect()->route('admin.permintaan.kategori')->with('success', $response["message"]);
         }
 
         return back()->with('error', $response["message"] ?? 'Terjadi kesalahan.');
@@ -398,7 +398,7 @@ class AdminController extends Controller
 
         if ($response->status() == 201) {
             $this->updateAuthCookie($request->auth, $response['auth']);
-            return redirect()->route('permintaanKategoriAdmin')->with('success', $response["message"]);
+            return redirect()->route('admin.permintaan.kategori')->with('success', $response["message"]);
         } else if (!empty($response["errors"])) {
             return back()->with('error', $response["message"]);
         } else {
@@ -423,7 +423,7 @@ class AdminController extends Controller
 
         if ($response->status() == 201) {
             $this->updateAuthCookie($request->auth, $response['auth']);
-            return redirect()->route('permintaanKategoriAdmin')->with('success', $response["message"]);
+            return redirect()->route('admin.permintaan.kategori')->with('success', $response["message"]);
         } else if (!empty($response["errors"])) {
             return back()->with('error', $response["message"]);
         } else {

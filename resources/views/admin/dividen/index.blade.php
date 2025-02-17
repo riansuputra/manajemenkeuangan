@@ -84,7 +84,7 @@
                 <h5 class="modal-title">Tambah/Update Dividen</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('dividenStore') }}" method="post" autocomplete="off">
+            <form action="{{ route('admin.dividen.store') }}" method="post" autocomplete="off">
                 @csrf
                 <div class="modal-body">
                     <div class="row">
