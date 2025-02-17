@@ -122,34 +122,20 @@ class AdminController extends Controller
         // Mengambil data dari API
         $responses = Http::pool(fn (Pool $pool) => [
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/permintaan-kategori-admin'),
-            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/kategori-pribadi'),
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/kategori-pengeluaran'),
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/kategori-pemasukan'),
         ]);
 
         // Memeriksa apakah respon berhasil
-        if ($responses[0]->successful() && $responses[1]->successful() && $responses[2]->successful() && $responses[3]->successful()) {
+        if ($responses[0]->successful() && $responses[1]->successful() && $responses[2]->successful() ) {
             // Mengambil data permintaan
             $permintaan = collect($responses[0]->json()['data']['permintaan'])
                         ->sortByDesc('created_at')
                         ->values()
                         ->all();
 
-            // Mengambil dan mengubah struktur kategori pribadi
-            $kategoriPribadi = collect($responses[1]->json()['data']['kategori_pribadi'])
-                ->map(function ($item) {
-                    return [
-                        'nama_kategori' => $item['nama_kategori'],
-                        'tipe' => 'pribadi', // Menandakan tipe kategori pribadi
-                        'cakupan' => 'personal', // Cakupan kategori pribadi
-                        'created_at' => $item['created_at'] ?? null, // Menambahkan created_at
-                    ];
-                });
-
-           
-
             // Mengambil dan mengubah struktur kategori pengeluaran
-            $kategoriPengeluaran = collect($responses[2]->json()['data']['kategori_pengeluaran'])
+            $kategoriPengeluaran = collect($responses[1]->json()['data']['kategori_pengeluaran'])
                 ->map(function ($item) {
                     $cakupan = 'global';
                     if($item['user_id'] != null) {
@@ -164,7 +150,7 @@ class AdminController extends Controller
                 });
 
                  // Mengambil dan mengubah struktur kategori pemasukan
-            $kategoriPemasukan = collect($responses[3]->json()['data']['kategori_pemasukan'])
+            $kategoriPemasukan = collect($responses[2]->json()['data']['kategori_pemasukan'])
             ->map(function ($item) {
                 $cakupan = 'global';
                     if($item['user_id'] != null) {
@@ -179,7 +165,7 @@ class AdminController extends Controller
             });
 
             // Menggabungkan semua kategori
-            $allKategori = $kategoriPribadi->merge($kategoriPemasukan)->merge($kategoriPengeluaran);
+            $allKategori = $kategoriPemasukan->merge($kategoriPengeluaran);
 
             // Urutkan berdasarkan created_at secara descending
             $allKategori = $allKategori->sortByDesc('created_at')->values();
@@ -396,7 +382,7 @@ class AdminController extends Controller
             'user-type' => $request->auth['user_type'],
         ])->post(env('API_URL') . '/permintaan-kategori/approve', $input);
 
-        if ($response->status() == 201) {
+        if ($response->status() == 200) {
             $this->updateAuthCookie($request->auth, $response['auth']);
             return redirect()->route('admin.permintaan.kategori')->with('success', $response["message"]);
         } else if (!empty($response["errors"])) {
@@ -421,7 +407,7 @@ class AdminController extends Controller
             'user-type' => $request->auth['user_type'],
         ])->post(env('API_URL') . '/permintaan-kategori/reject', $input);
 
-        if ($response->status() == 201) {
+        if ($response->status() == 200) {
             $this->updateAuthCookie($request->auth, $response['auth']);
             return redirect()->route('admin.permintaan.kategori')->with('success', $response["message"]);
         } else if (!empty($response["errors"])) {

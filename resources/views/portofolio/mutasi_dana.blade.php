@@ -182,11 +182,8 @@
                         <h4>Total : <span class="text-black">Rp. {{ number_format($saldo, 0, ',', '.') }}</span> </h4>
                     </div>
                 </div>
-                <div class="mb-3">
-                    <input type="text" id="searchInput2" class="form-control" placeholder="Cari data riwayat dana...">
-                </div>
                 <div class="table-responsive">
-                    <table class="table table-bordered table-vcenter table-striped" id="dataTable2">
+                    <table class="table table-bordered table-vcenter table-striped">
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
@@ -245,86 +242,6 @@
         </div>
     </div>
 </div>
-
-<table class="table table-bordered table-vcenter table-striped" hidden>
-    <thead>
-        <tr>
-            <th class="text-center">No</th>
-            <th class="text-center">Bulan</th>
-            <th class="text-center">Alur Dana</th>
-            <th class="text-center">Jumlah</th>
-            <th class="text-center">Harga Unit</th>
-            <th class="text-center">Jumlah Unit</th>
-        </tr>
-    </thead>
-    <tbody id="tableMutasi">
-        @if (!empty($mutasiDataGrup->toArray()))
-            @foreach($mutasiDataGrup as $tahun => $bulanData)
-                @foreach($bulanData as $bulan => $data)
-                    @foreach($data as $index => $item)
-                        <tr>
-                                <td class="text-center"">{{ $loop->parent->index + 1 }}</td>
-                                <td class="">{{ \Carbon\Carbon::create($tahun, $bulan, 1)->locale('id')->translatedFormat('F') }}</td>
-                                @if($item['alur_dana'] > 0)
-                                <td class="text-center">Masuk</td>
-                                @elseif ($item['alur_dana'] < 0)
-                                <td class="text-center">Keluar</td>                                     
-                                @else
-                                <td class="text-center">Dividen</td>
-                                @endif
-                            <td>Rp.<span>{{ number_format($item['alur_dana'], 0, ',', '.') }}</span></td>
-                            <td class="text-center">{{number_format($item['harga_unit_saat_ini'], 0, ',', '.')}}</td>
-                            <td class="text-center">{{number_format($item['jumlah_unit_penyertaan'], 0, ',', '.')}}</td>
-                        </tr>
-                    @endforeach
-                @endforeach
-            @endforeach
-        @else
-            <tr>
-                <td class="text-center" colspan="7">Belum ada mutasi dana.</td>
-            </tr>
-        @endif
-    </tbody>
-</table>
-
-<table class="table table-bordered table-vcenter table-striped" hidden>
-    <thead>
-        <tr>
-            <th class="text-center">No</th>
-            <th class="text-center">Tanggal</th>
-            <th class="text-center">Jenis</th>
-            <th class="text-center">Jumlah</th>
-        </tr>
-    </thead>
-    <tbody id="tableRiwayat">
-        @if (!empty($saldoData))
-            @php
-                $sortedGroupedSaldoData = collect($saldoData)->groupBy('tanggal'); // Mengelompokkan data berdasarkan tanggal
-                $groupedSaldoData = $sortedGroupedSaldoData;
-            @endphp
-            @foreach ($groupedSaldoData as $tanggal => $dataGroup)
-                @foreach ($dataGroup as $index => $data)
-                    <tr>
-                        <td class="text-center"">{{ $loop->parent->index + 1 }}</td>
-                        <td >{{ \Carbon\Carbon::parse($tanggal)->locale('id')->translatedFormat('d F Y') }}</td>
-                        @if ($data['saldo'] > 0)
-                        <td class="text-center">Masuk</td>
-                        @elseif ($data['saldo'] < 0)
-                        <td class="text-center">Keluar</td>
-                        @else
-                        <td class="text-center">Dividen</td>
-                        @endif
-                        <td>Rp. {{ number_format($data['saldo'], 0, ',', '.') }}</td>
-                    </tr>
-                @endforeach
-            @endforeach
-        @else
-            <tr>
-                <td class="text-center" colspan="5">Belum ada riwayat dana.</td>
-            </tr>
-        @endif
-    </tbody>
-</table>
 
 <!-- Modal Saldo -->
 <div class="modal modal-blur fade" id="modal-saldo" tabindex="-1" role="dialog" aria-hidden="true">
@@ -393,9 +310,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a href="" class="btn btn-link link-secondary" data-bs-dismiss="modal">
-                        Batal
-                    </a>
+                    <button type="button" class="me-auto btn" data-bs-dismiss="modal">Batal</button>
                     <button type="submit" class="btn btn-success ms-auto">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
                         Simpan
@@ -445,42 +360,6 @@
 </script>
 <script>
 	document.addEventListener('DOMContentLoaded', function () {
-		function searchTable(tableId, inputId) {
-			let input = document.getElementById(inputId).value.toLowerCase();  // Get the input value
-			let rows = document.querySelectorAll(`#${tableId} tbody tr`);  // Get all rows from the table
-			let noDataRow = document.querySelector(`#${tableId} .no-data-row`);  // Get the "no data" row
-			let hasVisibleRow = false;
-
-			rows.forEach((row) => {
-				let text = row.innerText.toLowerCase();  // Get text content of the row
-				let isVisible = text.includes(input);  // Check if the row should be visible
-
-				row.style.display = isVisible ? "" : "none";  // Show or hide the row based on the search
-
-				if (isVisible) {
-					hasVisibleRow = true;  // If a visible row is found, set hasVisibleRow to true
-				}
-			});
-
-			// If no visible rows are found, show the "no data found" row, otherwise hide it
-			if (noDataRow) {
-				if (!hasVisibleRow && input.trim() !== "") {
-					// If there are no matching rows and search input is not empty
-					noDataRow.style.display = "";
-				} else {
-					// Otherwise hide the "no data found" row
-					noDataRow.style.display = "none";
-				}
-			}
-		}
-
-		
-
-        // Event listeners for each search input
-		document.getElementById("searchInput2").addEventListener("input", function() {
-			searchTable("dataTable2", "searchInput2");
-		});
-
         document.getElementById('printModalToPdf').addEventListener('click', function () {
 
             const userName = @json($user['name']);

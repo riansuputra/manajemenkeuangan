@@ -25,18 +25,64 @@ class PengaturanController extends Controller
     {
         $responses = Http::pool(fn (Pool $pool) => [
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/permintaan-kategori'),
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/kategori-pengeluaran'),
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/kategori-pemasukan'),
         ]);
         
-        if ($responses[0]->successful()) {
+        if ($responses[0]->successful() & $responses[1]->successful() & $responses[2]->successful()) {
            
             $permintaan = collect($responses[0]->json()['data']['permintaan'])
                         ->sortByDesc('created_at')
                         ->values()
                         ->all();
 
+                        // Mengambil dan mengubah struktur kategori pengeluaran
+            $kategoriPengeluaran = collect($responses[1]->json()['data']['kategori_pengeluaran'])
+            ->filter(function ($item) use ($request) {
+                // Filter untuk menampilkan kategori dengan user_id null atau user_id yang sesuai dengan request
+                return $item['user_id'] === null || $item['user_id'] === $request->auth['user']['id'];
+            })->map(function ($item) use ($request) {
+                $cakupan = 'global';
+                if($item['user_id'] == null) {
+                    $cakupan = 'personal';
+                }
+                return [
+                    'nama_kategori' => $item['nama_kategori_pengeluaran'], // Pastikan key yang sesuai
+                    'tipe' => 'pengeluaran', // Menandakan tipe kategori pengeluaran
+                    'cakupan' => $cakupan, // Cakupan kategori pengeluaran
+                    'created_at' => $item['created_at'] ?? null, // Menambahkan created_at
+                ];
+            });
+
+             // Mengambil dan mengubah struktur kategori pemasukan
+            $kategoriPemasukan = collect($responses[2]->json()['data']['kategori_pemasukan'])
+            ->filter(function ($item) use ($request) {
+                // Filter untuk menampilkan kategori dengan user_id null atau user_id yang sesuai dengan request
+                return $item['user_id'] === null || $item['user_id'] === $request->auth['user']['id'];
+            })->map(function ($item) {
+                $cakupan = 'global';
+                    if($item['user_id'] != null) {
+                        $cakupan = 'personal';
+                    }
+                return [
+                    'nama_kategori' => $item['nama_kategori_pemasukan'], // Pastikan key yang sesuai
+                    'tipe' => 'pemasukan', // Menandakan tipe kategori pemasukan
+                    'cakupan' => $cakupan, // Cakupan kategori pemasukan
+                    'created_at' => $item['created_at'] ?? null, // Menambahkan created_at
+                ];
+            });
+
+            $allKategori = $kategoriPemasukan->merge($kategoriPengeluaran);
+
+            // Urutkan berdasarkan created_at secara descending
+            $allKategori = $allKategori->sortByDesc('created_at')->values();
+
+            // dd($permintaan);
+
             return view('pengaturan.permintaan_kategori', [
                 'user' => $request->auth['user'],
                 'permintaan' => $permintaan,
+                'allKategori' => $allKategori,
             ]);
         } else {
             abort(500, 'Failed to fetch data from API');

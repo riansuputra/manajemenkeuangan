@@ -37,7 +37,7 @@ class PortofolioController extends Controller
             $asetData = $responses[0]->json()['data']['aset'];
             $portoData = $responses[1]->json()['data']['portofolio'];
             $historisData = $responses[2]->json()['data']['historis'];
-            $mutasiData = $responses[3]->json()['data']['mutasi_dana'];
+            $mutasiData = $responses[3]->json()['data']['mutasi'];
             $kinerjaData = $responses[4]->json()['data']['kinerja'];
             $transaksiData = $responses[5]->json()['data']['transaksi'];
             $sekuritasData = $responses[6]->json()['data']['sekuritas'];
@@ -185,9 +185,9 @@ class PortofolioController extends Controller
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/portofolio'),
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/aset'),
         ]);
-
+        // dd($responses[0]->json() , $responses[1]->successful() , $responses[2]->successful() , $responses[3]->successful());
         if ($responses[0]->successful() && $responses[1]->successful() && $responses[2]->successful() && $responses[3]->successful()){
-            $mutasiData = $responses[0]->json()['data']['mutasi_dana'];
+            $mutasiData = $responses[0]->json()['data']['mutasi'];
             $saldoData = $responses[1]->json()['data']['saldo'];
             $portoData = $responses[2]->json()['data']['portofolio'];
             $asetData = $responses[3]->json()['data']['aset'];

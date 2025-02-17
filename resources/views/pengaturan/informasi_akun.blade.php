@@ -154,7 +154,7 @@
 							</a>
 						</div>
 						<div class="col">
-							<form method="post" action="{{route('informasi.hapus.catatan')}}">
+							<form method="post" action="{{route('informasi.catatan.hapus')}}">
 								@csrf
 								@method('DELETE')
 								<button type="submit" class="btn btn-danger w-100" data-bs-dismiss="modal">
