@@ -8,7 +8,7 @@
     <div class="text-muted mt-1">Tahun {{$selectedYear}}</div>
 </div>
 <div class="col-auto d-print-none" >
-	<form class="row"id="filterForm" action="{{ route('portofolio-filter') }}" method="POST">
+	<form class="row"id="filterForm" action="{{ route('portofolio.filter') }}" method="POST">
 		@csrf
 		<div class="col-auto d-print-none input-group">
             <select class="form-select" name="jenisFilter" id="jenisFilter">
@@ -236,7 +236,7 @@
                                             <h5 class="modal-title">{{$index['aset']['nama']}} <span class="text-muted"> - Update Harga</span></h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <form id="update-harga-form-{{ $index['aset']['id'] }}" action="{{ route('portofolio-update-harga') }}" method="post" autocomplete="off">
+                                        <form id="update-harga-form-{{ $index['aset']['id'] }}" action="{{ route('portofolio.update.harga') }}" method="post" autocomplete="off">
                                             @csrf
                                             <div class="modal-body">
                                                 <input type="hidden" name="id_aset" value="{{ $index['aset']['id'] }}">
@@ -258,7 +258,7 @@
                                                 <div class="row">
                                                     <div class="col-lg-12">
                                                         <div class="mb-3">
-                                                        <a href="{{ route('portofolio-update-harga-real', ['id_aset' => $index['aset']['id'], 'nama_aset' => $index['aset']['nama'], 'tipe' => 'price']) }}"  class="btn btn-secondary w-100">
+                                                        <a href="{{ route('portofolio.update.harga.terkini', ['id_aset' => $index['aset']['id'], 'nama_aset' => $index['aset']['nama'], 'tipe' => 'price']) }}"  class="btn btn-secondary w-100">
                                                                 Gunakan Harga Terkini
                                                             </a>
                                                         </div>
@@ -423,7 +423,7 @@
                 <h5 class="modal-title">Tambah Transaksi</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('portofolioStore') }}" method="post" autocomplete="off">
+            <form action="{{ route('portofolio.store') }}" method="post" autocomplete="off">
                 @csrf
                 <div class="modal-body">
                     <div class="row">
@@ -535,7 +535,7 @@
                 <h5 class="modal-title">Kelola IHSG {{ \Carbon\Carbon::create($currentMonth)->locale('id')->translatedFormat('F') }} {{$selectedYear}}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('historisStore') }}" method="post" autocomplete="off">
+            <form action="{{ route('historis.store') }}" method="post" autocomplete="off">
                 @csrf
                 <div class="modal-body">
                     <div class="row mb-2">
@@ -592,7 +592,7 @@
                         <div class="col-lg-3">
                             <div class="mb-3">
                                 <label class="form-label">&nbsp </label>
-                                <a href="{{ route('portofolio-update-harga-real', ['id_aset' => '0', 'nama_aset' => 'COMPOSITE', 'tipe' => 'ihsg']) }}"   class="btn btn-secondary w-100">
+                                <a href="{{ route('portofolio.update.harga.terkini', ['id_aset' => '0', 'nama_aset' => 'COMPOSITE', 'tipe' => 'ihsg']) }}"   class="btn btn-secondary w-100">
                                     Harga Terkini
                                 </a>
                             </div>
@@ -624,7 +624,7 @@
 
         if (selectedSahamId) {
             // Correctly replace placeholders with actual values
-            const updatedHref = "{{ route('portofolio-update-harga-real') }}?id_aset=" + selectedSahamId + "&nama_aset=" + encodeURIComponent(selectedSahamName) + "&tipe=portofolio";
+            const updatedHref = "{{ route('portofolio.update.harga.terkini') }}?id_aset=" + selectedSahamId + "&nama_aset=" + encodeURIComponent(selectedSahamName) + "&tipe=portofolio";
 
             // Tampilkan di console untuk debugging
             console.log("Selected ID Saham:", selectedSahamId);

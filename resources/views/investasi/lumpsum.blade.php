@@ -31,10 +31,10 @@
 			<div class="card-header">
 				<ul class="nav nav-tabs card-header-tabs nav-fill" data-bs-toggle="tabs" role="tablist">
 					<li class="nav-item" role="presentation">
-						<a href="{{ route('investasi-lumpsum') }}" class="nav-link active" aria-selected="true" role="tab">Lumpsum</a>
+						<a href="{{ route('investasi.lumpsum') }}" class="nav-link active" aria-selected="true" role="tab">Lumpsum</a>
 					</li>
 					<li class="nav-item" role="presentation">
-						<a href="{{ route('investasi-target-lumpsum') }}" class="nav-link" aria-selected="false" role="tab" tabindex="-1">Target Lumpsum</a>
+						<a href="{{ route('investasi.target.lumpsum') }}" class="nav-link" aria-selected="false" role="tab" tabindex="-1">Target Lumpsum</a>
 					</li>
 				</ul>
 			</div>

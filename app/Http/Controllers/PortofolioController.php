@@ -288,7 +288,7 @@ class PortofolioController extends Controller
     {
         $filterValue = $request->input('jenisFilter');
 
-        return redirect()->route('portofolio-mutasi-dana')->with([
+        return redirect()->route('portofolio.mutasi.dana')->with([
             'filterValue' => $filterValue,
         ]);
     }
@@ -297,7 +297,7 @@ class PortofolioController extends Controller
     {
         $filterValue = $request->input('jenisFilter');
 
-        return redirect()->route('portofolio-historis')->with([
+        return redirect()->route('portofolio.historis')->with([
             'filterValue' => $filterValue,
         ]);
     }

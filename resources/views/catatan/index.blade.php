@@ -17,11 +17,11 @@
 		<a href="" class="btn btn-success d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-report" aria-label="Create new report">
 			<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
 		</a>   
-		<a href="{{ url('/permintaan-kategori') }}" class="btn btn-primary d-none d-sm-inline-block">
+		<a href="{{ route('permintaan.kategori') }}" class="btn btn-primary d-none d-sm-inline-block">
 			<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-category"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4h6v6h-6z" /><path d="M14 4h6v6h-6z" /><path d="M4 14h6v6h-6z" /><path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /></svg>
           		Tambah Kategori
       	</a>
-		<a href="{{ url('/permintaan-kategori') }}" class="btn btn-primary d-sm-none btn-icon" >
+		<a href="{{ route('permintaan.kategori') }}" class="btn btn-primary d-sm-none btn-icon" >
 			<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-category"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4h6v6h-6z" /><path d="M14 4h6v6h-6z" /><path d="M4 14h6v6h-6z" /><path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /></svg>
 		</a>       
 	</div>
@@ -82,7 +82,7 @@
 			<hr>
 			<div class="form-label">Date Filter</div>
 			<div class="col-auto d-print-none" >
-				<form class="row"id="filterForm" action="{{ route('catatan-filter') }}" method="POST">
+				<form class="row"id="filterForm" action="{{ route('catatan.filter') }}" method="POST">
 					@csrf
 					<div class="col-auto d-print-none input-group">
 						<select class="form-select" name="jenisFilter" id="jenisFilter">
@@ -376,13 +376,13 @@
 															<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 														</div>
 														@if (isset($item['kategori_pemasukan_id']))
-															<form action="{{route('updateCatatan', ['id'=> $item['id']])}}" method="post" autocomplete="off">
+															<form action="{{route('catatan.update', ['id'=> $item['id']])}}" method="post" autocomplete="off">
 																@csrf
 																<input type="text" name="id" id="id" class="form-control text-end id-input" autocomplete="off" hidden>
 																<input type="text" name="jenisedit" id="jenisedit"class="form-control text-end jenisedit" autocomplete="off" hidden>
 																<input type="text" name="created_at" id="created_at{{$item['id']}}" class="form-control text-end created_at" autocomplete="off" hidden>
 														@else
-															<form action="{{route('updateCatatan', ['id'=> $item['id']])}}" method="post" autocomplete="off">
+															<form action="{{route('catatan.update', ['id'=> $item['id']])}}" method="post" autocomplete="off">
 																@csrf
 																<input type="text" name="id" id="id" class="form-control text-end id-input" autocomplete="off" hidden>
 																<input type="text" name="jenisedit" id="jenisedit"class="form-control text-end jenisedit" autocomplete="off" hidden>
@@ -491,11 +491,11 @@
 																</div>
 																<div class="col">
 																	@if (isset($item['kategori_pemasukan_id']))
-																		<form method="POST" action="{{route('hapusCatatan', ['id' => $item['id']] )}}">
+																		<form method="POST" action="{{route('catatan.hapus', ['id' => $item['id']] )}}">
 																			@csrf
 																			<input type="text" id="jenishapus" name="jenishapus" class="form-control text-end" autocomplete="off" hidden>
 																	@else
-																		<form method="POST" action="{{route('hapusCatatan', ['id' => $item['id']])}}">
+																		<form method="POST" action="{{route('catatan.hapus', ['id' => $item['id']])}}">
 																			@csrf
 																			<input type="text" id="jenishapus" name="jenishapus" class="form-control text-end" autocomplete="off" hidden>
 																	@endif

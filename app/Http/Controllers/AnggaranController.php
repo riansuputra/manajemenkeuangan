@@ -168,7 +168,7 @@ class AnggaranController extends Controller
 
         if ($response->status() == 201) {
             $this->updateAuthCookie($request->auth, $response['auth']);
-            return redirect()->route('anggaranWeek')->with('success', $response["message"]);
+            return redirect()->route('anggaran.week')->with('success', $response["message"]);
         } else if (!empty($response["errors"])) {
             return back()->with('error', $response["message"]);
         } else {
@@ -216,7 +216,7 @@ class AnggaranController extends Controller
 
         if ($response->status() == 200) {
             $this->updateAuthCookie($request->auth, $response['auth']);
-            return redirect()->route('anggaranWeek')->with('success', $response["message"]);
+            return redirect()->route('anggaran.week')->with('success', $response["message"]);
         } else if (!empty($response["errors"])) {
             return back()->with('error', $response["message"]);
         } else {
@@ -235,7 +235,7 @@ class AnggaranController extends Controller
 
         if ($response->status() == 200) {
             $this->updateAuthCookie($request->auth, $response['auth']);
-            return redirect()->route('anggaranWeek')->with('success', $response["message"]);
+            return redirect()->route('anggaran.week')->with('success', $response["message"]);
         } else if (!empty($response["errors"])) {
             return back()->with('error', $response["message"]);
         } else {

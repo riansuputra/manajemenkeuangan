@@ -18,51 +18,28 @@ use App\Http\Controllers\SaldoController;
 
 Route::middleware(['throttle:100,1'])->group(function() {
     
-    Route::get('/language/{locale}', function ($locale) {
-        if (in_array($locale, ['en', 'id'])) {
-            session(['locale' => $locale]);
-            app()->setLocale($locale);
-            // dd(file_exists(resource_path('lang/id/messages.php')));
-
-            // dd(app()->getLocale());  // Periksa locale yang aktif
-        }
-        return redirect()->back();  // Redirect ke halaman utama tanpa membawa query string
-    });
-
+    Route::get('/bahasa/{locale}', [LanguageController::class, 'switch'])->name('lang.switch');
+    
     Route::middleware([App\Http\Middleware\GuestMiddleware::class])->group(function()
     {
-        Route::get('/register',[AuthController::class,'registerPage'])->name('registerPage');
-        Route::post('/register/auth',[AuthController::class,'register'])->name('register');
-        Route::get('/login',[AuthController::class,'loginPage'])->name('loginPage');
-        Route::post('/login/auth',[AuthController::class,'login'])->name('login');
-        
-        Route::post('/loginAdmin/auth',[AuthController::class,'loginAdmin'])->name('loginAdmin');
-        Route::get('/loginAdmin',[AuthController::class,'loginAdminPage'])->name('loginAdminPage');
-        
-        Route::get('lang/{lang}', [LanguageController::class, 'switch'])->name('lang.switch');
+        Route::get('/register', [AuthController::class, 'registerPage'])->name('register.page');
+        Route::post('/register/auth', [AuthController::class, 'register'])->name('register');
+        Route::get('/login', [AuthController::class, 'loginPage'])->name('login.page');
+        Route::post('/login/auth', [AuthController::class, 'login'])->name('login');
+        Route::post('/login/admin/auth', [AuthController::class, 'loginAdmin'])->name('login.admin');
+        Route::get('/login/admin', [AuthController::class, 'loginAdminPage'])->name('login.admin.page');
     });
 
     Route::middleware([App\Http\Middleware\AdminUserMiddleware::class])->group(function()
     {
-        Route::get('lang/{lang}', [App\Http\Controllers\LanguageController::class, 'switch'])->name('lang.switch');
-        Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
-        Route::post('/dashboard-filter',[DashboardController::class,'filter'])->name('dashboard-filter');
-        Route::post('/mutasi-filter',[PortofolioController::class,'filterMutasi'])->name('mutasi-filter');
-        Route::post('/historis-filter',[PortofolioController::class,'filterHistoris'])->name('historis-filter');
-        Route::post('/portofolio-filter',[PortofolioController::class,'filterPortofolio'])->name('portofolio-filter');
         Route::get('/logout',[AuthController::class,'logout'])->name('logout');
-        // Route::get('/catatan',[CatatanController::class,'index'])->name('catatan');
-        // Route::get('/catatan', function () {return view('catatan.index');})->name('catatan');
-        // Route::get('/investasi', function () {return view('investasi.index');});
-        // Route::get('/profil', function () {return view('profil.index');});
-        
     });
 
     Route::middleware([App\Http\Middleware\AdminMiddleware::class])->group(function()
     {
         
         Route::get('/admin', [AdminController::class, 'index'])->name('admin-layout');
-        Route::get('/dashboard-admin', [AdminController::class, 'dashboard'])->name('admin-dashboard');
+        Route::get('/dashboard-admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
         Route::get('/permintaan-kategori-admin', [AdminController::class, 'permintaanKategoriAdmin'])->name('permintaanKategoriAdmin');
         Route::post('/kategori-store', [AdminController::class, 'storeKategori'])->name('kategoriStore');
@@ -84,72 +61,65 @@ Route::middleware(['throttle:100,1'])->group(function() {
 
     Route::middleware([App\Http\Middleware\UserMiddleware::class])->group(function()
     {
-        Route::get('/catatan-keuangan', [CatatanController::class, 'index'])->name('catatanHarian');
-        Route::post('/catatan-keuangan', [CatatanController::class, 'store'])->name('catatan');
-        Route::post('/catatan-filter',[CatatanController::class,'filter'])->name('catatan-filter');
-        Route::get('/catatan-keuangan/{id}', [CatatanController::class, 'show'])->name('detailCatatan');
-        Route::get('/catatan-keuangan/{catatan}', [CatatanController::class, 'edit'])->name('hapus-catatan');
-        Route::post('/update-catatan-keuangan/{id}', [CatatanController::class, 'update'])->name('updateCatatan');
-        Route::post('/delete-catatan-keuangan/{id}', [CatatanController::class, 'destroy'])->name('hapusCatatan');
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::post('/dashboard/filter', [DashboardController::class, 'filter'])->name('dashboard.filter');
 
-        Route::get('/catatan-umum', [CatatanUmumController::class, 'index'])->name('catatanUmum');
-        Route::post('/catatan-umum', [CatatanUmumController::class, 'store'])->name('simpanCatatanUmum');
-        Route::get('/catatan-umum/{id}', [CatatanUmumController::class, 'show'])->name('detailCatatanUmum');
-        Route::get('/catatan-umum/{catatan}', [CatatanUmumController::class, 'edit'])->name('hapusCatatanUmum');
-        Route::post('/update-catatan-umum/{id}', [CatatanUmumController::class, 'update'])->name('updateCatatanUmum');
-        Route::post('/delete-catatan-umum/{id}', [CatatanUmumController::class, 'destroy'])->name('hapusCatatanUmum');
+        Route::get('/catatan/keuangan', [CatatanController::class, 'index'])->name('catatan.keuangan');
+        Route::post('/catatan/keuangan', [CatatanController::class, 'store'])->name('catatan.keuangan.store');
+        Route::post('/catatan/filter', [CatatanController::class, 'filter'])->name('catatan.filter');
+        Route::get('/catatan/keuangan/{id}', [CatatanController::class, 'show'])->name('catatan.detail');
+        Route::post('/update/catatan/keuangan/{id}', [CatatanController::class, 'update'])->name('catatan.update');
+        Route::post('/delete/catatan/keuangan/{id}', [CatatanController::class, 'destroy'])->name('catatan.hapus');
 
-        Route::get('/anggaran-mingguan', [AnggaranController::class, 'index'])->name('anggaranWeek')->defaults('view', 'week');
-        Route::get('/anggaran-bulanan', [AnggaranController::class, 'index'])->name('anggaranMonth')->defaults('view', 'month');
-        Route::get('/anggaran-tahunan', [AnggaranController::class, 'index'])->name('anggaranYear')->defaults('view', 'year');
-        Route::post('/anggaran-store', [AnggaranController::class, 'store'])->name('anggaranstore');
-        Route::post('/update-anggaran/{id}', [AnggaranController::class, 'update'])->name('updateAnggaran');
-        Route::post('/delete-anggaran/{id}', [AnggaranController::class, 'destroy'])->name('hapusAnggaran');
+        Route::get('/permintaan-kategori', [PengaturanController::class, 'indexPermintaanKategori'])->name('permintaan.kategori');
+        Route::post('/permintaan-kategori/store', [PengaturanController::class, 'storePermintaanKategori'])->name('permintaan.kategori.store');
 
-        Route::get('/investasi-lumpsum', [InvestasiController::class, 'lumpsum'])->name('investasi-lumpsum');
-        Route::get('/investasi-bulanan', [InvestasiController::class, 'bulanan'])->name('investasi-bulanan');
-        Route::get('/investasi-target-lumpsum', [InvestasiController::class, 'targetLumpsum'])->name('investasi-target-lumpsum');
-        Route::get('/investasi-target-bulanan', [InvestasiController::class, 'targetBulanan'])->name('investasi-target-bulanan');
+        Route::get('/catatan/umum', [CatatanUmumController::class, 'index'])->name('catatan.umum');
+        Route::post('/catatan/umum', [CatatanUmumController::class, 'store'])->name('catatan.umum.store');
+        Route::get('/catatan/umum/{id}', [CatatanUmumController::class, 'show'])->name('catatan.umum.detail');
+        Route::get('/catatan/umum/{catatan}', [CatatanUmumController::class, 'edit'])->name('catatan.umum.hapus');
+        Route::post('/update/catatan/umum/{id}', [CatatanUmumController::class, 'update'])->name('catatan.umum');
+        Route::post('/delete/catatan/umum/{id}', [CatatanUmumController::class, 'destroy'])->name('catatan.umum');
+
+        Route::get('/anggaran/mingguan', [AnggaranController::class, 'index'])->name('anggaran.week')->defaults('view', 'week');
+        Route::get('/anggaran/bulanan', [AnggaranController::class, 'index'])->name('anggaran.month')->defaults('view', 'month');
+        Route::get('/anggaran/tahunan', [AnggaranController::class, 'index'])->name('anggaran.year')->defaults('view', 'year');
+        Route::post('/anggaran/store', [AnggaranController::class, 'store'])->name('anggaran.store');
+        Route::post('/update/anggaran/{id}', [AnggaranController::class, 'update'])->name('anggaran.update');
+        Route::post('/delete/anggaran/{id}', [AnggaranController::class, 'destroy'])->name('anggaran.hapus');
 
         Route::get('/kurs', [KursController::class, 'index'])->name('kurs');
         Route::get('/dividen', [DividenController::class, 'index'])->name('dividen');
         Route::get('/berita', [PortofolioController::class, 'berita'])->name('berita');
 
-        Route::get('/pinjaman', [PinjamanController::class, 'index'])->name('pinjaman');
-        Route::get('/pinjaman-bunga-tetap', [PinjamanController::class, 'bungaTetap'])->name('bungaTetap');
-        Route::get('/pinjaman-bunga-floating', [PinjamanController::class, 'bungaFloating'])->name('bungaFloating');
-        Route::get('/pinjaman-bunga-efektif', [PinjamanController::class, 'bungaEfektif'])->name('bungaEfektif');
+        Route::get('/investasi/lumpsum', [InvestasiController::class, 'lumpsum'])->name('investasi.lumpsum');
+        Route::get('/investasi/bulanan', [InvestasiController::class, 'bulanan'])->name('investasi.bulanan');
+        Route::get('/investasi/target/lumpsum', [InvestasiController::class, 'targetLumpsum'])->name('investasi.target.lumpsum');
+        Route::get('/investasi/target/bulanan', [InvestasiController::class, 'targetBulanan'])->name('investasi.target.bulanan');
 
-        Route::get('/pengaturan', [PengaturanController::class, 'index'])->name('settings');
-        Route::get('/permintaan-kategori', [PengaturanController::class, 'indexPermintaanKategori'])->name('permintaanKategori');
-        Route::post('/permintaan-kategori-store', [PengaturanController::class, 'storePermintaanKategori'])->name('permintaanKategoriStore');
+        Route::get('/pinjaman/bunga/tetap', [PinjamanController::class, 'bungaTetap'])->name('pinjaman.bunga.tetap');
+        Route::get('/pinjaman/bunga/efektif', [PinjamanController::class, 'bungaEfektif'])->name('pinjaman.bunga.efektif');
+
+        Route::get('/portofolio/mutasi-dana', [PortofolioController::class, 'mutasiDana'])->name('portofolio.mutasi.dana');
+        Route::post('/saldo/store', [SaldoController::class, 'store'])->name('saldo.store');
+        Route::post('/mutasi/filter',[PortofolioController::class,'filterMutasi'])->name('mutasi.filter');
 
         Route::get('/portofolio', [PortofolioController::class, 'portofolio'])->name('portofolio');
-        Route::post('/portofolio-store', [PortofolioController::class, 'store'])->name('portofolioStore');
-        Route::post('/portofolio-jual', [PortofolioController::class, 'storeJual'])->name('portofolioStoreJual');
-        // Route::post('/portofolio-update-harga', [PortofolioController::class, 'updateHarga'])->name('portofolioStoretst');
-        Route::get('/portofolio-mutasi-dana', [PortofolioController::class, 'mutasiDana'])->name('portofolio-mutasi-dana');
-        Route::get('/portofolio-kinerja', [PortofolioController::class, 'kinerja'])->name('portofolio-kinerja');
-        Route::get('/portofolio-historis', [PortofolioController::class, 'historis'])->name('portofolio-historis');
+        Route::post('/portofolio-filter',[PortofolioController::class,'filterPortofolio'])->name('portofolio.filter');
+        Route::post('/portofolio/store', [PortofolioController::class, 'store'])->name('portofolio.store');
+        Route::get('/portofolio/update-harga/terkini', [PortofolioController::class, 'updateHargaReal'])->name('portofolio.update.harga.terkini');
+        Route::post('/portofolio/update-harga', [PortofolioController::class, 'updateHarga'])->name('portofolio.update.harga');
+        Route::post('/portofolio/jual', [PortofolioController::class, 'storeJual'])->name('portofolio.store.jual');
+        
+        Route::get('/portofolio/historis', [PortofolioController::class, 'historis'])->name('portofolio.historis');
+        Route::post('/historis/store', [PortofolioController::class, 'historisStore'])->name('historis.store');
+        Route::post('/historis/filter',[PortofolioController::class,'filterHistoris'])->name('historis.filter');
 
-        Route::get('/portofolio-update-harga-real', [PortofolioController::class, 'updateHargaReal'])->name('portofolio-update-harga-real');
-        Route::post('/portofolio-update-harga', [PortofolioController::class, 'updateHarga'])->name('portofolio-update-harga');
-
-        Route::post('/historis-store', [PortofolioController::class, 'historisStore'])->name('historisStore');
-
-        Route::post('/saldo-store', [SaldoController::class, 'store'])->name('saldoStore');
-
-        Route::get('/informasi-akun', [PengaturanController::class, 'indexInformasiAkun'])->name('informasiAkun');
-        Route::delete('/hapus-portofolio', [PengaturanController::class, 'destroyPortofolio'])->name('hapusPorto');
-        Route::delete('/hapus-keuangan', [PengaturanController::class, 'destroyKeuangan'])->name('hapusKeuangan');
-        Route::delete('/hapus-catatan', [PengaturanController::class, 'destroyCatatan'])->name('hapusCatatanInfo');
-        Route::post('/update', [PengaturanController::class, 'updateUser'])->name('updateUser');
+        Route::get('/informasi-akun', [PengaturanController::class, 'indexInformasiAkun'])->name('informasi.akun');
+        Route::delete('/hapus/portofolio', [PengaturanController::class, 'destroyPortofolio'])->name('informasi.hapus.portofolio');
+        Route::delete('/hapus/keuangan', [PengaturanController::class, 'destroyKeuangan'])->name('informasi.hapus.keuangan');
+        Route::delete('/hapus/catatan', [PengaturanController::class, 'destroyCatatan'])->name('informasi.hapus.catatan');
+        Route::post('/update', [PengaturanController::class, 'updateUser'])->name('user.update');
         Route::get('/tentang', [PengaturanController::class, 'indexTentang'])->name('tentang');
-        // Route::get('/histori', [PortofolioController::class, 'historis'])->name('portofolio-historis');
-
-    });
-
-    Route::get('/test', function () {
-        return view('catatan.indexUmum');
     });
 });

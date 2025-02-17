@@ -101,7 +101,7 @@
                                                     </a>
                                                 </div>
                                                 <div class="col">
-                                                    <form method="POST" action="{{route('hapusCatatanUmum', ['id' => $catatan['id']])}}">
+                                                    <form method="POST" action="{{route('catatan.umum.hapus', ['id' => $catatan['id']])}}">
                                                         @csrf
                                                         <button type="submit" class="btn btn-danger w-100" data-bs-dismiss="modal">
                                                             Hapus
@@ -124,7 +124,7 @@
                                     </div>
                                     <div class="modal-status bg-warning"></div>
                                     <div class="modal-body">
-                                        <form action="{{route('updateCatatanUmum', ['id'=> $catatan['id']])}}" method="post" autocomplete="off">
+                                        <form action="{{route('catatan.umum.update', ['id'=> $catatan['id']])}}" method="post" autocomplete="off">
                                         @csrf
                                         <input type="text" name="id" id="id" class="form-control text-end id-input" autocomplete="off" hidden>
                                         <div class="mb-3">
@@ -248,7 +248,7 @@
                                                     </a>
                                                 </div>
                                                 <div class="col">
-                                                    <form method="POST" action="{{route('hapusCatatanUmum', ['id' => $catatan['id']])}}">
+                                                    <form method="POST" action="{{route('catatan.umum.hapus', ['id' => $catatan['id']])}}">
                                                         @csrf
                                                         <button type="submit" class="btn btn-danger w-100" data-bs-dismiss="modal">
                                                             Hapus
@@ -271,7 +271,7 @@
                                     </div>
                                     <div class="modal-status bg-warning"></div>
                                     <div class="modal-body">
-                                        <form action="{{route('updateCatatanUmum', ['id'=> $catatan['id']])}}" method="post" autocomplete="off">
+                                        <form action="{{route('catatan.umum.update', ['id'=> $catatan['id']])}}" method="post" autocomplete="off">
                                         @csrf
                                         <input type="text" name="id" id="id" class="form-control text-end id-input" autocomplete="off" hidden>
                                         <div class="mb-3">
@@ -395,7 +395,7 @@
                                                     </a>
                                                 </div>
                                                 <div class="col">
-                                                    <form method="POST" action="{{route('hapusCatatanUmum', ['id' => $catatan['id']])}}">
+                                                    <form method="POST" action="{{route('catatan.umum.hapus', ['id' => $catatan['id']])}}">
                                                         @csrf
                                                         <button type="submit" class="btn btn-danger w-100" data-bs-dismiss="modal">
                                                             Hapus
@@ -418,7 +418,7 @@
                                     </div>
                                     <div class="modal-status bg-warning"></div>
                                     <div class="modal-body">
-                                        <form action="{{route('updateCatatanUmum', ['id'=> $catatan['id']])}}" method="post" autocomplete="off">
+                                        <form action="{{route('catatan.umum.update', ['id'=> $catatan['id']])}}" method="post" autocomplete="off">
                                         @csrf
                                         <input type="text" name="id" id="id" class="form-control text-end id-input" autocomplete="off" hidden>
                                         <div class="mb-3">
@@ -542,7 +542,7 @@
                                                     </a>
                                                 </div>
                                                 <div class="col">
-                                                    <form method="POST" action="{{route('hapusCatatanUmum', ['id' => $catatan['id']])}}">
+                                                    <form method="POST" action="{{route('catatan.umum.hapus', ['id' => $catatan['id']])}}">
                                                         @csrf
                                                         <button type="submit" class="btn btn-danger w-100" data-bs-dismiss="modal">
                                                             Hapus
@@ -565,7 +565,7 @@
                                     </div>
                                     <div class="modal-status bg-warning"></div>
                                     <div class="modal-body">
-                                        <form action="{{route('updateCatatanUmum', ['id'=> $catatan['id']])}}" method="post" autocomplete="off">
+                                        <form action="{{route('catatan.umum.update', ['id'=> $catatan['id']])}}" method="post" autocomplete="off">
                                         @csrf
                                         <input type="text" name="id" id="id" class="form-control text-end id-input" autocomplete="off" hidden>
                                         <div class="mb-3">
@@ -625,7 +625,7 @@
             </div>
             <div class="modal-status bg-success"></div>
             <div class="modal-body">
-                <form action="{{route('simpanCatatanUmum')}}" method="post" autocomplete="off">
+                <form action="{{route('catatan.umum.store')}}" method="post" autocomplete="off">
 				@csrf
 				<div class="mb-3">
 					<label class="form-label required">Judul</label>

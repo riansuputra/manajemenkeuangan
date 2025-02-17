@@ -56,7 +56,7 @@ class SaldoController extends Controller
         // dd($response->json());
         if ($response->status() == 201) {
             $this->updateAuthCookie($request->auth, $response['auth']);
-            return redirect()->route('portofolio-mutasi-dana')->with('success', $response["message"]);
+            return redirect()->route('portofolio.mutasi.dana')->with('success', $response["message"]);
         } else if (!empty($response["errors"])) {
             return back()->with('error', $response["message"]);
         } else if ($response['status'] == 'warning') {

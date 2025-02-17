@@ -51,7 +51,7 @@ class CatatanUmumController extends Controller
                         ->post(env('API_URL') . '/catatan', $input);
     
         if ($response->status() == 201) {
-            return redirect()->route('catatanUmum')->with('success', $response->json()['message'] ?? 'Data berhasil disimpan');
+            return redirect()->route('catatan.umum')->with('success', $response->json()['message'] ?? 'Data berhasil disimpan');
         } elseif ($response->failed() && $response->json('errors')) {
             return back()->withErrors($response->json()['errors'])->withInput();
         } else {
@@ -73,7 +73,7 @@ class CatatanUmumController extends Controller
                         ->patch(env('API_URL') . '/catatan/'.$id, $input);
     
         if ($response->status() == 200) {
-            return redirect()->route('catatanUmum')->with('success', $response->json()['message'] ?? 'Data berhasil diubah');
+            return redirect()->route('catatan.umum')->with('success', $response->json()['message'] ?? 'Data berhasil diubah');
         } elseif ($response->failed() && $response->json('errors')) {
             return back()->withErrors($response->json()['errors'])->withInput();
         } else {
@@ -88,7 +88,7 @@ class CatatanUmumController extends Controller
 
         if ($response->status() == 200) {
             $this->updateAuthCookie($request->auth, $response['auth']);
-            return redirect()->route('catatanUmum')->with('success', $response["message"]);
+            return redirect()->route('catatan.umum')->with('success', $response["message"]);
         } else if (!empty($response["errors"])) {
             return back()->with('error', $response["message"]);
         } else {

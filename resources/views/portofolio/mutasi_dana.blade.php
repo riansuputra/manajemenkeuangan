@@ -10,7 +10,7 @@
     <div class="text-muted mt-1">Tahun {{$selectedYear}}</div>
 </div>
 <div class="col-auto d-print-none" >
-	<form class="row"id="filterForm" action="{{ route('mutasi-filter') }}" method="POST">
+	<form class="row"id="filterForm" action="{{ route('mutasi.filter') }}" method="POST">
 		@csrf
 		<div class="col-auto d-print-none input-group">
             <select class="form-select" name="jenisFilter" id="jenisFilter">
@@ -334,7 +334,7 @@
                 <h5 class="modal-title">Kelola Dana</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('saldoStore') }}" method="post" autocomplete="off">
+            <form action="{{ route('saldo.store') }}" method="post" autocomplete="off">
                 @csrf
                 <div class="modal-body">
                     <div class="row">

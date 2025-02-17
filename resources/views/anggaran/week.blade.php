@@ -29,13 +29,13 @@
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <a href="{{ route('anggaranWeek') }}" class="nav-link active" aria-selected="true" role="tab">Mingguan</a>
+                            <a href="{{ route('anggaran.week') }}" class="nav-link active" aria-selected="true" role="tab">Mingguan</a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a href="{{ route('anggaranMonth') }}" class="nav-link" aria-selected="false" role="tab" tabindex="-1">Bulanan</a>
+                            <a href="{{ route('anggaran.month') }}" class="nav-link" aria-selected="false" role="tab" tabindex="-1">Bulanan</a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a href="{{ route('anggaranYear') }}" class="nav-link" aria-selected="false" role="tab" tabindex="-1">Tahunan</a>
+                            <a href="{{ route('anggaran.year') }}" class="nav-link" aria-selected="false" role="tab" tabindex="-1">Tahunan</a>
                         </li>
                         <li class="nav-item ms-auto">
                             <a class="nav-link disabled text-muted" href="">
@@ -122,7 +122,7 @@
                                                 <h5 class="modal-title">Edit Anggaran<span id="modaledittitle_{{$data['id']}}" name="modaledittitle"> </span>Mingguan</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
-                                            <form action="{{ route('updateAnggaran', ['id'=> $data['id']]) }}" method="post" autocomplete="off">
+                                            <form action="{{ route('anggaran.update', ['id'=> $data['id']]) }}" method="post" autocomplete="off">
                                                 @csrf
                                                 <div class="modal-status bg-warning"></div>
                                                 <div class="modal-body">
@@ -213,7 +213,7 @@
                                                             </a>
                                                         </div>
                                                         <div class="col">
-                                                            <form method="POST" action="{{route('hapusAnggaran', ['id' => $data['id']] )}}">
+                                                            <form method="POST" action="{{route('anggaran.hapus', ['id' => $data['id']] )}}">
                                                                 @csrf
                                                                 <button type="submit" class="btn btn-danger w-100" data-bs-dismiss="modal">
                                                                     Hapus
@@ -257,7 +257,7 @@
                 <h5 class="modal-title">Tambah Anggaran</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('anggaranstore') }}" method="post" autocomplete="off">
+            <form action="{{ route('anggaran.store') }}" method="post" autocomplete="off">
                 @csrf
                 <div class="modal-status bg-success"></div>
                 <div class="modal-body">

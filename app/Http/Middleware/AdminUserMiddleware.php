@@ -24,6 +24,6 @@ class AdminUserMiddleware
                 return $next($request);
             }
         }
-        return redirect()->route('loginPage');
+        return redirect()->route('login.page');
     }
 }

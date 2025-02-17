@@ -16,7 +16,7 @@
 		<div class="row">
 			<div class="col d-flex flex-column">
 				<div class="card-body">
-				<form action="{{route('updateUser')}}" method="post" autocomplete="off">
+				<form action="{{route('user.update')}}" method="post" autocomplete="off">
 					@csrf
 						<h3 class="card-title">{{ __('messages.profil_akun') }}</h3>
 						<div class="row g-3">
@@ -46,7 +46,7 @@
 							<div class="col-auto">
 								<h3 class="card-title mt-4">{{ __('messages.kategori') }} :</h3>
 								<div>
-									<a href="{{url('/permintaan-kategori')}}" class="btn bg-primary text-white">
+									<a href="{{route('permintaan.kategori')}}" class="btn bg-primary text-white">
 										<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
 										{{ __('messages.permintaan_kategori') }}
 									</a>
@@ -119,7 +119,7 @@
 							</a>
 						</div>
 						<div class="col">
-							<form method="POST" action="{{route('hapusKeuangan')}}">
+							<form method="POST" action="{{route('informasi.keuangan.hapus')}}">
 								@csrf
 								@method('DELETE')
 								<button type="submit" class="btn btn-danger w-100" data-bs-dismiss="modal">
@@ -154,7 +154,7 @@
 							</a>
 						</div>
 						<div class="col">
-							<form method="post" action="{{route('hapusCatatanInfo')}}">
+							<form method="post" action="{{route('informasi.hapus.catatan')}}">
 								@csrf
 								@method('DELETE')
 								<button type="submit" class="btn btn-danger w-100" data-bs-dismiss="modal">
@@ -189,7 +189,7 @@
 							</a>
 						</div>
 						<div class="col">
-							<form method="post" action="{{route('hapusPorto')}}">
+							<form method="post" action="{{route('informasi.portofolio.hapus')}}">
 								@csrf
 								@method('DELETE')
 								<button type="submit" class="btn btn-danger w-100" data-bs-dismiss="modal">

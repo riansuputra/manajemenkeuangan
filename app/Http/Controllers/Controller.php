@@ -42,7 +42,7 @@ class Controller extends BaseController
         }        
         if($new_auth['user_type'] != $old_auth['user_type'] || ($new_auth['user_type'] != 'guest' && $new_auth['token'] != $old_auth['token'])){
             Cookie::expire('auth');
-            return redirect()->route('loginPage');
+            return redirect()->route('login.page');
         }
     }
 

@@ -33,15 +33,12 @@ class CatatanController extends Controller
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/pengeluaran'),
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/kategori-pemasukan'),
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/kategori-pengeluaran'),
-            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/kategori-pribadi')
         ]);
-
-        if ($responses[0]->successful() && $responses[1]->successful() && $responses[2]->successful() && $responses[3]->successful() && $responses[4]->successful()) {
+        if ($responses[0]->successful() && $responses[1]->successful() && $responses[2]->successful() && $responses[3]->successful()) {
             $pemasukanData = collect($responses[0]->json()['data']['pemasukan']);
             $pengeluaranData = collect($responses[1]->json()['data']['pengeluaran']);
             $kategoriPemasukanData = collect($responses[2]->json()['data']['kategori_pemasukan']);
             $kategoriPengeluaranData = collect($responses[3]->json()['data']['kategori_pengeluaran']);
-            $kategoriPribadiData = collect($responses[4]->json()['data']['kategori_pribadi']);
 
             $combinedData3 = $pemasukanData->merge($pengeluaranData);
             $combinedData2 = $this->applyDateFilters($combinedData3, $jenisFilter, $filterValue, $filterValue2);
@@ -188,7 +185,7 @@ class CatatanController extends Controller
                 break;
         }
 
-        return redirect()->route('catatanHarian')->with([
+        return redirect()->route('catatan.keuangan')->with([
             'jenisFilter' => $jenisFilter,
             'filterValue' => $filterValue,
             'filterValue2' => $filterValue2,
@@ -231,7 +228,7 @@ class CatatanController extends Controller
 
         if($response->status() == 200){
             
-            return redirect()->route('loginPage')->with('success',$response["message"]);
+            return redirect()->route('login.page')->with('success',$response["message"]);
         }else if(!empty($response["errors"])){
             return back()->with('success',$response["message"]);
         }else{
@@ -298,7 +295,7 @@ class CatatanController extends Controller
 
             if($response->status() == 200){
             
-                return redirect()->route('catatanHarian')->with('success',$response["message"]);
+                return redirect()->route('catatan.keuangan')->with('success',$response["message"]);
             }else if(!empty($response["errors"])){
                 return back()->with('success',$response["message"]);
             }else{
@@ -334,7 +331,7 @@ class CatatanController extends Controller
 
             if($response->status() == 200){
             
-                return redirect()->route('catatanHarian')->with('success',$response["message"]);
+                return redirect()->route('catatan.keuangan')->with('success',$response["message"]);
             }else if(!empty($response["errors"])){
                 return back()->with('success',$response["message"]);
             }else{
@@ -364,7 +361,7 @@ class CatatanController extends Controller
 
         if($response->status() == 200){
             
-            return redirect()->route('catatanHarian')->with('success',$response["message"]);
+            return redirect()->route('catatan.keuangan')->with('success',$response["message"]);
         }else if(!empty($response["errors"])){
             return back()->with('success',$response["message"]);
         }else{

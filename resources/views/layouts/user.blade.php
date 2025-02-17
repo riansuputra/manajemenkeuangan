@@ -231,11 +231,11 @@
                     						</span>
                   						</a>
                   						<div class="dropdown-menu">
-                    						<a class="dropdown-item" href="{{ url('language/en') }}">
+                    						<a class="dropdown-item" href="{{ url('bahasa/en') }}">
 					  							<span class="flag flag-country-us"></span>
 													&nbsp English
                     						</a>
-											<a class="dropdown-item" href="{{ url('language/id') }}">
+											<a class="dropdown-item" href="{{ url('bahasa/id') }}">
 					  							<span class="flag flag-country-id"></span>
                       								&nbsp Indonesia
                     						</a>
@@ -298,7 +298,7 @@
             		<h5 class="modal-title">Tambah Catatan</h5>
             		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           		</div>
-		  		<form action="{{ route('catatan') }}" method="post" autocomplete="off">
+		  		<form action="{{ route('catatan.keuangan.store') }}" method="post" autocomplete="off">
 					@csrf
 					<div class="modal-status bg-success"></div>
           			<div class="modal-body">

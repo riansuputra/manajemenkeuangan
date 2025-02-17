@@ -70,7 +70,7 @@
 		</div>
 	</div>
 	<div class="text-center mt-3">
-		Sudah punya akun? <a href="{{ url('login') }}" tabindex="-1">Masuk</a>
+		Sudah punya akun? <a href="{{ route('login') }}" tabindex="-1">Masuk</a>
 	</div>
 </div>
 @endsection

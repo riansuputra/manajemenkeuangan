@@ -41,7 +41,7 @@
 					</div>
 				</div>
 				<span class="form-label-description">
-					<a href="./forgot-password.html">Lupa password?</a>
+					<a href="">Lupa password?</a>
 				</span>
 				<br>
 				<div class="form-footer mb-2">
@@ -52,7 +52,7 @@
 	</div>
 	<div class="text-center mt-3">
 		Anda belum memiliki akun? 
-		<a href="{{ url('register') }}" tabindex="-1">Daftar</a>
+		<a href="{{ route('register') }}" tabindex="-1">Daftar</a>
 	</div>
 </div>
 @endsection

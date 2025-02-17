@@ -61,7 +61,7 @@ class PengaturanController extends Controller
 
         if ($response->status() == 201) {
             $this->updateAuthCookie($request->auth, $response['auth']);
-            return redirect()->route('permintaanKategori')->with('success', $response["message"]);
+            return redirect()->route('permintaan.kategori')->with('success', $response["message"]);
         } else if (!empty($response["errors"])) {
             return back()->with('error', $response["message"]);
         } else {
@@ -105,7 +105,7 @@ class PengaturanController extends Controller
 
         if ($response->status() == 200) {
             $this->updateAuthCookie($request->auth, $response['auth']);
-            return redirect()->route('informasiAkun')->with('success', $response["message"]);
+            return redirect()->route('informasi.akun')->with('success', $response["message"]);
         } else {
             return back()->with('error', $response["message"]);
         }
@@ -118,7 +118,7 @@ class PengaturanController extends Controller
 
         if ($response->status() == 200) {
             $this->updateAuthCookie($request->auth, $response['auth']);
-            return redirect()->route('informasiAkun')->with('success', $response["message"]);
+            return redirect()->route('informasi.akun')->with('success', $response["message"]);
         } else {
             return back()->with('error', $response["message"]);
         }
@@ -131,7 +131,7 @@ class PengaturanController extends Controller
 
         if ($response->status() == 200) {
             $this->updateAuthCookie($request->auth, $response['auth']);
-            return redirect()->route('informasiAkun')->with('success', $response["message"]);
+            return redirect()->route('informasi.akun')->with('success', $response["message"]);
         } else {
             return back()->with('error', $response["message"]);
         }
@@ -150,7 +150,7 @@ class PengaturanController extends Controller
     
         if ($response->status() == 200) {
             $this->updateAuthCookie($request->auth, $response['auth']);
-            return redirect()->route('informasiAkun')->with('success', $response->json()['message'] ?? 'Data berhasil diubah');
+            return redirect()->route('informasi.akun')->with('success', $response->json()['message'] ?? 'Data berhasil diubah');
         } elseif ($response->failed() && $response->json('errors')) {
             return back()->withErrors($response->json()['errors'])->withInput();
         } else {

@@ -15,7 +15,7 @@
 	<div class="col-lg-12">
 		<div class="card mb-3">
 			<div class="card-body">
-				<form action="{{ route('permintaanKategoriStore') }}" method="post" autocomplete="off">
+				<form action="{{ route('permintaan.kategori.store') }}" method="post" autocomplete="off">
 					@csrf
 					<h3 class="card-title">Tambah Permintaan Kategori</h3>
 					<div class="row">
