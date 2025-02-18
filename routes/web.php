@@ -69,6 +69,7 @@ Route::middleware(['throttle:100,1'])->group(function() {
 
         Route::get('/permintaan-kategori', [PengaturanController::class, 'indexPermintaanKategori'])->name('permintaan.kategori');
         Route::post('/permintaan-kategori/store', [PengaturanController::class, 'storePermintaanKategori'])->name('permintaan.kategori.store');
+        Route::post('/permintaan-kategori/update/{id}', [PengaturanController::class, 'updatePermintaanKategori'])->name('permintaan.kategori.update');
 
         Route::get('/catatan/umum', [CatatanUmumController::class, 'index'])->name('catatan.umum');
         Route::post('/catatan/umum', [CatatanUmumController::class, 'store'])->name('catatan.umum.store');

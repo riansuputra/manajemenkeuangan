@@ -253,6 +253,7 @@
             </div>
             <form action="{{ route('saldo.store') }}" method="post" autocomplete="off">
                 @csrf
+                <div class="modal-status bg-success"></div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-6">

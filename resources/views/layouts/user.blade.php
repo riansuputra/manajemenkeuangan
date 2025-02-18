@@ -372,7 +372,7 @@
 						<button type="button" class="me-auto btn" data-bs-dismiss="modal">Batal</button>
 						<button type="submit" class="btn btn-success ms-auto">
               				<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-              					Simpan Catatan
+              					Simpan
 						</button>
           			</div>
 				</form>	
@@ -383,6 +383,7 @@
      
     <script src="{{ asset('dist/libs/apexcharts/dist/apexcharts.min.js?1684106062') }}" defer></script>
     <script src="{{ asset('js/tabler.min.js?1684106062') }}" defer></script>
+	<script src="{{url('dist/libs/tom-select/dist/js/tom-select.base.min.js?1684106062')}}" defer></script>
 
 	{{-- Script untuk toast --}}
 	<script>
@@ -448,31 +449,64 @@
 	{{-- Script untuk load kategori --}}
 	<script>
 		document.addEventListener("DOMContentLoaded", function() {
+			let tomSelectInstances = {};
+
+			function initTomSelect(selectElement) {
+				if (!selectElement) return;
+
+				let id = selectElement.id;
+				if (!id) return;
+
+				// Hapus instance Tom Select sebelumnya jika ada
+				if (tomSelectInstances[id]) {
+					tomSelectInstances[id].destroy();
+				}
+
+				// Inisialisasi Tom Select baru
+				tomSelectInstances[id] = new TomSelect(selectElement, {
+					copyClassesToDropdown: false,
+					render: {
+						item: function (data, escape) {
+							return `<div>${escape(data.text)}</div>`;
+						},
+						option: function (data, escape) {
+							return `<div>${escape(data.text)}</div>`;
+						}
+					}
+				});
+			}
     		const kategoriPemasukanData = @json($kategoriPemasukanData ?? []);
     		const kategoriPengeluaranData = @json($kategoriPengeluaranData ?? []);
 
 			function updateSelectOptions1(radioElement) {
-				var modal = radioElement.closest('.modal');
-				var selectElement = modal.querySelector('.kategoriadd');
-				while (selectElement.options.length > 0) {
-					selectElement.remove(0);
+				let modal = radioElement.closest('.modal');
+				let selectElement = modal.querySelector('.kategoriadd');
+
+				if (!selectElement) return;
+				let id = selectElement.id;
+
+				if (!tomSelectInstances[id]) {
+					initTomSelect(selectElement);
 				}
 
-				let dataToUse = [];
-				if (radioElement.classList.contains('pemasukan-radio')) {
-					dataToUse = kategoriPemasukanData;
-				} else if (radioElement.classList.contains('pengeluaran-radio')) {
-					dataToUse = kategoriPengeluaranData;
-				} else {
-					return;
-				}
+				let tomSelectInstance = tomSelectInstances[id];
 
-				if (dataToUse.length > 0) {
-					dataToUse.forEach(function(item) {
-						let option = new Option(item.nama_kategori_pemasukan || item.nama_kategori_pengeluaran, item.id);
-						selectElement.add(option);
+				// Hapus semua opsi sebelumnya
+				tomSelectInstance.clear();
+				tomSelectInstance.clearOptions();
+
+				let dataToUse = radioElement.classList.contains('pemasukan-radio')
+					? kategoriPemasukanData
+					: kategoriPengeluaranData;
+
+				dataToUse.forEach(function (item) {
+					tomSelectInstance.addOption({
+						value: item.id,
+						text: item.nama_kategori_pemasukan || item.nama_kategori_pengeluaran
 					});
-				}
+				});
+
+				tomSelectInstance.refreshOptions(false);
 				selectElement.disabled = false;
 			}
 

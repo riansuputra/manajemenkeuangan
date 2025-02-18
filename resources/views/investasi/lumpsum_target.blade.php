@@ -258,6 +258,7 @@
                     </table>
                 </div>
             </div>
+            <div class="modal-status bg-primary"></div>
             <div class="modal-body">
                 <div class="card">
                     <div class="table-responsive">

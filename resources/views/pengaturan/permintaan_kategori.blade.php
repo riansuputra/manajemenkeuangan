@@ -68,6 +68,7 @@
 												<h5 class="modal-title">Detail Permintaan Kategori</h5>
 												<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 											</div>
+											<div class="modal-status bg-primary"></div>
 											<div class="modal-body">
 												<div class="row">
 													<div class="col-6">
@@ -109,6 +110,60 @@
 													</div>
 												</div>
 											</div>
+											<div class="modal-footer">
+												<button type="button" class="me-auto btn" data-bs-dismiss="modal">Batal</button>
+												<button type="submit" class="btn btn-warning ms-auto" data-bs-toggle="modal" data-bs-target="#modal-edit-{{$kategori['id']}}">
+													<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
+														Edit
+												</button>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<!-- Modal Info Kas -->
+								<div class="modal modal-blur fade" id="modal-edit-{{$kategori['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
+									<div class="modal-dialog modal-md modal-dialog-centered" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title">Edit Permintaan Kategori</h5>
+												<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+											</div>
+											<form action="{{ route('permintaan.kategori.update', ['id'=> $kategori['id']]) }}" method="post" autocomplete="off">
+												@csrf
+												<div class="modal-status bg-warning"></div>
+												<div class="modal-body">
+														<input type="text" class="form-control" id="id" name="id" value="{{$kategori['id']}}" hidden>
+														<div class="mb-3">
+															<label class="form-label required">Nama Kategori:</label>
+															<input type="text" class="form-control" id="nama_kategori_edit" name="nama_kategori_edit" value="{{$kategori['nama_kategori']}}" required>
+														</div>
+														<div class="mb-3">
+															<label class="form-label required">Tipe Kategori:</label>
+															<select class="form-select"name="tipe_kategori_edit" id="tipe_kategori_edit" required>
+																<option value="" disabled>Pilih Tipe Kategori</option>
+																<option value="pemasukan" @if($kategori['tipe_kategori'] == 'pemasukan') selected @endif>Pemasukan</option>
+																<option value="pengeluaran" @if($kategori['tipe_kategori'] == 'pengeluaran') selected @endif>Pengeluaran</option>
+															</select>
+														</div>
+														<div class="mb-3">
+															<label class="form-label required">Cakupan Kategori:</label>
+															<select class="form-select"name="cakupan_kategori_edit" id="cakupan_kategori_edit" required>
+																<option value="" disabled>Pilih Cakupan Kategori</option>
+																<option value="global" @if($kategori['scope'] == 'global') selected @endif>Global</option>
+																<option value="personal" @if($kategori['scope'] == 'personal') selected @endif>Personal</option>
+															</select>
+														</div>
+								
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="me-auto btn" data-bs-dismiss="modal">Batal</button>
+													<button type="submit" class="btn btn-success ms-auto">
+														<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+														Simpan
+													</button>
+												</div>
+											</form>	
 										</div>
 									</div>
 								</div>
@@ -176,6 +231,7 @@
             </div>
             <form action="{{ route('permintaan.kategori.store') }}" method="post" autocomplete="off">
                 @csrf
+                <div class="modal-status bg-success"></div>
                 <div class="modal-body">
 						<div class="mb-3">
 							<label class="form-label required">Nama Kategori:</label>

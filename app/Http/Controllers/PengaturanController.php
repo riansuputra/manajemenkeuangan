@@ -103,7 +103,34 @@ class PengaturanController extends Controller
             'x-api-key' => env('API_KEY'),
             'Authorization' => 'Bearer ' . $request->auth['token'],
             'user-type' => $request->auth['user_type'],
-        ])->post(env('API_URL') . '/permintaan-kategori-store', $input);
+        ])->post(env('API_URL') . '/permintaan-kategori/store', $input);
+
+        if ($response->status() == 201) {
+            $this->updateAuthCookie($request->auth, $response['auth']);
+            return redirect()->route('permintaan.kategori')->with('success', $response["message"]);
+        } else if (!empty($response["errors"])) {
+            return back()->with('error', $response["message"]);
+        } else {
+            return back()->with('error', $response["message"]);
+        }
+    }
+
+    public function updatePermintaanKategori(Request $request, $id)
+    {
+        $input = array(
+            'id' => $request->id,
+            'user_id' => $request->auth['user']['id'],
+            'nama_kategori' => $request->nama_kategori_edit,
+            'tipe_kategori' => $request->tipe_kategori_edit,
+            'cakupan_kategori' => $request->cakupan_kategori_edit,
+        );
+
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'x-api-key' => env('API_KEY'),
+            'Authorization' => 'Bearer ' . $request->auth['token'],
+            'user-type' => $request->auth['user_type'],
+        ])->post(env('API_URL') . '/permintaan-kategori/update/'.$id, $input);
 
         if ($response->status() == 201) {
             $this->updateAuthCookie($request->auth, $response['auth']);

@@ -185,7 +185,7 @@
                                                 <div class="modal-footer">
                                                     <button type="submit" class="btn btn-warning ms-auto">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                                                        Simpan Perubahan
+                                                        Simpan
                                                     </button>
                                                 </div>
                                             </form>
@@ -305,7 +305,7 @@
                     </a>
                     <button type="submit" class="btn btn-success ms-auto">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                        Simpan Anggaran
+                        Simpan
                     </button>
                 </div>
             </form>	
@@ -368,8 +368,44 @@
                 document.getElementById('jumlah_overspend_' + id).value = 'Rp. ' + formatNumber(overspend);
                 document.getElementById('periodeedit_' + id).value = periode;
                 document.getElementById('modaledittitle_' + id).textContent = ' "' + nama + '" ';
+
+                const expenseCategorySelectEdit = document.getElementById('id_kategori_pengeluaran_edit_' + id);
+        
+                if (expenseCategorySelectEdit) {
+                    new TomSelect(expenseCategorySelectEdit, {
+                        copyClassesToDropdown: false,
+                        render: {
+                            item: function (data, escape) {
+                                return `<div>${escape(data.text)}</div>`;
+                            },
+                            option: function (data, escape) {
+                                return `<div>${escape(data.text)}</div>`;
+                            }
+                        }
+                    });
+                }
             });
         });
+
+        
+        // Inisialisasi Tom Select untuk kategori select
+        const expenseCategorySelect = document.getElementById('id_kategori_pengeluaran');
+        
+        if (expenseCategorySelect) {
+            new TomSelect(expenseCategorySelect, {
+                copyClassesToDropdown: false,
+                render: {
+                    item: function (data, escape) {
+                        return `<div>${escape(data.text)}</div>`;
+                    },
+                    option: function (data, escape) {
+                        return `<div>${escape(data.text)}</div>`;
+                    }
+                }
+            });
+        }
+
+
     });
 </script>
 @endsection

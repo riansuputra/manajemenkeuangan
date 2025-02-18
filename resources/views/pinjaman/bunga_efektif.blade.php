@@ -166,6 +166,7 @@
                 <h5 class="modal-title">Detail Pinjaman</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <div class="modal-status bg-primary"></div>
             <div class="modal-body">
                 <div class="card">
                     <div class="table-responsive">

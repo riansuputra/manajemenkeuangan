@@ -141,6 +141,7 @@
                                             <h5 class="modal-title">{{$index['aset']['nama']}} <span class="text-muted"></span></h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
+                                        <div class="modal-status bg-primary"></div>
                                         <div class="modal-body">
                                             <h4 class="mb-2">Informasi Kas :</h4>
                                             <div class="row">
@@ -238,6 +239,7 @@
                                         </div>
                                         <form id="update-harga-form-{{ $index['aset']['id'] }}" action="{{ route('portofolio.update.harga') }}" method="post" autocomplete="off">
                                             @csrf
+                                            <div class="modal-status bg-warning"></div>
                                             <div class="modal-body">
                                                 <input type="hidden" name="id_aset" value="{{ $index['aset']['id'] }}">
                                                 <input type="hidden" name="nama_aset" value="{{ $index['aset']['nama'] }}">
@@ -285,6 +287,7 @@
                                             <h5 class="modal-title">{{$index['aset']['nama']}} <span class="text-muted">- {{$index['aset']['deskripsi']}}</span></h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
+                                        <div class="modal-status bg-primary"></div>
                                         <div class="modal-body">
                                             <h4 class="mb-2">Informasi Aset :</h4>
                                             <div class="row">
@@ -425,6 +428,7 @@
             </div>
             <form action="{{ route('portofolio.store') }}" method="post" autocomplete="off">
                 @csrf
+                <div class="modal-status bg-success"></div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-3">
@@ -535,6 +539,7 @@
             </div>
             <form action="{{ route('historis.store') }}" method="post" autocomplete="off">
                 @csrf
+                <div class="modal-status bg-success"></div>
                 <div class="modal-body">
                     <div class="row mb-2">
                         <div class="col-lg-6">

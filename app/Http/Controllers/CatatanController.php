@@ -248,6 +248,7 @@ class CatatanController extends Controller
 
     public function update(Request $request, string $id)
     {
+        // dd($request, $id);
         $jenisedit2 = $request->input('jenisedit2'.$id);
 
         if($jenisedit2 != $request->jenisedit) {

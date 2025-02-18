@@ -51,7 +51,7 @@
 				</label>
 				<div class="ms-4">
 					<div class="mb-2">
-						<select class="form-select category-select income-category" disabled>
+						<select class="form-select category-select income-category" id="income-category-select" >
 							<option value="" class="">Select Category</option>
 							@foreach($kategoriPemasukanData as $incomeCategory)
 								<option value="{{$incomeCategory['nama_kategori_pemasukan']}}income">{{$incomeCategory['nama_kategori_pemasukan']}}</option>
@@ -65,7 +65,7 @@
 				</label>
 				<div class="ms-4">
 					<div class="">
-						<select class="form-select category-select expense-category" disabled>
+						<select class="form-select category-select expense-category" id="expense-category-select" >
 							<option value="" class="">Select Category</option>
 							@foreach($kategoriPengeluaranData as $expenseCategory)
 								<option value="{{$expenseCategory['nama_kategori_pengeluaran']}}expense">{{$expenseCategory['nama_kategori_pengeluaran']}}</option>
@@ -460,7 +460,7 @@
 																<button type="button" class="me-auto btn" data-bs-dismiss="modal">Batal</button>
 																<button type="submit" class="btn btn-warning ms-auto">
 																	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-																		Simpan Perubahan
+																		Simpan
 																</button>
 															</div>
 														</form>
@@ -525,6 +525,7 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="{{url('dist/libs/tom-select/dist/js/tom-select.base.min.js?1684106062')}}" defer></script>
 
 {{-- Script untuk format angka ribuan --}}
 <script>
@@ -717,110 +718,146 @@
 {{-- Script untuk modal edit --}}
 <script>
 	document.addEventListener("DOMContentLoaded", function() {
-    	const editButtons = document.querySelectorAll('.edit-btn');
-		document.querySelectorAll('.pemasukan-radio, .pengeluaran-radio').forEach(radio => {
-			radio.addEventListener('change', function() {
-				updateSelectOptions1(this);
-			});
-		});
+    let tomSelectInstances = {};
 
-		const kategoriPengeluaranData = @json($kategoriPengeluaranData);
-        const kategoriPemasukanData = @json($kategoriPemasukanData);
+    function initTomSelect(selectElement) {
+        if (!selectElement) return;
 
-		function updateSelectOptions1(radioElement) {
-			var modal = radioElement.closest('.modal');
-			var selectElement = modal.querySelector('.kategoriedit');
-			
-			while (selectElement.options.length > 0) {
-				selectElement.remove(0);
-			}
-			let dataToUse = [];
-			if (radioElement.classList.contains('pemasukan-radio')) {
-				dataToUse = kategoriPemasukanData;
-			} else if (radioElement.classList.contains('pengeluaran-radio')) {
-				dataToUse = kategoriPengeluaranData;
-			} else {
-				return;
-			}
-			if (dataToUse.length > 0) {
-				dataToUse.forEach(function(item) {
-					let option = new Option(item.nama_kategori_pemasukan || item.nama_kategori_pengeluaran, item.id);
-					selectElement.add(option);
-				});
-			}
-			selectElement.disabled = false;
-		}
+        let id = selectElement.id;
+        if (!id) return;
 
-		editButtons.forEach(button => {
-			button.addEventListener('click', function(e) {
-				e.preventDefault();
-				const id = this.getAttribute('data-id');
-				const jenis = this.getAttribute('data-jenis');
-				const jumlah = this.getAttribute('data-jumlah');
-				const kategori = this.getAttribute('data-kategori');
-				const tanggal = this.getAttribute('data-tanggal');
-				const catatan = this.getAttribute('data-catatan');
-				const createdat = this.getAttribute('data-createdat');
-				const modal = document.getElementById(`modal-edit${id}`);
-				const idInput = modal.querySelector('.id-input');
-				const jenisRadioPemasukan = modal.querySelector('.pemasukan-radio');
-				const jenisRadioPengeluaran = modal.querySelector('.pengeluaran-radio');
-				const jumlahInput = modal.querySelector('.jumlahedit');
-				const jenisEdit = modal.querySelector('.jenisedit');
-				const createdatInput = modal.querySelector(`#created_at${id}`);
-				const jumlah1Input = modal.querySelector('.jumlah1edit');
-				const kategoriSelect = modal.querySelector('.kategoriedit');
-				const tanggalInput = modal.querySelector('.tanggaledit');
-				const catatanTextarea = modal.querySelector('.catatanedit');
-				if (createdatInput) createdatInput.value = createdat;
-				if (idInput) {
-					idInput.value = id;
-				}
-				if (jenisEdit) {
+        // Hapus instance Tom Select sebelumnya jika ada
+        if (tomSelectInstances[id]) {
+            tomSelectInstances[id].destroy();
+        }
+
+        // Inisialisasi Tom Select baru
+        tomSelectInstances[id] = new TomSelect(selectElement, {
+            copyClassesToDropdown: false,
+            render: {
+                item: function (data, escape) {
+                    return `<div>${escape(data.text)}</div>`;
+                },
+                option: function (data, escape) {
+                    return `<div>${escape(data.text)}</div>`;
+                }
+            }
+        });
+    }
+
+    // Data kategori
+    const kategoriPengeluaranData = @json($kategoriPengeluaranData);
+    const kategoriPemasukanData = @json($kategoriPemasukanData);
+
+    function updateSelectOptions1(radioElement) {
+        let modal = radioElement.closest('.modal');
+        let selectElement = modal.querySelector('.kategoriedit');
+
+        if (!selectElement) return;
+        let id = selectElement.id;
+
+        if (!tomSelectInstances[id]) {
+            initTomSelect(selectElement);
+        }
+
+        let tomSelectInstance = tomSelectInstances[id];
+
+        // Hapus semua opsi sebelumnya
+        tomSelectInstance.clear();
+        tomSelectInstance.clearOptions();
+
+        let dataToUse = radioElement.classList.contains('pemasukan-radio')
+            ? kategoriPemasukanData
+            : kategoriPengeluaranData;
+
+        dataToUse.forEach(function (item) {
+            tomSelectInstance.addOption({
+                value: item.id,
+                text: item.nama_kategori_pemasukan || item.nama_kategori_pengeluaran
+            });
+        });
+
+        tomSelectInstance.refreshOptions(false);
+        selectElement.disabled = false;
+    }
+
+    // Event Listener pada radio button
+    document.querySelectorAll('.pemasukan-radio, .pengeluaran-radio').forEach(radio => {
+        radio.addEventListener('change', function () {
+            updateSelectOptions1(this);
+        });
+    });
+
+    // Event Listener untuk tombol edit
+    document.querySelectorAll('.edit-btn').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const id = this.getAttribute('data-id');
+            const jenis = this.getAttribute('data-jenis');
+            const jumlah = this.getAttribute('data-jumlah');
+            const kategori = this.getAttribute('data-kategori');
+            const tanggal = this.getAttribute('data-tanggal');
+            const catatan = this.getAttribute('data-catatan');
+            const createdat = this.getAttribute('data-createdat');
+            const modal = document.getElementById(`modal-edit${id}`);
+
+            if (!modal) return;
+
+            const idInput = modal.querySelector('.id-input');
+            const jenisRadioPemasukan = modal.querySelector('.pemasukan-radio');
+            const jenisRadioPengeluaran = modal.querySelector('.pengeluaran-radio');
+            const jumlahInput = modal.querySelector('.jumlahedit');
+            const jumlah1Input = modal.querySelector('.jumlah1edit');
+			const jenisEdit = modal.querySelector('.jenisedit');
+            const kategoriSelect = modal.querySelector('.kategoriedit');
+            const tanggalInput = modal.querySelector('.tanggaledit');
+            const catatanTextarea = modal.querySelector('.catatanedit');
+            const createdatInput = modal.querySelector(`#created_at${id}`);
+
+            if (createdatInput) createdatInput.value = createdat;
+            if (idInput) idInput.value = id;
+            if (jumlahInput) {
+                const rawValue = jumlah.replace(/\D/g, '');
+                jumlahInput.value = rawValue;
+                if (jumlah1Input) jumlah1Input.value = rawValue;
+            }
+			if (jenisEdit) {
 					jenisEdit.value = jenis;
 				}
-				if (jenis === '1' && jenisRadioPemasukan) {
-					jenisRadioPemasukan.checked = true;
-					updateSelectOptions1(jenisRadioPemasukan);
-				} else if (jenis === '2' && jenisRadioPengeluaran) {
-					jenisRadioPengeluaran.checked = true;
-					updateSelectOptions1(jenisRadioPengeluaran);
-				}
-				if (jumlahInput) {
-					const rawValue = jumlah.replace(/\D/g, ''); 
-					const formattedValue = formatNumber1(rawValue); 
-					jumlahInput.value = formattedValue; 
-					jumlahInput.dispatchEvent(new Event('input')); 
-					if (jumlah1Input) {
-						jumlah1Input.value = rawValue; 
-					}
-				}
-				if (kategoriSelect) {
-					kategoriSelect.value = kategori;
-				}
-				if (tanggalInput) {
-					tanggalInput.value = tanggal;
-				}
-				if (catatanTextarea) {
-					catatanTextarea.value = catatan;
-				}
-			});
-		});
-		const modals = document.querySelectorAll('.modal');
-		modals.forEach(modal => {
-			modal.addEventListener('hidden.bs.modal', function() {
-				const form = this.querySelector('form');
-				if (form) {
-					form.reset();
-				}
-			});
-		});
-		document.querySelectorAll('.pemasukan-radio, .pengeluaran-radio').forEach(function(radio) {
-			radio.addEventListener('change', function() {
-				updateSelectOptions1(this);
-			});
-		});
-	});
+            if (tanggalInput) tanggalInput.value = tanggal;
+            if (catatanTextarea) catatanTextarea.value = catatan;
+
+            if (jenis === '1' && jenisRadioPemasukan) {
+                jenisRadioPemasukan.checked = true;
+                updateSelectOptions1(jenisRadioPemasukan);
+            } else if (jenis === '2' && jenisRadioPengeluaran) {
+                jenisRadioPengeluaran.checked = true;
+                updateSelectOptions1(jenisRadioPengeluaran);
+            }
+
+            if (kategoriSelect) {
+                kategoriSelect.value = kategori;
+                kategoriSelect.dispatchEvent(new Event('change'));
+            }
+        });
+    });
+
+    // Reset form saat modal ditutup
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('hidden.bs.modal', function() {
+            const form = this.querySelector('form');
+            if (form) {
+                form.reset();
+            }
+        });
+    });
+
+    // Inisialisasi Tom Select untuk semua kategori select saat halaman dimuat
+    document.querySelectorAll('.kategoriedit').forEach(select => {
+        initTomSelect(select);
+    });
+});
+
 </script>
 
 {{-- Script untuk trigger modal edit --}}
@@ -839,125 +876,170 @@
 {{-- Script untuk edit style table --}}
 <script>
 	$(document).ready(function() {
-		var table = $('#table-harian').DataTable({
-			"lengthMenu": [[5, 10, 25, 50, 100], [5, 10, 25, 50, 100]],
-			"pageLength": 100,
-			"ordering": false,
-			"lengthChange": false,
-			"paging": false,
-			"info": false,
-			initComplete: function(settings, json) {
-				$('#table-harian').css('display', 'table');
-				$('#table-harian th.sorting_disabled').remove();
-			},
-			"drawCallback": function(settings) {
-				$('#table-harian th.sorting_disabled').remove();
-			}
-		});
+    // Inisialisasi DataTable
+    var table = $('#table-harian').DataTable({
+        "lengthMenu": [[5, 10, 25, 50, 100], [5, 10, 25, 50, 100]],
+        "pageLength": 100,
+        "ordering": false,
+        "lengthChange": false,
+        "paging": false,
+        "info": false,
+        initComplete: function(settings, json) {
+            $('#table-harian').css('display', 'table');
+            $('#table-harian th.sorting_disabled').remove();
+        },
+        "drawCallback": function(settings) {
+            $('#table-harian th.sorting_disabled').remove();
+        }
+    });
 
-		$('.dataTables_filter').each(function() {
-			$(this).attr("hidden", "hidden");
-		});
-	
-		function updateHeaderTotals() {
-			$('.header-total').each(function() {
-				$(this).text('');
-			});
-			var totals = {};
-			var totalIncome = 0;
-			var totalExpense = 0;
-			table.rows({ search: 'applied' }).every(function(rowIdx, tableLoop, rowLoop) {
-				var data = this.data();
-				var date = $(data[0]).find('.item-data').data('date');
-				var amount = parseFloat($(data[0]).find('.item-data').data('amount'));
-				if (!totals[date]) {
-					totals[date] = { income: 0, expense: 0 };
-				}
-				if ($(data[0]).find('.item-data').data('amount') !== undefined && !isNaN(amount)) {
-					if ($(data[0]).find('.item-data').data('id-pemasukan') !== undefined) {
-						totals[date].income += amount;
-						totalIncome += amount;
-					} else {
-						totals[date].expense += amount;
-						totalExpense += amount;
-					}
-				}
-			});
+    // Sembunyikan filter
+    $('.dataTables_filter').each(function() {
+        $(this).attr("hidden", "hidden");
+    });
 
-			$('.header-total').each(function() {
-				var date = $(this).closest('tr').find('.item-data').data('date');
-				if (totals[date] !== undefined) {
-					var netTotal = totals[date].income - Math.abs(totals[date].expense);
-					if (!isNaN(netTotal)) {
-						if (netTotal < 0) {
-							$(this).text(`- Rp. ${new Intl.NumberFormat('id-ID').format(Math.abs(netTotal))}`).addClass('text-red').removeClass('text-green');
-						} else {
-							$(this).text(`+ Rp. ${new Intl.NumberFormat('id-ID').format(netTotal)}`).addClass('text-green').removeClass('text-red');
-						}
-					}
-				}
-			});
-			$('#current-balance').text(`Rp. ${new Intl.NumberFormat('id-ID').format(totalIncome - Math.abs(totalExpense))}`);
-			$('#total-expenses').text(`- Rp. ${new Intl.NumberFormat('id-ID').format(Math.abs(totalExpense))}`).addClass('text-red');
-			$('#total-income').text(`+ Rp. ${new Intl.NumberFormat('id-ID').format(totalIncome)}`).addClass('text-green');
-		}
-		updateHeaderTotals();
+    // Inisialisasi Tom Select untuk kategori pemasukan
+    const incomeCategorySelect = document.querySelector('.category-select');
+    if (incomeCategorySelect) {
+        new TomSelect(incomeCategorySelect, {
+            copyClassesToDropdown: false,
+            render: {
+                item: function (data, escape) {
+                    return `<div>${escape(data.text)}</div>`;
+                },
+                option: function (data, escape) {
+                    return `<div>${escape(data.text)}</div>`;
+                }
+            }
+        });
+    }
 
-		table.on('search.dt', function() {
-			updateHeaderTotals();
-		});
+    // Inisialisasi Tom Select untuk kategori pengeluaran
+    const expenseCategorySelect = document.querySelector('#expense-category-select');
+    if (expenseCategorySelect) {
+        new TomSelect(expenseCategorySelect, {
+            copyClassesToDropdown: false,
+            render: {
+                item: function (data, escape) {
+                    return `<div>${escape(data.text)}</div>`;
+                },
+                option: function (data, escape) {
+                    return `<div>${escape(data.text)}</div>`;
+                }
+            }
+        });
+    }
 
-		$('#searchRecord').on('input', function() {
-			var searchValue = $(this).val();
-			if (searchValue === '') {
-				$('.dataTables_filter input[type="search"]').val('').trigger('input');
-				$('input[name="record-type"][value="1"]').prop('checked', true);
-				$('.category-select').prop('disabled', true);
-				updateHeaderTotals();
+    // Fungsi update total header
+    function updateHeaderTotals() {
+        $('.header-total').each(function() {
+            $(this).text('');
+        });
+        var totals = {};
+        var totalIncome = 0;
+        var totalExpense = 0;
+        table.rows({ search: 'applied' }).every(function(rowIdx, tableLoop, rowLoop) {
+            var data = this.data();
+            var date = $(data[0]).find('.item-data').data('date');
+            var amount = parseFloat($(data[0]).find('.item-data').data('amount'));
+            if (!totals[date]) {
+                totals[date] = { income: 0, expense: 0 };
+            }
+            if ($(data[0]).find('.item-data').data('amount') !== undefined && !isNaN(amount)) {
+                if ($(data[0]).find('.item-data').data('id-pemasukan') !== undefined) {
+                    totals[date].income += amount;
+                    totalIncome += amount;
+                } else {
+                    totals[date].expense += amount;
+                    totalExpense += amount;
+                }
+            }
+        });
 
-				return; 
-			}
-			var existingSearchValue = $('.dataTables_filter input[type="search"]').val();
-			var updatedValue = existingSearchValue ? existingSearchValue + ' ' + searchValue : searchValue;
-			$('.dataTables_filter input[type="search"]').val(updatedValue).trigger('input');
-			updateHeaderTotals();
-		});
+        // Menampilkan total
+        $('.header-total').each(function() {
+            var date = $(this).closest('tr').find('.item-data').data('date');
+            if (totals[date] !== undefined) {
+                var netTotal = totals[date].income - Math.abs(totals[date].expense);
+                if (!isNaN(netTotal)) {
+                    if (netTotal < 0) {
+                        $(this).text(`- Rp. ${new Intl.NumberFormat('id-ID').format(Math.abs(netTotal))}`).addClass('text-red').removeClass('text-green');
+                    } else {
+                        $(this).text(`+ Rp. ${new Intl.NumberFormat('id-ID').format(netTotal)}`).addClass('text-green').removeClass('text-red');
+                    }
+                }
+            }
+        });
 
-		$('.btn-resetfilter').on('click', function(e) {
-			e.preventDefault();
-			$('#searchRecord').val('');
-			$('input[name="record-type"][value="1"]').prop('checked', true);
-			$('.category-select').prop('disabled', true);
-			$('#searchRecord').trigger('input');
-			updateHeaderTotals();
-		});
+        // Menampilkan total saldo
+        $('#current-balance').text(`Rp. ${new Intl.NumberFormat('id-ID').format(totalIncome - Math.abs(totalExpense))}`);
+        $('#total-expenses').text(`- Rp. ${new Intl.NumberFormat('id-ID').format(Math.abs(totalExpense))}`).addClass('text-red');
+        $('#total-income').text(`+ Rp. ${new Intl.NumberFormat('id-ID').format(totalIncome)}`).addClass('text-green');
+    }
 
-		$('input[type="radio"][name="record-type"]').change(function() {
-			var value = $(this).val();
-			$('.category-select').val('');
-			if (value === "1") {
-				$('.category-select').prop('disabled', true);
-				table.search('').draw();
-			} else if (value === "2") {
-				$('.income-category').prop('disabled', false);
-				$('.expense-category').prop('disabled', true);
-				table.search('Income').draw();
-			} else if (value === "3") {
-				$('.income-category').prop('disabled', true);
-				$('.expense-category').prop('disabled', false);
-				table.search('Expense').draw();
-			}
-			updateHeaderTotals();
-		});
+    // Panggil updateHeaderTotals setelah DataTable selesai
+    updateHeaderTotals();
 
-		$('.category-select').change(function() {
-			var recordType = $('input[type="radio"][name="record-type"]:checked').val();
-			var category = $(this).val();
-			table.search(category).draw();
-			updateHeaderTotals();
-		});
-    
-	});
+    // Event listener untuk search
+    table.on('search.dt', function() {
+        updateHeaderTotals();
+    });
+
+    // Pencarian record
+    $('#searchRecord').on('input', function() {
+        var searchValue = $(this).val();
+        if (searchValue === '') {
+            $('.dataTables_filter input[type="search"]').val('').trigger('input');
+            $('input[name="record-type"][value="1"]').prop('checked', true);
+            $('.category-select').prop('disabled', true);
+            updateHeaderTotals();
+            return;
+        }
+        var existingSearchValue = $('.dataTables_filter input[type="search"]').val();
+        var updatedValue = existingSearchValue ? existingSearchValue + ' ' + searchValue : searchValue;
+        $('.dataTables_filter input[type="search"]').val(updatedValue).trigger('input');
+        updateHeaderTotals();
+    });
+
+    // Reset filter button
+    $('.btn-resetfilter').on('click', function(e) {
+        e.preventDefault();
+        $('#searchRecord').val('');
+        $('input[name="record-type"][value="1"]').prop('checked', true);
+        $('.category-select').prop('disabled', true);
+        $('#searchRecord').trigger('input');
+        updateHeaderTotals();
+    });
+
+    // Event untuk radio button filter
+    $('input[type="radio"][name="record-type"]').change(function() {
+        var value = $(this).val();
+        $('.category-select').val('');
+        if (value === "1") {
+            $('.category-select').prop('disabled', true);  // Menonaktifkan kategori
+            table.search('').draw();
+        } else if (value === "2") {
+            $('.income-category').prop('disabled', false);
+            $('.expense-category').prop('disabled', true);  // Menonaktifkan kategori pengeluaran
+            table.search('Income').draw();
+        } else if (value === "3") {
+            $('.income-category').prop('disabled', true);  // Menonaktifkan kategori pemasukan
+            $('.expense-category').prop('disabled', false);  // Mengaktifkan kategori pengeluaran
+            table.search('Expense').draw();
+        }
+        updateHeaderTotals();
+    });
+
+    // Event untuk kategori select
+    $('.category-select').change(function() {
+        var recordType = $('input[type="radio"][name="record-type"]:checked').val();
+        var category = $(this).val();
+        table.search(category).draw();
+        updateHeaderTotals();
+    });
+});
+
+
 </script>
 
 @endsection
