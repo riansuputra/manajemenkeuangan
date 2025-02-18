@@ -341,7 +341,7 @@
                               			<span class="input-group-text">
                                 			Rp.
                               			</span>
-                              			<input type="text" id="jumlah" oninput="updateFormattedNumber()" name="jumlah" class="form-control text-end" autocomplete="off" required>
+                              			<input type="text" id="jumlah" oninput="updateFormattedNumber()" name="jumlah" class="form-control text-end" autocomplete="off" placeholder="0" required>
                               			<input type="text" id="jumlah1" name="jumlah1" class="form-control text-end" autocomplete="off" hidden>
                             		</div>
                 				</div>
@@ -363,7 +363,7 @@
 							<div class="col-lg-12">
                 				<div class="mb-2">
                   					<label class="form-label">Catatan :</label>
-                  					<textarea id="catatan" name="catatan" class="form-control" rows="3"></textarea>
+                  					<textarea id="catatan" name="catatan" class="form-control" rows="3" placeholder="Masukkan catatan disini..."></textarea>
                 				</div>
               				</div>
             			</div>

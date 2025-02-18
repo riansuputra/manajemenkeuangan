@@ -57,9 +57,9 @@
 												<ul>
 													<li>Investasi</li>
 													<li>Pinjaman</li>
-													<li>Portofolio</li>
 												</ul>
 											</li>
+											<li>Portofolio</li>
 										</ul>	
                             		</div>
                           		</div>

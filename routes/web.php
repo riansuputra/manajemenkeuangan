@@ -120,5 +120,5 @@ Route::middleware(['throttle:100,1'])->group(function() {
         Route::get('/tentang', [PengaturanController::class, 'indexTentang'])->name('tentang');
     });
 
-    Route::fallback(function () {return view('errors.404');});
+    // Route::fallback(function () {return view('errors.404');});
 });
