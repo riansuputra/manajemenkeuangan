@@ -119,4 +119,6 @@ Route::middleware(['throttle:100,1'])->group(function() {
         Route::post('/update', [PengaturanController::class, 'updateUser'])->name('user.update');
         Route::get('/tentang', [PengaturanController::class, 'indexTentang'])->name('tentang');
     });
+
+    Route::fallback(function () {return view('errors.404');});
 });
