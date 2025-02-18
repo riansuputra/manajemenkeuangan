@@ -13,13 +13,10 @@
 </div>
 <div class="col-auto ms-auto d-print-none">
 	<div class="btn-list">
-		<a href="" class="btn btn-primary d-none d-sm-inline-block" id="printModalToPdf">
+		<a href="" class="btn btn-primary" id="printModalToPdf">
             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
           	Cetak PDF
       	</a>
-        <a href="" class="btn btn-primary d-sm-none btn-icon" id="printModalToPdf">
-            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
-		</a>
 	</div>
 </div>
 @endsection
@@ -277,7 +274,6 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="me-auto btn" data-bs-dismiss="modal">Batal</button>
-                <button type="button" id="printModalToPdf" class="btn btn-primary">Cetak PDF</button>
             </div>
         </div>
     </div>
@@ -413,58 +409,68 @@
         }
 
         function calculateNilai() {
-            const awaldana = parseFloat(document.getElementById('awaldana').value);
-            const jmhtahun = parseFloat(document.getElementById('jmhtahun').value);
-            const persentasebunga = parseFloat(document.getElementById('persentasebunga').value);
+    const awaldana = parseFloat(document.getElementById('awaldana').value); // Setoran per bulan
+    const jmhtahun = parseFloat(document.getElementById('jmhtahun').value); // Jangka waktu dalam tahun
+    const persentasebunga = parseFloat(document.getElementById('persentasebunga').value); // Bunga tahunan
 
-            if (!isNaN(awaldana) && !isNaN(jmhtahun) && !isNaN(persentasebunga)) {
-				const tingkatBungaPerBulan = persentasebunga / 100 / 12;
-				const totalSetoran = 12 * jmhtahun;
-                const nilai = awaldana * ((Math.pow((1 + tingkatBungaPerBulan), totalSetoran) - 1) / tingkatBungaPerBulan) * (1 + tingkatBungaPerBulan);
-                return nilai.toFixed(0);
-            } else {
-                return 0;
-            }
+    if (!isNaN(awaldana) && !isNaN(jmhtahun) && !isNaN(persentasebunga)) {
+        const tingkatBungaPerBulan = persentasebunga / 100 / 12; // Bunga per bulan
+        const totalSetoran = 12 * jmhtahun; // Total bulan
+        let saldo = 0;
+
+        // Hitung nilai akhir investasi
+        for (let bulan = 1; bulan <= totalSetoran; bulan++) {
+            saldo += awaldana; // Setoran setiap bulan
+            saldo *= (1 + tingkatBungaPerBulan); // Terapkan bunga bulanan pada saldo
         }
 
-        function populateModalTable() {
-            const awaldana = parseFloat(document.getElementById('awaldana').value);
-            const jmhtahun = parseFloat(document.getElementById('jmhtahun').value);
-            const persentasebunga = parseFloat(document.getElementById('persentasebunga').value);
-            
-            document.getElementById('awaldana4').textContent = 'Rp. ' + formatNumber(awaldana);
-            
-            const modalTableBody = document.getElementById('modalTableBody');
-            modalTableBody.innerHTML = '';
+        return saldo.toFixed(0); // Nilai akhir investasi setelah bunga
+    } else {
+        return 0;
+    }
+}
 
-            const totalYears = 12 * jmhtahun;
-            const tahunValues = Array.from({ length: totalYears }, (_, i) => i + 1);
-            
-            tahunValues.forEach(tahun => {
-				const totalSetoran = tahun;
-                const row = document.createElement('tr');
-                
-                const tahunCell = document.createElement('td');
-                tahunCell.textContent = tahun;
-                tahunCell.classList.add('text-center');
-                row.appendChild(tahunCell);
-                
-                const investasiCell = document.createElement('td');
-				const investasiNilai = awaldana * totalSetoran;
-                investasiCell.textContent = formatNumber(investasiNilai);
-                investasiCell.classList.add('text-center');
-                row.appendChild(investasiCell);
-                
-                const nilaiInvestasiCell = document.createElement('td');
-				const tingkatBungaPerBulan = persentasebunga / 100 / 12;
-                const nilaiTahun = awaldana * ((Math.pow((1 + tingkatBungaPerBulan), totalSetoran) - 1) / tingkatBungaPerBulan) * (1 + tingkatBungaPerBulan);
-                nilaiInvestasiCell.textContent = 'Rp. ' + formatNumber(nilaiTahun.toFixed(0));
-                nilaiInvestasiCell.classList.add('text-center');
-                row.appendChild(nilaiInvestasiCell);
-                
-                modalTableBody.appendChild(row);
-            });
-        }
+function populateModalTable() {
+    const awaldana = parseFloat(document.getElementById('awaldana').value); // Setoran per bulan
+    const jmhtahun = parseFloat(document.getElementById('jmhtahun').value); // Jangka waktu dalam tahun
+    const persentasebunga = parseFloat(document.getElementById('persentasebunga').value); // Bunga tahunan
+
+    document.getElementById('awaldana4').textContent = 'Rp. ' + formatNumber(awaldana);
+
+    const modalTableBody = document.getElementById('modalTableBody');
+    modalTableBody.innerHTML = '';
+
+    const totalYears = 12 * jmhtahun; // Total bulan
+    const tingkatBungaPerBulan = persentasebunga / 100 / 12; // Bunga per bulan
+    let saldo = 0;
+
+    // Loop untuk setiap bulan
+    for (let bulan = 1; bulan <= totalYears; bulan++) {
+        saldo += awaldana;  // Setoran bulanan
+        saldo *= (1 + tingkatBungaPerBulan);  // Terapkan bunga bulanan pada saldo
+
+        const row = document.createElement('tr');
+
+        const bulanCell = document.createElement('td');
+        bulanCell.textContent = bulan;
+        bulanCell.classList.add('text-center');
+        row.appendChild(bulanCell);
+
+        const investasiCell = document.createElement('td');
+        investasiCell.textContent = formatNumber(awaldana * bulan);  // Total setoran bulanan
+        investasiCell.classList.add('text-center');
+        row.appendChild(investasiCell);
+
+        const nilaiInvestasiCell = document.createElement('td');
+        nilaiInvestasiCell.textContent = 'Rp. ' + formatNumber(saldo.toFixed(0)); // Nilai investasi setelah bunga
+        nilaiInvestasiCell.classList.add('text-center');
+        row.appendChild(nilaiInvestasiCell);
+
+        modalTableBody.appendChild(row);
+    }
+}
+
+
 
         function populateFromLocalStorage() {
             const investasiBulananData = JSON.parse(localStorage.getItem('investasi-bulanan'));

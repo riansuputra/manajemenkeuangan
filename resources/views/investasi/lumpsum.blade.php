@@ -13,13 +13,10 @@
 </div>
 <div class="col-auto ms-auto d-print-none">
 	<div class="btn-list">
-		<a href="" class="btn btn-primary d-none d-sm-inline-block" id="printModalToPdf">
+		<a href="" class="btn btn-primary" id="printModalToPdf">
             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
           	Cetak PDF
       	</a>
-        <a href="" class="btn btn-primary d-sm-none btn-icon" id="printModalToPdf">
-            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
-		</a>
 	</div>
 </div>
 @endsection
@@ -71,7 +68,7 @@
                                                     <div class="input-group">
                                                         <input type="number" id="persentasebunga" name="persentasebunga" class="form-control text-end" autocomplete="off">
                                                         <span class="input-group-text">
-                                                            %
+                                                            %/Tahun
                                                         </span>
                                                     </div>
                                                 </div>
@@ -256,8 +253,8 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">Tahun</th>
-                                    <th class="text-center">Investasi</th>
-                                    <th class="text-center">Nilai Investasi</th>
+                                    <th class="text-center">Investasi Awal</th>
+                                    <th class="text-center">Nilai Investasi Tahunan</th>
                                 </tr>
                             </thead>
                             <tbody id="modalTableBody">
@@ -268,7 +265,6 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="me-auto btn" data-bs-dismiss="modal">Batal</button>
-                <button type="button" id="printModalToPdf" class="btn btn-primary">Cetak PDF</button>
             </div>
         </div>
     </div>
@@ -530,7 +526,7 @@
             const tableRows = Array.from(modalTableBody.querySelectorAll('tr'));
             
             const pdfTableBody = [
-                [{ text: 'Tahun', style: 'tableHeader' }, { text: 'Investasi', style: 'tableHeader' }, { text: 'Nilai Investasi', style: 'tableHeader' }]
+                [{ text: 'Tahun', style: 'tableHeader' }, { text: 'Investasi Awal', style: 'tableHeader' }, { text: 'Nilai Investasi Tahunan', style: 'tableHeader' }]
             ];
             
             tableRows.forEach(row => {

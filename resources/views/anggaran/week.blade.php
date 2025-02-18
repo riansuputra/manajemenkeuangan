@@ -152,7 +152,7 @@
                                                             <div class="mb-3">
                                                                 <label class="form-label required">Kategori Pengeluaran:</label>
                                                                 <select id="id_kategori_pengeluaran_edit_{{$data['id']}}" name="id_kategori_pengeluaran_edit" class="form-select">
-                                                                    <option value="" selected>Pilih Kategori</option>
+                                                                    <option value="" selected disabled>Pilih Kategori</option>
                                                                     @foreach($kategoriData as $kategori)
                                                                         <option value="{{$kategori['id']}}">{{$kategori['nama_kategori_pengeluaran']}}</option>
                                                                     @endforeach
@@ -164,7 +164,7 @@
                                                                 <label class="form-label required">Jumlah : </label>
                                                                 <div class="input-group">
                                                                     <span class="input-group-text">Rp.</span>
-                                                                    <input type="text" id="jumlah_edit_{{$data['id']}}" oninput="updateFormattedNumberAnggaran({{$data['id']}})" name="jumlahedit" class="form-control text-end" autocomplete="off" required>
+                                                                    <input type="text" id="jumlah_edit_{{$data['id']}}" oninput="updateFormattedNumberAnggaran({{$data['id']}})" name="jumlahedit" class="form-control text-end" autocomplete="off" placeholder="0" required>
                                                                     <input type="text" id="jumlah1_edit_{{$data['id']}}" name="jumlah1edit" class="form-control text-end" autocomplete="off" hidden>
                                                                 </div>
                                                             </div>
@@ -173,7 +173,7 @@
                                                             <div class="mb-3">
                                                                 <label class="form-label required">Periode :</label>
                                                                 <select id="periodeedit_{{$data['id']}}" name="periodeedit" class="form-select">
-                                                                    <option value="" selected>Pilih Periode</option>
+                                                                    <option value="" selected disabled>Pilih Periode</option>
                                                                     <option value="Mingguan">Mingguan</option>
                                                                     <option value="Tahunan">Tahunan</option>
                                                                     <option value="Bulanan">Bulanan</option>
@@ -266,7 +266,7 @@
                             <div class="mb-3">
                                 <label class="form-label required">Kategori Pengeluaran:</label>
                                 <select id="id_kategori_pengeluaran" name="id_kategori_pengeluaran" class="form-select" required>
-                                    <option value="" selected>Pilih Kategori</option>
+                                    <option value="" selected disabled>Pilih Kategori</option>
                                     @foreach($kategoriData as $kategori)
                                     <option value="{{$kategori['id']}}">{{$kategori['nama_kategori_pengeluaran']}}</option>
                                     @endforeach
@@ -280,7 +280,7 @@
                                     <span class="input-group-text">
                                         Rp.
                                     </span>
-                                    <input type="text" id="jumlah" name="jumlah" class="form-control text-end" autocomplete="off" required>
+                                    <input type="text" id="jumlah" name="jumlah" class="form-control text-end" autocomplete="off" placeholder="0" required>
                                     <input type="text" id="jumlah1" name="jumlah1" class="form-control text-end" autocomplete="off" hidden>
                                 </div>
                             </div>
@@ -289,7 +289,7 @@
                             <div class="mb-3">
                                 <label class="form-label required">Periode :</label>
                                 <select id="periode" name="periode" class="form-select" required>
-                                    <option value="" selected>Pilih Periode</option>
+                                    <option value="" selected disabled>Pilih Periode</option>
                                     <option value="Mingguan" >Mingguan</option>
                                     <option value="Tahunan">Tahunan</option>
                                     <option value="Bulanan">Bulanan</option>

@@ -13,13 +13,10 @@
 </div>
 <div class="col-auto ms-auto d-print-none">
 	<div class="btn-list">
-		<a href="" class="btn btn-primary d-none d-sm-inline-block" id="printModalToPdf">
+		<a href="" class="btn btn-primary" id="printModalToPdf">
             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
           	Cetak PDF
       	</a>
-        <a href="" class="btn btn-primary d-sm-none btn-icon" id="printModalToPdf">
-            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
-		</a>
 	</div>
 </div>
 @endsection
@@ -72,7 +69,7 @@
 
                                                         <input type="number" id="persentasebunga" name="persentasebunga" class="form-control text-end" autocomplete="off">
                                                         <span class="input-group-text">
-                                                            %
+                                                            %/Tahun
                                                         </span>
                                                     </div>
                                                 </div>
@@ -106,7 +103,7 @@
                                                 <div class="mb-3">
                                                     <h3 class="text-center text-bold">Hasil Perhitungan</h3>
                                                     <div class="table-responsive">
-                                                        <table class="table table-vcenter card-table">
+                                                        <table class="table table-vcenter table-borderless card-table">
                                                             <thead>
                                                                 <tr>
                                                                     <th></th>
@@ -266,9 +263,8 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">Tahun</th>
-                                    <th class="text-center">Investasi</th>
-                                    <th class="text-center">Nilai Investasi</th>
-                                    <th class="text-center">Target Dana</th>
+                                    <th class="text-center">Investasi Awal</th>
+                                    <th class="text-center">Nilai Investasi Tahunan</th>
                                 </tr>
                             </thead>
                             <tbody id="modalTableBody">
@@ -279,7 +275,6 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="me-auto btn" data-bs-dismiss="modal">Batal</button>
-                <button type="button" id="printModalToPdf" class="btn btn-primary">Cetak PDF</button>
             </div>
         </div>
     </div>
@@ -437,62 +432,56 @@
         }
 
         function populateModalTable() {
-			const awaldana = parseFloat(document.getElementById('awaldana').value);
-			const jmhtahun = parseFloat(document.getElementById('jmhtahun').value);
-			const persentasebunga = parseFloat(document.getElementById('persentasebunga').value);
-            const nilai = parseFloat(calculateNilai());
-			const months = jmhtahun * 12;
-            const danaInvestasiAwal = awaldana;
-            const nilaiInvestasi = nilai;
-			const totalInvestment = nilai * months;
-    		const estimatedReturn = awaldana - totalInvestment;
-            
-            document.getElementById('awaldana4').textContent = 'Rp. ' + formatNumber(nilai);
-            
+            const targetDana = parseFloat(document.getElementById('awaldana').value);
+            const jmhtahun = parseFloat(document.getElementById('jmhtahun').value);
+            const persentaseBunga = parseFloat(document.getElementById('persentasebunga').value);
+
+            if (isNaN(targetDana) || isNaN(jmhtahun) || isNaN(persentaseBunga) || targetDana <= 0 || jmhtahun <= 0 || persentaseBunga <= 0) {
+                return;
+            }
+
+            const bungaDesimal = persentaseBunga / 100;
+            const investasiLumpsum = targetDana / Math.pow((1 + bungaDesimal), jmhtahun);
+
+            document.getElementById('awaldana4').textContent = 'Rp ' + formatNumber(investasiLumpsum.toFixed(0));
+
             const modalTableBody = document.getElementById('modalTableBody');
             modalTableBody.innerHTML = '';
 
-            const totalYears = jmhtahun;
-            const tahunValues = Array.from({ length: totalYears }, (_, i) => i + 1);
-            
-            tahunValues.forEach(tahun => {
-                const row = document.createElement('tr');
-				const months = 12 * tahun ;
-				const investasiValue = nilai ;
+            let nilaiInvestasi = investasiLumpsum;
 
+            for (let tahun = 1; tahun <= jmhtahun; tahun++) {
+                nilaiInvestasi *= (1 + bungaDesimal);
+
+                const row = document.createElement('tr');
+
+                // Kolom Tahun
                 const tahunCell = document.createElement('td');
                 tahunCell.textContent = tahun;
                 tahunCell.classList.add('text-center');
                 row.appendChild(tahunCell);
-                
+
+                // Kolom Investasi Awal
                 const investasiCell = document.createElement('td');
-                investasiCell.textContent = formatNumber(investasiValue);
+                investasiCell.textContent = 'Rp ' + formatNumber(investasiLumpsum.toFixed(0));
                 investasiCell.classList.add('text-center');
                 row.appendChild(investasiCell);
-                
-                const nilaiInvestasiCell = document.createElement('td');
-				let totalMultiplier = 1.0;
-				const monthlyInterestRate = persentasebunga / 100 / 12;
-                
-				for (let i = 0; i < months; i++) {
-        			totalMultiplier *= (1 + monthlyInterestRate);
-    			}
 
-                const nilaiTahun = awaldana / totalMultiplier;
-                const keuntungan = awaldana - nilai;
-                nilaiInvestasiCell.textContent = 'Rp. ' + formatNumber(keuntungan.toFixed(0));
+                // Kolom Nilai Investasi Tahunan
+                const nilaiInvestasiCell = document.createElement('td');
+                nilaiInvestasiCell.textContent = 'Rp ' + formatNumber(nilaiInvestasi.toFixed(0));
                 nilaiInvestasiCell.classList.add('text-center');
                 row.appendChild(nilaiInvestasiCell);
 
-                const targetDanaCell = document.createElement('td');
-
-                targetDanaCell.textContent = 'Rp. ' + formatNumber(awaldana.toFixed(0));
-                targetDanaCell.classList.add('text-center');
-                row.appendChild(targetDanaCell);
-                
                 modalTableBody.appendChild(row);
-            });
+            }
         }
+
+        // Fungsi Format Angka Rupiah
+        function formatNumber(num) {
+            return new Intl.NumberFormat('id-ID').format(num);
+        }
+
 
         function populateFromLocalStorage() {
             const investasiTargetData = JSON.parse(localStorage.getItem('investasi-target'));
@@ -581,7 +570,7 @@
             const tableRows = Array.from(modalTableBody.querySelectorAll('tr'));
             
             const pdfTableBody = [
-                [{ text: 'Tahun', style: 'tableHeader' }, { text: 'Investasi', style: 'tableHeader' }, { text: 'Nilai Investasi', style: 'tableHeader' }, { text: 'Target Dana', style: 'tableHeader' }]
+                [{ text: 'Tahun', style: 'tableHeader' }, { text: 'Investasi Awal', style: 'tableHeader' }, { text: 'Nilai Investasi Tahunan', style: 'tableHeader' }]
             ];
             
             tableRows.forEach(row => {
@@ -590,7 +579,6 @@
                     cells[0].textContent, 
                     cells[1].textContent, 
                     cells[2].textContent,  
-                    cells[3].textContent  
                 ]);
             });
             
@@ -641,7 +629,7 @@
                         style: 'tableExample',
                         table: {
                             headerRows: 1,
-                            widths: [50, '*', '*', '*'], 
+                            widths: [50, '*', '*'], 
                             body: pdfTableBody 
                         },
                         alignment: 'center',

@@ -11,13 +11,10 @@
 </div>
 <div class="col-auto ms-auto d-print-none">
 	<div class="btn-list">
-        <a href="" class="btn btn-primary d-none d-sm-inline-block" id="printModalToPdf">
+        <a href="" class="btn btn-primary" id="printModalToPdf">
             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
           	Cetak PDF
       	</a>
-        <a href="" class="btn btn-primary d-sm-none btn-icon" id="printModalToPdf">
-            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
-		</a>
 	</div>
 </div>
 @endsection
@@ -28,8 +25,11 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="mb-3">
+                    <div class="input-icon mb-3">
                         <input type="text" id="searchInput1" class="form-control" placeholder="Cari data dividen...">
+                        <span class="input-icon-addon">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>
+                        </span>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-vcenter table-bordered" id="dataTable1">

@@ -13,13 +13,10 @@
 </div>
 <div class="col-auto ms-auto d-print-none">
 	<div class="btn-list">
-		<a href="" class="btn btn-primary d-none d-sm-inline-block" id="printModalToPdf">
+		<a href="" class="btn btn-primary" id="printModalToPdf">
             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
           	Cetak PDF
       	</a>
-        <a href="" class="btn btn-primary d-sm-none btn-icon" id="printModalToPdf">
-            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
-		</a>
 	</div>
 </div>
 @endsection
@@ -106,7 +103,7 @@
                                                 <div class="mb-3">
                                                     <h3 class="text-center text-bold">Hasil Perhitungan</h3>
                                                     <div class="table-responsive">
-                                                        <table class="table table-vcenter card-table">
+                                                        <table class="table table-vcenter table-borderless card-table">
                                                             <thead>
                                                                 <tr>
                                                                     <th></th>
@@ -277,7 +274,6 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="me-auto btn" data-bs-dismiss="modal">Batal</button>
-                <button type="button" id="printModalToPdf" class="btn btn-primary">Cetak PDF</button>
             </div>
         </div>
     </div>

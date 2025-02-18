@@ -18,7 +18,7 @@
 				<option value="{{$year}}" {{ $year == $selectedYear ? 'selected' : '' }}>{{$year}}</option>
             @endforeach
 			</select>
-            <div class="col-auto d-print-none" name="btnFilter" id="btnFilter">
+            <div class="col-auto d-print-none" name="btnFilter" id="btnFilter" data-bs-original-title="Filter" data-bs-placement="bottom" data-bs-toggle="tooltip">
                 <button type="submit" class="btn pe-1">
                     <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-filter-search"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11.36 20.213l-2.36 .787v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414" /><path d="M18 18m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /><path d="M20.2 20.2l1.8 1.8" /></svg>
                 </button>
@@ -35,12 +35,9 @@
         <a href="" class="btn btn-success d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-saldo">
         	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
 		</a>
-        <button class="btn btn-primary d-none d-sm-inline-block" id="printModalToPdf">
+        <button class="btn btn-primary" id="printModalToPdf">
             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
           	Cetak PDF
-        </button>
-        <button class="btn btn-primary d-sm-none btn-icon" id="printModalToPdf">
-            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
         </button>
 	</div>
 </div>
@@ -109,7 +106,7 @@
                                 <th class="text-center">No</th>
                                 <th class="text-center">Bulan</th>
                                 <th class="text-center">Alur Dana</th>
-                                <th class="text-center">Jumlah</th>
+                                <th class="text-center">Jumlah (Rupiah)</th>
                                 <th class="text-center">Harga Unit</th>
                                 <th class="text-center">Jumlah Unit</th>
                             </tr>
@@ -144,16 +141,7 @@
                                                         </a>
                                                     @endif
                                                 </td>
-                                                <td>
-                                                    <div class="row">
-                                                        <div class="col-auto">
-                                                            <span>Rp.</span>
-                                                        </div>
-                                                        <div class="col text-end">
-                                                            <span>{{ number_format($item['alur_dana'], 0, ',', '.') }}</span>
-                                                        </div>
-                                                    </div>
-                                                </td>
+                                                <td class="text-end">{{ number_format($item['alur_dana'], 0, ',', '.') }}</td>
                                                 <td class="text-center">{{number_format($item['harga_unit_saat_ini'], 0, ',', '.')}}</td>
                                                 <td class="text-center">{{number_format($item['jumlah_unit_penyertaan'], 0, ',', '.')}}</td>
                                             </tr>
@@ -189,7 +177,7 @@
                                 <th class="text-center">No</th>
                                 <th class="text-center">Tanggal</th>
                                 <th class="text-center">Jenis</th>
-                                <th class="text-center">Jumlah</th>
+                                <th class="text-center">Jumlah (Rupiah)</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -217,16 +205,7 @@
                                                     <a class="btn btn-sm btn-primary btn-pill ms-auto">Dividen</a>
                                                 @endif
                                             </td>
-                                            <td>
-                                                <div class="row">
-                                                    <div class="col-auto">
-                                                        <span>Rp.</span>
-                                                    </div>
-                                                    <div class="col text-end">
-                                                        <span>{{ number_format($data['saldo'], 0, ',', '.') }}</span>
-                                                    </div>
-                                                </div>
-                                            </td>
+                                            <td class="text-end">{{ number_format($data['saldo'], 0, ',', '.') }}</td>
                                         </tr>
                                     @endforeach
                                 @endforeach

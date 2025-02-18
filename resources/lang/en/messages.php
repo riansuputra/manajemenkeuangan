@@ -23,5 +23,5 @@ return [
     'hapus_data_catatan_keuangan_anggaran' => 'Delete Financial Notes & Budget Data',
     'hapus_data_catatan_umum' => 'Delete General Notes Data',
     'hapus_data_portofolio' => 'Delete Portfolio Data',
-    'simpan_perubahan' => 'Save Changes',
+    'simpan' => 'Save',
 ];

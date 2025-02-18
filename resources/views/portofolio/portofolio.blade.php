@@ -16,7 +16,7 @@
 				<option value="{{$year}}" {{ $year == $selectedYear ? 'selected' : '' }}>{{$year}}</option>
                 @endforeach
 			</select>
-            <div class="col-auto d-print-none" name="btnFilter" id="btnFilter">
+            <div class="col-auto d-print-none" name="btnFilter" id="btnFilter" data-bs-original-title="Filter" data-bs-placement="bottom" data-bs-toggle="tooltip">
                 <button type="submit" class="btn pe-1">
                     <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-filter-search"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11.36 20.213l-2.36 .787v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414" /><path d="M18 18m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /><path d="M20.2 20.2l1.8 1.8" /></svg>    
                 </button>
@@ -33,13 +33,10 @@
         <a href="" class="btn btn-success d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-portofolio" aria-label="Create new report">
 			<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
 		</a>
-        <a href="" class="btn btn-primary d-none d-sm-inline-block">
+        <a href="" class="btn btn-primary">
             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
           	Cetak PDF
       	</a>
-        <a href="" class="btn btn-primary d-sm-none btn-icon">
-            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
-		</a>
 	</div>
 </div>
 @endsection
@@ -60,9 +57,12 @@
                             <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($mutasiDataFilter['jumlah_unit_penyertaan'] ?? 0, 0, ',', '.' )}}</h5>
                         </div>
                         <div class="col-4">
-                            <h5 class="mt-0 mb-0 pt-0 pb-2">Yield :</h5>   
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format(($sortedHistorisData['yield'] ?? 0), 2, ',', '.') }}%
-                            </h5>   
+                            <a href="" class="bg-teal-lt" data-bs-toggle="modal" data-bs-target="#modal-yield">
+                                <div data-bs-original-title="Klik untuk edit" data-bs-placement="bottom" data-bs-toggle="tooltip">
+                                    <h5 class="mt-0 mb-0 pt-0 pb-2">Yield :</h5>   
+                                    <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format(($sortedHistorisData['yield'] ?? 0), 2, ',', '.') }}%</h5>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -73,21 +73,24 @@
                 <div class="card-body pb-0 mb-0">
                     <div class="row">
                         <div class="col-4">
-                            <a href="" title="click to edit" data-bs-toggle="modal" data-bs-target="#modal-ihsg">
-                                <h5 class="mt-0 mb-0 pt-0 pb-2">IHSG Start </h5>
-                                <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($sortedHistorisData['ihsg_start'] ?? 0, 0, ',', '.' )}}</h5>
+                            <a href="" data-bs-toggle="modal" data-bs-target="#modal-ihsg">
+                                <div data-bs-original-title="Klik untuk edit" data-bs-placement="bottom" data-bs-toggle="tooltip">
+                                    <h5 class="mt-0 mb-0 pt-0 pb-2">IHSG Start </h5>
+                                    <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($sortedHistorisData['ihsg_start'] ?? 0, 0, ',', '.' )}}</h5>
+                                </div>
                             </a>
                         </div>
                         <div class="col-4">
-                            <a href="" title="click to edit" data-bs-toggle="modal" data-bs-target="#modal-ihsg">
-                                <h5 class="mt-0 mb-0 pt-0 pb-2">IHSG End </h5>
-                                <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($sortedHistorisData['ihsg_end'] ?? 0, 0, ',', '.')}}</h5>
+                            <a href="" data-bs-toggle="modal" data-bs-target="#modal-ihsg">
+                                <div data-bs-original-title="Klik untuk edit" data-bs-placement="bottom" data-bs-toggle="tooltip">
+                                    <h5 class="mt-0 mb-0 pt-0 pb-2">IHSG End </h5>
+                                    <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($sortedHistorisData['ihsg_end'] ?? 0, 0, ',', '.')}}</h5>
+                                </div>
                             </a>
                         </div>
                         <div class="col-4">
                             <h5 class="mt-0 mb-0 pt-0 pb-2">Yield IHSG :</h5>
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format(($sortedHistorisData['yield_ihsg'] ?? 0) , 2, ',', '.') }}%
-                            </h5>
+                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format(($sortedHistorisData['yield_ihsg'] ?? 0) , 2, ',', '.') }}%</h5>
                         </div>
                     </div>
                 </div>
@@ -97,8 +100,11 @@
     <div class="col-lg-12">
         <div class="card mt-3">
             <div class="card-body">
-                <div class="mb-3">
+                <div class="input-icon mb-3">
                     <input type="text" id="searchInput1" class="form-control" placeholder="Cari data saham...">
+                    <span class="input-icon-addon">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>
+                    </span>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-bordered table-vcenter" id="dataTable1">
@@ -474,7 +480,7 @@
                             <div class="mb-3">
                                 <label class="form-label required">Sekuritas: </label>
                                 <select name="sekuritas" class="form-select" id="sekuritas" value="" required>
-                                    <option value="" selected>Pilih Sekuritas</option>
+                                    <option value="" selected disabled>Pilih Sekuritas</option>
                                     @foreach ($sekuritasData as $data)
                                     <option value="{{$data['id']}}"> {{$data['nama_sekuritas']}}</option>
                                    @endforeach
@@ -531,6 +537,90 @@
 </div>
 
 <div class="modal modal-blur fade" id="modal-ihsg" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Kelola IHSG {{ \Carbon\Carbon::create($currentMonth)->locale('id')->translatedFormat('F') }} {{$selectedYear}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ route('historis.store') }}" method="post" autocomplete="off">
+                @csrf
+                <div class="modal-status bg-success"></div>
+                <div class="modal-body">
+                    <div class="row mb-2">
+                        <div class="col-lg-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" id="ihsgstartlabel" name="ihsgstartlabel" value="{{ $filteredHistorisData && !$filteredHistorisData->isEmpty() ? number_format($filteredHistorisData->first()['ihsg_start'], 0, ',', '.') : '0'  }}" class="form-control text-strong text-warning border-warning mt-2" autocomplete="off" readonly>
+                                <label for="ihsgstartlabel" class="form-label text-black">IHSG Start :</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" id="ihsgendlabel" name="ihsgendlabel" value="{{ $filteredHistorisData && !$filteredHistorisData->isEmpty() && !$filteredHistorisData->where('bulan', $currentMonth)->isEmpty() ? number_format($filteredHistorisData->where('bulan', $currentMonth)->first()['ihsg_end'], 0, ',', '.') : '0' }}" class="form-control text-strong text-success border-success mt-2" autocomplete="off" readonly>
+                                <label for="ihsgendlabel" class="form-label text-black">IHSG End {{ \Carbon\Carbon::create($currentMonth)->locale('id')->translatedFormat('F') }} :</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="mb-3">
+                                <label class="form-label required">Bulan: </label>
+                                <select name="bulan" id="bulan" class="form-select" required>
+                                    <option value="" disabled selected>Pilih Bulan</option>
+                                    @foreach (range(1, 12) as $month)
+                                        <option value="{{ $month }}" {{ $month == $currentMonth ? 'selected' : '' }}>
+                                            {{ \Carbon\Carbon::createFromFormat('!m', $month)->locale('id')->translatedFormat('F') }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <input type="number" id="tahun" name="tahun" value="{{$selectedYear}}" hidden>
+                        
+                        
+                        <div class="col-lg-3">
+                            <div class="mb-3">
+                                <label class="form-label">IHSG Start: </label>
+                                <div class="input-group">
+                                    <input type="text" id="ihsgstart" name="ihsgstart" class="form-control text-end" autocomplete="off"  placeholder="{{ $filteredHistorisData && !$filteredHistorisData->isEmpty() && !$filteredHistorisData->where('bulan', $currentMonth)->isEmpty() ? number_format($filteredHistorisData->where('bulan', $currentMonth)->first()['ihsg_start'], 0, ',', '.') : '0' }}" required>
+                                    <input type="text" id="ihsgstart1" name="ihsgstart1" class="form-control text-end" autocomplete="off" hidden>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="mb-3">
+                                <label class="form-label">IHSG End: </label>
+                                <div class="input-group">
+                                    <input type="text" id="ihsgend" name="ihsgend" class="form-control text-end" autocomplete="off" placeholder="{{ $filteredHistorisData && !$filteredHistorisData->isEmpty() && !$filteredHistorisData->where('bulan', $currentMonth)->isEmpty() ? number_format($filteredHistorisData->where('bulan', $currentMonth)->first()['ihsg_end'], 0, ',', '.') : '0' }}" required>
+                                    <input type="text" id="ihsgend1" name="ihsgend1" class="form-control text-end" autocomplete="off" hidden>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="mb-3">
+                                <label class="form-label">&nbsp </label>
+                                <a href="{{ route('portofolio.update.harga.terkini', ['id_aset' => '0', 'nama_aset' => 'COMPOSITE', 'tipe' => 'ihsg']) }}"   class="btn btn-secondary w-100">
+                                    Harga Terkini
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="me-auto btn" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-success ms-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                        Simpan
+                    </button>
+                </div>
+            </form>	
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-blur fade" id="modal-yield" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
