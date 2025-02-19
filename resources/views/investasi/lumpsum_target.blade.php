@@ -337,14 +337,14 @@
             document.getElementById('awaldana3').textContent = awaldana;
             document.getElementById('jmhtahun2').textContent = document.getElementById('jmhtahun').value + ' Tahun';
             document.getElementById('persentasebunga1').textContent = document.getElementById('persentasebunga').value + '%';
-            document.getElementById('nilai').innerHTML = '<strong>Rp. ' + formatNumber(estimatedReturn.toFixed(0)) + '</strong>';
-            document.getElementById('totalnilai').innerHTML = '<strong>Rp. ' + formatNumber(nilai.toFixed(0)) + '</strong>';
+            document.getElementById('nilai').innerHTML = '<strong>Rp. ' + formatNumber(estimatedReturn.toFixed(2)) + '</strong>';
+            document.getElementById('totalnilai').innerHTML = '<strong>Rp. ' + formatNumber(nilai.toFixed(2)) + '</strong>';
 
             document.getElementById('awaldana4').textContent = 'Rp. ' + formatNumber(nilaiInvestasi);
             document.getElementById('jmhtahun4').textContent = document.getElementById('jmhtahun').value + ' Tahun';
             document.getElementById('persentasebunga4').textContent = document.getElementById('persentasebunga').value + '%';
-            document.getElementById('nilai1').textContent = 'Rp. ' + formatNumber(estimatedReturn.toFixed(0));
-            document.getElementById('totalnilai1').textContent = 'Rp. ' + formatNumber(totalInvestment.toFixed(0));
+            document.getElementById('nilai1').textContent = 'Rp. ' + formatNumber(estimatedReturn.toFixed(2));
+            document.getElementById('totalnilai1').textContent = 'Rp. ' + formatNumber(totalInvestment.toFixed(2));
             document.getElementById('totalnilai2').textContent = 'Rp. ' + formatNumber(awaldana.toFixed(0));
 
             const chartData = [estimatedReturn, totalInvestment]; 
@@ -443,7 +443,7 @@
             const bungaDesimal = persentaseBunga / 100;
             const investasiLumpsum = targetDana / Math.pow((1 + bungaDesimal), jmhtahun);
 
-            document.getElementById('awaldana4').textContent = 'Rp ' + formatNumber(investasiLumpsum.toFixed(0));
+            document.getElementById('awaldana4').textContent = 'Rp ' + formatNumber(investasiLumpsum.toFixed(2));
 
             const modalTableBody = document.getElementById('modalTableBody');
             modalTableBody.innerHTML = '';
@@ -463,13 +463,13 @@
 
                 // Kolom Investasi Awal
                 const investasiCell = document.createElement('td');
-                investasiCell.textContent = 'Rp ' + formatNumber(investasiLumpsum.toFixed(0));
+                investasiCell.textContent = 'Rp ' + formatNumber(investasiLumpsum.toFixed(2));
                 investasiCell.classList.add('text-center');
                 row.appendChild(investasiCell);
 
                 // Kolom Nilai Investasi Tahunan
                 const nilaiInvestasiCell = document.createElement('td');
-                nilaiInvestasiCell.textContent = 'Rp ' + formatNumber(nilaiInvestasi.toFixed(0));
+                nilaiInvestasiCell.textContent = 'Rp ' + formatNumber(nilaiInvestasi.toFixed(2));
                 nilaiInvestasiCell.classList.add('text-center');
                 row.appendChild(nilaiInvestasiCell);
 

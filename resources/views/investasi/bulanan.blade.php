@@ -332,15 +332,15 @@
             document.getElementById('awaldana3').textContent = awaldana;
             document.getElementById('jmhtahun2').textContent = document.getElementById('jmhtahun').value + ' Tahun';
             document.getElementById('persentasebunga1').textContent = document.getElementById('persentasebunga').value + '%';
-            document.getElementById('nilai').innerHTML = '<strong>Rp. ' + formatNumber(nilaiInvestasi.toFixed(0)) + '</strong>';
-            document.getElementById('totalnilai').innerHTML = '<strong>Rp. ' + formatNumber(nilai.toFixed(0)) + '</strong>';
+            document.getElementById('nilai').innerHTML = '<strong>Rp. ' + formatNumber(nilaiInvestasi.toFixed(2)) + '</strong>';
+            document.getElementById('totalnilai').innerHTML = '<strong>Rp. ' + formatNumber(nilai.toFixed(2)) + '</strong>';
 
             document.getElementById('awaldana4').textContent = 'Rp. ' + formatNumber(awaldana);
             document.getElementById('jmhtahun4').textContent = document.getElementById('jmhtahun').value + ' Tahun';
             document.getElementById('persentasebunga4').textContent = document.getElementById('persentasebunga').value + '%';
-            document.getElementById('nilai1').textContent = 'Rp. ' + formatNumber(nilaiInvestasi.toFixed(0));
-            document.getElementById('nilaitotal').textContent = 'Rp. ' + formatNumber(danaInvestasiAwal.toFixed(0));
-            document.getElementById('totalnilai1').textContent = 'Rp. ' + formatNumber(nilai.toFixed(0));
+            document.getElementById('nilai1').textContent = 'Rp. ' + formatNumber(nilaiInvestasi.toFixed(2));
+            document.getElementById('nilaitotal').textContent = 'Rp. ' + formatNumber(danaInvestasiAwal.toFixed());
+            document.getElementById('totalnilai1').textContent = 'Rp. ' + formatNumber(nilai.toFixed(2));
 
             const chartData = [nilaiInvestasi, danaInvestasiAwal]; 
 
@@ -409,26 +409,26 @@
         }
 
         function calculateNilai() {
-    const awaldana = parseFloat(document.getElementById('awaldana').value); // Setoran per bulan
-    const jmhtahun = parseFloat(document.getElementById('jmhtahun').value); // Jangka waktu dalam tahun
-    const persentasebunga = parseFloat(document.getElementById('persentasebunga').value); // Bunga tahunan
+            const awaldana = parseFloat(document.getElementById('awaldana').value); // Setoran per bulan
+            const jmhtahun = parseFloat(document.getElementById('jmhtahun').value); // Jangka waktu dalam tahun
+            const persentasebunga = parseFloat(document.getElementById('persentasebunga').value); // Bunga tahunan
 
-    if (!isNaN(awaldana) && !isNaN(jmhtahun) && !isNaN(persentasebunga)) {
-        const tingkatBungaPerBulan = persentasebunga / 100 / 12; // Bunga per bulan
-        const totalSetoran = 12 * jmhtahun; // Total bulan
-        let saldo = 0;
+            if (!isNaN(awaldana) && !isNaN(jmhtahun) && !isNaN(persentasebunga)) {
+                const tingkatBungaPerBulan = persentasebunga / 100 / 12; // Bunga per bulan
+                const totalSetoran = 12 * jmhtahun; // Total bulan
+                let saldo = 0;
 
-        // Hitung nilai akhir investasi
-        for (let bulan = 1; bulan <= totalSetoran; bulan++) {
-            saldo += awaldana; // Setoran setiap bulan
-            saldo *= (1 + tingkatBungaPerBulan); // Terapkan bunga bulanan pada saldo
+                // Hitung nilai akhir investasi
+                for (let bulan = 1; bulan <= totalSetoran; bulan++) {
+                    saldo += awaldana; // Setoran setiap bulan
+                    saldo *= (1 + tingkatBungaPerBulan); // Terapkan bunga bulanan pada saldo
+                }
+
+                return saldo.toFixed(2); // Nilai akhir investasi setelah bunga
+            } else {
+                return 0;
+            }
         }
-
-        return saldo.toFixed(0); // Nilai akhir investasi setelah bunga
-    } else {
-        return 0;
-    }
-}
 
 function populateModalTable() {
     const awaldana = parseFloat(document.getElementById('awaldana').value); // Setoran per bulan
@@ -462,7 +462,7 @@ function populateModalTable() {
         row.appendChild(investasiCell);
 
         const nilaiInvestasiCell = document.createElement('td');
-        nilaiInvestasiCell.textContent = 'Rp. ' + formatNumber(saldo.toFixed(0)); // Nilai investasi setelah bunga
+        nilaiInvestasiCell.textContent = 'Rp. ' + formatNumber(saldo.toFixed(2)); // Nilai investasi setelah bunga
         nilaiInvestasiCell.classList.add('text-center');
         row.appendChild(nilaiInvestasiCell);
 

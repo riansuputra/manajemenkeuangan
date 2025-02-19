@@ -319,14 +319,14 @@
             document.getElementById('awaldana3').textContent = awaldana;
             document.getElementById('jmhtahun2').textContent = document.getElementById('jmhtahun').value + ' Tahun';
             document.getElementById('persentasebunga1').textContent = document.getElementById('persentasebunga').value + '%';
-            document.getElementById('nilai').innerHTML = '<strong>Rp. ' + formatNumber(nilaiInvestasi.toFixed(0)) + '</strong>';
-            document.getElementById('totalnilai').innerHTML = '<strong>Rp. ' + formatNumber(nilai.toFixed(0)) + '</strong>';
+            document.getElementById('nilai').innerHTML = '<strong>Rp. ' + formatNumber(nilaiInvestasi.toFixed(2)) + '</strong>';
+            document.getElementById('totalnilai').innerHTML = '<strong>Rp. ' + formatNumber(nilai.toFixed(2)) + '</strong>';
 
             document.getElementById('awaldana4').textContent = 'Rp. ' + formatNumber(awaldana);
             document.getElementById('jmhtahun4').textContent = document.getElementById('jmhtahun').value + ' Tahun';
             document.getElementById('persentasebunga4').textContent = document.getElementById('persentasebunga').value + '%';
-            document.getElementById('nilai1').textContent = 'Rp. ' + formatNumber(nilaiInvestasi.toFixed(0));
-            document.getElementById('totalnilai1').textContent = 'Rp. ' + formatNumber(nilai.toFixed(0));
+            document.getElementById('nilai1').textContent = 'Rp. ' + formatNumber(nilaiInvestasi.toFixed(2));
+            document.getElementById('totalnilai1').textContent = 'Rp. ' + formatNumber(nilai.toFixed(2));
 
             const chartData = [nilaiInvestasi, danaInvestasiAwal]; 
 
@@ -400,7 +400,7 @@
 
             if (!isNaN(awaldana) && !isNaN(jmhtahun) && !isNaN(persentasebunga)) {
                 const nilai = awaldana * Math.pow((1 + persentasebunga / 100), jmhtahun);
-                return nilai.toFixed(0);
+                return nilai.toFixed(2);
             } else {
                 return 0;
             }
@@ -434,7 +434,7 @@
                 
                 const nilaiInvestasiCell = document.createElement('td');
                 const nilaiTahun = awaldana * Math.pow((1 + persentasebunga / 100), tahun);
-                nilaiInvestasiCell.textContent = 'Rp. ' + formatNumber(nilaiTahun.toFixed(0));
+                nilaiInvestasiCell.textContent = 'Rp. ' + formatNumber(nilaiTahun.toFixed(2));
                 nilaiInvestasiCell.classList.add('text-center');
                 row.appendChild(nilaiInvestasiCell);
                 
