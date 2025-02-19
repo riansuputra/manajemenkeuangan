@@ -26,6 +26,8 @@ Route::middleware(['throttle:100,1'])->group(function() {
         Route::post('/register/auth', [AuthController::class, 'register'])->name('register');
         Route::get('/login', [AuthController::class, 'loginPage'])->name('login.page');
         Route::post('/login/auth', [AuthController::class, 'login'])->name('login');
+        Route::get('/lupa-password', [AuthController::class, 'passwordPage'])->name('password.page');
+        Route::post('/lupa-password/store', [AuthController::class, 'lupaPassword'])->name('password');
         Route::post('/login/admin/auth', [AuthController::class, 'loginAdmin'])->name('login.admin');
         Route::get('/login/admin', [AuthController::class, 'loginAdminPage'])->name('login.admin.page');
     });

@@ -10,7 +10,7 @@
     <link href="{{ asset('css/tabler-vendors.min.css?1684106062') }}" rel="stylesheet"/>
 	<link href="{{ asset('dist/css/demo.min.css?1684106062')}}" rel="stylesheet"/>
 	<link href="{{asset('dist/css/tabler-flags.min.css?1684106062')}}" rel="stylesheet"/>
-	<link rel="icon" type="image/png" href="{{ asset('img\logo_new.png') }}">
+	<link rel="icon" type="image/png" href="{{ asset('img/logo-2.png') }}"/>
     <style>
 		@import url('https://rsms.me/inter/inter.css');
 		:root {

@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ session('locale', config('app.locale')) }}">
 
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <title>@yield('title') - Smart Finance</title>
+	<link rel="icon" type="image/png" href="{{ asset('img/logo-2.png') }}"/>
     <link href="{{asset('css/tabler.min.css?1684106062')}}" rel="stylesheet"/>
     <link href="{{asset('css/tabler-flags.min.css?1684106062')}}" rel="stylesheet"/>
     <link href="{{asset('css/tabler-payments.min.css?1684106062')}}" rel="stylesheet"/>

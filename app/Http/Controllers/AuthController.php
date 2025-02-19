@@ -67,6 +67,11 @@ class AuthController extends Controller
         return back()->with('error', 'Gagal masuk, coba lagi nanti.')->withErrors($response['errors'])->withInput($input);
     }
 
+    public function passwordPage()
+    {
+        return view('autentikasi.password');
+    } 
+
     public function lupaPassword(Request $request)
     {
         $input = array(

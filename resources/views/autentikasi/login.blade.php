@@ -5,9 +5,9 @@
 @section('content')
 <div class="container container-tight">
 	<div class="text-center mb-4">
-		<a href="." class="navbar-brand navbar-brand-autodark">
-			<img class="mb-2" src="{{ asset('img/logo.png') }}" height="30" alt="">
-			<h1 class="m-0">Smart Finance</h1>
+		<a class="navbar-brand navbar-brand-autodark">
+			<img class="mb-2" src="{{ asset('img/logo-2.png') }}" height="30" alt="">
+			<h1 class="m-0 text-white">Smart Finance</h1>
 		</a>
 	</div>
 	<div class="card card-md">
@@ -41,18 +41,33 @@
 					</div>
 				</div>
 				<span class="form-label-description">
-					<a href="">Lupa password?</a>
+					<div class="dropdown">
+						<a class="dropdown-toggle text-muted" href="" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							@if((session('locale', config('app.locale'))) == 'en') 
+								English
+							@elseif((session('locale', config('app.locale'))) == 'id')
+							  	Indonesia 
+							@endif
+						</a>
+						<div class="dropdown-menu dropdown-menu-end" style="">
+							<a class="dropdown-item" href="{{ route('bahasa.id') }}">Indonesia</a>
+							<a class="dropdown-item" href="{{ route('bahasa.en') }}">English</a>
+						</div>
+					</div>
+				</span>
+				<span class="form-label">
+					<a href="{{ route('password.page') }}">Lupa password?</a>
 				</span>
 				<br>
-				<div class="form-footer mb-2">
+				<div class="form-footer">
 					<button type="submit" class="btn btn-primary w-100">MASUK</button>
 				</div>
 			</form>
 		</div>
 	</div>
-	<div class="text-center mt-3">
+	<div class="text-center text-white mt-3">
 		Anda belum memiliki akun? 
-		<a href="{{ route('register') }}" tabindex="-1">Daftar</a>
+		<a href="{{ route('register.page') }}" class="fw-bold text-white" tabindex="-1">Daftar</a>
 	</div>
 </div>
 @endsection
