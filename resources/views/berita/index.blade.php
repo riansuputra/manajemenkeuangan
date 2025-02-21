@@ -1,14 +1,14 @@
 @extends('layouts.user')
 
-@section('title', 'Berita')
+@section('title', __('info.news'))
 
 @section('page-title')
 <div class="col">
 	<h2 class="page-title">
-		Berita
+		{{ __('info.news') }}
 	</h2>
 </div>
-<div class="text-muted mt-1">Terakhir diperbarui pada {{\Carbon\Carbon::parse($update)->locale('id')->translatedFormat('l, d F Y H:i')}} UTC+8</div>
+<div class="text-muted mt-1">{{ __('info.last_updated') }} {{\Carbon\Carbon::parse($update)->locale('id')->translatedFormat('l, d F Y H:i')}} UTC+8</div>
 @endsection
 
 @section('content')

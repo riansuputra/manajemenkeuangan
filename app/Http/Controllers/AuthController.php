@@ -104,6 +104,7 @@ class AuthController extends Controller
 
     public function loginAdmin(Request $request)
     {
+        // dd($request);
         $input = array(
             'email' => $request->email,
             'password' => $request->password,

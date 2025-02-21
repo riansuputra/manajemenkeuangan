@@ -7,13 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
 
-    <title>{{ __('auth.forgot_password') }} - Smart Finance</title>
+    <title>{{ __('auth.reset_password') }} - Smart Finance</title>
     <!-- CSS files -->
 	<link rel="icon" type="image/png" href="{{ asset('img/logo-2.png') }}"/>
     <link href="{{ asset('dist/css/tabler.min.css?1684106062')}}" rel="stylesheet"/>
-    <link href="{{ asset('dist/css/tabler-flags.min.css?1684106062')}}" rel="stylesheet"/>
-    <link href="{{ asset('dist/css/tabler-payments.min.css?1684106062')}}" rel="stylesheet"/>
-    <link href="{{ asset('dist/css/tabler-vendors.min.css?1684106062')}}" rel="stylesheet"/>
     <link href="{{ asset('dist/css/demo.min.css?1684106062')}}" rel="stylesheet"/>
     <style>
       @import url('https://rsms.me/inter/inter.css');
@@ -38,15 +35,18 @@
             </div>
             <form class="card card-md" action="./" method="get" autocomplete="off" novalidate>
                 <div class="card-body">
-                    <h2 class="card-title text-center mb-4">{{ __('auth.forgot_password') }}</h2>
-                    <p class="text-muted mb-4">{{ __('auth.enter_emailP') }}</p>
+                    <h2 class="card-title text-center mb-4">{{ __('auth.reset_password') }}</h2>
                     <div class="mb-3">
-                        <label class="form-label">{{ __('auth.email') }} :</label>
-                        <input type="email" name="email" id="email" class="form-control" placeholder="{{ __('auth.enter_email') }}" required>
+                        <label class="form-label">{{ __('auth.new_password') }} :</label>
+                        <input type="email" name="new_password" id="new_password" class="form-control" placeholder="{{ __('auth.enter_new_password') }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">{{ __('auth.confirm_new_password') }} :</label>
+                        <input type="email" name="confirm_new_password" id="confirm_new_password" class="form-control" placeholder="{{ __('auth.enter_confirm_new_password') }}" required>
                     </div>
                     <div class="form-footer">
                         <a href="" class="btn btn-primary w-100">
-                            {{ __('auth.send_new_password') }}
+                            {{ __('auth.reset') }}
                         </a>
                     </div>
                 </div>

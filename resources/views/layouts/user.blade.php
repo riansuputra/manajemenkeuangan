@@ -58,19 +58,19 @@
                 			<div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
 								<a class="dropdown-item" href="{{ url('/informasi-akun') }}" >
 							  		<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"></path><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"></path></svg>
-                              			Informasi Akun
+									  	{{ __('layout.account_info') }}
                             	</a>	
 								<a class="dropdown-item" href="{{ url('/tentang') }}" >
 									<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path><path d="M12 9h.01"></path><path d="M11 12h1v4h1"></path></svg>
-                              			Tentang Aplikasi
+										{{ __('layout.about_app') }}
                             	</a>
 								<a class="dropdown-item" href="mailto:smartfinance.ta.com" >
 									<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-inline me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M12 17l0 .01" /><path d="M12 13.5a1.5 1.5 0 0 1 1 -1.5a2.6 2.6 0 1 0 -3 -4" /></svg>
-										Bantuan & Dukungan
+										{{ __('layout.help_support') }}
       							</a>
                               	<a class="dropdown-item" href="{{ url('/logout') }}" >
 									<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2"></path><path d="M9 12h12l-3 -3"></path><path d="M18 15l3 -3"></path></svg>
-										Keluar
+										{{ __('layout.logout') }}
       							</a>
                 			</div>
               			</div>
@@ -88,7 +88,7 @@
                         					<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l-2 0l9 -9l9 9l-2 0" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
 										</span>
                       					<span class="nav-link-title">
-										  	{{ __('messages.dashboard') }}
+										  	{{ __('layout.dashboard') }}
                       					</span>
 									</a>
                   				</li>
@@ -98,17 +98,17 @@
 											<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M5 3m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z"></path><path d="M9 7l6 0"></path><path d="M9 11l6 0"></path><path d="M9 15l4 0"></path></svg>
 										</span>
                       					<span class="nav-link-title">
-										  	{{ __('messages.catatan') }}
+										  	{{ __('layout.notes') }}
                       					</span>
                     				</a>
                             		<div class="dropdown-menu">
               							<a class="dropdown-item" href="{{ route('catatan.keuangan') }}">
 										  	<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-inline me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M14.8 9a2 2 0 0 0 -1.8 -1h-2a2 2 0 1 0 0 4h2a2 2 0 1 1 0 4h-2a2 2 0 0 1 -1.8 -1" /><path d="M12 7v10" /></svg>
-                            					Keuangan
+											  	{{ __('layout.finance') }}
                           				</a>
 						  				<a class="dropdown-item" href="{{ route('catatan.umum') }}">
 										  	<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-inline me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h11a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-11a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1m3 0v18" /><path d="M13 8l2 0" /><path d="M13 12l2 0" /></svg>
-                            					Umum
+											  	{{ __('layout.general') }}
                           				</a>
 									</div>
                   				</li>
@@ -118,7 +118,7 @@
 					  						<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M16 6m-5 0a5 3 0 1 0 10 0a5 3 0 1 0 -10 0"></path><path d="M11 6v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4"></path><path d="M11 10v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4"></path><path d="M11 14v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4"></path><path d="M7 9h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5"></path><path d="M5 15v1m0 -8v1"></path></svg>
                       					</span>
                       					<span class="nav-link-title">
-										  	{{ __('messages.anggaran') }}
+											{{ __('layout.budget') }}
                       					</span>
 									</a>
                   				</li>
@@ -128,21 +128,21 @@
 										  	<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-file-info"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M11 14h1v4h1" /><path d="M12 11h.01" /></svg>
                       					</span>
 										<span class="nav-link-title">
-										  	{{ __('messages.informasi') }}
+										  	{{ __('layout.information') }}
                       					</span>
                     				</a>
                     				<div class="dropdown-menu">
 										<a class="dropdown-item" href="{{ route('berita') }}">
 											<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-inline me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M16 6h3a1 1 0 0 1 1 1v11a2 2 0 0 1 -4 0v-13a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1v12a3 3 0 0 0 3 3h11" /><path d="M8 8l4 0" /><path d="M8 12l4 0" /><path d="M8 16l4 0" /></svg>
-						  						Berita
+												{{ __('layout.news') }}
 										</a>
                           				<a class="dropdown-item" href="{{ route('kurs') }}">
 										  	<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-inline me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 18m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M19 6m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M19 8v5a5 5 0 0 1 -5 5h-3l3 -3m0 6l-3 -3" /><path d="M5 16v-5a5 5 0 0 1 5 -5h3l-3 -3m0 6l3 -3" /></svg>
-	                            				Kurs
+											  	{{ __('layout.exchange_rate') }}
                           				</a>
 										<a class="dropdown-item" href="{{ route('dividen') }}">
 										  	<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-inline me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 21l18 0" /><path d="M3 10l18 0" /><path d="M5 6l7 -3l7 3" /><path d="M4 10l0 11" /><path d="M20 10l0 11" /><path d="M8 14l0 3" /><path d="M12 14l0 3" /><path d="M16 14l0 3" /></svg>
-                            					Dividen
+											  	{{ __('layout.dividend') }}
                           				</a>
                     				</div>
 								</li>
@@ -158,35 +158,35 @@
 										  	<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-category-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 4h6v6h-6z" /><path d="M4 14h6v6h-6z" /><path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /><path d="M7 7m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /></svg>
                       					</span>
                       					<span class="nav-link-title">
-										  	{{ __('messages.simulasi') }}
+										  	{{ __('layout.simulation') }}
                       					</span>
                     				</a>
                     				<div class="dropdown-menu">
 										<div class="dropend">
 											<a class="dropdown-item dropdown-toggle" href="" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
 												<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M3 3v18h18"></path><path d="M20 18v3"></path><path d="M16 16v5"></path><path d="M12 13v8"></path><path d="M8 16v5"></path><path d="M3 11c6 0 5 -5 9 -5s3 5 9 5"></path></svg>
-													Investasi
+													{{ __('layout.investment') }}
 											</a>
 											<div class="dropdown-menu">
 												<a href="{{ route('investasi.bulanan') }}" class="dropdown-item">
-													Bulanan
+													{{ __('layout.monthly') }}
 												</a>
 												<a href="{{ route('investasi.lumpsum') }}" class="dropdown-item">
-													Lumpsum
+													{{ __('layout.lumpsum') }}
 												</a>
 											</div>
 										</div>
 										<div class="dropend">
 											<a class="dropdown-item dropdown-toggle" href="" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
 												<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 9m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z"></path><path d="M14 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path><path d="M17 9v-2a2 2 0 0 0 -2 -2h-10a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h2"></path></svg>
-													Pinjaman
+													{{ __('layout.loan') }}
 											</a>
 											<div class="dropdown-menu">
 												<a href="{{ route('pinjaman.bunga.efektif') }}" class="dropdown-item">
-													Bunga Efektif (Anuitas)
+													{{ __('layout.effective_interest') }}
 												</a>
 												<a href="{{ route('pinjaman.bunga.tetap') }}" class="dropdown-item">
-													Bunga Tetap (Flat)
+													{{ __('layout.fixed_interest') }}
 												</a>
 											</div>
 										</div>
@@ -198,21 +198,21 @@
 										  	<svg xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-inline me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M8 11h8v7h-8z" /><path d="M8 15h8" /><path d="M11 11v7" /></svg>
                       					</span>
                       					<span class="nav-link-title">
-										  	{{ __('messages.portofolio') }}
+										  	{{ __('layout.portfolio') }}
                       					</span>
                     				</a>
                     				<div class="dropdown-menu">
 										<a class="dropdown-item" href="{{ route('portofolio') }}">
 											<svg xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-inline me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M8 11h8v7h-8z" /><path d="M8 15h8" /><path d="M11 11v7" /></svg>
-							  					Portofolio
+												{{ __('layout.portfolio') }}
 										</a>
                           				<a class="dropdown-item" href="{{ route('portofolio.mutasi.dana') }}">
 										  	<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-inline me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 9m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z" /><path d="M14 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 9v-2a2 2 0 0 0 -2 -2h-10a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h2" /></svg>
-                            					Mutasi Dana
+											  	{{ __('layout.fund_mutation') }}
                           				</a>
 										  <a class="dropdown-item" href="{{ route('portofolio.historis') }}">
 										  	<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-inline me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20.866 10.45a9 9 0 1 0 -7.815 10.488" /><path d="M12 7v5l1.5 1.5" /><path d="M21 15h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" /><path d="M19 21v1m0 -8v1" /></svg>
-                            					Historis
+											  	{{ __('layout.history') }}
                           				</a>
                     				</div>
 								</li>
@@ -227,7 +227,7 @@
 												</span>
                     						</span>
                     						<span class="nav-link-title">
-												{{ __('messages.bahasa') }}
+												{{ __('layout.language') }}
                     						</span>
                   						</a>
                   						<div class="dropdown-menu">
@@ -248,17 +248,17 @@
 												<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon text-warning hide-theme-dark"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 19a1 1 0 0 1 .993 .883l.007 .117v1a1 1 0 0 1 -1.993 .117l-.007 -.117v-1a1 1 0 0 1 1 -1z" /><path d="M18.313 16.91l.094 .083l.7 .7a1 1 0 0 1 -1.32 1.497l-.094 -.083l-.7 -.7a1 1 0 0 1 1.218 -1.567l.102 .07z" /><path d="M7.007 16.993a1 1 0 0 1 .083 1.32l-.083 .094l-.7 .7a1 1 0 0 1 -1.497 -1.32l.083 -.094l.7 -.7a1 1 0 0 1 1.414 0z" /><path d="M4 11a1 1 0 0 1 .117 1.993l-.117 .007h-1a1 1 0 0 1 -.117 -1.993l.117 -.007h1z" /><path d="M21 11a1 1 0 0 1 .117 1.993l-.117 .007h-1a1 1 0 0 1 -.117 -1.993l.117 -.007h1z" /><path d="M6.213 4.81l.094 .083l.7 .7a1 1 0 0 1 -1.32 1.497l-.094 -.083l-.7 -.7a1 1 0 0 1 1.217 -1.567l.102 .07z" /><path d="M19.107 4.893a1 1 0 0 1 .083 1.32l-.083 .094l-.7 .7a1 1 0 0 1 -1.497 -1.32l.083 -.094l.7 -.7a1 1 0 0 1 1.414 0z" /><path d="M12 2a1 1 0 0 1 .993 .883l.007 .117v1a1 1 0 0 1 -1.993 .117l-.007 -.117v-1a1 1 0 0 1 1 -1z" /><path d="M12 7a5 5 0 1 1 -4.995 5.217l-.005 -.217l.005 -.217a5 5 0 0 1 4.995 -4.783z" /></svg>
                     						</span>
                     						<span class="nav-link-title">
-												{{ __('messages.tema') }}
+												{{ __('layout.theme') }}
                     						</span>
                   						</a>
                   						<div class="dropdown-menu">
 										  	<a href="{{ url()->current() }}?theme=dark" class="dropdown-item" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Enable dark mode" data-bs-original-title="Enable dark mode">
 											  	<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon text-yellow"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 1.992a10 10 0 1 0 9.236 13.838c.341 -.82 -.476 -1.644 -1.298 -1.31a6.5 6.5 0 0 1 -6.864 -10.787l.077 -.08c.551 -.63 .113 -1.653 -.758 -1.653h-.266l-.068 -.006l-.06 -.002z" /></svg>
-													&nbsp Dark
+													&nbsp {{ __('layout.dark') }}
 											</a>
 											<a href="{{ url()->current() }}?theme=light" class="dropdown-item" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Enable light mode" data-bs-original-title="Enable light mode">
 												<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon text-warning"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 19a1 1 0 0 1 .993 .883l.007 .117v1a1 1 0 0 1 -1.993 .117l-.007 -.117v-1a1 1 0 0 1 1 -1z" /><path d="M18.313 16.91l.094 .083l.7 .7a1 1 0 0 1 -1.32 1.497l-.094 -.083l-.7 -.7a1 1 0 0 1 1.218 -1.567l.102 .07z" /><path d="M7.007 16.993a1 1 0 0 1 .083 1.32l-.083 .094l-.7 .7a1 1 0 0 1 -1.497 -1.32l.083 -.094l.7 -.7a1 1 0 0 1 1.414 0z" /><path d="M4 11a1 1 0 0 1 .117 1.993l-.117 .007h-1a1 1 0 0 1 -.117 -1.993l.117 -.007h1z" /><path d="M21 11a1 1 0 0 1 .117 1.993l-.117 .007h-1a1 1 0 0 1 -.117 -1.993l.117 -.007h1z" /><path d="M6.213 4.81l.094 .083l.7 .7a1 1 0 0 1 -1.32 1.497l-.094 -.083l-.7 -.7a1 1 0 0 1 1.217 -1.567l.102 .07z" /><path d="M19.107 4.893a1 1 0 0 1 .083 1.32l-.083 .094l-.7 .7a1 1 0 0 1 -1.497 -1.32l.083 -.094l.7 -.7a1 1 0 0 1 1.414 0z" /><path d="M12 2a1 1 0 0 1 .993 .883l.007 .117v1a1 1 0 0 1 -1.993 .117l-.007 -.117v-1a1 1 0 0 1 1 -1z" /><path d="M12 7a5 5 0 1 1 -4.995 5.217l-.005 -.217l.005 -.217a5 5 0 0 1 4.995 -4.783z" /></svg>
-													&nbsp Light
+													&nbsp {{ __('layout.light') }}
 											</a>
                   						</div>
                 					</li>
@@ -272,7 +272,7 @@
       	<div class="page-wrapper">
 			<div class="container container-slim my-auto" id="spinner" style="display:block;">
 				<div class="text-center">
-					<div class=" mb-3">Loading</div>
+					<div class=" mb-3">{{ __('layout.loading') }}</div>
 					<div class="progress progress-sm">
 						<div class="progress-bar progress-bar-indeterminate"></div>
 					</div>
@@ -295,14 +295,14 @@
     	<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         	<div class="modal-content">
           		<div class="modal-header">
-            		<h5 class="modal-title">Tambah Catatan</h5>
+            		<h5 class="modal-title">{{ __('notes.add_record') }}</h5>
             		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           		</div>
 		  		<form action="{{ route('catatan.keuangan.store') }}" method="post" autocomplete="off">
 					@csrf
 					<div class="modal-status bg-success"></div>
           			<div class="modal-body">
-            			<label class="form-label required">Pilih Jenis :</label>
+            			<label class="form-label required">{{ __('notes.select_type') }} :</label>
             			<div class="form-selectgroup-boxes row mb-3">
 							<div class="col-lg-6">
 								<label class="form-selectgroup-item">
@@ -313,7 +313,7 @@
 										</span>
 										<span class="form-selectgroup-label-content">
 											<div class="card-status-top bg-green"></div>
-											<span class="form-selectgroup-title mb-1">Pemasukan</span>
+											<span class="form-selectgroup-title mb-1">{{ __('notes.income') }}</span>
 										</span>
 									</span>
 								</label>
@@ -327,7 +327,7 @@
 										</span>
 										<span class="form-selectgroup-label-content">
 											<div class="card-status-top bg-red"></div>
-											<span class="form-selectgroup-title mb-1">Pengeluaran</span>
+											<span class="form-selectgroup-title mb-1">{{ __('notes.expense') }}</span>
 										</span>
 									</span>
 								</label>
@@ -336,7 +336,7 @@
             			<div class="row">
               				<div class="col-lg-4">
                 				<div class="mb-3">
-                  					<label class="form-label required">Jumlah : </label>
+                  					<label class="form-label required">{{ __('notes.amount') }} : </label>
 				  					<div class="input-group">
                               			<span class="input-group-text">
                                 			Rp.
@@ -350,29 +350,29 @@
                 				<div class="mb-3">
                   					<label class="form-label required">Kategori :</label>
 									<select id="kategori" name="kategori" class="form-select kategoriadd">
-                                        <option value="" disabled selected>Pilih Kategori</option>
+                                        <option value="" disabled selected>{{ __('notes.select_category') }}</option>
                                     </select>
                 				</div>
               				</div>
 			  				<div class="col-lg-4">
                 				<div class="mb-3">
-                  					<label class="form-label required">Tanggal :</label>
+                  					<label class="form-label required">{{ __('notes.date') }} :</label>
                   					<input type="date" id="tanggal" name="tanggal" class="form-control" value="{{ now()->format('Y-m-d') }}">
                 				</div>
               				</div>
 							<div class="col-lg-12">
                 				<div class="mb-2">
                   					<label class="form-label">Catatan :</label>
-                  					<textarea id="catatan" name="catatan" class="form-control" rows="3" placeholder="Masukkan catatan disini..."></textarea>
+                  					<textarea id="catatan" name="catatan" class="form-control" rows="3" placeholder="{{ __('notes.write_note_here') }}"></textarea>
                 				</div>
               				</div>
             			</div>
           			</div>
           			<div class="modal-footer">
-						<button type="button" class="me-auto btn" data-bs-dismiss="modal">Batal</button>
+						<button type="button" class="me-auto btn" data-bs-dismiss="modal">{{ __('notes.cancel') }}</button>
 						<button type="submit" class="btn btn-success ms-auto">
               				<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-              					Simpan
+							  {{ __('notes.save') }}
 						</button>
           			</div>
 				</form>	

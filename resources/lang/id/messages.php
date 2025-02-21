@@ -1,5 +1,10 @@
 <?php
 return [
+
+    // Login page
+    
+    // End of login page
+
     'welcome' => 'Selamat Datang',
     'dashboard' => 'Dasbor',
     'catatan' => 'Catatan',

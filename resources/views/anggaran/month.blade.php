@@ -1,18 +1,18 @@
 @extends('layouts.user')
 
-@section('title', 'Anggaran')
+@section('title', __('budget.budget') )
 
 @section('page-title')
 <div class="col">
     <h2 class="page-title">
-        Anggaran
+        {{ __('budget.budget') }}
     </h2>
 </div>
 <div class="col-auto ms-auto d-print-none">
 	<div class="btn-list">
 		<a href="" class="btn btn-success d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-anggaran">
         	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-          	Tambah Anggaran
+            {{ __('budget.add_budget') }}
       	</a>
 		<a href="" class="btn btn-success d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-anggaran" aria-label="Create new report">
 			<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
@@ -29,13 +29,13 @@
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <a href="{{ route('anggaran.week') }}" class="nav-link" aria-selected="true" role="tab">Mingguan</a>
+                            <a href="{{ route('anggaran.week') }}" class="nav-link" aria-selected="true" role="tab">{{ __('budget.weekly') }}</a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a href="{{ route('anggaran.month') }}" class="nav-link active" aria-selected="false" role="tab" tabindex="-1">Bulanan</a>
+                            <a href="{{ route('anggaran.month') }}" class="nav-link active" aria-selected="false" role="tab" tabindex="-1">{{ __('budget.monthly') }}</a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a href="{{ route('anggaran.year') }}" class="nav-link" aria-selected="false" role="tab" tabindex="-1">Tahunan</a>
+                            <a href="{{ route('anggaran.year') }}" class="nav-link" aria-selected="false" role="tab" tabindex="-1">{{ __('budget.yearly') }}</a>
                         </li>
                         <li class="nav-item ms-auto">
                             <a class="nav-link disabled text-muted" href="">
@@ -93,14 +93,14 @@
                                                         data-tersisa="{{ $remaining }}"
                                                         data-overspend="{{ $overspend }}"
                                                         data-periode="{{ $data['periode'] }}">
-                                                        Edit
+                                                        {{ __('budget.edit') }}
                                                     </a>
                                                     <a class="dropdown-item btn-delete" href=""
                                                         data-bs-toggle="modal" 
                                                         data-bs-target="#modal-danger{{$data['id']}}" 
                                                         data-nama="{{ $data['nama_kategori_pengeluaran'] }}" 
                                                         data-id="{{$data['id']}}">
-                                                        Delete
+                                                        {{ __('budget.delete') }}
                                                     </a>
                                                 </div>
                                             </div>
@@ -119,7 +119,7 @@
                                     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title">Edit Anggaran<span id="modaledittitle_{{$data['id']}}" name="modaledittitle"> </span>Bulanan</h5>
+                                                <h5 class="modal-title">{{ __('budget.edit_budget') }}<span id="modaledittitle_{{$data['id']}}" name="modaledittitle"> </span>{{ __('budget.monthly') }}</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <form action="{{ route('anggaran.update', ['id'=> $data['id']]) }}" method="post" autocomplete="off">
@@ -130,19 +130,19 @@
                                                         <div class="col-lg-4">
                                                             <div class="form-floating mb-3">
                                                                 <input type="text" id="jumlah_anggaran_{{$data['id']}}" name="jumlahanggaran" class="form-control text-strong text-warning border-warning mt-2" autocomplete="off" readonly>
-                                                                <label for="jumlah_anggaran_{{$data['id']}}" class="form-label text-black">Used :</label>
+                                                                <label for="jumlah_anggaran_{{$data['id']}}" class="form-label text-black">{{ __('budget.used') }} :</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-4">
                                                             <div class="form-floating mb-3">
                                                                 <input type="text" id="jumlah_tersisa_{{$data['id']}}" name="jumlahtersisa" class="form-control text-strong text-success border-success mt-2" autocomplete="off" readonly>
-                                                                <label for="jumlah_tersisa_{{$data['id']}}" class="form-label text-black">Remaining :</label>
+                                                                <label for="jumlah_tersisa_{{$data['id']}}" class="form-label text-black">{{ __('budget.remaining') }} :</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-4">
                                                             <div class="form-floating mb-3">
                                                                 <input type="text" id="jumlah_overspend_{{$data['id']}}" name="jumlahoverspend" class="form-control text-strong text-danger border-danger mt-2" autocomplete="off" readonly>
-                                                                <label for="jumlah_overspend_{{$data['id']}}" class="form-label text-black">Overspend :</label>
+                                                                <label for="jumlah_overspend_{{$data['id']}}" class="form-label text-black">{{ __('budget.overspend') }} :</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -150,9 +150,9 @@
                                                         <div class="col-lg-4">
                                                             <input type="text" id="id_{{$data['id']}}" name="id" value="{{$data['id']}}" class="form-control text-end" autocomplete="off" hidden>
                                                             <div class="mb-3">
-                                                                <label class="form-label required">Kategori Pengeluaran:</label>
+                                                                <label class="form-label required">{{ __('budget.expense_category') }}:</label>
                                                                 <select id="id_kategori_pengeluaran_edit_{{$data['id']}}" name="id_kategori_pengeluaran_edit" class="form-select">
-                                                                    <option value="" selected disabled>Pilih Kategori</option>
+                                                                    <option value="" selected disabled>{{ __('budget.select_category') }}</option>
                                                                     @foreach($kategoriData as $kategori)
                                                                         <option value="{{$kategori['id']}}">{{$kategori['nama_kategori_pengeluaran']}}</option>
                                                                     @endforeach
@@ -161,7 +161,7 @@
                                                         </div>
                                                         <div class="col-lg-4">
                                                             <div class="mb-3">
-                                                                <label class="form-label required">Jumlah : </label>
+                                                                <label class="form-label required">{{ __('budget.amount') }} : </label>
                                                                 <div class="input-group">
                                                                     <span class="input-group-text">Rp.</span>
                                                                     <input type="text" id="jumlah_edit_{{$data['id']}}" oninput="updateFormattedNumberAnggaran({{$data['id']}})" name="jumlahedit" class="form-control text-end" autocomplete="off" placeholder="0" required>
@@ -171,12 +171,12 @@
                                                         </div>
                                                         <div class="col-lg-4">
                                                             <div class="mb-3">
-                                                                <label class="form-label required">Periode :</label>
+                                                                <label class="form-label required">{{ __('budget.period') }} :</label>
                                                                 <select id="periodeedit_{{$data['id']}}" name="periodeedit" class="form-select">
-                                                                    <option value="" selected disabled>Pilih Periode</option>
-                                                                    <option value="Mingguan">Mingguan</option>
-                                                                    <option value="Tahunan">Tahunan</option>
-                                                                    <option value="Bulanan">Bulanan</option>
+                                                                    <option value="" selected disabled>{{ __('budget.select_period') }}</option>
+                                                                    <option value="Mingguan">{{ __('budget.weekly') }}</option>
+                                                                    <option value="Tahunan">{{ __('budget.yearly') }}</option>
+                                                                    <option value="Bulanan">{{ __('budget.monthly') }}</option>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -185,7 +185,7 @@
                                                 <div class="modal-footer">
                                                     <button type="submit" class="btn btn-warning ms-auto">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                                                        Simpan
+                                                        {{ __('budget.save') }}
                                                     </button>
                                                 </div>
                                             </form>
@@ -201,22 +201,22 @@
                                             <div class="modal-status bg-danger"></div>
                                             <div class="modal-body text-center py-4">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.24 3.957l-8.422 14.06a1.989 1.989 0 0 0 1.7 2.983h16.845a1.989 1.989 0 0 0 1.7 -2.983l-8.423 -14.06a1.989 1.989 0 0 0 -3.4 0z" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
-                                                <h3>Konfirmasi Penghapusan</h3>
-                                                <div class="">Apakah anda yakin ingin menghapus anggaran ini?</div>
+                                                <h3>{{ __('budget.confirm_delete') }}</h3>
+                                                <div class="">{{ __('budget.delete_question') }}?</div>
                                             </div>
                                             <div class="modal-footer">
                                                 <div class="w-100">
                                                     <div class="row">
                                                         <div class="col">
                                                             <a href="" class="btn w-100" data-bs-dismiss="modal">
-                                                                Batal
+                                                                {{ __('budget.cancel') }}
                                                             </a>
                                                         </div>
                                                         <div class="col">
                                                             <form method="POST" action="{{route('anggaran.hapus', ['id' => $data['id']] )}}">
                                                                 @csrf
                                                                 <button type="submit" class="btn btn-danger w-100" data-bs-dismiss="modal">
-                                                                    Hapus
+                                                                    {{ __('budget.delete') }}
                                                                 </button>
                                                             </form>
                                                         </div>
@@ -235,13 +235,13 @@
                     <div class="row">
                         <div class="col-auto d-flex align-items-center pe-2">
                             <span class="legend me-2 bg-primary"></span>
-                            <span id="inlimit">In limit</span>
+                            <span id="inlimit">{{ __('budget.in_limit') }}</span>
                             <span class="d-none d-md-inline d-lg-none d-xxl-inline ms-2 text-muted"></span>
                         </div>
 
                         <div class="col-auto d-flex align-items-center ps-2" >
                             <span class="legend me-2 bg-danger" id="overspend"></span>
-                            <span id="overspend">Overspend</span>
+                            <span id="overspend">{{ __('budget.overspend') }}</span>
                             <span class="d-none d-md-inline d-lg-none d-xxl-inline ms-2 text-muted"></span>
                         </div>
                     </div>
@@ -255,7 +255,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Tambah Anggaran</h5>
+                <h5 class="modal-title">{{ __('budget.add_budget') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="{{ route('anggaran.store') }}" method="post" autocomplete="off">
@@ -265,9 +265,9 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="mb-3">
-                                <label class="form-label required">Kategori Pengeluaran:</label>
+                                <label class="form-label required">{{ __('budget.expense_category') }}:</label>
                                 <select id="id_kategori_pengeluaran" name="id_kategori_pengeluaran" class="form-select" required>
-                                    <option value="" selected disabled>Pilih Kategori</option>
+                                    <option value="" selected disabled>{{ __('budget.select_category') }}</option>
                                     @foreach($kategoriData as $kategori)
                                     <option value="{{$kategori['id']}}">{{$kategori['nama_kategori_pengeluaran']}}</option>
                                     @endforeach
@@ -276,7 +276,7 @@
                         </div>
                             <div class="col-lg-4">
                             <div class="mb-3">
-                                <label class="form-label required">Jumlah : </label>
+                                <label class="form-label required">{{ __('budget.amount') }} : </label>
                                 <div class="input-group">
                                     <span class="input-group-text">
                                         Rp.
@@ -288,24 +288,22 @@
                         </div>
                         <div class="col-lg-4">
                             <div class="mb-3">
-                                <label class="form-label required">Periode :</label>
+                                <label class="form-label required">{{ __('budget.period') }} :</label>
                                 <select id="periode" name="periode" class="form-select" required>
-                                    <option value="" selected disabled>Pilih Periode</option>
-                                    <option value="Mingguan" >Mingguan</option>
-                                    <option value="Tahunan">Tahunan</option>
-                                    <option value="Bulanan">Bulanan</option>
+                                    <option value="" selected disabled>{{ __('budget.select_period') }}</option>
+                                    <option value="Mingguan" >{{ __('budget.weekly') }}</option>
+                                    <option value="Tahunan">{{ __('budget.yearly') }}</option>
+                                    <option value="Bulanan">{{ __('budget.monthly') }}</option>
                                 </select>
                             </div>
                         </div>				  				
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a href="" class="btn btn-link link-secondary" data-bs-dismiss="modal">
-                        Batal
-                    </a>
+                    <button type="button" class="me-auto btn" data-bs-dismiss="modal">{{ __('budget.cancel') }}</button>
                     <button type="submit" class="btn btn-success ms-auto">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                        Simpan
+                        {{ __('budget.save') }}
                     </button>
                 </div>
             </form>	

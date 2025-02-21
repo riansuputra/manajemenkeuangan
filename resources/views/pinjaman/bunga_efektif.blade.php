@@ -1,21 +1,21 @@
 @extends('layouts.user')
 
-@section('title', 'Pinjaman')
+@section('title', __('simulation.loan') )
 
 @section('page-title')
 <div class="col">
     <div class="page-pretitle">
-        Simulasi
+        {{ __('simulation.simulation') }}
     </div>
     <h2 class="page-title">
-        Pinjaman Bunga Efektif
+        {{ __('simulation.effective_interest_loan') }}
     </h2>
 </div>
 <div class="col-auto ms-auto d-print-none">
 	<div class="btn-list">
 		<a href="" class="btn btn-primary" id="printModalToPdf">
             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
-          	Cetak PDF
+            {{ __('simulation.print_pdf') }}
       	</a>
 	</div>
 </div>
@@ -33,7 +33,7 @@
                         	<div class="row-auto">
                                 <div class="col-xl-12">
                                     <div class="mb-3">
-                                        <label class="form-label">Jumlah Pinjaman : </label>
+                                        <label class="form-label">{{ __('simulation.loan_amount') }} : </label>
                                         <div class="input-group">
                                             <span class="input-group-text">
                                                 Rp.
@@ -47,17 +47,17 @@
                                         <div class="input-group">
                                             <input type="number" id="jmhtahun" name="jmhtahun" class="form-control text-end" autocomplete="off">
                                             <span class="input-group-text">
-                                                Bulan
+                                                {{ __('simulation.month') }}
                                             </span>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col">
-                                            <label class="form-label">Persentase Bunga :</label>
+                                            <label class="form-label">{{ __('simulation.interest_rate') }} :</label>
                                             <div class="input-group">
                                                 <input type="number" id="persentasebunga" name="persentasebunga" class="form-control text-end" autocomplete="off">
                                                 <span class="input-group-text">
-                                                    %/Tahun
+                                                    %/{{ __('simulation.years') }}
                                                 </span>
                                             </div>
                                         </div>
@@ -65,17 +65,17 @@
                                     <div class="row mb-3">
                                         <div class="col mt-3">
                                             <button type="button" class="btn btn-success w-100">
-                                                Hitung
+                                                {{ __('simulation.calculate') }}
                                             </button>
                                         </div>
                                         <div class="col mt-3">
                                             <button type="button" class="btn btn-secondary w-100">
-                                                Reset
+                                                {{ __('simulation.reset') }}
                                             </button>
                                         </div>
                                         <div class="col mt-3">
                                             <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#modal-scrollable">
-                                                Detail
+                                                {{ __('simulation.details') }}
                                             </button>
                                         </div>
                                     </div>
@@ -90,7 +90,7 @@
 	                        <div class="row align-items-center">
                                 <div class="col-xl-12">
                                     <div class="mb-3">
-                                        <h3 class="text-center text-bold mt-3">Hasil Perhitungan</h3>
+                                        <h3 class="text-center text-bold mt-3">{{ __('simulation.calculation_result') }}</h3>
                                         <div class="table-responsive">
                                             <table class="table table-vcenter card-table table-borderless">
                                                 <thead>
@@ -102,28 +102,28 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr style="height:2.93rem;">
-                                                        <td style="width:49%;">Jumlah Pinjaman</td>
+                                                        <td style="width:49%;">{{ __('simulation.loan_amount') }}</td>
                                                         <td style="width:5%;">:</td>
                                                         <td style="width:%" class="text-end" id="pinjamandana2">Rp. 0</td>
                                                     </tr>
                                                     <td style="width:%" class="text-end" id="pinjamandana3" hidden>0</td>
                                                     <tr style="height:2.93rem;">
-                                                        <td style="width:49%;">Jangka Waktu</td>
+                                                        <td style="width:49%;">{{ __('simulation.duration') }}</td>
                                                         <td style="width:5%;">:</td>
-                                                        <td style="width:%" class="text-end" id="jmhtahun2">0 Bulan</td>
+                                                        <td style="width:%" class="text-end" id="jmhtahun2">0 {{ __('simulation.month') }}</td>
                                                     </tr>
                                                     <tr style="height:2.93rem;">
-                                                        <td style="width:49%;">Bunga per tahun</td>
+                                                        <td style="width:49%;">{{ __('simulation.annual_interest') }}</td>
                                                         <td style="width:5%;">:</td>
                                                         <td style="width:%" class="text-end" id="persentasebunga1">0%</td>
                                                     </tr>
                                                     <tr style="height:2.93rem;">
-                                                        <td style="width:49%;"><strong>Total Bunga</strong></td>
+                                                        <td style="width:49%;"><strong>{{ __('simulation.total_interest') }}</strong></td>
                                                         <td style="width:5%;">:</td>
                                                         <td style="width:%" class="text-end" id="nilai"><strong>Rp. 0</strong></td>
                                                     </tr>
                                                     <tr style="height:2.93rem;">
-                                                        <td style="width:49%;"><strong>Total Angsuran</strong></td>
+                                                        <td style="width:49%;"><strong>{{ __('simulation.total_installment') }}</strong></td>
                                                         <td style="width:5%;">:</td>
                                                         <td style="width:%" class="text-end" id="totalnilai"><strong>Rp. 0</strong></td>
                                                     </tr>
@@ -142,7 +142,7 @@
                         	<div class="row align-items-center">
                                 <div class="col-xl-12">
                                     <div class="mb-3">
-                                        <h3 class="text-center text-bold">Statistik</h3>
+                                        <h3 class="text-center text-bold">{{ __('simulation.statistics') }}</h3>
                                     </div>
                                     <div id="chart-demo-pie#3" style="min-height: 267px;"></div>
                                 </div>
@@ -160,7 +160,7 @@
     <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Detail Pinjaman</h5>
+                <h5 class="modal-title">{{ __('simulation.loan_details') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-status bg-primary"></div>
@@ -170,11 +170,11 @@
                         <table class="table table-bordered table-vcenter card-table">
                             <thead>
                                 <tr>
-                                    <th class="text-center">Bulan</th>
-                                    <th class="text-center">Angsuran Bunga</th>
-                                    <th class="text-center">Angsuran Pokok</th>
-                                    <th class="text-center">Total Angsuran</th>
-                                    <th class="text-center">Sisa Pinjaman</th>
+                                    <th class="text-center">{{ __('simulation.month') }}</th>
+                                    <th class="text-center">{{ __('simulation.interest_installment') }}</th>
+                                    <th class="text-center">{{ __('simulation.principal_installment') }}</th>
+                                    <th class="text-center">{{ __('simulation.total_installment') }}</th>
+                                    <th class="text-center">{{ __('simulation.remaining_loan') }}</th>
                                 </tr>
                             </thead>
                             <tbody id="modalTableBody">
@@ -184,7 +184,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="me-auto btn" data-bs-dismiss="modal">Batal</button>
+                <button type="button" class="me-auto btn" data-bs-dismiss="modal">{{ __('simulation.cancel') }}</button>
             </div>
         </div>
     </div>
@@ -269,7 +269,7 @@
                         opacity: 1,
                     },
                     series: chartData,
-                    labels: ["Total Angsuran Bunga", "Total Angsuran Pokok"],
+                    labels: ["{{ __('simulation.total_interest_installment') }}", "{{ __('simulation.total_principal_installment') }}"],
                     tooltip: {
                         theme: 'dark',
                         y: {

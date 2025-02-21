@@ -30,6 +30,15 @@ Route::middleware(['throttle:100,1'])->group(function() {
         Route::post('/lupa-password/store', [AuthController::class, 'lupaPassword'])->name('password');
         Route::post('/login/admin/auth', [AuthController::class, 'loginAdmin'])->name('login.admin');
         Route::get('/login/admin', [AuthController::class, 'loginAdminPage'])->name('login.admin.page');
+        Route::get('/1', function () {
+            return view('autentikasi.ganti_password');
+        });
+        Route::get('/2', function () {
+            return view('autentikasi.verif_akun');
+        });
+        Route::get('/3', function () {
+            return view('autentikasi.verif_password');
+        });
     });
 
     Route::middleware([App\Http\Middleware\AdminUserMiddleware::class])->group(function()
@@ -122,5 +131,5 @@ Route::middleware(['throttle:100,1'])->group(function() {
         Route::get('/tentang', [PengaturanController::class, 'indexTentang'])->name('tentang');
     });
 
-    // Route::fallback(function () {return view('errors.404');});
+    
 });

@@ -1,19 +1,19 @@
 @extends('layouts.user')
 
-@section('title', 'Kurs')
+@section('title', __('info.exchange_rate'))
 
 @section('page-title')
 <div class="col">
 	<h2 class="page-title">
-        Kurs
+        {{ __('info.exchange_rate') }}
     </h2>
-    <div class="text-muted mt-1">Terakhir diperbarui pada <span class="" id="update">{{\Carbon\Carbon::parse($update)->locale('id')->translatedFormat('l, d F Y H:i')}}</span> UTC+8</div>
+    <div class="text-muted mt-1">{{ __('info.last_updated') }} <span class="" id="update">{{\Carbon\Carbon::parse($update)->locale('id')->translatedFormat('l, d F Y H:i')}}</span> UTC+8</div>
 </div>
 <div class="col-auto ms-auto d-print-none">
 	<div class="btn-list">
 		<a href="" class="btn btn-primary" id="printModalToPdf">
             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
-          	Cetak PDF
+                {{ __('info.print_pdf') }}
       	</a>
 	</div>
 </div>
@@ -25,7 +25,7 @@
         <div class="col-sm-12 col-lg-4">
             <div class="card">
                 <div class="card-body">
-                    <h3>Kalkulator Kurs</h3>
+                    <h3>{{ __('info.exchange_calculator') }}</h3>
                     <div class="mb-3">
                         @php
                             function toRawValue($nilaiTukar) {
@@ -33,9 +33,9 @@
                             }
                         @endphp
                         
-                        <label class="form-label">Jumlah :</label>
+                        <label class="form-label">{{ __('info.amount') }} :</label>
                         <div class="input-group mb-2">
-                            <input type="text" class="form-control" style="width:60%;" id="input1" placeholder="Masukkan jumlah" aria-label="Input nilai">
+                            <input type="text" class="form-control" style="width:60%;" id="input1" placeholder="{{ __('info.enter_amount') }}" aria-label="Input nilai">
                             <select class="form-select" id="select1"  required>
                                 <option value="1" data-name="Indonesian Rupiah (IDR)">IDR</option>
                                 @foreach ($kursData as $kurs)
@@ -45,7 +45,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <label class="form-label mt-3">Dikonversi menjadi :</label>
+                        <label class="form-label mt-3">{{ __('info.converted_to') }} :</label>
                         <div class="input-group">
                             <input type="text" class="form-control" style="width:60%;" id="input2" placeholder="Hasil konversi" aria-label="Hasil konversi" readonly>
                             <select class="form-select" id="select2" required>
@@ -70,7 +70,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="input-icon mb-3">
-                        <input type="text" id="searchInput1" class="form-control" placeholder="Cari data kurs...">
+                        <input type="text" id="searchInput1" class="form-control" placeholder="{{ __('info.search_exchange_data') }}">
                         <span class="input-icon-addon">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>
                         </span>
@@ -80,9 +80,9 @@
                             <thead>
                                 <tr>
                                     <th class="text-center w-1">No.</th>
-                                    <th class="text-center" colspan="2">Mata Uang</th>
-                                    <th class="text-center w-2">Kode</th>
-                                    <th class="text-center">Nilai Dalam Rupiah</th>
+                                    <th class="text-center" colspan="2">{{ __('info.currency') }}</th>
+                                    <th class="text-center w-2">{{ __('info.currency_code') }}</th>
+                                    <th class="text-center">{{ __('info.value_in_idr') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -91,7 +91,7 @@
                                     <td>{{$kurs['id']}}</td>
                                     <td class="w-1"><span class="flag flag-country-{{$kurs['ikon']}}"></span></td>
                                     <td class="">{{$kurs['nama_mata_uang']}}</td>
-                                    <td class="">{{$kurs['kode_mata_uang']}}</td>
+                                    <td class="text-center">{{$kurs['kode_mata_uang']}}</td>
                                     <td class="w-5">
                                         <div class="row">
                                             <div class="col-auto">Rp.</div>
@@ -122,9 +122,9 @@
     <thead>
         <tr>
             <th class="text-center w-1">No.</th>
-            <th class="text-center" colspan="2">Mata Uang</th>
-            <th class="text-center w-2">Kode</th>
-            <th class="text-center">Nilai Dalam Rupiah</th>
+            <th class="text-center" colspan="2">{{ __('info.currency') }}</th>
+            <th class="text-center w-2">{{ __('info.currency_code') }}</th>
+            <th class="text-center">{{ __('info.value_in_idr') }}</th>
         </tr>
     </thead>
     <tbody id="modalTableBody">

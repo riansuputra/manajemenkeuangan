@@ -1,25 +1,25 @@
 @extends('layouts.user')
 
-@section('title', 'Catatan Keuangan')
+@section('title', __('notes.financial_notes'))
 
 @section('page-title')
 <div class="col">
 	<h2 class="page-title">
-        Catatan Keuangan
+        {{ __('notes.financial_notes') }}
     </h2>
 </div>
 <div class="col-auto ms-auto d-print-none">
 	<div class="btn-list">
 		<a href="" class="btn btn-success d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-report">
         	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-          		Tambah Catatan
+				{{ __('notes.add_record') }}
       	</a>
 		<a href="" class="btn btn-success d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-report" aria-label="Create new report">
 			<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
 		</a>   
 		<a href="{{ route('permintaan.kategori') }}" class="btn btn-primary d-none d-sm-inline-block">
 			<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-category"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4h6v6h-6z" /><path d="M14 4h6v6h-6z" /><path d="M4 14h6v6h-6z" /><path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /></svg>
-          		Tambah Kategori
+			{{ __('notes.add_category') }}
       	</a>
 		<a href="{{ route('permintaan.kategori') }}" class="btn btn-primary d-sm-none btn-icon" >
 			<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-category"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4h6v6h-6z" /><path d="M14 4h6v6h-6z" /><path d="M4 14h6v6h-6z" /><path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /></svg>
@@ -34,25 +34,25 @@
 		{{-- Filter --}}
 		<div class="col-md-3">
 			<div class="input-icon mb-4">
-				<input type="text" value="" class="form-control" id="searchRecord" name="searchRecord" placeholder="Search…">
+				<input type="text" value="" class="form-control" id="searchRecord" name="searchRecord" placeholder="{{ __('notes.search') }}">
 				<span class="input-icon-addon">
 					<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>
 				</span>
 			</div>
-			<div class="form-label mt-1 mb-2">Record Types</div>
+			<div class="form-label mt-1 mb-2">{{ __('notes.record_types') }}</div>
 			<div class="mb-4">
 				<label class="form-check">
 					<input type="radio" class="form-check-input" name="record-type" value="1" checked>
-					<span class="form-check-label">All Record Types</span>
+					<span class="form-check-label">{{ __('notes.all_record_types') }}</span>
 				</label>
 				<label class="form-check">
 					<input type="radio" class="form-check-input" name="record-type" value="2">
-					<span class="form-check-label">Income</span>
+					<span class="form-check-label">{{ __('notes.income') }}</span>
 				</label>
 				<div class="ms-4">
 					<div class="mb-2">
 						<select class="form-select category-select income-category" id="income-category-select" >
-							<option value="" class="">Select Category</option>
+							<option value="" class="">{{ __('notes.select_category') }}</option>
 							@foreach($kategoriPemasukanData as $incomeCategory)
 								<option value="{{$incomeCategory['nama_kategori_pemasukan']}}income">{{$incomeCategory['nama_kategori_pemasukan']}}</option>
 							@endforeach
@@ -61,12 +61,12 @@
 				</div>
 				<label class="form-check">
 					<input type="radio" class="form-check-input" name="record-type" value="3">
-					<span class="form-check-label">Expense</span>
+					<span class="form-check-label">{{ __('notes.expense') }}</span>
 				</label>
 				<div class="ms-4">
 					<div class="">
 						<select class="form-select category-select expense-category" id="expense-category-select" >
-							<option value="" class="">Select Category</option>
+							<option value="" class="">{{ __('notes.select_category') }}</option>
 							@foreach($kategoriPengeluaranData as $expenseCategory)
 								<option value="{{$expenseCategory['nama_kategori_pengeluaran']}}expense">{{$expenseCategory['nama_kategori_pengeluaran']}}</option>
 							@endforeach
@@ -76,7 +76,7 @@
 			</div>
 			<div class="form-label mt-1 mb-2">
 				<a href="" class="w-100 btn-resetfilter">
-					Reset to defaults
+					{{ __('notes.reset_to_defaults') }}
 				</a>
 			</div>
 			<hr>
@@ -86,26 +86,26 @@
 					@csrf
 					<div class="col-auto d-print-none input-group">
 						<select class="form-select" name="jenisFilter" id="jenisFilter">
-							<option value="Kisaran" {{ $jenisFilter == 'Kisaran' ? 'selected' : '' }}>Range</option>
-							<option value="Mingguan" {{ $jenisFilter == 'Mingguan' ? 'selected' : '' }}>Weeks</option>
-							<option value="Bulanan" {{ $jenisFilter == 'Bulanan' ? 'selected' : '' }}>Months</option>
-							<option value="Tahunan" {{ $jenisFilter == 'Tahunan' ? 'selected' : '' }}>Years</option>
-							<option value="Custom" {{ $jenisFilter == 'Custom' ? 'selected' : '' }}>Custom Range</option>
+							<option value="Kisaran" {{ $jenisFilter == 'Kisaran' ? 'selected' : '' }}>{{ __('notes.range') }}</option>
+							<option value="Mingguan" {{ $jenisFilter == 'Mingguan' ? 'selected' : '' }}>{{ __('notes.week') }}</option>
+							<option value="Bulanan" {{ $jenisFilter == 'Bulanan' ? 'selected' : '' }}>{{ __('notes.month') }}</option>
+							<option value="Tahunan" {{ $jenisFilter == 'Tahunan' ? 'selected' : '' }}>{{ __('notes.year') }}</option>
+							<option value="Custom" {{ $jenisFilter == 'Custom' ? 'selected' : '' }}>{{ __('notes.custom_range') }}</option>
 						</select>
 						<div class="col-auto d-print-none" name="pilihanFilter" id="pilihanFilter"></div>
 					</div>
 					<div class="mt-4 mb-2 input-group">
-						<div class="form-label mt-2 me-1">Start Date &nbsp:</div>
+						<div class="form-label mt-2 me-1">{{ __('notes.start_date') }} &nbsp:</div>
 						<input type="date" class="ms-2 form-control" name="startdate-filter" id="startdate-filter" disabled>
 					</div>
 					<div class="mt-2 input-group">
-						<div class="form-label mt-2 me-1">End Date &nbsp&nbsp&nbsp:</div>
+						<div class="form-label mt-2 me-1">{{ __('notes.end_date') }} &nbsp&nbsp&nbsp:</div>
 						<input type="date" class="ms-2 form-control" name="enddate-filter" id="enddate-filter" disabled>
 					</div>
 					<div class="col-auto d-print-none mt-5 w-100" name="btnFilter" id="btnFilter">
 						<button type="submit" class="btn btn-primary w-100">
 							<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-filter-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11.18 20.274l-2.18 .726v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414v3" /><path d="M15 19l2 2l4 -4" /></svg>
-								Filter
+							{{ __('notes.filter') }}
 						</button>
 					</div>
 				</form>
@@ -120,7 +120,7 @@
 								<div class="card">
 									<div class="card-body">
 										<div class="d-flex align-items-center mb-1">
-											<div class="">Current Wallet Balance</div>
+											<div class="">{{ __('notes.current_wallet_balance') }}</div>
 										</div>
 										<div id ="current-balance" class="h3 text-strong">Rp. {{ number_format(floatval(1000000), 0, ',', '.')}}</div>
 									</div>
@@ -130,7 +130,7 @@
 								<div class="card">
 									<div class="card-body">
 										<div class="d-flex align-items-center mb-1">
-											<div class="">Total Period Income</div>
+											<div class="">{{ __('notes.total_period_income') }}</div>
 										</div>
 										<div id="total-income" class="h3 text-green">+ Rp. {{ number_format(floatval(1000000), 0, ',', '.')}}</div>
 									</div>
@@ -140,7 +140,7 @@
 								<div class="card">
 									<div class="card-body">
 										<div class="d-flex align-items-center mb-1">
-											<div class="">Total Period Expenses</div>
+											<div class="">{{ __('notes.total_period_expenses') }}</div>
 										</div>
 										<div id="total-expenses" class="h3 text-red">- Rp. {{ number_format(floatval(1000000), 0, ',', '.')}}</div>
 									</div>
@@ -224,7 +224,7 @@
 																						</div>
 																					@else
 																						<div class="list-inline-item">
-																							(Tanpa catatan)
+																							({{ __('notes.without_note') }})
 																						</div>
 																					@endif
 																				</div>
@@ -239,7 +239,7 @@
 																						</div>
 																					@else
 																						<div class="list-item mt-1">
-																							(Tanpa catatan)
+																							({{ __('notes.without_note') }})
 																						</div>
 																					@endif
 																				</div>
@@ -266,14 +266,14 @@
 																							data-tanggal="{{$item['tanggal']}}" 
 																							data-createdat="{{$item['created_at']}}" 
 																							data-catatan="{{$item['catatan']}}">
-																								Edit
+																							{{ __('notes.edit') }}
 																						</a>
 																						<a class="dropdown-item delete-btn" href=""
 																							data-bs-toggle="modal"
 																							data-bs-target="#modal-danger{{$item['id']}}" 
 																							data-id="{{$item['id']}}" 
 																							data-jenis="1">
-																								Delete
+																							{{ __('notes.delete') }}
 																						</a>
 																					</div>
 																				</div>
@@ -302,7 +302,7 @@
 																						</div>
 																					@else
 																						<div class="list-inline-item">
-																							(Tanpa catatan)
+																							({{ __('notes.without_note') }})
 																						</div>
 																					@endif
 																				</div>
@@ -317,7 +317,7 @@
 																						</div>
 																					@else
 																						<div class="list-item mt-1">
-																							(Tanpa catatan)
+																							({{ __('notes.without_note') }})
 																						</div>
 																					@endif
 																				</div>
@@ -344,14 +344,14 @@
 																							data-tanggal="{{$item['tanggal']}}" 
 																							data-createdat="{{$item['created_at']}}" 
 																							data-catatan="{{$item['catatan']}}">
-																								Edit
+																							{{ __('notes.edit') }}
 																						</a>
 																						<a class="dropdown-item delete-btn" href=""
 																							data-bs-toggle="modal"
 																							data-bs-target="#modal-danger{{$item['id']}}" 
 																							data-id="{{$item['id']}}" 
 																							data-jenis="2">
-																								Delete
+																							{{ __('notes.delete') }}
 																						</a>
 																					</div>
 																				</div>
@@ -372,7 +372,7 @@
 												<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
 													<div class="modal-content">
 														<div class="modal-header">
-															<h5 class="modal-title">Edit Catatan</h5>
+															<h5 class="modal-title">{{ __('notes.edit_record') }}</h5>
 															<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 														</div>
 														@if (isset($item['kategori_pemasukan_id']))
@@ -390,7 +390,7 @@
 														@endif
 															<div class="modal-status bg-warning"></div>
 															<div class="modal-body">
-																<label class="form-label required">Pilih Jenis :</label>
+																<label class="form-label required">{{ __('notes.select_type') }} :</label>
 																<div class="form-selectgroup-boxes row mb-3">
 																	<div class="col-lg-6">
 																		<label class="form-selectgroup-item">
@@ -401,7 +401,7 @@
 																				</span>
 																				<span class="form-selectgroup-label-content">
 																					<div class="card-status-top bg-green"></div>
-																					<span class="form-selectgroup-title mb-1">Pemasukan</span>
+																					<span class="form-selectgroup-title mb-1">{{ __('notes.income') }}</span>
 																				</span>
 																			</span>
 																		</label>
@@ -415,7 +415,7 @@
 																				</span>
 																				<span class="form-selectgroup-label-content">
 																					<div class="card-status-top bg-red"></div>
-																					<span class="form-selectgroup-title mb-1">Pengeluaran</span>
+																					<span class="form-selectgroup-title mb-1">{{ __('notes.expense') }}</span>
 																				</span>
 																			</span>
 																		</label>
@@ -424,7 +424,7 @@
 																<div class="row">
 																	<div class="col-lg-4">
 																		<div class="mb-3">
-																			<label class="form-label required">Jumlah : </label>
+																			<label class="form-label required">{{ __('notes.amount') }} : </label>
 																			<div class="input-group">
 																				<span class="input-group-text">
 																					Rp.
@@ -436,22 +436,22 @@
 																	</div>
 																	<div class="col-lg-4">
 																		<div class="mb-3">
-																			<label class="form-label required">Kategori :</label>
-																			<select name="kategoriedit" id="kategoriedit"class="form-select kategoriedit">
-																				<option value="" disabled selected>Pilih Kategori</option>
+																			<label class="form-label required">{{ __('notes.category') }} :</label>
+																			<select name="kategoriedit" id="kategoriedit{{$item['id']}}"class="form-select kategoriedit">
+																				<option value="" disabled selected>{{ __('notes.select_category') }}</option>
 																			</select>
 																		</div>
 																	</div>
 																	<div class="col-lg-4">
 																		<div class="mb-3">
-																			<label class="form-label required">Tanggal :</label>
+																			<label class="form-label required">{{ __('notes.date') }} :</label>
 																			<input type="date" name="tanggaledit" id="tanggaledit" class="form-control tanggaledit" value="{{ now()->format('Y-m-d') }}">
 																		</div>
 																	</div>
 																	<div class="col-lg-12">
 																		<div class="mb-2">
-																			<label class="form-label">Catatan :</label>
-																			<textarea name="catatanedit" id="catatanedit" class="form-control catatanedit" rows="3" placeholder="Masukkan catatan disini..."></textarea>
+																			<label class="form-label">{{ __('notes.note') }} :</label>
+																			<textarea name="catatanedit" id="catatanedit" class="form-control catatanedit" rows="3" placeholder="{{ __('notes.write_note_here') }}"></textarea>
 																		</div>
 																	</div>
 																</div>
@@ -460,7 +460,7 @@
 																<button type="button" class="me-auto btn" data-bs-dismiss="modal">Batal</button>
 																<button type="submit" class="btn btn-warning ms-auto">
 																	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-																		Simpan
+																	{{ __('notes.save') }}
 																</button>
 															</div>
 														</form>
@@ -478,15 +478,15 @@
 														<div class="modal-status bg-danger"></div>
 														<div class="modal-body text-center py-4">
 															<svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.24 3.957l-8.422 14.06a1.989 1.989 0 0 0 1.7 2.983h16.845a1.989 1.989 0 0 0 1.7 -2.983l-8.423 -14.06a1.989 1.989 0 0 0 -3.4 0z" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
-															<h3>Konfirmasi Penghapusan</h3>
-														<div class="">Apakah anda yakin ingin menghapus catatan ini?</div>
+															<h3>{{ __('notes.confirm_delete') }}</h3>
+														<div class="">{{ __('notes.delete_question2') }}</div>
 													</div>
 													<div class="modal-footer">
 														<div class="w-100">
 															<div class="row">
 																<div class="col">
 																	<a href="" class="btn w-100" data-bs-dismiss="modal">
-																		Batal
+																		{{ __('notes.cancel') }}
 																	</a>
 																</div>
 																<div class="col">
@@ -500,7 +500,7 @@
 																			<input type="text" id="jenishapus" name="jenishapus" class="form-control text-end" autocomplete="off" hidden>
 																	@endif
 																			<button type="submit" class="btn btn-danger w-100" data-bs-dismiss="modal">
-																				Hapus
+																				{{ __('notes.delete') }}
 																			</button>
 																		</form>
 																	</div>
@@ -635,12 +635,12 @@
 				selectKisaran.setAttribute("id", "filterKisaran");
 				selectKisaran.setAttribute("required", "required");
 				const options = [
-					{ text: "Semua", value: "semuaHari" },
-					{ text: "Hari Ini", value: "iniHari" },
-					{ text: "7 Hari", value: "7Hari" },
-					{ text: "30 Hari", value: "30Hari" },
-					{ text: "90 Hari", value: "90Hari" },
-					{ text: "12 Bulan", value: "12Bulan" },
+					{ text: "{{ __('notes.all') }}", value: "semuaHari" },
+					{ text: "{{ __('notes.today') }}", value: "iniHari" },
+					{ text: "{{ __('notes.7_days') }}", value: "7Hari" },
+					{ text: "{{ __('notes.30_days') }}", value: "30Hari" },
+					{ text: "{{ __('notes.90_days') }}", value: "90Hari" },
+					{ text: "{{ __('notes.12_months') }}", value: "12Bulan" },
 				];
 				options.forEach(optionData => {
 					const option = document.createElement("option");
@@ -839,6 +839,22 @@
                 kategoriSelect.value = kategori;
                 kategoriSelect.dispatchEvent(new Event('change'));
             }
+
+			const expenseCategorySelectEdit = document.getElementById('kategoriedit' + id);
+        
+                if (expenseCategorySelectEdit) {
+                    new TomSelect(expenseCategorySelectEdit, {
+                        copyClassesToDropdown: false,
+                        render: {
+                            item: function (data, escape) {
+                                return `<div>${escape(data.text)}</div>`;
+                            },
+                            option: function (data, escape) {
+                                return `<div>${escape(data.text)}</div>`;
+                            }
+                        }
+                    });
+                }
         });
     });
 

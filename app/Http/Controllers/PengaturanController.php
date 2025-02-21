@@ -43,7 +43,7 @@ class PengaturanController extends Controller
                 return $item['user_id'] === null || $item['user_id'] === $request->auth['user']['id'];
             })->map(function ($item) use ($request) {
                 $cakupan = 'global';
-                if($item['user_id'] == null) {
+                if($item['user_id'] != null) {
                     $cakupan = 'personal';
                 }
                 return [

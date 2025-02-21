@@ -1,19 +1,19 @@
 @extends('layouts.user')
 
-@section('title', 'Dividen')
+@section('title', __('info.dividends'))
 
 @section('page-title')
 <div class="col">
 	<h2 class="page-title">
-        Dividen
+        {{ __('info.dividends') }}
     </h2>
-    <div class="text-muted mt-1">Terakhir diperbarui pada <span class="" id="update">{{\Carbon\Carbon::parse($lastUpdate)->locale('id')->translatedFormat('l, d F Y H:i')}}</span> UTC+8</div>
+    <div class="text-muted mt-1">{{ __('info.last_updated') }} <span class="" id="update">{{\Carbon\Carbon::parse($lastUpdate)->locale('id')->translatedFormat('l, d F Y H:i')}}</span> UTC+8</div>
 </div>
 <div class="col-auto ms-auto d-print-none">
 	<div class="btn-list">
         <a href="" class="btn btn-primary" id="printModalToPdf">
             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
-          	Cetak PDF
+                {{ __('info.print_pdf') }}
       	</a>
 	</div>
 </div>
@@ -26,7 +26,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="input-icon mb-3">
-                        <input type="text" id="searchInput1" class="form-control" placeholder="Cari data dividen...">
+                        <input type="text" id="searchInput1" class="form-control" placeholder="{{ __('info.search_dividend_data') }}">
                         <span class="input-icon-addon">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>
                         </span>
@@ -36,8 +36,8 @@
                             <thead>
                                 <tr>
                                     <th class="text-center w-1">No.</th>
-                                    <th class="text-center" colspan="2">Emiten</th>
-                                    <th class="text-center" style="width:auto;">Dividen</th>
+                                    <th class="text-center" colspan="2">{{ __('info.stocks') }}</th>
+                                    <th class="text-center" style="width:auto;">{{ __('info.dividends') }}</th>
                                     <th class="text-center" style="width:auto;">Cum Date</th>
                                     <th class="text-center" style="width:auto;">Ex Date</th>
                                     <th class="text-center" style="width:auto;">Payment Date</th>
@@ -65,7 +65,7 @@
                                 @endforeach
                                 @else
                                 <tr>
-                                    <td class="text-center" colspan="7">Belum ada data dividen.</td>
+                                    <td class="text-center" colspan="7">{{ __('info.no_data') }}</td>
                                 </tr>
                                 @endif
                             </tbody>
@@ -81,8 +81,8 @@
     <thead>
         <tr>
             <th class="text-center w-1">No.</th>
-            <th class="text-center">Emiten</th>
-            <th class="text-center" style="width:auto;">Dividen</th>
+            <th class="text-center">{{ __('info.stocks') }}</th>
+            <th class="text-center" style="width:auto;">{{ __('info.dividends') }}</th>
             <th class="text-center" style="width:auto;">Cum Date</th>
             <th class="text-center" style="width:auto;">Ex Date</th>
             <th class="text-center" style="width:auto;">Payment Date</th>
@@ -104,7 +104,7 @@
         @endforeach
         @else
         <tr>
-            <td class="text-center" colspan="7">Belum ada data dividen.</td>
+            <td class="text-center" colspan="7">{{ __('info.no_data') }}.</td>
         </tr>
         @endif
     </tbody>
@@ -138,7 +138,7 @@
 				let text = row.innerText.toLowerCase();  
 				let isVisible = text.includes(input);  
 
-				row.style.display = isVisible ? "" : "none";  
+				row.style.display = isVisible ? "" : "{{ __('info.no_data') }}";  
 
 				if (isVisible) {
 					hasVisibleRow = true;  
@@ -152,7 +152,7 @@
 					noDataRow.style.display = "";
 				} else {
 					
-					noDataRow.style.display = "none";
+					noDataRow.style.display = "{{ __('info.no_data') }}";
 				}
 			}
 		}

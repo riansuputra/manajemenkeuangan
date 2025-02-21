@@ -1,18 +1,18 @@
 @extends('layouts.user')
 
-@section('title', 'Catatan Umum')
+@section('title', __('notes.general_notes') )
 
 @section('page-title')
 <div class="col">
 	<h2 class="page-title">
-        Catatan Umum
+        {{ __('notes.general_notes') }}
     </h2>
 </div>
 <div class="col-auto ms-auto d-print-none">
 	<div class="btn-list">
 		<a href="" class="btn btn-success d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-catatan">
         	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-          	    Tambah Catatan
+            {{ __('notes.add_note') }}
       	</a>
 		<a href="" class="btn btn-success d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-catatan" aria-label="Create new report">
 			<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
@@ -25,7 +25,7 @@
 <div class="container-xl">
     <div class="row">
         <div class="col-12 col-md-6 col-lg">
-            <h3 class="mb-0 ">Belum Dikerjakan</h3>
+            <h3 class="mb-0 ">{{ __('notes.not_started') }}</h3>
             <hr class="mt-2 mb-3">
             <div class="mb-4">
                 <div class="row row-cards">
@@ -67,13 +67,13 @@
                                                     data-tipe="{{$catatan['tipe']}}"
                                                     data-warna="{{$catatan['warna']}}"
                                                     data-catatan="{{$catatan['catatan']}}">
-                                                    Edit
+                                                    {{ __('notes.edit') }}
                                                 </a>
                                                 <a class="dropdown-item delete-btn" href=""
                                                     data-bs-toggle="modal" 
                                                     data-bs-target="#modal-delete{{$catatan['id']}}"
                                                     data-id="{{$catatan['id']}}">
-                                                    Delete
+                                                    {{ __('notes.delete') }}
                                                 </a>
                                             </div>
                                         </div>
@@ -89,22 +89,22 @@
                                     <div class="modal-status bg-danger"></div>
                                     <div class="modal-body text-center py-4">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.24 3.957l-8.422 14.06a1.989 1.989 0 0 0 1.7 2.983h16.845a1.989 1.989 0 0 0 1.7 -2.983l-8.423 -14.06a1.989 1.989 0 0 0 -3.4 0z" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
-                                        <h3>Konfirmasi Penghapusan</h3>
-                                        <div class="">Apakah anda yakin ingin menghapus catatan ini?</div>
+                                        <h3>{{ __('notes.confirm_delete') }}</h3>
+                                        <div class="">{{ __('notes.delete_question') }}</div>
                                     </div>
                                     <div class="modal-footer">
                                         <div class="w-100">
                                             <div class="row">
                                                 <div class="col">
                                                     <a href="" class="btn w-100" data-bs-dismiss="modal">
-                                                        Batal
+                                                        {{ __('notes.cancel') }}
                                                     </a>
                                                 </div>
                                                 <div class="col">
                                                     <form method="POST" action="{{route('catatan.umum.hapus', ['id' => $catatan['id']])}}">
                                                         @csrf
                                                         <button type="submit" class="btn btn-danger w-100" data-bs-dismiss="modal">
-                                                            Hapus
+                                                            {{ __('notes.delete') }}
                                                         </button>
                                                     </form>
                                                 </div>
@@ -119,7 +119,7 @@
                             <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Edit Catatan</h5>
+                                        <h5 class="modal-title">{{ __('notes.edit_note') }}</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-status bg-warning"></div>
@@ -128,35 +128,35 @@
                                         @csrf
                                         <input type="text" name="id" id="id" class="form-control text-end id-input" autocomplete="off" hidden>
                                         <div class="mb-3">
-                                            <label class="form-label required">Judul</label>
-                                            <input name="juduledit" id="juduledit" type="text" class="form-control juduledit required" placeholder="Judul" required>
+                                            <label class="form-label required">{{ __('notes.title') }}</label>
+                                            <input name="juduledit" id="juduledit" type="text" class="form-control juduledit required" placeholder="{{ __('notes.title') }}" required>
                                         </div>
                                         <div class="row mb-3">
                                             <div class="col">
-                                                <label class="form-label required">Tipe</label>
+                                                <label class="form-label required">{{ __('notes.type') }}</label>
                                                 <select name="tipeedit" id="tipeedit" class="form-select tipeedit" required>
-                                                    <option value="" selected disabled>Pilih Tipe</option>
-                                                    <option value="todo">Belum dikerjakan</option>
-                                                    <option value="inprogress">Sedang dikerjakan</option>
-                                                    <option value="complete">Selesai</option>
-                                                    <option value="other">Lainnya</option>
+                                                    <option value="" selected disabled>{{ __('notes.select_type') }}</option>
+                                                    <option value="todo">{{ __('notes.not_started') }}</option>
+                                                    <option value="inprogress">{{ __('notes.in_progress') }}</option>
+                                                    <option value="complete">{{ __('notes.completed') }}</option>
+                                                    <option value="other">{{ __('notes.others') }}</option>
                                                 </select>
                                             </div>
                                             <div class="col">
-                                                <label class="form-label">Warna</label>
+                                                <label class="form-label">{{ __('notes.color') }}</label>
                                                 <input name="warnaedit" id="warnaedit" type="color" class="form-control form-control-color warnaedit" style="width:100%" value="#206bc4" title="Choose your color">
                                             </div>
                                         </div>
                                         <div>
-                                            <label class="form-label required">Catatan</label>
+                                            <label class="form-label required">{{ __('notes.note') }}</label>
                                             <textarea class="catatanedit" name="catatanedit" id="tinymce-mytextarea-{{$catatan['id']}}" required></textarea>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="me-auto btn" data-bs-dismiss="modal">Batal</button>
-                                        <button type="submit" class="btn btn-success ms-auto">
+                                        <button type="button" class="me-auto btn" data-bs-dismiss="modal">{{ __('notes.cancel') }}</button>
+                                        <button type="submit" class="btn btn-warning ms-auto">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                                            Simpan Perubahan
+                                            {{ __('notes.save') }}
                                         </button>
                                     </div>
                                     </form>	
@@ -166,13 +166,13 @@
                     </div>
                     @endforeach
                 @else
-                    <div class="col-12 ">Tidak ada catatan.</div>
+                    <div class="col-12 ">{{ __('notes.no_notes') }}</div>
                 @endif
                 </div>
             </div>
         </div>
         <div class="col-12 col-md-6 col-lg">
-            <h3 class="mb-0 ">Sedang Dikerjakan</h3>
+            <h3 class="mb-0 ">{{ __('notes.in_progress') }}</h3>
             <hr class="mt-2 mb-3">
             <div class="mb-4">
                 <div class="row row-cards">
@@ -214,13 +214,13 @@
                                                     data-tipe="{{$catatan['tipe']}}"
                                                     data-warna="{{$catatan['warna']}}"
                                                     data-catatan="{{$catatan['catatan']}}">
-                                                    Edit
+                                                    {{ __('notes.edit') }}
                                                 </a>
                                                 <a class="dropdown-item delete-btn" href=""
                                                     data-bs-toggle="modal" 
                                                     data-bs-target="#modal-delete{{$catatan['id']}}"
                                                     data-id="{{$catatan['id']}}">
-                                                    Delete
+                                                    {{ __('notes.delete') }}
                                                 </a>
                                             </div>
                                         </div>
@@ -236,22 +236,22 @@
                                     <div class="modal-status bg-danger"></div>
                                     <div class="modal-body text-center py-4">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.24 3.957l-8.422 14.06a1.989 1.989 0 0 0 1.7 2.983h16.845a1.989 1.989 0 0 0 1.7 -2.983l-8.423 -14.06a1.989 1.989 0 0 0 -3.4 0z" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
-                                        <h3>Konfirmasi Penghapusan</h3>
-                                        <div class="">Apakah anda yakin ingin menghapus catatan ini?</div>
+                                        <h3>{{ __('notes.confirm_delete') }}</h3>
+                                        <div class="">{{ __('notes.delete_question') }}</div>
                                     </div>
                                     <div class="modal-footer">
                                         <div class="w-100">
                                             <div class="row">
                                                 <div class="col">
                                                     <a href="" class="btn w-100" data-bs-dismiss="modal">
-                                                        Batal
+                                                        {{ __('notes.cancel') }}
                                                     </a>
                                                 </div>
                                                 <div class="col">
                                                     <form method="POST" action="{{route('catatan.umum.hapus', ['id' => $catatan['id']])}}">
                                                         @csrf
                                                         <button type="submit" class="btn btn-danger w-100" data-bs-dismiss="modal">
-                                                            Hapus
+                                                            {{ __('notes.delete') }}
                                                         </button>
                                                     </form>
                                                 </div>
@@ -266,7 +266,7 @@
                             <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Edit Catatan</h5>
+                                        <h5 class="modal-title">{{ __('notes.edit_note') }}</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-status bg-warning"></div>
@@ -275,35 +275,35 @@
                                         @csrf
                                         <input type="text" name="id" id="id" class="form-control text-end id-input" autocomplete="off" hidden>
                                         <div class="mb-3">
-                                            <label class="form-label required">Judul</label>
-                                            <input name="juduledit" id="juduledit" type="text" class="form-control juduledit required" placeholder="Judul" required>
+                                            <label class="form-label required">{{ __('notes.title') }}</label>
+                                            <input name="juduledit" id="juduledit" type="text" class="form-control juduledit required" placeholder="{{ __('notes.title') }}" required>
                                         </div>
                                         <div class="row mb-3">
                                             <div class="col">
-                                                <label class="form-label required">Tipe</label>
+                                                <label class="form-label required">{{ __('notes.type') }}</label>
                                                 <select name="tipeedit" id="tipeedit" class="form-select tipeedit" required>
-                                                    <option value="" selected disabled>Pilih Tipe</option>
-                                                    <option value="todo">Belum dikerjakan</option>
-                                                    <option value="inprogress">Sedang dikerjakan</option>
-                                                    <option value="complete">Selesai</option>
-                                                    <option value="other">Lainnya</option>
+                                                    <option value="" selected disabled>{{ __('notes.select_type') }}</option>
+                                                    <option value="todo">{{ __('notes.not_started') }}</option>
+                                                    <option value="inprogress">{{ __('notes.in_progress') }}</option>
+                                                    <option value="complete">{{ __('notes.completed') }}</option>
+                                                    <option value="other">{{ __('notes.others') }}</option>
                                                 </select>
                                             </div>
                                             <div class="col">
-                                                <label class="form-label">Warna</label>
+                                                <label class="form-label">{{ __('notes.color') }}</label>
                                                 <input name="warnaedit" id="warnaedit" type="color" class="form-control form-control-color warnaedit" style="width:100%" value="#206bc4" title="Choose your color">
                                             </div>
                                         </div>
                                         <div>
-                                            <label class="form-label required">Catatan</label>
+                                            <label class="form-label required">{{ __('notes.note') }}</label>
                                             <textarea class="catatanedit" name="catatanedit" id="tinymce-mytextarea-{{$catatan['id']}}" required></textarea>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="me-auto btn" data-bs-dismiss="modal">Batal</button>
+                                        <button type="button" class="me-auto btn" data-bs-dismiss="modal">{{ __('notes.cancel') }}</button>
                                         <button type="submit" class="btn btn-warning ms-auto">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                                            Simpan
+                                            {{ __('notes.save') }}
                                         </button>
                                     </div>
                                     </form>	
@@ -313,13 +313,13 @@
                     </div>
                     @endforeach
                 @else
-                    <div class="col-12 ">Tidak ada catatan.</div>
+                    <div class="col-12 ">{{ __('notes.no_notes') }}</div>
                 @endif
                 </div>
             </div>
         </div>
         <div class="col-12 col-md-6 col-lg">
-            <h3 class="mb-0 ">Selesai</h3>
+            <h3 class="mb-0 ">{{ __('notes.completed') }}</h3>
             <hr class="mt-2 mb-3">
             <div class="mb-4">
                 <div class="row row-cards">
@@ -361,13 +361,13 @@
                                                     data-tipe="{{$catatan['tipe']}}"
                                                     data-warna="{{$catatan['warna']}}"
                                                     data-catatan="{{$catatan['catatan']}}">
-                                                    Edit
+                                                    {{ __('notes.edit') }}
                                                 </a>
                                                 <a class="dropdown-item delete-btn" href=""
                                                     data-bs-toggle="modal" 
                                                     data-bs-target="#modal-delete{{$catatan['id']}}"
                                                     data-id="{{$catatan['id']}}">
-                                                    Delete
+                                                    {{ __('notes.delete') }}
                                                 </a>
                                             </div>
                                         </div>
@@ -383,22 +383,22 @@
                                     <div class="modal-status bg-danger"></div>
                                     <div class="modal-body text-center py-4">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.24 3.957l-8.422 14.06a1.989 1.989 0 0 0 1.7 2.983h16.845a1.989 1.989 0 0 0 1.7 -2.983l-8.423 -14.06a1.989 1.989 0 0 0 -3.4 0z" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
-                                        <h3>Konfirmasi Penghapusan</h3>
-                                        <div class="">Apakah anda yakin ingin menghapus catatan ini?</div>
+                                        <h3>{{ __('notes.confirm_delete') }}</h3>
+                                        <div class="">{{ __('notes.delete_question') }}</div>
                                     </div>
                                     <div class="modal-footer">
                                         <div class="w-100">
                                             <div class="row">
                                                 <div class="col">
                                                     <a href="" class="btn w-100" data-bs-dismiss="modal">
-                                                        Batal
+                                                        {{ __('notes.cancel') }}
                                                     </a>
                                                 </div>
                                                 <div class="col">
                                                     <form method="POST" action="{{route('catatan.umum.hapus', ['id' => $catatan['id']])}}">
                                                         @csrf
                                                         <button type="submit" class="btn btn-danger w-100" data-bs-dismiss="modal">
-                                                            Hapus
+                                                            {{ __('notes.delete') }}
                                                         </button>
                                                     </form>
                                                 </div>
@@ -413,7 +413,7 @@
                             <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Edit Catatan</h5>
+                                        <h5 class="modal-title">{{ __('notes.edit_note') }}</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-status bg-warning"></div>
@@ -422,35 +422,35 @@
                                         @csrf
                                         <input type="text" name="id" id="id" class="form-control text-end id-input" autocomplete="off" hidden>
                                         <div class="mb-3">
-                                            <label class="form-label required">Judul</label>
-                                            <input name="juduledit" id="juduledit" type="text" class="form-control juduledit required" placeholder="Judul" required>
+                                            <label class="form-label required">{{ __('notes.title') }}</label>
+                                            <input name="juduledit" id="juduledit" type="text" class="form-control juduledit required" placeholder="{{ __('notes.title') }}" required>
                                         </div>
                                         <div class="row mb-3">
                                             <div class="col">
-                                                <label class="form-label required">Tipe</label>
+                                                <label class="form-label required">{{ __('notes.type') }}</label>
                                                 <select name="tipeedit" id="tipeedit" class="form-select tipeedit" required>
-                                                    <option value="" selected disabled>Pilih Tipe</option>
-                                                    <option value="todo">Belum dikerjakan</option>
-                                                    <option value="inprogress">Sedang dikerjakan</option>
-                                                    <option value="complete">Selesai</option>
-                                                    <option value="other">Lainnya</option>
+                                                    <option value="" selected disabled>{{ __('notes.select_type') }}</option>
+                                                    <option value="todo">{{ __('notes.not_started') }}</option>
+                                                    <option value="inprogress">{{ __('notes.in_progress') }}</option>
+                                                    <option value="complete">{{ __('notes.completed') }}</option>
+                                                    <option value="other">{{ __('notes.others') }}</option>
                                                 </select>
                                             </div>
                                             <div class="col">
-                                                <label class="form-label">Warna</label>
+                                                <label class="form-label">{{ __('notes.color') }}</label>
                                                 <input name="warnaedit" id="warnaedit" type="color" class="form-control form-control-color warnaedit" style="width:100%" value="#206bc4" title="Choose your color">
                                             </div>
                                         </div>
                                         <div>
-                                            <label class="form-label required">Catatan</label>
+                                            <label class="form-label required">{{ __('notes.note') }}</label>
                                             <textarea class="catatanedit" name="catatanedit" id="tinymce-mytextarea-{{$catatan['id']}}" required></textarea>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="me-auto btn" data-bs-dismiss="modal">Batal</button>
+                                        <button type="button" class="me-auto btn" data-bs-dismiss="modal">{{ __('notes.cancel') }}</button>
                                         <button type="submit" class="btn btn-warning ms-auto">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                                            Simpan 
+                                            {{ __('notes.save') }} 
                                         </button>
                                     </div>
                                     </form>	
@@ -460,13 +460,13 @@
                     </div>
                     @endforeach
                 @else
-                    <div class="col-12 ">Tidak ada catatan.</div>
+                    <div class="col-12 ">{{ __('notes.no_notes') }}</div>
                 @endif
                 </div>
             </div>
         </div>
         <div class="col-12 col-md-6 col-lg">
-            <h3 class="mb-0 ">Lainnya</h3>
+            <h3 class="mb-0 ">{{ __('notes.others') }}</h3>
             <hr class="mt-2 mb-3">
             <div class="mb-4">
                 <div class="row row-cards">
@@ -508,13 +508,13 @@
                                                     data-tipe="{{$catatan['tipe']}}"
                                                     data-warna="{{$catatan['warna']}}"
                                                     data-catatan="{{$catatan['catatan']}}">
-                                                    Edit
+                                                    {{ __('notes.edit') }}
                                                 </a>
                                                 <a class="dropdown-item delete-btn" href=""
                                                     data-bs-toggle="modal" 
                                                     data-bs-target="#modal-delete{{$catatan['id']}}"
                                                     data-id="{{$catatan['id']}}">
-                                                    Delete
+                                                    {{ __('notes.delete') }}
                                                 </a>
                                             </div>
                                         </div>
@@ -530,22 +530,22 @@
                                     <div class="modal-status bg-danger"></div>
                                     <div class="modal-body text-center py-4">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.24 3.957l-8.422 14.06a1.989 1.989 0 0 0 1.7 2.983h16.845a1.989 1.989 0 0 0 1.7 -2.983l-8.423 -14.06a1.989 1.989 0 0 0 -3.4 0z" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
-                                        <h3>Konfirmasi Penghapusan</h3>
-                                        <div class="">Apakah anda yakin ingin menghapus catatan ini?</div>
+                                        <h3>{{ __('notes.confirm_delete') }}</h3>
+                                        <div class="">{{ __('notes.delete_question') }}</div>
                                     </div>
                                     <div class="modal-footer">
                                         <div class="w-100">
                                             <div class="row">
                                                 <div class="col">
                                                     <a href="" class="btn w-100" data-bs-dismiss="modal">
-                                                        Batal
+                                                        {{ __('notes.cancel') }}
                                                     </a>
                                                 </div>
                                                 <div class="col">
                                                     <form method="POST" action="{{route('catatan.umum.hapus', ['id' => $catatan['id']])}}">
                                                         @csrf
                                                         <button type="submit" class="btn btn-danger w-100" data-bs-dismiss="modal">
-                                                            Hapus
+                                                            {{ __('notes.delete') }}
                                                         </button>
                                                     </form>
                                                 </div>
@@ -560,7 +560,7 @@
                             <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Edit Catatan</h5>
+                                        <h5 class="modal-title">{{ __('notes.edit_note') }}</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-status bg-warning"></div>
@@ -569,45 +569,45 @@
                                         @csrf
                                         <input type="text" name="id" id="id" class="form-control text-end id-input" autocomplete="off" hidden>
                                         <div class="mb-3">
-                                            <label class="form-label required">Judul</label>
-                                            <input name="juduledit" id="juduledit" type="text" class="form-control juduledit required" placeholder="Judul" required>
+                                            <label class="form-label required">{{ __('notes.title') }}</label>
+                                            <input name="juduledit" id="juduledit" type="text" class="form-control juduledit required" placeholder="{{ __('notes.title') }}" required>
                                         </div>
                                         <div class="row mb-3">
                                             <div class="col">
-                                                <label class="form-label required">Tipe</label>
+                                                <label class="form-label required">{{ __('notes.type') }}</label>
                                                 <select name="tipeedit" id="tipeedit" class="form-select tipeedit" required>
-                                                    <option value="" selected disabled>Pilih Tipe</option>
-                                                    <option value="todo">Belum dikerjakan</option>
-                                                    <option value="inprogress">Sedang dikerjakan</option>
-                                                    <option value="complete">Selesai</option>
-                                                    <option value="other">Lainnya</option>
+                                                    <option value="" selected disabled>{{ __('notes.select_type') }}</option>
+                                                    <option value="todo">{{ __('notes.not_started') }}</option>
+                                                    <option value="inprogress">{{ __('notes.in_progress') }}</option>
+                                                    <option value="complete">{{ __('notes.completed') }}</option>
+                                                    <option value="other">{{ __('notes.others') }}</option>
                                                 </select>
                                             </div>
                                             <div class="col">
-                                                <label class="form-label">Warna</label>
+                                                <label class="form-label">{{ __('notes.color') }}</label>
                                                 <input name="warnaedit" id="warnaedit" type="color" class="form-control form-control-color warnaedit" style="width:100%" value="#206bc4" title="Choose your color">
                                             </div>
                                         </div>
                                         <div>
-                                            <label class="form-label required">Catatan</label>
+                                            <label class="form-label required">{{ __('notes.note') }}</label>
                                             <textarea class="catatanedit" name="catatanedit" id="tinymce-mytextarea-{{$catatan['id']}}" required></textarea>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="me-auto btn" data-bs-dismiss="modal">Batal</button>
+                                        <button type="button" class="me-auto btn" data-bs-dismiss="modal">{{ __('notes.cancel') }}</button>
                                         <button type="submit" class="btn btn-warning ms-auto">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                                            Simpan
+                                            {{ __('notes.save') }}
                                         </button>
                                     </div>
                                     </form>	
-                                </div>
+                                </div{{ __('notes.delete') }}
                             </div>
                         </div>
                     </div>
                     @endforeach
                 @else
-                    <div class="col-12 ">Tidak ada catatan.</div>
+                    <div class="col-12 ">{{ __('notes.no_notes') }}</div>
                 @endif
                 </div>
             </div>
@@ -620,7 +620,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Tambah Catatan</h5>
+                <h5 class="modal-title">{{ __('notes.add_note') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-status bg-success"></div>
@@ -628,39 +628,39 @@
                 <form action="{{route('catatan.umum.store')}}" method="post" autocomplete="off">
 				@csrf
 				<div class="mb-3">
-					<label class="form-label required">Judul</label>
-					<input name="judul" id="judul" type="text" class="form-control required" placeholder="Judul" required>
+					<label class="form-label required">{{ __('notes.title') }}</label>
+					<input name="judul" id="judul" type="text" class="form-control required" placeholder="{{ __('notes.title') }}" required>
 				</div>
 				<div class="row mb-3">
 					<div class="col">
-						<label class="form-label required">Tipe</label>
+						<label class="form-label required">{{ __('notes.type') }}</label>
 						<select name="tipe" id="tipe"class="form-select" required>
-							<option value="" selected disabled>Pilih Tipe</option>
-							<option value="todo">Belum dikerjakan</option>
-							<option value="inprogress">Sedang dikerjakan</option>
-							<option value="complete">Selesai</option>
-							<option value="other">Lainnya</option>
+							<option value="" selected disabled>{{ __('notes.select_type') }}</option>
+							<option value="todo">{{ __('notes.not_started') }}</option>
+							<option value="inprogress">{{ __('notes.in_progress') }}</option>
+							<option value="complete">{{ __('notes.completed') }}</option>
+							<option value="other">{{ __('notes.others') }}</option>
 						</select>
 					</div>
 					<div class="col">
-						<label class="form-label">Warna</label>
+						<label class="form-label">{{ __('notes.color') }}</label>
 						<input name="warna" id="warna" type="color" class="form-control form-control-color" style="width:100%" value="#206bc4" title="Choose your color">
 					</div>
 				</div>
 				<div>
-					<label class="form-label required">Catatan</label>
-					<textarea name="catatan" id="tinymce-mytextarea" required><b>Tuliskan isi catatan di sini !</b></textarea>
+					<label class="form-label required">{{ __('notes.note') }}</label>
+					<textarea name="catatan" id="tinymce-mytextarea" required><b>{{ __('notes.write_note_here') }}</b></textarea>
 				</div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="me-auto btn" data-bs-dismiss="modal">Batal</button>
+                <button type="button" class="me-auto btn" data-bs-dismiss="modal">{{ __('notes.cancel') }}</button>
                 <button type="submit" class="btn btn-success ms-auto">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                        Simpan
+                    {{ __('notes.save') }}
                 </button>
                 </div>
             </form>	
-        </div>
+        </div{{ __('notes.delete') }}
     </div>
 </div>
 

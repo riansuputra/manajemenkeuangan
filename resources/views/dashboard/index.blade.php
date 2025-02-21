@@ -1,11 +1,11 @@
 @extends('layouts.user')
 
-@section('title', __('messages.dashboard'))
+@section('title', __('dashboard.dashboard'))
 
 @section('page-title')
 <div class="col-auto me-auto d-print-none">
     <h2 class="page-title">
-        {{ __('messages.dashboard') }}
+        {{ __('dashboard.dashboard') }}
     </h2>
 </div>
 <div class="col-auto d-print-none" >
@@ -13,11 +13,11 @@
 		@csrf
 		<div class="col-auto d-print-none input-group">
             <select class="form-select" name="jenisFilter" id="jenisFilter">
-				<option value="Kisaran" {{ $jenisFilter == 'Kisaran' ? 'selected' : '' }}>Kisaran</option>
-				<option value="Mingguan" {{ $jenisFilter == 'Mingguan' ? 'selected' : '' }}>Mingguan</option>
-				<option value="Bulanan" {{ $jenisFilter == 'Bulanan' ? 'selected' : '' }}>Bulanan</option>
-				<option value="Tahunan" {{ $jenisFilter == 'Tahunan' ? 'selected' : '' }}>Tahunan</option>
-				<option value="Custom" {{ $jenisFilter == 'Custom' ? 'selected' : '' }}>Custom Range</option>
+				<option value="Kisaran" {{ $jenisFilter == 'Kisaran' ? 'selected' : '' }}>{{ __('dashboard.range') }}</option>
+				<option value="Mingguan" {{ $jenisFilter == 'Mingguan' ? 'selected' : '' }}>{{ __('dashboard.weekly') }}</option>
+				<option value="Bulanan" {{ $jenisFilter == 'Bulanan' ? 'selected' : '' }}>{{ __('dashboard.monthly') }}</option>
+				<option value="Tahunan" {{ $jenisFilter == 'Tahunan' ? 'selected' : '' }}>{{ __('dashboard.yearly') }}</option>
+				<option value="Custom" {{ $jenisFilter == 'Custom' ? 'selected' : '' }}>{{ __('dashboard.custom_range') }}</option>
 			</select>
 		    <div class="col-auto d-print-none" name="pilihanFilter" id="pilihanFilter"></div>
             <input type="date" class="form-control" name="startdate-filter" id="startdate-filter" hidden>
@@ -34,7 +34,7 @@
 	<div class="btn-list">
     	<a href="" class="btn btn-success d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-report">
 			<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-				Tambah Catatan
+                {{ __('dashboard.add_record') }}
 		</a>
 		<a href="" class="btn btn-success d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-report" aria-label="Create new report">
 			<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
@@ -59,10 +59,10 @@
                           		</div>
                           		<div class="col">
 								  	<div class="d-flex align-items-center">
-										<div class="">Total Saldo</div>
+										<div class="">{{ __('dashboard.total_balance') }}</div>
 										<div class="ms-auto lh-1">
 											<div class="dropdown">
-                                                {{$summary['catTotal']}} Catatan
+                                                {{$summary['catTotal']}} {{ __('dashboard.records') }}
 											</div>
 										</div>
 									</div>
@@ -85,10 +85,10 @@
                           		</div>
                           		<div class="col">
 								  	<div class="d-flex align-items-center">
-										<div class="">Total Pemasukan</div>
+										<div class="">{{ __('dashboard.total_income') }}</div>
 										<div class="ms-auto lh-1">
 											<div class="dropdown">
-                                                {{$summary['catPemasukan']}} Catatan
+                                                {{$summary['catPemasukan']}} {{ __('dashboard.records') }}
 											</div>
 										</div>
 									</div>
@@ -111,10 +111,10 @@
                           		</div>
                           		<div class="col">
 								  	<div class="d-flex align-items-center">
-										<div class="">Total Pengeluaran</div>
+										<div class="">{{ __('dashboard.total_expense') }}</div>
 										<div class="ms-auto lh-1">
 											<div class="dropdown">
-												{{$summary['catPengeluaran']}} Catatan
+												{{$summary['catPengeluaran']}} {{ __('dashboard.records') }}
 											</div>
 										</div>
 									</div>
@@ -131,7 +131,7 @@
 		<div class="col-lg-4">
 			<div class="card">
 					<div class="card-body">
-					<h3 class="card-title ">All Record</h3>
+					<h3 class="card-title ">{{ __('dashboard.all_records') }}</h3>
 					<div id="chart-demo-pie#3" class="chart-lg mb-2" style="height: 130px;"></div>
 				</div>
 			</div>
@@ -139,7 +139,7 @@
 		<div class="col-lg-4">
 			<div class="card">
 					<div class="card-body">
-					<h3 class="card-title ">Pemasukan</h3>
+					<h3 class="card-title ">{{ __('dashboard.income') }}</h3>
 					<div id="chart-demo-pie" class="chart-lg mb-2" style="height: 130px;"></div>
 				</div>
 			</div>
@@ -147,7 +147,7 @@
 		<div class="col-lg-4">
 			<div class="card">
 					<div class="card-body">
-					<h3 class="card-title ">Pengeluaran</h3>
+					<h3 class="card-title ">{{ __('dashboard.expense') }}</h3>
 					<div id="chart-demo-pie#2" class="chart-lg mb-2" style="height: 130px;"></div>
 				</div>
 			</div>
@@ -155,7 +155,7 @@
 		<div class="col-lg-6">
 			<div class="card">
 					<div class="card-body">
-					<h3 class="card-title  mb-5">Tren Saldo</h3>
+					<h3 class="card-title  mb-5">{{ __('dashboard.balance_trend') }}</h3>
 					<div id="chart-completion-tasks-3" class="chart-lg" style="min-height: 240px;"></div>
 				</div>
 			</div>
@@ -163,7 +163,7 @@
 		<div class="col-lg-6">
 			<div class="card">
 				<div class="card-body" style="flex:0;">
-					<h3 class="card-title ">Catatan Terakhir</h3>
+					<h3 class="card-title ">{{ __('dashboard.latest_records') }}</h3>
 				</div>
 				<div class="card-table table-responsive">
                     <table class="table table-vcenter">
@@ -184,7 +184,7 @@
                                             @if (isset($catatan['catatan']))
                                                 {{$catatan['catatan']}}
                                             @else
-                                                (Tanpa catatan)
+                                                {{ __('dashboard.without_records') }}
                                             @endif
                                             </div>
                                         </td>
@@ -324,12 +324,12 @@
                 selectKisaran.setAttribute("required", "required");
 
                 const options = [
-                    { text: "Semua", value: "semuaHari" },
-                    { text: "Hari Ini", value: "iniHari" },
-                    { text: "7 Hari", value: "7Hari" },
-                    { text: "30 Hari", value: "30Hari" },
-                    { text: "90 Hari", value: "90Hari" },
-                    { text: "12 Bulan", value: "12Bulan" },
+                    { text: "{{ __('dashboard.all') }}", value: "semuaHari" },
+                    { text: "{{ __('dashboard.today') }}", value: "iniHari" },
+                    { text: "{{ __('dashboard.7_days') }}", value: "7Hari" },
+                    { text: "{{ __('dashboard.30_days') }}", value: "30Hari" },
+                    { text: "{{ __('dashboard.90_days') }}", value: "90Hari" },
+                    { text: "{{ __('dashboard.12_months') }}", value: "12Bulan" },
                 ];
 
                 options.forEach(optionData => {
@@ -393,7 +393,7 @@
                 },
                 series: [], 
                 noData: {
-                    text: "Tidak ada data.",
+                    text: "{{ __('dashboard.no_data') }}",
                     align: 'center',
                     verticalAlign: 'middle',
                     style: {
@@ -437,7 +437,7 @@
                     curve: "straight",
                 },
                 series: [{
-                    name: "Jumlah",
+                    name: "{{ __('dashboard.amount') }}",
                     data: balances
                 }],
                 tooltip: {
@@ -571,7 +571,7 @@
                 series: [], 
                 labels: [], 
                 noData: {
-                    text: "Tidak ada data.",
+                    text: "{{ __('dashboard.no_data') }}",
                     align: 'center',
                     verticalAlign: 'middle',
                     style: {
@@ -669,7 +669,7 @@
                 series: [], 
                 labels: [], 
                 noData: {
-                    text: "Tidak ada data.",
+                    text: "{{ __('dashboard.no_data') }}",
                     align: 'center',
                     verticalAlign: 'middle',
                     style: {
@@ -763,7 +763,7 @@
                 series: [], 
                 labels: [], 
                 noData: {
-                    text: "Tidak ada data.",
+                    text: "{{ __('dashboard.no_data') }}",
                     align: 'center',
                     verticalAlign: 'middle',
                     style: {
