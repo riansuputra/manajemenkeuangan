@@ -35,10 +35,10 @@
         <a href="" class="btn btn-success d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-saldo">
         	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
 		</a>
-        <button class="btn btn-primary" id="printModalToPdf">
+        <a class="btn btn-primary" id="printModalToPdf">
             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
           	Cetak PDF
-        </button>
+        </a>
 	</div>
 </div>
 @endsection
@@ -106,7 +106,7 @@
                                 <th class="text-center">No</th>
                                 <th class="text-center">Bulan</th>
                                 <th class="text-center">Alur Dana</th>
-                                <th class="text-center">Jumlah (Rupiah)</th>
+                                <th class="text-center">Jumlah</th>
                                 <th class="text-center">Harga Unit</th>
                                 <th class="text-center">Jumlah Unit</th>
                             </tr>
@@ -177,7 +177,7 @@
                                 <th class="text-center">No</th>
                                 <th class="text-center">Tanggal</th>
                                 <th class="text-center">Jenis</th>
-                                <th class="text-center">Jumlah (Rupiah)</th>
+                                <th class="text-center">Jumlah</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -301,6 +301,85 @@
     </div>
 </div>
 
+<table class="table table-bordered table-vcenter table-striped" hidden>
+    <thead>
+        <tr>
+            <th class="text-center">No</th>
+            <th class="text-center">Bulan</th>
+            <th class="text-center">Alur Dana</th>
+            <th class="text-center">Jumlah</th>
+            <th class="text-center">Harga Unit</th>
+            <th class="text-center">Jumlah Unit</th>
+        </tr>
+    </thead>
+    <tbody id="tableMutasi">
+        @if (!empty($mutasiDataGrup->toArray()))
+            @foreach($mutasiDataGrup as $tahun => $bulanData)
+                @foreach($bulanData as $bulan => $data)
+                    @foreach($data as $index => $item)
+                        <tr>
+                                <td class="text-center"">{{ $loop->parent->index + 1 }}</td>
+                                <td class="">{{ \Carbon\Carbon::create($tahun, $bulan, 1)->locale('id')->translatedFormat('F') }}</td>
+                                @if($item['alur_dana'] > 0)
+                                <td class="text-center">Masuk</td>
+                                @elseif ($item['alur_dana'] < 0)
+                                <td class="text-center">Keluar</td>                                     
+                                @else
+                                <td class="text-center">Dividen</td>
+                                @endif
+                            <td>Rp.<span>{{ number_format($item['alur_dana'], 0, ',', '.') }}</span></td>
+                            <td class="text-center">{{number_format($item['harga_unit_saat_ini'], 0, ',', '.')}}</td>
+                            <td class="text-center">{{number_format($item['jumlah_unit_penyertaan'], 0, ',', '.')}}</td>
+                        </tr>
+                    @endforeach
+                @endforeach
+            @endforeach
+        @else
+            <tr>
+                <td class="text-center" colspan="7">Belum ada mutasi dana.</td>
+            </tr>
+        @endif
+    </tbody>
+</table>
+
+<table class="table table-bordered table-vcenter table-striped" hidden>
+    <thead>
+        <tr>
+            <th class="text-center">No</th>
+            <th class="text-center">Tanggal</th>
+            <th class="text-center">Jenis</th>
+            <th class="text-center">Jumlah</th>
+        </tr>
+    </thead>
+    <tbody id="tableRiwayat">
+        @if (!empty($saldoData))
+            @php
+                $sortedGroupedSaldoData = collect($saldoData)->groupBy('tanggal'); // Mengelompokkan data berdasarkan tanggal
+                $groupedSaldoData = $sortedGroupedSaldoData;
+            @endphp
+            @foreach ($groupedSaldoData as $tanggal => $dataGroup)
+                @foreach ($dataGroup as $index => $data)
+                    <tr>
+                        <td class="text-center"">{{ $loop->parent->index + 1 }}</td>
+                        <td >{{ \Carbon\Carbon::parse($tanggal)->locale('id')->translatedFormat('d F Y') }}</td>
+                        @if ($data['saldo'] > 0)
+                        <td class="text-center">Masuk</td>
+                        @elseif ($data['saldo'] < 0)
+                        <td class="text-center">Keluar</td>
+                        @else
+                        <td class="text-center">Dividen</td>
+                        @endif
+                        <td>Rp. {{ number_format($data['saldo'], 0, ',', '.') }}</td>
+                    </tr>
+                @endforeach
+            @endforeach
+        @else
+            <tr>
+                <td class="text-center" colspan="5">Belum ada riwayat dana.</td>
+            </tr>
+        @endif
+    </tbody>
+</table>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

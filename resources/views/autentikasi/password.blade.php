@@ -36,7 +36,8 @@
                     <h1 class="m-0 text-white">Smart Finance</h1>
                 </a>
             </div>
-            <form class="card card-md" action="./" method="get" autocomplete="off" novalidate>
+            <form class="card card-md" action="{{ route('password') }}" method="post" autocomplete="off">
+                @csrf
                 <div class="card-body">
                     <h2 class="card-title text-center mb-4">{{ __('auth.forgot_password') }}</h2>
                     <p class="text-muted mb-4">{{ __('auth.enter_emailP') }}</p>
@@ -45,9 +46,7 @@
                         <input type="email" name="email" id="email" class="form-control" placeholder="{{ __('auth.enter_email') }}" required>
                     </div>
                     <div class="form-footer">
-                        <a href="" class="btn btn-primary w-100">
-                            {{ __('auth.send_new_password') }}
-                        </a>
+                        <button type="submit" class="btn btn-primary text-white w-100">{{ __('auth.send_new_password') }}</button>
                     </div>
                 </div>
             </form>

@@ -27,7 +27,7 @@ return [
     'error_found' => 'Oops… You just found an error page.',
 
     'enter_emailP' => 'Enter your email address and your password will be reset and emailed to you.',
-    'send_new_password' => 'Send me new password',
+    'send_new_password' => 'Send confirmation email',
     'return_to_signin' => 'Return to the page',
 
     'reset_password' => 'Reset Password',
@@ -41,9 +41,11 @@ return [
     'check_inbox' => 'Check Your Inbox',
     'verification_link_sent' => 'We have sent a verification link to',
     'click_to_confirm' => 'Please click the link to confirm your email address.',
-    'check_spam' => 'Can’t find the email? Please check your spam folder.',
+    'check_spam' => 'Can’t find the email? Please check your spam folder or',
     'wrong_email' => 'Wrong email?',
     're_enter_email' => 'Please re-enter the correct email address.',
+    'resend_email' => 'Resend verification email',
+    'resend_email_confirmation' => 'Resend confirmation email',
     'back_to_login' => 'Back to login page',
 
     // Password Reset Link

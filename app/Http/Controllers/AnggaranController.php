@@ -123,6 +123,7 @@ class AnggaranController extends Controller
         return [
             'Accept' => 'application/json',
             'x-api-key' => env('API_KEY'),
+            'Accept-Language'=> Session::get('locale', 'id'),
             'Authorization' => 'Bearer ' . $request->auth['token'],
             'user-type' => $request->auth['user_type'],
         ];

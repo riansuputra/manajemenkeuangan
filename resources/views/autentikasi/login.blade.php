@@ -56,7 +56,7 @@
 					</div>
 				</span>
 				<span class="form-label">
-					<a href="{{ route('password.page') }}"><u>{{ __('auth.forgot_password') }}?</u></a>
+					<a href="{{ route('password.page') }}">{{ __('auth.forgot_password') }}?</a>
 				</span>
 				<br>
 				<div class="form-footer">

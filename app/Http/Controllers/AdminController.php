@@ -372,6 +372,8 @@ class AdminController extends Controller
         $input = array(
             'id' => $request->id,
             'scope' => $request->scope,
+            'nama_kategori_en' => $request->nama_kategori_en,
+            'nama_kategori' => $request->nama_kategori,
             'message' => $request->message,
         );
 

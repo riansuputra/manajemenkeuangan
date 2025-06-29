@@ -24,7 +24,7 @@ return [
     'expense' => 'Expense',
     'balance_trend' => 'Balance Trend',
     'latest_records' => 'Latest Records',
-    'without_note' => 'Tanpa Catatan',
+    'without_records' => 'Without notes',
     'amount' => 'Amount',
     'filter' => 'Filter',
     'no_data' => 'No data available',

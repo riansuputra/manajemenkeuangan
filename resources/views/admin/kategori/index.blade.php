@@ -117,16 +117,42 @@
 
 							<!-- Modal Approve Message -->
                             <div class="modal modal-blur fade" id="modal-approve-{{$data['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
-                                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                                <div class="modal-dialog modal-md modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title">{{$data['nama_kategori']}}</h5>
+                                            <h5 class="modal-title">Detail - {{$data['nama_kategori']}}</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <form action="{{ route('admin.permintaan.approve', ['id'=> $data['id']]) }}" method="post" autocomplete="off">
                                             @csrf
                                             <div class="modal-body">
                                                 <input type="hidden" name="id" value="{{ $data['id'] }}">
+														<div class="mb-3">
+															<label class="form-label required">{{ __('settings.category_name') }}:</label>
+															<div class="row">
+																	<div class="input-group">
+															<span class="input-group-text">
+																ID
+															</span>
+															<input type="text" class="form-control" id="nama_kategori" name="nama_kategori" value="{{$data['nama_kategori']}}" required>
+
+															</div>
+																
+															</div>
+														</div>
+														<div class="mb-3">
+															<div class="row">
+																	<div class="input-group">
+															<span class="input-group-text">
+																EN
+															</span>
+															<input type="text" class="form-control" id="nama_kategori_en" name="nama_kategori_en" value="{{$data['nama_kategori']}}" required>
+
+															</div>
+																
+															</div>
+														</div>
+														
                                                 <div class="row">
 													<div class="col-lg-12">
 														<div class="mb-3">

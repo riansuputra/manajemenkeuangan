@@ -24,20 +24,37 @@
         </div>
 	</form>
 </div>
+
 <div class="col-auto ms-auto d-print-none">
 	<div class="btn-list">
-		<a href="" class="btn btn-success d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-portofolio">
-        	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-          	Transaksi
-      	</a>
+        {{-- <div data-bs-original-title="❌ Transaksi tidak dapat dilakukan karena periode telah ditutup." data-bs-placement="bottom" data-bs-toggle="tooltip"> --}}
+            <a class="btn btn-success d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-portofolio">
+			    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                {{-- <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-lock"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6z" /><path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" /><path d="M8 11v-4a4 4 0 1 1 8 0v4" /></svg> --}}
+                Transaksi
+            </a>
+        {{-- </div> --}}
         <a href="" class="btn btn-success d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-portofolio" aria-label="Create new report">
 			<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
 		</a>
-        <a href="" class="btn btn-primary">
-            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
-          	Cetak PDF
+        <a href="" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown">
+            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-settings"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" /><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /></svg>
+          	    Kelola
       	</a>
-	</div>
+        <a href="" class="btn btn-secondary d-sm-none btn-icon" data-bs-toggle="dropdown" aria-label="Create new report">
+            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-settings"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" /><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /></svg>
+		</a>
+        <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+            <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#modal-tutup-buku" aria-label="Create new report">
+                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-inline me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M19 4v16h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12z" /><path d="M19 16h-12a2 2 0 0 0 -2 2" /><path d="M9 8h6" /></svg>
+                    Tutup Buku
+            </a>	
+            <a class="dropdown-item" id="printModalToPdf">
+                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-inline me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
+                    Cetak PDF
+            </a>
+        </div>
+    </div>
 </div>
 @endsection
 
@@ -58,7 +75,7 @@
                         </div>
                         <div class="col-4">
                             <a href="" class="bg-teal-lt" data-bs-toggle="modal" data-bs-target="#modal-yield">
-                                <div data-bs-original-title="Klik untuk edit" data-bs-placement="bottom" data-bs-toggle="tooltip">
+                                <div data-bs-original-title="Klik untuk info" data-bs-placement="bottom" data-bs-toggle="tooltip">
                                     <h5 class="mt-0 mb-0 pt-0 pb-2">Yield :</h5>   
                                     <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format(($sortedHistorisData['yield'] ?? 0), 2, ',', '.') }}%</h5>
                                 </div>
@@ -114,34 +131,38 @@
                                 <th class="text-center" colspan="2">Saham</th>
                                 <th class="text-center">Jumlah<br>Lembar</th>
                                 <th class="text-center">Current<br>Price</th>
+                                <th class="text-center">Modal</th>
                                 <th class="text-center">Valuation</th>
                                 <th class="text-center">P/L</th>
                                 <th class="text-center">P/L (%)</th>
                                 <th class="text-center"></th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="modalTableBody">
                             @if($sortedData->isNotEmpty())
                             @foreach($sortedData as $key => $index)
                             @if ($loop->first)
                             <tr>
                                 <td class="text-center"></td>
-                                <td class="fw-bold text-center" colspan="2">KAS</td>
-                                <td class="text-end fw-bold" colspan="2">{{number_format($index['cur_price'], 0, ',', '.')}}</td>
-                                <td class="text-end fw-bold">{{ number_format($index['cur_price'], 0, ',', '.')}}</td>
-                                <td class="text-end fw-bold">-</td>
-                                <td class="text-end fw-bold">0,00%</td>
+                                <td class=" text-center" colspan="2">KAS</td>
+                                <td class="text-end " colspan="2">{{number_format($index['cur_price'], 0, ',', '.')}}</td>
+                                <td class="text-end ">{{ number_format($index['cur_price'], 0, ',', '.')}}</td>
+                                <td class="text-end ">{{ number_format($index['modal'], 0, ',', '.')}}</td>
+                                <td class="text-end ">-</td>
+                                <td class="text-end ">0,00%</td>
                                 <td style="width:1%" class="text-center">
-                                    <a href="" class=""  title="Info" data-bs-toggle="modal" data-bs-target="#modal-info-{{$index['aset']['id']}}">
-                                        <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-menu-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 6l16 0" /><path d="M4 12l16 0" /><path d="M4 18l16 0" /></svg>
-                                        </span>
+                                    <a href="" class="text-muted" data-bs-toggle="modal" data-bs-target="#modal-info-{{$index['aset']['id']}}" >
+                                        <div data-bs-original-title="Info" data-bs-placement="bottom" data-bs-toggle="tooltip">
+                                            <span class="">
+                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-menu-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 6l16 0" /><path d="M4 12l16 0" /><path d="M4 18l16 0" /></svg>
+                                            </span>
+                                        </div>
                                     </a>
                                 </td>
                             </tr>
                             <!-- Modal Info Kas -->
                             <div class="modal modal-blur fade" id="modal-info-{{$index['aset']['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
-                                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                                <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title">{{$index['aset']['nama']}} <span class="text-muted"></span></h5>
@@ -164,51 +185,15 @@
                                                     <h4>{{number_format($index['value_effect'], 0, ',', '.')}}%</h4>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="modal-body">
                                             <h4>Riwayat Kas :</h4>
-                                            @if($filteredData->isNotEmpty())
-                                                @foreach($filteredData as $item => $key)
-                                                    @if($item == $index['aset']['id'])
-                                                        @if($key->isNotEmpty())
-                                                            @foreach($key as $k)
-                                                                @php
-                                                                    $harga = $k['kinerja_portofolio']['transaksi']['harga'];
-                                                                @endphp
-                                                                <div class="card mb-3 
-                                                                    @if($harga > 0) bg-teal-lt
-                                                                    @elseif($harga < 0) bg-red-lt
-                                                                    @else bg-primary-lt
-                                                                    @endif">
-                                                                    <div class="card-body">
-                                                                        <div class="row">
-                                                                            <div class="col-4">
-                                                                                <p class="mb-0">Jenis :</p>
-                                                                                <h4>{{$k['kinerja_portofolio']['transaksi']['deskripsi']}}</h4>
-                                                                            </div>
-                                                                            <div class="col-4">
-                                                                                <p class="mb-0">Tanggal :</p>
-                                                                                <h4>{{\Carbon\Carbon::parse($k['kinerja_portofolio']['transaksi']['tanggal'])->format('d-m-Y')}}</h4>
-                                                                            </div>
-                                                                            <div class="col-4">
-                                                                                <p class="mb-0">Harga :</p>
-                                                                                <h4 class="mb-0">{{number_format($k['kinerja_portofolio']['transaksi']['harga'], 0, ',', '.')}}</h4>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            @endforeach
-                                                        @endif
-                                                    @endif
-                                                @endforeach
-                                            @endif
+                                            
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <!-- End of Modal Info Kas -->
                             @else
-                            <tr class="@if($index['volume'] == 0) bg-muted text-white @endif">
+                            <tr class="@if($index['volume'] == 0) bg-muted-lt text-white @endif">
                                 <td style="width:1%" class="text-center">{{$loop->iteration - 1}}</td>
                                 <td style="width:1%"><span class="avatar avatar-xs" style="background-image: url({{$index['aset']['info']}}); --tblr-avatar-size:1.3rem;"></span></td>
                                 <td style="width:6%">{{$index['aset']['nama']}}</td>
@@ -216,21 +201,24 @@
                                 <td class="text-end">
                                     {{ number_format($index['cur_price'], 0, ',', '.')}}
 
-                                    <a href="" class="ms-2"  title="Update Harga" data-bs-toggle="modal" data-bs-target="#modal-price-{{$index['aset']['id']}}">
-                                        <span class="avatar avatar-xs">
+                                    <a href="" class="ms-2" data-bs-toggle="modal" data-bs-target="#modal-price-{{$index['aset']['id']}}">
+                                        <span class="avatar avatar-xs" data-bs-original-title="Klik untuk update harga" data-bs-placement="bottom" data-bs-toggle="tooltip">
                                             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
                                         </span>
                                     </a>
 
                                 </td>
+                                <td class="text-end">{{ number_format($index['modal'], 0, ',', '.')}}</td>
                                 <td class="text-end">{{ number_format($index['valuasi'] , 0, ',', '.')}}</td>
                                 <td class="text-end @if($index['p/l'] < 0) text-danger @elseif($index['p/l'] > 0) text-success @endif">{{ $index['p/l'] == 0 ? '-' : number_format($index['p/l'] , 0, ',', '.')}}</td>
                                 <td class="text-end @if($index['p/l'] < 0) text-danger @elseif($index['p/l%'] > 0) text-success @endif">{{ number_format($index['p/l%'] , 2, ',', '.')}}%</td>
                                 <td style="width:1%" class="text-center">
-                                    <a href="" class=""  title="Info" data-bs-toggle="modal" data-bs-target="#modal-info-{{$index['aset']['id']}}">
-                                        <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-menu-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 6l16 0" /><path d="M4 12l16 0" /><path d="M4 18l16 0" /></svg>
-                                        </span>
+                                    <a href="" class="text-muted"  data-bs-toggle="modal" data-bs-target="#modal-info-{{$index['aset']['id']}}">
+                                        <div data-bs-original-title="Info" data-bs-placement="bottom" data-bs-toggle="tooltip">
+                                            <span class="">
+                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-menu-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 6l16 0" /><path d="M4 12l16 0" /><path d="M4 18l16 0" /></svg>
+                                            </span>
+                                        </div>
                                     </a>
                                 </td>
                             </tr>
@@ -252,12 +240,18 @@
                                                 <div class="row">
                                                     <div class="col-lg-12">
                                                         <div class="mb-3">
+                                                            <label class="form-label required">Tanggal: </label>
+                                                            <input type="date" name="tanggal_harga" id="tanggal_harga" class="form-control" min="{{ now()->format('Y-m-d') }}"  value="{{ now()->format('Y-m-d') }}" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="mb-3">
                                                             <label class="form-label required">Harga: </label>
                                                             <div class="input-group">
                                                                 <span class="input-group-text">
                                                                     Rp.
                                                                 </span>
-                                                                <input type="text" id="updateHarga-{{ $index['aset']['id'] }}" name="updateHarga" class="form-control text-end" autocomplete="off" placeholder="{{ number_format($index['cur_price'], 0, ',', '.')}}">
+                                                                <input type="text" id="updateHarga-{{ $index['aset']['id'] }}" name="updateHarga" class="form-control text-end" autocomplete="off" placeholder="{{ number_format($index['cur_price'], 0, ',', '.')}}" value="{{ number_format($index['cur_price'], 0, ',', '.')}}" required>
                                                                 <input type="text" id="updateHarga1-{{ $index['aset']['id'] }}" name="updateHarga1" class="form-control text-end" autocomplete="off" hidden>
                                                             </div>
                                                         </div>
@@ -294,120 +288,461 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-status bg-primary"></div>
-                                        <div class="modal-body">
-                                            <h4 class="mb-2">Informasi Aset :</h4>
-                                            <div class="row">
-                                                <div class="col-4">
-                                                    <p class="mb-0 text-muted">Jml Lembar :</p>
-                                                    <h4>{{number_format($index['volume'], 0, ',', '.')}}</h4>
-                                                </div>
-                                                <div class="col-4">
-                                                    <p class="mb-0 text-muted">Avg. Price :</p>
-                                                    <h4>{{number_format($index['avg_price'], 0, ',', '.')}}</h4>
-                                                </div>
-                                                <div class="col-4">
-                                                    <p class="mb-0 text-muted">Cur. Price :</p>
-                                                    <h4>{{number_format($index['cur_price'], 0, ',', '.')}}</h4>
-                                                </div>
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <ul class="nav nav-tabs card-header-tabs nav-fill" data-bs-toggle="tabs">
+                                                    <li class="nav-item">
+                                                        <a href="#floating-{{$index['aset']['id']}}" class="nav-link active" data-bs-toggle="tab">
+                                                            Floating
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a href="#realisasi-{{$index['aset']['id']}}" class="nav-link" data-bs-toggle="tab">
+                                                            Realisasi
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a href="#riwayat-{{$index['aset']['id']}}" class="nav-link" data-bs-toggle="tab">
+                                                            Riwayat
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a href="#harga-{{$index['aset']['id']}}" class="nav-link" data-bs-toggle="tab">
+                                                            Harga
+                                                        </a>
+                                                    </li>
+                                                </ul>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-4">
-                                                    <p class="mb-0 text-muted">Modal :</p>
-                                                    <h4>{{number_format($index['modal'], 0, ',', '.')}}</h4>
-                                                </div>
-                                                <div class="col-4">
-                                                    <p class="mb-0 text-muted">P/L :</p>
-                                                    <h4 class="@if($index['p/l'] < 0) text-danger @elseif($index['p/l'] > 0) text-success @endif">{{number_format($index['p/l'], 0, ',', '.')}}</h4>
-                                                </div>
-                                                <div class="col-4">
-                                                    <p class="mb-0 text-muted">Fund Alloc :</p>
-                                                    <h4>{{number_format($index['fund_alloc'], 0, ',', '.')}}%</h4>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-4">
-                                                    <p class="mb-0 text-muted">Valuation :</p>
-                                                    <h4>{{number_format($index['valuasi'], 0, ',', '.')}}</h4>
-                                                </div>
-                                                <div class="col-4">
-                                                    <p class="mb-0 text-muted">P/L(%) :</p>
-                                                    <h4 class="@if($index['p/l'] < 0) text-danger @elseif($index['p/l'] > 0) text-success @endif">{{number_format($index['p/l%'], 2, ',', '.')}}%</h4>
-                                                </div>
-                                                
-                                                <div class="col-4">
-                                                    <p class="mb-0 text-muted">Value Effect :</p>
-                                                    <h4>{{number_format($index['value_effect'], 0, ',', '.')}}%</h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-body">
-                                            <h4>Riwayat Transaksi :</h4>
-                                            @if($filteredDataTran->isNotEmpty())
-                                                @foreach($filteredDataTran as $item => $key)
-                                                    @if($item == $index['aset']['id'])
-                                                        @if($key->isNotEmpty())
-                                                        @foreach($key as $k)
-                                                                <div class="card mb-3 
-                                                                    @if($k['jenis_transaksi'] == 'beli') bg-teal-lt
-                                                                    @elseif($k['jenis_transaksi'] == 'jual') bg-red-lt
-                                                                    @elseif($k['jenis_transaksi'] == 'dividen') bg-primary-lt
-                                                                    @else bg-primary-lt
-                                                                    @endif">
-                                                                    <div class="card-body">
-                                                                        <div class="row">
-                                                                            <div class="col-4">
-                                                                                <p class="mb-0">Jenis :</p>
-                                                                                <h4>{{strtoupper($k['jenis_transaksi'])}}</h4>
+                                            <div class="card-body">
+                                                <div class="tab-content">
+                                                    <div class="tab-pane active show" id="floating-{{$index['aset']['id']}}">
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <p class="mb-0 text-muted">Jml Lembar :</p>
+                                                                <h4>{{number_format($index['volume'], 0, ',', '.')}}</h4>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <p class="mb-0 text-muted">Avg. Price :</p>
+                                                                <h4>{{number_format($index['avg_price'], 0, ',', '.')}}</h4>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <p class="mb-0 text-muted">Cur. Price :</p>
+                                                                <h4>{{number_format($index['cur_price'], 0, ',', '.')}}</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <p class="mb-0 text-muted">Modal :</p>
+                                                                <h4>{{number_format($index['modal'], 0, ',', '.')}}</h4>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <p class="mb-0 text-muted">P/L :</p>
+                                                                <h4 class="@if($index['p/l'] < 0) text-danger @elseif($index['p/l'] > 0) text-success @endif">{{number_format($index['p/l'], 0, ',', '.')}}</h4>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <p class="mb-0 text-muted">Fund Alloc :</p>
+                                                                <h4>{{number_format($index['fund_alloc'], 0, ',', '.')}}%</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <p class="mb-0 text-muted">Valuation :</p>
+                                                                <h4>{{number_format($index['valuasi'], 0, ',', '.')}}</h4>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <p class="mb-0 text-muted">P/L(%) :</p>
+                                                                <h4 class="@if($index['p/l'] < 0) text-danger @elseif($index['p/l'] > 0) text-success @endif">{{number_format($index['p/l%'], 2, ',', '.')}}%</h4>
+                                                            </div>
+                                                            
+                                                            <div class="col-4">
+                                                                <p class="mb-0 text-muted">Value Effect :</p>
+                                                                <h4>{{number_format($index['value_effect'], 0, ',', '.')}}%</h4>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    <div class="tab-pane" id="realisasi-{{$index['aset']['id']}}">
+                                                        @php 
+                                                            $dataExists = isset($filteredDataTranJual[$index['aset']['id']]) && $filteredDataTranJual[$index['aset']['id']]->isNotEmpty();
+                                                    
+                                                            $totalVolume = $dataExists ? $filteredDataTranJual[$index['aset']['id']]->sum('volume') : 0;
+                                                            $totalModal = $dataExists ? $filteredDataTranJual[$index['aset']['id']]->sum('modal') : 0;
+                                                            $totalHasilJual = $dataExists ? $filteredDataTranJual[$index['aset']['id']]->sum('hasil_jual') : 0;
+                                                            $totalPL = $dataExists ? $filteredDataTranJual[$index['aset']['id']]->sum('p/l') : 0;
+                                                            $totalPLPersen = ($totalModal > 0) ? ($totalPL / $totalModal) * 100 : 0;
+                                                            $tanggalJualTerakhir = $dataExists ? $filteredDataTranJual[$index['aset']['id']]->max('tanggal') : '-';
+                                                        @endphp
+                                                    
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <p class="mb-0 text-muted">Total Lembar Terjual:</p>
+                                                                <h4>{{ number_format($totalVolume, 0, ',', '.') }}</h4>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <p class="mb-0 text-muted">Total Modal:</p>
+                                                                <h4>{{ number_format($totalModal, 0, ',', '.') }}</h4>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <p class="mb-0 text-muted">Total Hasil Penjualan:</p>
+                                                                <h4>{{ number_format($totalHasilJual, 0, ',', '.') }}</h4>
+                                                            </div>
+                                                        </div>
+                                                    
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <p class="mb-0 text-muted">Tanggal Jual Terakhir:</p>
+                                                                <h4>{{ $tanggalJualTerakhir }}</h4>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <p class="mb-0 text-muted">Total P/L:</p>
+                                                                <h4 class="@if($totalPL < 0) text-danger @elseif($totalPL > 0) text-success @endif">
+                                                                    {{ number_format($totalPL, 0, ',', '.') }}
+                                                                </h4>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <p class="mb-0 text-muted">Total P/L (%):</p>
+                                                                <h4 class="@if($totalPLPersen < 0) text-danger @elseif($totalPL > 0) text-success @endif">
+                                                                    {{ number_format($totalPLPersen, 2, ',', '.') }}%
+                                                                </h4>
+                                                            </div>
+                                                        </div>
+                                                    </div>                                                    
+                                                    <div class="tab-pane" id="riwayat-{{$index['aset']['id']}}">
+                                                        @if($filteredDataTran->isNotEmpty())
+                                                            @foreach($filteredDataTran as $item => $key)
+                                                                @if($item == $index['aset']['id'])
+                                                                    @if($key->isNotEmpty())
+                                                                        @foreach($key as $k)
+                                                                            <div class="card mb-3 
+                                                                                @if($k['jenis_transaksi'] == 'beli') bg-teal-lt
+                                                                                @elseif($k['jenis_transaksi'] == 'jual') bg-red-lt
+                                                                                @elseif($k['jenis_transaksi'] == 'dividen') bg-primary-lt
+                                                                                @else bg-primary-lt
+                                                                                @endif">
+                                                                                <div class="card-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col-4">
+                                                                                            <p class="mb-0">Jenis :</p>
+                                                                                            <h4>{{strtoupper($k['jenis_transaksi'])}}</h4>
+                                                                                        </div>
+                                                                                        <div class="col-4">
+                                                                                            <p class="mb-0">Tanggal :</p>
+                                                                                            <h4>{{\Carbon\Carbon::parse($k['tanggal'])->format('d-m-Y')}}</h4>
+                                                                                        </div>
+                                                                                        <div class="col-4">
+                                                                                            <p class="mb-0">Sekuritas :</p>
+                                                                                            <h4>{{$k['sekuritas']['nama_sekuritas'] ?? '-'}}</h4>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        <div class="col-4">
+                                                                                            <p class="mb-0">Volume :</p>
+                                                                                            <h4 class="mb-0">{{number_format($k['volume'], 0, ',', '.')}}</h4>
+                                                                                        </div>
+                                                                                        <div class="col-4">
+                                                                                            <p class="mb-0">Harga :</p>
+                                                                                            <h4 class="mb-0">{{number_format($k['harga'], 0, ',', '.')}}</h4>
+                                                                                        </div>
+                                                                                        <div class="col-4">
+                                                                                            <p class="mb-0">Total :</p>
+                                                                                            <h4 class="mb-0">{{number_format(($k['harga'] * $k['volume']), 0, ',', '.')}}</h4>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                @if($k === $key->last()) 
+                                                                                    <div class="row">
+                                                                                        <div class="col">
+                                                                                            <a href="" class="btn @if($k['jenis_transaksi'] == 'beli') btn-outline-success
+                                                                                                @elseif($k['jenis_transaksi'] == 'jual') btn-outline-danger
+                                                                                                @elseif($k['jenis_transaksi'] == 'dividen') btn-outline-primary
+                                                                                                @else btn-outline-secondary
+                                                                                                @endif w-100" data-bs-toggle="modal" data-bs-target="#modal-edit-riwayat-{{$k['id']}}" data-transaksi="{{ $k['id']}}" data-aset="{{ $index['aset']['id'] }}">
+                                                                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
+                                                                                                    Edit Terakhir    
+                                                                                            </a>
+                                                                                        </div>
+                                                                                        <div class="col">
+                                                                                            <a href="" class="btn @if($k['jenis_transaksi'] == 'beli') btn-outline-success
+                                                                                                @elseif($k['jenis_transaksi'] == 'jual') btn-outline-danger
+                                                                                                @elseif($k['jenis_transaksi'] == 'dividen') btn-outline-primary
+                                                                                                @else btn-outline-secondary
+                                                                                                @endif w-100" data-bs-toggle="modal" data-bs-target="#modal-delete-riwayat-{{$k['id']}}" data-transaksi="{{ $k['id']}}" data-aset="{{ $index['aset']['id'] }}">
+                                                                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
+                                                                                                    Delete Terakhir    
+                                                                                            </a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                @else
+                                                                                    <div class="row">
+                                                                                        <div class="col">
+                                                                                            <a href="" class="btn @if($k['jenis_transaksi'] == 'beli') btn-outline-success
+                                                                                                @elseif($k['jenis_transaksi'] == 'jual') btn-outline-danger
+                                                                                                @elseif($k['jenis_transaksi'] == 'dividen') btn-outline-primary
+                                                                                                @else btn-outline-secondary
+                                                                                                @endif w-100" data-bs-toggle="modal" data-bs-target="#modal-edit-riwayat-{{$k['id']}}" data-transaksi="{{ $k['id']}}" data-aset="{{ $index['aset']['id'] }}">
+                                                                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
+                                                                                                    Edit    
+                                                                                            </a>
+                                                                                        </div>
+                                                                                        <div class="col">
+                                                                                            <a href="" class="btn @if($k['jenis_transaksi'] == 'beli') btn-outline-success
+                                                                                                @elseif($k['jenis_transaksi'] == 'jual') btn-outline-danger
+                                                                                                @elseif($k['jenis_transaksi'] == 'dividen') btn-outline-primary
+                                                                                                @else btn-outline-secondary
+                                                                                                @endif w-100" data-bs-toggle="modal" data-bs-target="#modal-delete-riwayat-{{$k['id']}}" data-transaksi="{{ $k['id']}}" data-aset="{{ $index['aset']['id'] }}">
+                                                                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
+                                                                                                    Delete    
+                                                                                            </a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                @endif
                                                                             </div>
-                                                                            <div class="col-4">
-                                                                                <p class="mb-0">Tanggal :</p>
-                                                                                <h4>{{\Carbon\Carbon::parse($k['tanggal'])->format('d-m-Y')}}</h4>
+
+                                                                            @push('modals')
+
+                                                                            <!-- Modal Edit Riwayat -->
+                                                                            <div class="modal modal-blur fade" id="modal-edit-riwayat-{{$k['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                                                                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                                                                                    <div class="modal-content">
+                                                                                        <div class="modal-header">
+                                                                                            <h5 class="modal-title">Edit Transaksi {{$k['aset']['nama']}}</h5>
+                                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                                        </div>
+                                                                                        <form action="{{ route('portofolio.update', $k['id']) }}" method="post" autocomplete="off">
+                                                                                            @csrf
+                                                                                            <div class="modal-status bg-warning"></div>
+                                                                                            <div class="modal-body">
+                                                                                                <input type="text" id="aset_id" name="aset_id" class="form-control text-end" autocomplete="off" placeholder="0" value="{{$k['aset']['id']}}" hidden>
+                                                                                                <div class="row">
+                                                                                                    <div class="col-lg-12 mb-3">
+                                                                                                        <span class="form-control text-strong bg-warning-lt text-warning border-warning" autocomplete="off">
+                                                                                                            <strong>Perhatian!</strong> Mengedit transaksi ini akan menghapus semua transaksi setelahnya untuk saham yang sama guna menjaga konsistensi perhitungan portofolio Anda.
+                                                                                                        </span>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="row">
+                                                                                                    <div class="col-lg-3">
+                                                                                                        <div class="mb-3">
+                                                                                                            <label class="form-label required">Jenis Transaksi:</label>
+                                                                                                            <select name="jenis_transaksi" id="jenis_transaksi" class="form-select" required>
+                                                                                                                <option value="" disabled>Pilih Jenis</option>
+                                                                                                                <option value="beli" @if ($k['jenis_transaksi'] == 'beli') selected @endif>Beli</option>
+                                                                                                                <option value="jual" @if ($k['jenis_transaksi'] == 'jual') selected @endif>Jual</option>
+                                                                                                            </select>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="col-lg-9">
+                                                                                                        <div class="mb-3">
+                                                                                                            <label class="form-label required">Pilih Saham:</label>
+                                                                                                            <select name="id_saham_update" type="text" class="form-select" id="select-people" disabled required>
+                                                                                                                <option value="" disabled>Pilih Saham</option>
+                                                                                                                @foreach ($filteredAsetData as $saham)
+                                                                                                                <option value="{{$saham['id']}}" @if($k['aset_id'] == $saham['id']) selected @endif data-custom-properties="<span class='avatar avatar-xs' style='background-image: url({{ $saham['info'] }})'></span>"> {{$saham['nama']}} - {{$saham['deskripsi']}}</option>
+                                                                                                               @endforeach
+                                                                                                               
+                                                                                                            </select>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="row">
+                                                                                                    <div class="col-lg-4">
+                                                                                                        <div class="mb-3">
+                                                                                                            <label class="form-label required">Jumlah Lembar: </label>
+                                                                                                            <div class="input-group">
+                                                                                                                <input type="text" id="lembaredit-{{$k['id']}}" name="lembaredit" class="form-control text-end" autocomplete="off" placeholder="0" value="{{number_format($k['volume'], 0, ',', '.')}}" required >
+                                                                                                                <input type="text" id="lembaredit1-{{$k['id']}}" name="lembaredit1" class="form-control text-end" autocomplete="off" value="{{$k['volume']}}" >
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="col-lg-4">
+                                                                                                        <div class="mb-3">
+                                                                                                            <label class="form-label required">Tanggal: </label>
+                                                                                                            <input type="date" name="tanggal" id="tanggal" class="form-control" value="{{ $k['tanggal'] }}">
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="col-lg-4">
+                                                                                                        <div class="mb-3">
+                                                                                                            <label class="form-label required">Sekuritas: </label>
+                                                                                                            <select name="sekuritas" class="form-select" id="sekuritas" value="" required>
+                                                                                                                <option value="" disabled>Pilih Sekuritas</option>
+                                                                                                                @foreach ($sekuritasData as $data)
+                                                                                                                <option value="{{$data['id']}}" @if($k['sekuritas_id'] == $data['id']) selected @endif> {{$data['nama_sekuritas']}}</option>
+                                                                                                               @endforeach
+                                                                                                               
+                                                                                                            </select>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="row">
+                                                                                                    <div class="col-lg-6">
+                                                                                                        <div class="mb-3">
+                                                                                                            <label class="form-label required">Harga: </label>
+                                                                                                            <div class="row g-2">
+                                                                                                                <div class="col">
+                                                                                                                    <div class="input-group">
+                                                                                                                        <span class="input-group-text">
+                                                                                                                            Rp.
+                                                                                                                        </span>
+                                                                                                                        <input type="text" id="jumlahedit-{{$k['id']}}" name="jumlahedit" class="form-control text-end" autocomplete="off" required placeholder="" value="{{number_format($k['harga'], 0, ',', '.')}}">
+                                                                                                                        <input type="text" id="jumlahedit1-{{$k['id']}}" name="jumlahedit1" class="form-control text-end" autocomplete="off" value="{{$k['harga']}}" >
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="col-lg-6">
+                                                                                                        <label class="form-label">Total :</label>
+                                                                                                        <div class="input-group">
+                                                                                                            <span class="input-group-text">
+                                                                                                                Rp.
+                                                                                                            </span>
+                                                                                                            <input type="text" id="totaledit-{{$k['id']}}" name="totaledit" class="form-control text-end" autocomplete="off" readonly>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="modal-footer">
+                                                                                                <button type="button" class="me-auto btn" data-bs-dismiss="modal">Batal</button>
+                                                                                                <button type="submit" class="btn btn-warning ms-auto">
+                                                                                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                                                                                                    Simpan
+                                                                                                </button>
+                                                                                            </div>
+                                                                                        </form>	
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
-                                                                            <div class="col-4">
-                                                                                <p class="mb-0">Sekuritas :</p>
-                                                                                <h4>{{$k['sekuritas']['nama_sekuritas'] ?? '-'}}</h4>
+                                                                            <!-- End of Modal Edit Riwayat -->
+
+                                                                            <!-- Modal Delete Riwayat -->
+                                                                            <div class="modal modal-blur fade" id="modal-delete-riwayat-{{$k['id']}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                                                                <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+                                                                                    <div class="modal-content">
+                                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                                        <div class="modal-status bg-danger"></div>
+                                                                                        <div class="modal-body text-center py-4">
+                                                                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.24 3.957l-8.422 14.06a1.989 1.989 0 0 0 1.7 2.983h16.845a1.989 1.989 0 0 0 1.7 -2.983l-8.423 -14.06a1.989 1.989 0 0 0 -3.4 0z" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
+                                                                                            <h3>Anda yakin ingin menghapus transaksi ini?</h3>
+                                                                                            <div class="">Semua transaksi setelah transaksi ini untuk saham yang sama juga akan ikut dihapus untuk menjaga konsistensi data portofolio Anda.</div>
+                                                                                        </div>
+                                                                                        <div class="modal-footer">
+                                                                                            <div class="w-100">
+                                                                                                <div class="row">
+                                                                                                    <div class="col">
+                                                                                                        <a href="" class="btn w-100" data-bs-dismiss="modal">
+                                                                                                            {{ __('settings.cancel') }}
+                                                                                                        </a>
+                                                                                                    </div>
+                                                                                                    <div class="col">
+                                                                                                        <form method="post" action="{{route('portofolio.delete', $k['id'])}}">
+                                                                                                            @csrf
+                                                                                                            @method('DELETE')
+                                                                                                            <button type="submit" class="btn btn-danger w-100" data-bs-dismiss="modal">
+                                                                                                                {{ __('settings.delete') }}
+                                                                                                            </button>
+                                                                                                        </form>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
-                                                                        </div>
-                                                                        <div class="row">
-                                                                            <div class="col-4">
-                                                                                <p class="mb-0">Volume :</p>
-                                                                                <h4 class="mb-0">{{number_format($k['volume'], 0, ',', '.')}}</h4>
-                                                                            </div>
-                                                                            <div class="col-4">
-                                                                                <p class="mb-0">Harga :</p>
-                                                                                <h4 class="mb-0">{{number_format($k['harga'], 0, ',', '.')}}</h4>
-                                                                            </div>
-                                                                            <div class="col-4">
-                                                                                <p class="mb-0">Total :</p>
-                                                                                <h4 class="mb-0">{{number_format($k['harga'], 0, ',', '.')}}</h4>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                                            <!-- End of Modal Delete Riwayat -->
+
+                                                                            @endpush
+                                                                            
+                                                                        @endforeach
+                                                                    @endif
+                                                                @endif
                                                             @endforeach
                                                         @endif
-                                                    @endif
-                                                @endforeach
-                                            @endif
+                                                    </div>
+                                                    <div class="tab-pane" id="harga-{{$index['aset']['id']}}">
+                                                        <div class="row text-end">
+                                                            <div class="d-flex align-items-baseline">
+                                                                @php
+                                                                    $previousHarga = null;
+                                                                @endphp
+                                                                @foreach($sortHargaData as $hargaData)
+                                                                @foreach($hargaData as $harga)
+                                                                @if($harga['aset']['id'] == $index['aset']['id'])
+                                                                @php
+                                                                    // Hitung perubahan harga dalam persen
+                                                                    $persentasePerubahan = $previousHarga !== null 
+                                                                        ? number_format((($harga['harga'] - $previousHarga) / $previousHarga) * 100, 2)
+                                                                        : null; // Tidak ada perubahan untuk data pertama
+                                                                    
+                                                                    // Simpan harga saat ini untuk iterasi berikutnya
+                                                                    $previousHarga = $harga['harga'];
+                                                                @endphp
+                                                                @if($loop->last)        
+                                                                <div class="h1 me-2 ms-auto">{{number_format($previousHarga, 0, ',', '.')}}</div>
+                                                                <span class="@if($persentasePerubahan > 0) text-green @else text-red @endif d-inline-flex align-items-center lh-1">
+                                                                    @if($persentasePerubahan > 0)
+                                                                    {{$persentasePerubahan}}%
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon ms-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M3 17l6 -6l4 4l8 -8"></path><path d="M14 7l7 0l0 7"></path></svg>
+                                                                    @elseif($persentasePerubahan < 0) 
+                                                                    {{$persentasePerubahan}}%
+                                                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon ms-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7l6 6l4 -4l8 8" /><path d="M21 10l0 7l-7 0" /></svg>
+                                                                    @else
+                                                                    {{$persentasePerubahan}}
+                                                                    @endif
+                                                                </span>
+                                                                @endif
+                                                                @endif
+                                                                @endforeach
+                                                                @endforeach
+                                                            </div>
+                                                        </div>
+                                                        <div id="chart-harga-{{$index['aset']['id']}}" class="chart-lg mb-2 trigger-modal" style="height: 130px;"></div>
+                                                        <hr>
+                                                            <h4>Riwayat Perubahan Harga :</h4>
+                                                            <div class="divide-y">
+                                                                @foreach($sortHargaData as $hargaData)
+                                                                @foreach($hargaData as $harga)
+                                                                @if($harga['aset']['id'] == $index['aset']['id'])
+                                                                <div class="m-0">
+                                                                    <div class="row">
+                                                                        <div class="col-auto">{{$loop->index + 1}}.</div>
+                                                                        <div class="col fw-bold">{{number_format($harga['harga'], 0, ',', '.')}}</div>
+                                                                        <div class="col-auto text-muted align-self-center">{{ \Carbon\Carbon::parse($harga['created_at'])->locale(session('locale', config('app.locale')))->timezone('Asia/Makassar')->translatedFormat('d F Y / H:i') }}</div>
+                                                                    </div>
+                                                                </div>
+                                                                @endif
+                                                                @endforeach
+                                                                @endforeach
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <a href="" type="submit" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-portofolio" data-jenis="beli" data-aset="{{ $index['aset']['id'] }}">
-                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-arrow-big-up"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.586 3l-6.586 6.586a2 2 0 0 0 -.434 2.18l.068 .145a2 2 0 0 0 1.78 1.089h2.586v7a2 2 0 0 0 2 2h4l.15 -.005a2 2 0 0 0 1.85 -1.995l-.001 -7h2.587a2 2 0 0 0 1.414 -3.414l-6.586 -6.586a2 2 0 0 0 -2.828 0z" /></svg>
-                                                Beli
-                                            </a>
-                                            <a href="" type="submit" class="btn btn-danger ms-auto" data-bs-toggle="modal" data-bs-target="#modal-portofolio" data-jenis="jual" data-aset="{{ $index['aset']['id'] }}">
-                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-arrow-big-down"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 2l-.15 .005a2 2 0 0 0 -1.85 1.995v6.999l-2.586 .001a2 2 0 0 0 -1.414 3.414l6.586 6.586a2 2 0 0 0 2.828 0l6.586 -6.586a2 2 0 0 0 .434 -2.18l-.068 -.145a2 2 0 0 0 -1.78 -1.089l-2.586 -.001v-6.999a2 2 0 0 0 -2 -2h-4z" /></svg>
-                                                Jual
-                                            </a>
+                                            <div class="col">
+                                                    <a href="" type="submit" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#modal-portofolio" data-jenis="beli" data-aset="{{ $index['aset']['id'] }}">
+                                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-arrow-big-up"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.586 3l-6.586 6.586a2 2 0 0 0 -.434 2.18l.068 .145a2 2 0 0 0 1.78 1.089h2.586v7a2 2 0 0 0 2 2h4l.15 -.005a2 2 0 0 0 1.85 -1.995l-.001 -7h2.587a2 2 0 0 0 1.414 -3.414l-6.586 -6.586a2 2 0 0 0 -2.828 0z" /></svg>
+                                                            Beli {{$index['aset']['nama']}}
+                                                    </a>
+                                            </div>
+                                            <div class="col">
+                                                    <a href="" type="submit" class="btn btn-danger w-100 ms-auto" data-bs-toggle="modal" data-bs-target="#modal-portofolio" data-jenis="jual" data-aset="{{ $index['aset']['id'] }}">
+                                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-arrow-big-down"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 2l-.15 .005a2 2 0 0 0 -1.85 1.995v6.999l-2.586 .001a2 2 0 0 0 -1.414 3.414l6.586 6.586a2 2 0 0 0 2.828 0l6.586 -6.586a2 2 0 0 0 .434 -2.18l-.068 -.145a2 2 0 0 0 -1.78 -1.089l-2.586 -.001v-6.999a2 2 0 0 0 -2 -2h-4z" /></svg>
+                                                            Jual {{$index['aset']['nama']}}
+                                                    </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <!-- End of Modal Info -->
+
+                            
+
                            @endif
                            @endforeach
                            <tr class="fw-bold">
                                 <td colspan="5" class="text-center">TOTAL</td>
+                                <td class="text-end">{{ number_format($sortedData->sum('modal'), 0, ',', '.') }}</td>
                                 <td class="text-end">{{ number_format($sortedData->sum('valuasi'), 0, ',', '.') }}</td>
                                 <td class="text-end @if($sortedData->sum('p/l') < 0) text-danger @elseif($sortedData->sum('p/l') > 0) text-success @endif">{{ $sortedData->sum('p/l') == 0 ? '-' : number_format($sortedData->sum('p/l'), 0, ',', '.') }}</td>
                                 <td class="text-end @if(($sortedData->sum('p/l') / $sortedData->sum('modal')) < 0) text-danger @elseif(($sortedData->sum('p/l') / $sortedData->sum('modal')) > 0) text-success @endif">{{ number_format(($sortedData->sum('p/l') / $sortedData->sum('modal')) * 100, 2, ',', '.') }}%</td>
@@ -472,20 +807,19 @@
                         </div>
                         <div class="col-lg-4">
                             <div class="mb-3">
-                                <label class="form-label required">Tanggal: </label>
-                                <input type="date" name="tanggal" id="tanggal" class="form-control" min="{{ now()->format('Y-m-d') }}"  value="{{ now()->format('Y-m-d') }}">
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="mb-3">
                                 <label class="form-label required">Sekuritas: </label>
                                 <select name="sekuritas" class="form-select" id="sekuritas" value="" required>
                                     <option value="" selected disabled>Pilih Sekuritas</option>
                                     @foreach ($sekuritasData as $data)
                                     <option value="{{$data['id']}}"> {{$data['nama_sekuritas']}}</option>
-                                   @endforeach
-                                   
+                                    @endforeach
                                 </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label class="form-label required">Tanggal: </label>
+                                <input type="date" name="tanggal" id="tanggal" class="form-control" min="{{ now()->format('Y-m-d') }}"  value="{{ now()->format('Y-m-d') }}">
                             </div>
                         </div>
                     </div>
@@ -540,7 +874,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Kelola IHSG {{ \Carbon\Carbon::create($currentMonth)->locale('id')->translatedFormat('F') }} {{$selectedYear}}</h5>
+                <h5 class="modal-title">Kelola IHSG {{ \Carbon\Carbon::create(null, $currentMonth, 1)->locale('id')->translatedFormat('F') }} {{$selectedYear}}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="{{ route('historis.store') }}" method="post" autocomplete="off">
@@ -557,7 +891,7 @@
                         <div class="col-lg-6">
                             <div class="form-floating mb-3">
                                 <input type="text" id="ihsgendlabel" name="ihsgendlabel" value="{{ $filteredHistorisData && !$filteredHistorisData->isEmpty() && !$filteredHistorisData->where('bulan', $currentMonth)->isEmpty() ? number_format($filteredHistorisData->where('bulan', $currentMonth)->first()['ihsg_end'], 0, ',', '.') : '0' }}" class="form-control text-strong text-success border-success mt-2" autocomplete="off" readonly>
-                                <label for="ihsgendlabel" class="form-label text-black">IHSG End {{ \Carbon\Carbon::create($currentMonth)->locale('id')->translatedFormat('F') }} :</label>
+                                <label for="ihsgendlabel" class="form-label text-black">IHSG End {{ \Carbon\Carbon::create(null, $currentMonth, 1)->locale('id')->translatedFormat('F') }}                                    :</label>
                             </div>
                         </div>
                     </div>
@@ -621,87 +955,108 @@
 </div>
 
 <div class="modal modal-blur fade" id="modal-yield" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Kelola IHSG {{ \Carbon\Carbon::create($currentMonth)->locale('id')->translatedFormat('F') }} {{$selectedYear}}</h5>
+                <h5 class="modal-title">Info Yield</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('historis.store') }}" method="post" autocomplete="off">
-                @csrf
-                <div class="modal-status bg-success"></div>
-                <div class="modal-body">
-                    <div class="row mb-2">
-                        <div class="col-lg-6">
-                            <div class="form-floating mb-3">
-                                <input type="text" id="ihsgstartlabel" name="ihsgstartlabel" value="{{ $filteredHistorisData && !$filteredHistorisData->isEmpty() ? number_format($filteredHistorisData->first()['ihsg_start'], 0, ',', '.') : '0'  }}" class="form-control text-strong text-warning border-warning mt-2" autocomplete="off" readonly>
-                                <label for="ihsgstartlabel" class="form-label text-black">IHSG Start :</label>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-floating mb-3">
-                                <input type="text" id="ihsgendlabel" name="ihsgendlabel" value="{{ $filteredHistorisData && !$filteredHistorisData->isEmpty() && !$filteredHistorisData->where('bulan', $currentMonth)->isEmpty() ? number_format($filteredHistorisData->where('bulan', $currentMonth)->first()['ihsg_end'], 0, ',', '.') : '0' }}" class="form-control text-strong text-success border-success mt-2" autocomplete="off" readonly>
-                                <label for="ihsgendlabel" class="form-label text-black">IHSG End {{ \Carbon\Carbon::create($currentMonth)->locale('id')->translatedFormat('F') }} :</label>
-                            </div>
-                        </div>
+            <div class="modal-status bg-primary"></div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6">
+                        <p class="mb-0 text-muted">Total Profit Realisasi :</p>
+                        <h4>
+                            @if($filteredDataTranJual->isNotEmpty())
+                                {{ number_format(($filteredDataTranJual->flatten(1)->where('p/l', '>', 0)->sum('p/l')), 0, ',', '.') }}
+                            @else
+                                0,00
+                            @endif
+                        </h4>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-3">
-                            <div class="mb-3">
-                                <label class="form-label required">Bulan: </label>
-                                <select name="bulan" id="bulan" class="form-select" required>
-                                    <option value="" disabled selected>Pilih Bulan</option>
-                                    @foreach (range(1, 12) as $month)
-                                        <option value="{{ $month }}" {{ $month == $currentMonth ? 'selected' : '' }}>
-                                            {{ \Carbon\Carbon::createFromFormat('!m', $month)->locale('id')->translatedFormat('F') }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <input type="number" id="tahun" name="tahun" value="{{$selectedYear}}" hidden>
-                        
-                        
-                        <div class="col-lg-3">
-                            <div class="mb-3">
-                                <label class="form-label">IHSG Start: </label>
-                                <div class="input-group">
-                                    <input type="text" id="ihsgstart" name="ihsgstart" class="form-control text-end" autocomplete="off"  placeholder="{{ $filteredHistorisData && !$filteredHistorisData->isEmpty() && !$filteredHistorisData->where('bulan', $currentMonth)->isEmpty() ? number_format($filteredHistorisData->where('bulan', $currentMonth)->first()['ihsg_start'], 0, ',', '.') : '0' }}" required>
-                                    <input type="text" id="ihsgstart1" name="ihsgstart1" class="form-control text-end" autocomplete="off" hidden>
-                                </div>
-                                
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="mb-3">
-                                <label class="form-label">IHSG End: </label>
-                                <div class="input-group">
-                                    <input type="text" id="ihsgend" name="ihsgend" class="form-control text-end" autocomplete="off" placeholder="{{ $filteredHistorisData && !$filteredHistorisData->isEmpty() && !$filteredHistorisData->where('bulan', $currentMonth)->isEmpty() ? number_format($filteredHistorisData->where('bulan', $currentMonth)->first()['ihsg_end'], 0, ',', '.') : '0' }}" required>
-                                    <input type="text" id="ihsgend1" name="ihsgend1" class="form-control text-end" autocomplete="off" hidden>
-                                </div>
-                                
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="mb-3">
-                                <label class="form-label">&nbsp </label>
-                                <a href="{{ route('portofolio.update.harga.terkini', ['id_aset' => '0', 'nama_aset' => 'COMPOSITE', 'tipe' => 'ihsg']) }}"   class="btn btn-secondary w-100">
-                                    Harga Terkini
-                                </a>
-                            </div>
-                        </div>
+                    <div class="col-6">
+                        <p class="mb-0 text-muted">Yield Realisasi :</p>
+                        <h4>
+                            @if($filteredDataTranJual->isNotEmpty())
+                                {{ number_format(($filteredDataTranJual->flatten(1)->sum('p/l') / ($filteredDataTranJual->flatten(1)->sum('modal'))) * 100, 2, ',', '.') }}%
+                            @else
+                                0,00
+                            @endif
+                        </h4>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="me-auto btn" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-success ms-auto">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                        Simpan
-                    </button>
+                <div class="row">
+                    <div class="col-6">
+                        <p class="mb-0 text-muted">Total Loss Realisasi :</p>
+                        <h4>
+                            @if($filteredDataTranJual->isNotEmpty())
+                                {{ number_format(($filteredDataTranJual->flatten(1)->where('p/l', '<', 0)->sum('p/l')), 0, ',', '.') }}
+                            @else
+                                0,00%
+                            @endif
+                        </h4>
+                    </div>
+                    <div class="col-6">
+                        <p class="mb-0 text-muted">Yield Floating  :</p>
+                        <h4>
+                            @if(isset($sortedHistorisData['yield']))
+                                {{ number_format(($sortedHistorisData['yield']), 2, ',', '.') }}%
+                            @else
+                                0,00%
+                            @endif
+                        </h4>
+                    </div>
                 </div>
-            </form>	
+                <div class="row">
+                    <div class="col-6">
+                        <p class="mb-0 text-muted">Net Realisasi :</p>
+                        <h4>
+                            @if($filteredDataTranJual->isNotEmpty())
+                                    {{ number_format(($filteredDataTranJual->flatten(1)->sum('p/l')), 0, ',', '.') }}
+                            @else
+                                0,00
+                            @endif
+                        </h4>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+</div>
+
+<!-- Modal Tutup Buku -->
+<div class="modal modal-blur fade" id="modal-tutup-buku" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			<div class="modal-status bg-danger"></div>
+			<div class="modal-body text-center py-4">
+				<svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.24 3.957l-8.422 14.06a1.989 1.989 0 0 0 1.7 2.983h16.845a1.989 1.989 0 0 0 1.7 -2.983l-8.423 -14.06a1.989 1.989 0 0 0 -3.4 0z" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
+				<h3>Konfirmasi Tutup Buku</h3>
+				<div class="">Apakah Anda yakin ingin menutup buku? Proses ini tidak dapat dibatalkan.</div>
+			</div>
+			<div class="modal-footer">
+				<div class="w-100">
+					<div class="row">
+						<div class="col">
+							<a href="" class="btn w-100" data-bs-dismiss="modal">
+								{{ __('settings.cancel') }}
+							</a>
+						</div>
+						<div class="col">
+							<form method="post" action="{{route('portofolio.tutupbuku', $selectedYear)}}">
+								@csrf
+                                <input type="text" id="tahun" name="tahun" class="form-control text-end" autocomplete="off" value="{{$selectedYear}}" hidden>
+								<button type="submit" class="btn btn-danger w-100" data-bs-dismiss="modal">
+									Yakin
+								</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <script>
@@ -712,10 +1067,11 @@
         const selectedOption = selectPeople.selectedOptions[0];
         const selectedSahamId = selectedOption.value;
         const selectedSahamName = selectedOption.text;
+        const kodeSaham = selectedSahamName.split(" - ")[0];
 
         if (selectedSahamId) {
             // Correctly replace placeholders with actual values
-            const updatedHref = "{{ route('portofolio.update.harga.terkini') }}?id_aset=" + selectedSahamId + "&nama_aset=" + encodeURIComponent(selectedSahamName) + "&tipe=portofolio";
+            const updatedHref = "{{ route('portofolio.update.harga.terkini') }}?id_aset=" + selectedSahamId + "&nama_aset=" + kodeSaham + "&tipe=portofolio";
 
             // Tampilkan di console untuk debugging
             console.log("Selected ID Saham:", selectedSahamId);
@@ -731,71 +1087,79 @@
 
 <script>
     function formatNumberPorto(num) {
-        const parts = num.toString().split(".");
+        if (!num) return "";
+        const parts = num.toString().split(",");
         const integerPart = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         const decimalPart = parts.length > 1 ? "," + parts[1] : "";
         return integerPart + decimalPart;
     }
-
-    function updateFormattedNumberPorto(elementId, inputId, dataAttribute) {
+    
+    function updateFormattedNumberPorto(elementId, inputId) {
         var inputElement = document.getElementById(elementId);
-        var rawValue = inputElement.value.replace(/\D/g, ''); // Remove non-numeric characters
-        var formattedValue = formatNumberPorto(rawValue); // Format the number
-        inputElement.value = formattedValue; // Update the input field with formatted value
-        inputElement.setAttribute('data-value', rawValue); // Store unformatted value in a data attribute
-        setUnformattedValueToInputPorto(inputId, dataAttribute); // Set the unformatted value to the input field
-    }
-
-    function setUnformattedValueToInputPorto(inputId, dataAttribute) {
-        var unformattedValuePorto = getUnformattedValuePorto(dataAttribute); // Retrieve the unformatted value
-        var inputElement = document.getElementById(inputId);
-        inputElement.value = unformattedValuePorto; // Set the unformatted value to the input field
-    }
-
-    function getUnformattedValuePorto(dataAttribute) {
-        var inputElement = document.getElementById(dataAttribute);
-        return inputElement.getAttribute('data-value') || ''; // Retrieve unformatted value from data attribute
-    }
-
-    // Attach event listener to the input fields to trigger formatting as the user types
-    document.getElementById('ihsgend').addEventListener('input', function() {
-        updateFormattedNumberPorto('ihsgend', 'ihsgend1', 'ihsgend');
-    });
-
-    document.getElementById('jumlahlembar').addEventListener('input', function() {
-        updateFormattedNumberPorto('jumlahlembar', 'jumlahlembar1', 'jumlahlembar');
-    });
-
-    document.getElementById('ihsgstart').addEventListener('input', function() {
-        updateFormattedNumberPorto('ihsgstart', 'ihsgstart1', 'ihsgstart');
-    });
-
-
-    document.addEventListener('DOMContentLoaded', function() {
-        // Menambahkan event listener untuk setiap input yang sesuai
-        // Menambahkan event listener input untuk setiap input harga dengan ID dinamis
-        var hargaInputs = document.querySelectorAll('[id^="updateHarga-"]');  // Pilih semua elemen input yang ID-nya diawali dengan "updateHarga-"
+        if (!inputElement) return;
         
-        hargaInputs.forEach(function(inputElement) {
-            inputElement.addEventListener('input', function() {
-                var elementId = inputElement.id;
-                var inputId = 'updateHarga1-' + inputElement.id.split('-')[1];  // Menyesuaikan ID dinamis untuk input lainnya
-                var dataAttribute = elementId.split('-')[1];  // Ambil ID aset dari elemen ID
-                updateFormattedNumberPorto(elementId, inputId, elementId);
+        var rawValue = inputElement.value.replace(/[^0-9,]/g, ''); // Hanya angka dan koma yang boleh
+    
+        // Jika ada lebih dari satu koma, hapus koma yang kelebihan
+        let commaCount = (rawValue.match(/,/g) || []).length;
+        if (commaCount > 1) {
+            rawValue = rawValue.replace(/,(?=.*,)/g, '');
+        }
+    
+        var formattedValue = formatNumberPorto(rawValue);
+        inputElement.value = formattedValue;
+        
+        // Simpan versi unformatted di data-value
+        var unformatted = rawValue.replace(/\./g, '').replace(',', '.');
+        inputElement.setAttribute('data-value', unformatted);
+    
+        // Set ke input hidden
+        var targetInput = document.getElementById(inputId);
+        if (targetInput) {
+            targetInput.value = unformatted;
+        }
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        // Input spesifik
+        const fixedInputs = [
+            { field: 'ihsgend', hidden: 'ihsgend1' },
+            { field: 'jumlahlembar', hidden: 'jumlahlembar1' },
+            { field: 'ihsgstart', hidden: 'ihsgstart1' },
+            { field: 'jumlah', hidden: 'jumlah1' },
+        ];
+    
+        fixedInputs.forEach(function(item) {
+            const el = document.getElementById(item.field);
+            if (el) {
+                el.addEventListener('input', function() {
+                    updateFormattedNumberPorto(item.field, item.hidden);
+                });
+            }
+        });
+    
+        // Input dinamis
+        const dynamicSelectors = [
+            { selector: '[id^="jumlahedit-"]', prefix: 'jumlahedit1-' },
+            { selector: '[id^="lembaredit-"]', prefix: 'lembaredit1-' },
+            { selector: '[id^="updateHarga-"]', prefix: 'updateHarga1-' }
+        ];
+    
+        dynamicSelectors.forEach(function(group) {
+            var inputs = document.querySelectorAll(group.selector);
+            inputs.forEach(function(inputElement) {
+                inputElement.addEventListener('input', function() {
+                    var idSuffix = inputElement.id.split('-')[1];
+                    var targetId = group.prefix + idSuffix;
+                    updateFormattedNumberPorto(inputElement.id, targetId);
+                });
             });
         });
     });
-
-</script>
+    </script>
+    
                      
 <script src="{{url('dist/libs/tom-select/dist/js/tom-select.base.min.js?1684106062')}}" defer></script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        
-    });
-
-</script>
 
   
 <script>
@@ -940,26 +1304,75 @@
         const jumlahHidden = document.getElementById('jumlah1'); // Nilai tanpa format
         const totalInput = document.getElementById('total'); // Input total yang akan diisi
 
+
         // Fungsi untuk menghitung total
         function calculateTotal() {
-            const jumlahLembar = parseFloat(jumlahLembarHidden.value) || 0; // Ambil nilai dari input hidden
-            const jumlah = parseFloat(jumlahHidden.value) || 0; // Ambil nilai dari input hidden
+            const jumlahLembar = parseFloat(jumlahLembarHidden.value.replace(',', '.')) || 0; // Ganti koma dengan titik
+            const jumlah = parseFloat(jumlahHidden.value.replace(',', '.')) || 0; // Ganti koma dengan titik
             const total = jumlahLembar * jumlah;
 
             // Update nilai total
-            totalInput.value = total.toLocaleString('id-ID'); // Format total ke ribuan
+            // totalInput.value = total.toLocaleString('id-ID', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+             totalInput.value = total.toLocaleString('id-ID', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
         }
 
         // Tambahkan event listener untuk mendeteksi perubahan nilai
         jumlahLembarInput.addEventListener('input', function () {
-            jumlahLembarHidden.value = jumlahLembarInput.value.replace(/\./g, ''); // Sinkronisasi nilai ke hidden input
+            jumlahLembarHidden.value = jumlahLembarInput.value
+                .replace(/\./g, '') // Hapus titik ribuan
+                .replace(',', '.'); // Ganti koma menjadi titik untuk parsing angka
             calculateTotal();
         });
 
         jumlahInput.addEventListener('input', function () {
-            jumlahHidden.value = jumlahInput.value.replace(/\./g, ''); // Sinkronisasi nilai ke hidden input
+            jumlahHidden.value = jumlahInput.value
+                .replace(/\./g, '') // Hapus titik ribuan
+                .replace(',', '.'); // Ganti koma menjadi titik untuk parsing angka
             calculateTotal();
         });
+
+
+        const editModals = document.querySelectorAll('[id^="modal-edit-riwayat-"]');
+
+        editModals.forEach(function(modal) {
+            modal.addEventListener('shown.bs.modal', function () {
+                const modalId = modal.id.split('modal-edit-riwayat-')[1];
+
+                const lembarEditInput = document.getElementById('lembaredit-' + modalId);
+                const jumlaheditInput = document.getElementById('jumlahedit-' + modalId);
+                const lembarEditHidden = document.getElementById('lembaredit1-' + modalId);
+                const jumlaheditHidden = document.getElementById('jumlahedit1-' + modalId);
+                const totalEditInput = document.getElementById('totaledit-' + modalId);
+
+                function calculateTotalEdit() {
+                    const jumlahLembar = parseFloat(lembarEditHidden.value) || 0;
+                    const jumlah = parseFloat(jumlaheditHidden.value) || 0;
+                    const total = jumlahLembar * jumlah;
+                    totalEditInput.value = total.toLocaleString('id-ID');
+                }
+
+                // Format dan hitung langsung saat modal muncul
+                lembarEditHidden.value = lembarEditInput.value.replace(/\./g, '');
+                jumlaheditHidden.value = jumlaheditInput.value.replace(/\./g, '');
+                calculateTotalEdit();
+
+                // Event input
+                lembarEditInput.addEventListener('input', function () {
+                    lembarEditHidden.value = lembarEditInput.value.replace(/\./g, '');
+                    calculateTotalEdit();
+                });
+
+                jumlaheditInput.addEventListener('input', function () {
+                    jumlaheditHidden.value = jumlaheditInput.value.replace(/\./g, '');
+                    calculateTotalEdit();
+                });
+            });
+        });
+
+        
     });
 </script>
 
@@ -1040,4 +1453,248 @@
 		});
 	});
 </script>
+<script>
+    var hargaData = {!! json_encode($sortHargaData) !!};
+    console.log(hargaData);
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const modals = document.querySelectorAll('.modal');
+
+        modals.forEach((modal) => {
+            modal.addEventListener('shown.bs.modal', function (event) {
+                // Cari elemen chart di dalam modal yang sedang terbuka
+                const chartElement = modal.querySelector('.trigger-modal');
+
+                if (chartElement) {
+                    const asetId = chartElement.getAttribute('id').replace('chart-harga-', '');
+                    console.log('Rendering chart for Aset ID:', asetId);
+
+                    // Fungsi untuk menampilkan chart
+                    renderChart(asetId, chartElement);
+                }
+            });
+        });
+
+        function renderChart(asetId, element) {
+            // Cek apakah asetId ada di hargaData
+            if (hargaData.hasOwnProperty(asetId)) {
+                // Ambil data harga untuk aset tersebut
+                var dataAset = hargaData[asetId];
+
+                // Ambil tanggal dan harga dari setiap objek
+                var dates = dataAset.map(item => item.created_at);
+                var balances = dataAset.map(item => item.harga);
+
+                console.log('Dates:', dates);
+                console.log('Balances:', balances);
+
+                // Render chart menggunakan ApexCharts
+                if (window.ApexCharts) {
+                    new ApexCharts(element, {
+                        chart: {
+                            type: 'line',
+                            fontFamily: 'inherit',
+                            height: 240,
+                            parentHeightOffset: 0,
+                            toolbar: {
+                                show: false
+                            },
+                            animations: {
+                                enabled: true
+                            }
+                        },
+                        plotOptions: {
+                            bar: {
+                                columnWidth: '50%'
+                            }
+                        },
+                        dataLabels: {
+                            enabled: false
+                        },
+                        fill: {
+                            opacity: 1,
+                            type: 'solid'
+                        },
+                        stroke: {
+                            width: 2,
+                            curve: 'straight',
+                            lineCap: 'round'
+                        },
+                        series: [{
+                            name: 'Harga',
+                            data: balances
+                        }],
+                        tooltip: {
+                            theme: 'dark',
+                            y: {
+                                    formatter: function(val) {
+                                        return formatNumber(val);
+                                    },
+                                },
+                        },
+                        grid: {
+                            padding: {
+                                top: -20,
+                                right: 0,
+                                left: -4,
+                                bottom: -4
+                            },
+                            strokeDashArray: 4,
+                        },
+                        xaxis: {
+                            labels: {
+                                padding: 0,
+                            },
+                            tooltip: {
+                                enabled: false
+                            },
+                            axisBorder: {
+                                show: false,
+                            },
+                            type: 'datetime',
+                            categories: dates
+                        },
+                        yaxis: {
+                            labels: {
+                                padding: 4,
+                                
+                            },
+                        },
+                        labels: dates,
+                        colors: [tabler.getColor("primary")],
+                        legend: {
+                            show: false,
+                        },
+                    }).render();
+                }
+            } else {
+                console.error('Data untuk asetId', asetId, 'tidak ditemukan.');
+            }
+        }
+    });
+
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var modal = document.querySelectorAll('[id^="modal-price-"]');
+        var input = document.querySelectorAll('[id^="updateHarga-"]');
+            modal.addEventListener('shown.bs.modal', function () {
+                var modalId = modal.id.split('modal-price-')[1];
+                var inputId = input.id.split('updateHarga-')[1];
+                var input = document.getElementById('updateHarga-' + modalId);
+                if (input) {
+                    // Berikan sedikit delay agar browser siap memproses
+                    setTimeout(function() {
+                        input.select(); // Blok semua teks dalam input
+                    }, 100);
+                }
+            });
+    });
+
+    document.getElementById('printModalToPdf').addEventListener('click', function () {
+
+            const userName = @json($user['name']);
+            const userEmail = @json($user['email']);
+            const currentDate = @json($date); 
+
+            const update = document.getElementById('update').textContent.trim();
+
+            const Data = [
+                ': ' + update,
+            ];
+            
+            const modalTableBody = document.getElementById('modalTableBody');
+            const tableRows = Array.from(modalTableBody.querySelectorAll('tr'));
+            
+            const pdfTableBody = [
+                [{ text: 'No', style: 'tableHeader' }, 
+                { text: 'Emiten', style: 'tableHeader' }, 
+                { text: 'Dividen', style: 'tableHeader' }, 
+                { text: 'Cum Date', style: 'tableHeader' }, 
+                { text: 'Ex Date', style: 'tableHeader' }, 
+                { text: 'Payment Date', style: 'tableHeader' }, 
+                { text: 'Recording Date', style: 'tableHeader' },]
+            ];
+            
+            tableRows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                pdfTableBody.push([
+                    { text: cells[0].textContent, alignment: 'center' }, 
+                    { text: cells[1].textContent, alignment: 'left' }, 
+                    { text: cells[2].textContent, alignment: 'right' }, 
+                    { text: cells[3].textContent, alignment: 'center' }, 
+                    { text: cells[4].textContent, alignment: 'center' }, 
+                    { text: cells[5].textContent, alignment: 'center' }, 
+                    { text: cells[6].textContent, alignment: 'center' }, 
+                ]);
+            });
+            
+            const docDefinition = {
+                content: [
+                    {
+                        alignment: 'justify',
+                        columns: [
+                            {
+                                text: [`${userName}\n`, { text: userEmail, bold: false, color: 'gray' }],
+                                bold: true
+                            },
+                            {
+                                text: [`${currentDate}\nSmart Finance`],
+                                style: ['alignRight'],
+                                color: 'gray',
+                            }
+                        ]
+                    },
+                    {
+                        text: '\Dividen\n\n',
+                        style: 'header',
+                        alignment: 'center'
+                    },
+                    {
+                        text: 'Terakhir Diperbarui ' + Data + ' UTC+8\n',
+                    },
+                    {
+                        style: 'tableExample',
+                        table: {
+                            headerRows: 1,
+                            widths: [50, '*', '*', '*', '*', '*', '*'], 
+                            body: pdfTableBody 
+                        },
+                        alignment: 'center',
+                        layout: {
+				fillColor: function (rowIndex, node, columnIndex) {
+					return (rowIndex % 2 === 0) ? '#CEEFFD' : null;
+				}
+			}
+                    },
+                ],
+                styles: {
+                    header: {
+                        fontSize: 18,
+                        bold: true,
+                        alignment: 'justify',
+                    },
+                    alignRight: {
+                        alignment: 'right'
+                    },
+                    tableExample: {
+                        margin: [0, 5, 0, 15]
+                    },
+                    tableHeader: {
+                        bold: true,
+                        fontSize: 12,
+                        color: 'black'
+                    }
+                },
+                defaultStyle: {
+                    columnGap: 20
+                },
+                pageOrientation: 'landscape'  
+            };
+            pdfMake.createPdf(docDefinition).open();
+        });
+</script>
+
 @endsection

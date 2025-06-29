@@ -24,9 +24,22 @@ Route::middleware(['throttle:100,1'])->group(function() {
     {
         Route::get('/register', [AuthController::class, 'registerPage'])->name('register.page');
         Route::post('/register/auth', [AuthController::class, 'register'])->name('register');
+        Route::get('/verifikasi-akun', [AuthController::class, 'verificationPage'])->name('verification.page');
+        Route::get('/email-verification', [AuthController::class, 'verifyEmail'])->name('email.verification');
+        Route::post('/kirim-ulang-verifikasi', [AuthController::class, 'resendVerification'])->name('resend.verification');
+        Route::get('/email-confirmation', [AuthController::class, 'verifyEmailPassword'])->name('email.confirmation');
         Route::get('/login', [AuthController::class, 'loginPage'])->name('login.page');
         Route::post('/login/auth', [AuthController::class, 'login'])->name('login');
+
         Route::get('/lupa-password', [AuthController::class, 'passwordPage'])->name('password.page');
+
+        Route::get('/konfirmasi-email', [AuthController::class, 'confirmationPage'])->name('email.confirmation.page');
+
+        Route::get('/reset-password/{token}', [AuthController::class, 'gantiPasswordForm'])->name('reset.password.page');
+
+        Route::post('/password-confirmation', [AuthController::class, 'verifyPassword'])->name('password.confirmation');
+        
+        Route::post('/kirim-ulang-konfirmasi', [AuthController::class, 'resendConfirmationPassword'])->name('resend.confirmation.password');
         Route::post('/lupa-password/store', [AuthController::class, 'lupaPassword'])->name('password');
         Route::post('/login/admin/auth', [AuthController::class, 'loginAdmin'])->name('login.admin');
         Route::get('/login/admin', [AuthController::class, 'loginAdminPage'])->name('login.admin.page');
@@ -115,6 +128,11 @@ Route::middleware(['throttle:100,1'])->group(function() {
         Route::get('/portofolio', [PortofolioController::class, 'portofolio'])->name('portofolio');
         Route::post('/portofolio-filter',[PortofolioController::class,'filterPortofolio'])->name('portofolio.filter');
         Route::post('/portofolio/store', [PortofolioController::class, 'store'])->name('portofolio.store');
+
+        Route::post('/portofolio/update/{id}', [PortofolioController::class, 'update'])->name('portofolio.update');
+        Route::delete('/portofolio/delete/{id}', [PortofolioController::class, 'destroy'])->name('portofolio.delete');
+        Route::post('/portofolio/tutupbuku/{id}', [PortofolioController::class, 'tutupBuku'])->name('portofolio.tutupbuku');
+
         Route::get('/portofolio/update-harga/terkini', [PortofolioController::class, 'updateHargaReal'])->name('portofolio.update.harga.terkini');
         Route::post('/portofolio/update-harga', [PortofolioController::class, 'updateHarga'])->name('portofolio.update.harga');
         Route::post('/portofolio/jual', [PortofolioController::class, 'storeJual'])->name('portofolio.store.jual');

@@ -62,7 +62,7 @@
 				"closeButton" : true,
 				"progressBar" : true,
 			}
-			toastr.error("{{ Session::get('error') }}",);
+			toastr.error("{{ Session::get('error') }}");
 		@endif
     </script>
     <script src="{{ ('js/tabler.min.js?1684106062') }}" defer></script>

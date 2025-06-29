@@ -10,12 +10,14 @@ use Illuminate\Pagination\Paginator;
 use Carbon\Carbon;
 use Illuminate\Http\Client\Pool;
 
+
 class CatatanController extends Controller
 {
     private function getHeaders($request) 
     {
         return [
             'Accept' => 'application/json',
+            'Accept-Language'=> Session::get('locale', 'id'),
             'x-api-key' => env('API_KEY'),
             'Authorization' => 'Bearer ' . $request->auth['token'],
             'user-type' => $request->auth['user_type'],
@@ -39,7 +41,7 @@ class CatatanController extends Controller
             $pengeluaranData = collect($responses[1]->json()['data']['pengeluaran']);
             $kategoriPemasukanData = collect($responses[2]->json()['data']['kategori_pemasukan']);
             $kategoriPengeluaranData = collect($responses[3]->json()['data']['kategori_pengeluaran']);
-
+            // dd($kategoriPemasukanData, $kategoriPengeluaranData);
             $combinedData3 = $pemasukanData->merge($pengeluaranData);
             $combinedData2 = $this->applyDateFilters($combinedData3, $jenisFilter, $filterValue, $filterValue2);
 

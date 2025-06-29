@@ -21,6 +21,9 @@
       	font-feature-settings: "cv03", "cv04", "cv11";
       }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 </head>
 
 <body  class=" d-flex flex-column bg-primary">
@@ -33,21 +36,21 @@
                     <h1 class="m-0 text-white">Smart Finance</h1>
                 </a>
             </div>
-            <form class="card card-md" action="./" method="get" autocomplete="off" novalidate>
+            <form class="card card-md" action="{{ route('password.confirmation') }}" method="post" autocomplete="off">
+                @csrf
                 <div class="card-body">
+                    <input type="hidden" name="token" value="{{ $token }}">
                     <h2 class="card-title text-center mb-4">{{ __('auth.reset_password') }}</h2>
                     <div class="mb-3">
                         <label class="form-label">{{ __('auth.new_password') }} :</label>
-                        <input type="email" name="new_password" id="new_password" class="form-control" placeholder="{{ __('auth.enter_new_password') }}" required>
+                        <input type="password" name="new_password" id="new_password" class="form-control" placeholder="{{ __('auth.enter_new_password') }}" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">{{ __('auth.confirm_new_password') }} :</label>
-                        <input type="email" name="confirm_new_password" id="confirm_new_password" class="form-control" placeholder="{{ __('auth.enter_confirm_new_password') }}" required>
+                        <input type="password" name="confirm_new_password" id="confirm_new_password" class="form-control" placeholder="{{ __('auth.enter_confirm_new_password') }}" required>
                     </div>
                     <div class="form-footer">
-                        <a href="" class="btn btn-primary w-100">
-                            {{ __('auth.reset') }}
-                        </a>
+                        <button type="submit" class="btn btn-primary w-100">{{ __('auth.reset') }}</button>
                     </div>
                 </div>
             </form>
@@ -59,6 +62,36 @@
 
     <script src="{{ asset('dist/js/tabler.min.js?1684106062')}}" defer></script>
     <script src="{{ asset('dist/js/demo.min.js?1684106062')}}" defer></script>
+    <script>
+		@if (Session::has('success'))
+			toastr.options = {
+				"closeButton" : true,
+				"progressBar" : true,
+			}
+			toastr.success("{{ Session::get('success') }}");
+		@endif
+		@if (Session::has('error'))
+			toastr.options = {
+				"closeButton" : true,
+				"progressBar" : true,
+			}
+			toastr.error("{{ Session::get('error') }}",);
+		@endif
+		@if (Session::has('warning'))
+			toastr.options = {
+				"closeButton" : true,
+				"progressBar" : true,
+			}
+			toastr.warning("{{ Session::get('warning') }}",);
+		@endif
+		@if (Session::has('info'))
+			toastr.options = {
+				"closeButton" : true,
+				"progressBar" : true,
+			}
+			toastr.info("{{ Session::get('info') }}",);
+		@endif
+    </script>
 </body>
 
 </html>

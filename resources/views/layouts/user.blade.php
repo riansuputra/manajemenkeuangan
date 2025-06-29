@@ -68,6 +68,7 @@
 									<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-inline me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M12 17l0 .01" /><path d="M12 13.5a1.5 1.5 0 0 1 1 -1.5a2.6 2.6 0 1 0 -3 -4" /></svg>
 										{{ __('layout.help_support') }}
       							</a>
+								<div class="dropdown-divider mb-0"></div>
                               	<a class="dropdown-item" href="{{ url('/logout') }}" >
 									<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2"></path><path d="M9 12h12l-3 -3"></path><path d="M18 15l3 -3"></path></svg>
 										{{ __('layout.logout') }}
@@ -195,7 +196,7 @@
 								<li class="nav-item dropdown {{ request()->routeIs('portofolio.mutasi.dana') ? 'active' : '' }} {{ request()->routeIs('portofolio') ? 'active' : '' }} {{ request()->routeIs('portofolio.historis') ? 'active' : '' }}" >
                     				<a class="nav-link dropdown-toggle" href="" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
                       					<span class="nav-link-icon d-md-none d-lg-inline-block">
-										  	<svg xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-inline me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M8 11h8v7h-8z" /><path d="M8 15h8" /><path d="M11 11v7" /></svg>
+										  	<svg xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M8 11h8v7h-8z" /><path d="M8 15h8" /><path d="M11 11v7" /></svg>
                       					</span>
                       					<span class="nav-link-title">
 										  	{{ __('layout.portfolio') }}
@@ -222,7 +223,7 @@
                 					<li class="nav-item dropdown">
                   						<a class="nav-link dropdown-toggle" href="" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
                     						<span class="nav-link-icon d-md-none d-lg-inline-block">
-												<span class="flag @if((session('locale', config('app.locale'))) == 'en') flag-country-us
+												<span class="flag @if((session('locale', config('app.locale'))) == 'en') flag-country-gb
 													@elseif((session('locale', config('app.locale'))) == 'id')  flag-country-id @endif nav-link-icon d-md-none d-lg-inline-block">
 												</span>
                     						</span>
@@ -232,7 +233,7 @@
                   						</a>
                   						<div class="dropdown-menu">
                     						<a class="dropdown-item" href="{{ route('bahasa.en') }}">
-					  							<span class="flag flag-country-us"></span>
+					  							<span class="flag flag-country-gb"></span>
 													&nbsp English
                     						</a>
 											<a class="dropdown-item" href="{{ route('bahasa.id') }}">
@@ -380,6 +381,8 @@
       	</div>
     </div>
 	{{-- Modal tambah catatan --}}
+
+	@stack('modals')
      
     <script src="{{ asset('dist/libs/apexcharts/dist/apexcharts.min.js?1684106062') }}" defer></script>
     <script src="{{ asset('js/tabler.min.js?1684106062') }}" defer></script>

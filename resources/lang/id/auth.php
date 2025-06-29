@@ -26,7 +26,7 @@ return [
     'error_found' => 'Ups… Anda baru saja menemukan halaman error.',
 
     'enter_emailP' => 'Masukkan alamat email Anda dan kata sandi baru akan direset serta dikirimkan ke email Anda.',
-    'send_new_password' => 'Kirimkan kata sandi baru',
+    'send_new_password' => 'Kirimkan email konfirmasi',
     'return_to_signin' => 'Kembali ke halaman',
 
     // Baru
@@ -41,9 +41,11 @@ return [
     'check_inbox' => 'Periksa Kotak Masuk Anda',
     'verification_link_sent' => 'Kami telah mengirimkan tautan verifikasi ke',
     'click_to_confirm' => 'Silakan klik tautan tersebut untuk mengonfirmasi alamat email Anda.',
-    'check_spam' => 'Tidak menemukan emailnya? Silakan cek folder spam Anda.',
+    'check_spam' => 'Tidak menemukan emailnya? Silakan cek folder spam Anda atau',
     'wrong_email' => 'Email salah?',
     're_enter_email' => 'Silakan masukkan kembali alamat email yang benar.',
+    'resend_email' => 'Kirim ulang verifikasi email',
+    'resend_email_confirmation' => 'Kirim ulang konfirmasi email',
     'back_to_login' => 'Kembali ke halaman masuk',
 
     // Password Reset Link

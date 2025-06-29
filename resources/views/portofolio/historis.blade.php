@@ -28,7 +28,7 @@
 </div>
 <div class="col-auto ms-auto d-print-none">
 	<div class="btn-list">
-		<a href="" class="btn btn-primary"  id="printModalToPdf">
+		<a class="btn btn-primary"  id="printModalToPdf">
             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
           	Cetak PDF
       	</a>
@@ -39,7 +39,7 @@
 @section('content')
 <div class="container-xl">
     <div class="row row-cards">
-        <div class="col-sm-12 col-lg-6">
+        <div class="col-sm-12 col-lg-12">
             <div class="card">
                 <div class="card-body card-body-scrollable" style="max-height: 400px">
                     <div class="row">
@@ -52,8 +52,8 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">Tahun</th>
-                                    <th class="text-center">Yield</th>
-                                    <th class="text-center">Yield IHSG</th>
+                                    <th class="text-center col-2">Yield Floating</th>
+                                    <th class="text-center col-2">Yield IHSG</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -61,13 +61,13 @@
                                 @foreach($historisByYear as $tahun => $data)
                                 <tr>
                                     <td style="width:5%" class="text-center">{{ $tahun }}</td>
-                                    <td class="text-center">{{ $data['yield'] !== null ? number_format($data['yield'], 2, ',', '.') . '%' : '-' }}</td>
-                                    <td class="text-center">{{ $data['yield_ihsg'] !== null ? number_format($data['yield_ihsg'], 2, ',', '.') . '%' : '-' }}</td>
+                                    <td class="text-center @if($data['yield'] < 0) text-red @elseif($data['yield'] > 0) text-green @endif">{{ $data['yield'] !== null ? number_format($data['yield'], 2, ',', '.') . '%' : '-' }}</td>
+                                    <td class="text-center @if($data['yield_ihsg'] < 0) text-red @elseif($data['yield_ihsg'] > 0) text-green @endif">{{ $data['yield_ihsg'] !== null ? number_format($data['yield_ihsg'], 2, ',', '.') . '%' : '-' }}</td>
                                 </tr>
                                 @endforeach
                                 @else
                                 <tr>
-                                    <td class="text-center" colspan="3">Belum ada riwayat tahunan.</td>
+                                    <td class="text-center" colspan="5">Belum ada riwayat tahunan.</td>
                                 </tr>
                                 @endif
                             </tbody>
@@ -76,7 +76,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-12 col-lg-6">
+        <div class="col-sm-12 col-lg-12">
             <div class="card">
                 <div class="card-body card-body-scrollable" style="max-height: 400px">
                     <div class="row">
@@ -92,8 +92,8 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">Bulan</th>
-                                    <th class="text-center">Yield</th>
-                                    <th class="text-center">Yield IHSG</th>
+                                    <th class="text-center col-2">Yield Floating</th>
+                                    <th class="text-center col-2">Yield IHSG</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -101,13 +101,13 @@
                                 @foreach($groupedByMonth as $bulan => $data)
                                 <tr>
                                     <td style="width:5%">{{ \Carbon\Carbon::create()->month($bulan)->locale('id')->translatedFormat('F') }}</td>
-                                    <td class="text-center">{{ $data['yield'] !== null ? number_format($data['yield'], 2, ',', '.') . '%' : '-' }}</td>
-                                    <td class="text-center">{{ $data['yield_ihsg'] !== null ? number_format($data['yield_ihsg'], 2, ',', '.') . '%' : '-' }}</td>
+                                    <td class="text-center @if($data['yield'] < 0) text-red @elseif($data['yield'] > 0) text-green @endif">{{ $data['yield'] !== null ? number_format($data['yield'], 2, ',', '.') . '%' : '-' }}</td>
+                                    <td class="text-center @if($data['yield_ihsg'] < 0) text-red @elseif($data['yield_ihsg'] > 0) text-green @endif">{{ $data['yield_ihsg'] !== null ? number_format($data['yield_ihsg'], 2, ',', '.') . '%' : '-' }}</td>
                                 </tr>
                                 @endforeach
                                 @else
                                 <tr>
-                                    <td class="text-center" colspan="3">Belum ada riwayat bulanan.</td>
+                                    <td class="text-center" colspan="5">Belum ada riwayat bulanan.</td>
                                 </tr>
                                 @endif
                             </tbody>

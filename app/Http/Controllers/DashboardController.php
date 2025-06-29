@@ -17,6 +17,7 @@ class DashboardController extends Controller
     {
         return [
             'Accept' => 'application/json',
+            'Accept-Language'=> Session::get('locale', 'id'),
             'x-api-key' => env('API_KEY'),
             'Authorization' => 'Bearer ' . $request->auth['token'],
             'user-type' => $request->auth['user_type'],
@@ -25,6 +26,7 @@ class DashboardController extends Controller
 
     public function index(Request $request) 
     {
+        // dd(Session::get('locale', 'id'));
         $jenisFilter = session('jenisFilter', 'Kisaran');
         $filterValue = session('filterValue', ($jenisFilter == 'Kisaran') ? 'semuaHari' : null);
         $filterValue2 = session('filterValue2');
@@ -41,7 +43,7 @@ class DashboardController extends Controller
             $pengeluaranData = collect($responses[1]->json()['data']['pengeluaran']);
             $kategoriPemasukanData = collect($responses[2]->json()['data']['kategori_pemasukan']);
             $kategoriPengeluaranData = collect($responses[3]->json()['data']['kategori_pengeluaran']);
-
+            // dd($pemasukanData);
             $combinedData3 = $pemasukanData->merge($pengeluaranData);
 
             $filteredPemasukan = $this->applyDateFilters($pemasukanData, $jenisFilter, $filterValue, $filterValue2);
@@ -66,6 +68,8 @@ class DashboardController extends Controller
 
             $sortedData = $combinedData->sortByDesc('tanggal');
             $summary = $this->calculateSummary($sortedData);
+
+            // dd($groupedPemasukanData);
 
             return view('dashboard.index', [
                 'user' => $request->auth['user'],

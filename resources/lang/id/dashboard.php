@@ -28,6 +28,7 @@ return [
     'amount' => 'Jumlah',
     'filter' => 'Filter',
     'no_data' => 'Tidak ada data',
+    'without_records' => 'Tanpa Catatan',
     // End of Dashboard Page
 
 ];

@@ -20,6 +20,9 @@
       	    font-feature-settings: "cv03", "cv04", "cv11";
         }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 </head>
   
 <body  class="bg-primary d-flex flex-column">
@@ -36,16 +39,27 @@
                 <div class="my-5">
                     <h2 class="h1 text-white">{{ __('auth.check_inbox') }}</h2>
                     <p class="fs-h3 text-white">
-                        {{ __('auth.reset_link_sent') }} <strong>support@tabler.io</strong>.<br />
+                        {{ __('auth.reset_link_sent') }} <strong>{{ $input['email'] ?? old('email') }}</strong>.<br />
                         {{ __('auth.click_to_reset') }}
                     </p>
                 </div>
                 <div class="text-center text-white mt-3">
                     {{ __('auth.check_spam') }}<br />
-                    {{ __('auth.wrong_email') }} <a href="#" class="text-white"><u>{{ __('auth.re_enter_email') }}</u></a>
+                    {{ __('auth.wrong_email') }} <a href="{{ route('password.page') }}" class="text-white"><u>{{ __('auth.re_enter_email') }}</u></a>
                 </div>
                 <div class="form-footer mb-2">
-					<a href="{{ route('login.page') }}" class="btn text-primary">{{ __('auth.back_to_login') }}</a>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-6 mb-2">
+                            <form id="resend-form" action="{{ route('resend.confirmation.password') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="email" value="{{ $input['email'] ?? old('email') }}">
+                                <button type="submit" class="btn text-primary">{{ __('auth.resend_email_confirmation') }}</button>
+                            </form>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-6 mb-2">
+                            <a href="{{ route('login.page') }}" class="btn text-primary">{{ __('auth.back_to_login') }}</a>
+                        </div>
+                    </div>
 				</div>
             </div>
         </div>
@@ -53,6 +67,36 @@
 
     <script src="{{ asset('dist/js/tabler.min.js?1684106062')}}" defer></script>
     <script src="{{ asset('dist/js/demo.min.js?1684106062')}}" defer></script>
+    <script>
+		@if (Session::has('success'))
+			toastr.options = {
+				"closeButton" : true,
+				"progressBar" : true,
+			}
+			toastr.success("{{ Session::get('success') }}");
+		@endif
+		@if (Session::has('error'))
+			toastr.options = {
+				"closeButton" : true,
+				"progressBar" : true,
+			}
+			toastr.error("{{ Session::get('error') }}",);
+		@endif
+		@if (Session::has('warning'))
+			toastr.options = {
+				"closeButton" : true,
+				"progressBar" : true,
+			}
+			toastr.warning("{{ Session::get('warning') }}",);
+		@endif
+		@if (Session::has('info'))
+			toastr.options = {
+				"closeButton" : true,
+				"progressBar" : true,
+			}
+			toastr.info("{{ Session::get('info') }}",);
+		@endif
+    </script>
 </body>
 
 </html>
