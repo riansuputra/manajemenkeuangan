@@ -394,27 +394,27 @@
         });
 
         let tipeSaldo = document.getElementById("tipe_saldo");
-    let sahamField = document.getElementById("saham-field");
-    let jumlahField = document.getElementById("jumlah-field");
-    let selectSaham = document.getElementById("select-people");
+        let sahamField = document.getElementById("saham-field");
+        let jumlahField = document.getElementById("jumlah-field");
+        let selectSaham = document.getElementById("select-people");
 
-    tipeSaldo.addEventListener("change", function() {
-        if (this.value === "dividen") {
-            sahamField.style.display = "block";  // Show "Pilih Saham"
-            selectSaham.removeAttribute("disabled"); // Enable field
-            selectSaham.setAttribute("required", "true"); // Make required
-            
-            jumlahField.classList.remove("col-lg-12");
-            jumlahField.classList.add("col-lg-6");  // Change to col-lg-6
-        } else {
-            sahamField.style.display = "none";  // Hide "Pilih Saham"
-            selectSaham.setAttribute("disabled", "true"); // Disable field
-            selectSaham.removeAttribute("required"); // Remove required
-            
-            jumlahField.classList.remove("col-lg-6");
-            jumlahField.classList.add("col-lg-12");  // Change to col-lg-12
-        }
-    });
+        tipeSaldo.addEventListener("change", function() {
+            if (this.value === "dividen") {
+                sahamField.style.display = "block";  // Show "Pilih Saham"
+                selectSaham.removeAttribute("disabled"); // Enable field
+                selectSaham.setAttribute("required", "true"); // Make required
+                
+                jumlahField.classList.remove("col-lg-12");
+                jumlahField.classList.add("col-lg-6");  // Change to col-lg-6
+            } else {
+                sahamField.style.display = "none";  // Hide "Pilih Saham"
+                selectSaham.setAttribute("disabled", "true"); // Disable field
+                selectSaham.removeAttribute("required"); // Remove required
+                
+                jumlahField.classList.remove("col-lg-6");
+                jumlahField.classList.add("col-lg-12");  // Change to col-lg-12
+            }
+        });
     });
 </script>
 <script>
@@ -424,6 +424,7 @@
             const userName = @json($user['name']);
             const userEmail = @json($user['email']);
             const currentDate = @json($date); 
+            const selectedYear = @json($selectedYear); 
 
             const valuasiAwal = document.getElementById('valuasi_awal').textContent.trim();
             const unitAwal = document.getElementById('unit_awal').textContent.trim();
@@ -448,8 +449,7 @@
 
             
             const pdfTableBody = [
-                [{ text: 'No', style: 'tableHeader', alignment: 'center' }, 
-                { text: 'Bulan', style: 'tableHeader', alignment: 'center' }, 
+                [{ text: 'Bulan', style: 'tableHeader', alignment: 'center' }, 
                 { text: 'Alur Dana', style: 'tableHeader', alignment: 'center' }, 
                 { text: 'Jumlah', style: 'tableHeader', alignment: 'center' }, 
                 { text: 'Harga Unit', style: 'tableHeader', alignment: 'center' }, 
@@ -457,77 +457,71 @@
             ];
 
             const pdfTableBodyRiwayat = [
-                [{ text: 'No', style: 'tableHeader', alignment: 'center' }, 
-                { text: 'Tanggal', style: 'tableHeader', alignment: 'center' }, 
+                [{ text: 'Tanggal', style: 'tableHeader', alignment: 'center' }, 
                 { text: 'Jenis', style: 'tableHeader', alignment: 'center' }, 
                 { text: 'Jumlah', style: 'tableHeader', alignment: 'center' }]
             ];
             
 
-// Track the previous values to simulate rowspan
-let lastNo = null;
-let lastMonth = null;
+            // Track the previous values to simulate rowspan
+          
+            let lastMonth = null;
 
-tableRowsMutasi.forEach(row => {
-    const cells = row.querySelectorAll('td');
-    let currentNo = cells[0].textContent;
-    let currentMonth = cells[1].textContent;
+            tableRowsMutasi.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                const currentMonth = cells[1].textContent.trim(); // kolom 1 = Bulan
 
-    pdfTableBody.push([
-        lastNo === currentNo ? '' : { text: currentNo, alignment: 'center' },  // Merge "No"
-        lastMonth === currentMonth ? '' : { text: currentMonth, alignment: 'left' },  // Merge "Bulan"
-        { text: cells[2].textContent, alignment: 'center' },  // "Alur Dana" aligned left
-        { text: cells[3].textContent, alignment: 'right' },  // "Jumlah" aligned right
-        { text: cells[4].textContent, alignment: 'right' },  // "Harga Unit" aligned right
-        { text: cells[5].textContent, alignment: 'right' },  // "Jumlah Unit" aligned right
-    ]);
+                pdfTableBody.push([
+                    
+                    lastMonth === currentMonth ? '' : { text: currentMonth, alignment: 'left' },  // Merge "Bulan"
+                    { text: cells[2].textContent, alignment: 'center' },  // "Alur Dana" aligned left
+                    { text: cells[3].textContent, alignment: 'right' },  // "Jumlah" aligned right
+                    { text: cells[4].textContent, alignment: 'right' },  // "Harga Unit" aligned right
+                    { text: cells[5].textContent, alignment: 'right' },  // "Jumlah Unit" aligned right
+                ]);
 
-    lastNo = currentNo;
-    lastMonth = currentMonth;
-});
+                lastMonth = currentMonth;
+            });
 
-tableRowsRiwayat.forEach(row => {
-    const cells = row.querySelectorAll('td');
-    let currentNo = cells[0].textContent;
-    let currentMonth = cells[1].textContent;
+            tableRowsRiwayat.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                const currentDate = cells[1].textContent.trim(); // kolom 1 = Tanggal
 
+                pdfTableBodyRiwayat.push([
+                    
+                    lastMonth === currentDate ? '' : { text: currentDate, alignment: 'left' },  // Merge "Bulan"
+                    { text: cells[2].textContent, alignment: 'center' },  // "Alur Dana" aligned left
+                    { text: cells[3].textContent, alignment: 'right' },  // "Jumlah" aligned right
+                ]);
 
-    pdfTableBodyRiwayat.push([
-        lastNo === currentNo ? '' : { text: currentNo, alignment: 'center' },  // Merge "No"
-        lastMonth === currentMonth ? '' : { text: currentMonth, alignment: 'left' },  // Merge "Bulan"
-        { text: cells[2].textContent, alignment: 'center' },  // "Alur Dana" aligned left
-        { text: cells[3].textContent, alignment: 'right' },  // "Jumlah" aligned right
-    ]);
+                lastMonth = currentDate;
+            });
 
-    lastNo = currentNo;
-    lastMonth = currentMonth;
-});
+            const mergedRows = [];
+            const mergedCols = [];
 
-const mergedRows = [];
-const mergedCols = [];
+            // Loop through `pdfTableBody` and identify merged rows & columns
+            for (let rowIndex = 1; rowIndex < pdfTableBody.length; rowIndex++) {
+                // Check for merged rows based on duplicate values in the first column
+                if (pdfTableBody[rowIndex][0] === pdfTableBody[rowIndex - 1][0]) {
+                    mergedRows.push(rowIndex);
+                }
+                // Check for merged columns based on duplicate values in the second column
+                if (pdfTableBody[rowIndex][1] === pdfTableBody[rowIndex - 1][1]) {
+                    mergedCols.push(rowIndex);
+                }
+            }
 
-// Loop through `pdfTableBody` and identify merged rows & columns
-for (let rowIndex = 1; rowIndex < pdfTableBody.length; rowIndex++) {
-    // Check for merged rows based on duplicate values in the first column
-    if (pdfTableBody[rowIndex][0] === pdfTableBody[rowIndex - 1][0]) {
-        mergedRows.push(rowIndex);
-    }
-    // Check for merged columns based on duplicate values in the second column
-    if (pdfTableBody[rowIndex][1] === pdfTableBody[rowIndex - 1][1]) {
-        mergedCols.push(rowIndex);
-    }
-}
-
-for (let rowIndex = 1; rowIndex < pdfTableBodyRiwayat.length; rowIndex++) {
-    // Check for merged rows based on duplicate values in the first column
-    if (pdfTableBodyRiwayat[rowIndex][0] === pdfTableBodyRiwayat[rowIndex - 1][0]) {
-        mergedRows.push(rowIndex);
-    }
-    // Check for merged columns based on duplicate values in the second column
-    if (pdfTableBodyRiwayat[rowIndex][1] === pdfTableBodyRiwayat[rowIndex - 1][1]) {
-        mergedCols.push(rowIndex);
-    }
-}
+            for (let rowIndex = 1; rowIndex < pdfTableBodyRiwayat.length; rowIndex++) {
+                // Check for merged rows based on duplicate values in the first column
+                if (pdfTableBodyRiwayat[rowIndex][0] === pdfTableBodyRiwayat[rowIndex - 1][0]) {
+                    mergedRows.push(rowIndex);
+                }
+                // Check for merged columns based on duplicate values in the second column
+                if (pdfTableBodyRiwayat[rowIndex][1] === pdfTableBodyRiwayat[rowIndex - 1][1]) {
+                    mergedCols.push(rowIndex);
+                }
+            }
 
             
             const docDefinition = {
@@ -547,7 +541,7 @@ for (let rowIndex = 1; rowIndex < pdfTableBodyRiwayat.length; rowIndex++) {
                         ]
                     },
                     {
-                        text: '\nMutasi Dana\n\n',
+                        text: [`\nMutasi Dana ${selectedYear}\n\n`],
                         style: 'header',
                         alignment: 'center'
                     },
@@ -578,7 +572,7 @@ for (let rowIndex = 1; rowIndex < pdfTableBodyRiwayat.length; rowIndex++) {
                         style: 'tableExample',
                         table: {
                             headerRows: 1,
-                            widths: [50, '*', '*', '*', '*', '*'], 
+                            widths: ['*', '*', '*', '*', '*'], 
                             body: pdfTableBody 
                         },
                         alignment: 'center',
@@ -586,7 +580,7 @@ for (let rowIndex = 1; rowIndex < pdfTableBodyRiwayat.length; rowIndex++) {
                     },
 
                     {
-                        text: '\nRiwayat Dana\n\n',
+                        text: [`\nRiwayat Dana ${selectedYear}\n\n`],
                         style: 'header',
                         alignment: 'center'
                     },
@@ -594,7 +588,7 @@ for (let rowIndex = 1; rowIndex < pdfTableBodyRiwayat.length; rowIndex++) {
                         style: 'tableExample',
                         table: {
                             headerRows: 1,
-                            widths: [50, '*', '*', '*'], 
+                            widths: ['*', '*', '*'], 
                             body: pdfTableBodyRiwayat 
                         },
                         alignment: 'center',

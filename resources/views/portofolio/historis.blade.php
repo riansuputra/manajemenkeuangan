@@ -286,6 +286,7 @@
             const userName = @json($user['name']);
             const userEmail = @json($user['email']);
             const currentDate = @json($date); 
+            const selectedYear = @json($selectedYear); 
 
             const modalTableTahun = document.getElementById('tableTahun');
             const modalTableBulan = document.getElementById('tableBulan');
@@ -324,81 +325,81 @@
 
             
             const docDefinition = {
-    content: [
-        // First row with two tables
-        {
-                        alignment: 'justify',
-                        columns: [
-                            {
-                                text: [`${userName}\n`, { text: userEmail, bold: false, color: 'gray' }],
-                                bold: true
+            content: [
+                // First row with two tables
+                {
+                                alignment: 'justify',
+                                columns: [
+                                    {
+                                        text: [`${userName}\n`, { text: userEmail, bold: false, color: 'gray' }],
+                                        bold: true
+                                    },
+                                    {
+                                        text: [`${currentDate}\nSmart Finance`],
+                                        style: ['alignRight'],
+                                        color: 'gray',
+                                    }
+                                ]
                             },
                             {
-                                text: [`${currentDate}\nSmart Finance`],
-                                style: ['alignRight'],
-                                color: 'gray',
-                            }
-                        ]
-                    },
-                    {
-                        text: '\Historis\n\n',
-                        style: 'header',
-                        alignment: 'center'
-                    },
-        {
-            columns: [
-                // First Table (adjust widths to fit in page)
+                                text: [`\nHistoris ${selectedYear}\n\n`],
+                                style: 'header',
+                                alignment: 'center'
+                            },
                 {
-                    style: 'tableExample',
-                    table: {
-                        headerRows: 1,
-                        widths: ['*', '*', '*'],  // Use '*' for flexible widths
-                        body: pdfTableTahun,
-                    },
-                },
-                // Second Table (next to the first table in the same row)
-                {
-                    style: 'tableExample',
-                    table: {
-                        headerRows: 1,
-                        widths: ['*', '*', '*'],  // Use '*' for flexible widths
-                        body: pdfTableBulan,
-                    },
+                    columns: [
+                        // First Table (adjust widths to fit in page)
+                        {
+                            style: 'tableExample',
+                            table: {
+                                headerRows: 1,
+                                widths: ['*', '*', '*'],  // Use '*' for flexible widths
+                                body: pdfTableTahun,
+                            },
+                        },
+                        // Second Table (next to the first table in the same row)
+                        {
+                            style: 'tableExample',
+                            table: {
+                                headerRows: 1,
+                                widths: ['*', '*', '*'],  // Use '*' for flexible widths
+                                body: pdfTableBulan,
+                            },
+                        }
+                    ]
                 }
-            ]
-        }
-    ],
-    styles: {
-        tableExample: {
-            margin: [0, 5, 0, 15]  // Adds margin between tables
-        },
-        header: {
-                        fontSize: 18,
-                        bold: true,
-                        alignment: 'justify',
-                    },
-                    alignRight: {
-                        alignment: 'right'
-                    },
-                    tableExample: {
-                        margin: [0, 5, 0, 15]
-                    },
-                    tableHeader: {
-                        bold: true,
-                        fontSize: 12,
-                        color: 'black',
-                        fillColor: '#CEEFFD',
-                    },
-    },
-    defaultStyle: {
-        columnGap: 20
-    },
-    pageOrientation: 'landscape'  // Optional: Set page orientation to landscape for more space
-};
+            ],
+            styles: {
+                tableExample: {
+                    margin: [0, 5, 0, 15]  // Adds margin between tables
+                },
+                header: {
+                                fontSize: 18,
+                                bold: true,
+                                alignment: 'justify',
+                            },
+                            alignRight: {
+                                alignment: 'right'
+                            },
+                            tableExample: {
+                                margin: [0, 5, 0, 15]
+                            },
+                            tableHeader: {
+                                bold: true,
+                                fontSize: 12,
+                                color: 'black',
+                                fillColor: '#CEEFFD',
+                            },
+            },
+            defaultStyle: {
+                columnGap: 20
+            },
+            pageOrientation: 'landscape'  // Optional: Set page orientation to landscape for more space
+        };
 
 
-// Create and open the PDF
-pdfMake.createPdf(docDefinition).open();
+        // Create and open the PDF
+        pdfMake.createPdf(docDefinition).open();
 
 
         });
