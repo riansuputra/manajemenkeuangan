@@ -616,7 +616,8 @@
                 },
                 defaultStyle: {
                     columnGap: 20
-                }
+                },
+                pageOrientation: 'landscape',  // Optional: Set page orientation to landscape for more space
             };
             pdfMake.createPdf(docDefinition).open();
         });

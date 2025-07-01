@@ -67,17 +67,17 @@
                     <div class="row">
                         <div class="col-4">
                             <h5 class="mt-0 mb-0 pt-0 pb-2">Harga Unit :</h5>
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($mutasiDataFilter['harga_unit_saat_ini'] ?? 0, 0, ',', '.' )}}</h5>
+                            <h5 class="mt-0 mb-1 pt-0 pb-2" id="hargaUnit">{{ number_format($mutasiDataFilter['harga_unit_saat_ini'] ?? 0, 0, ',', '.' )}}</h5>
                         </div>
                         <div class="col-4">
                             <h5 class="mt-0 mb-0 pt-0 pb-2">Jumlah/Unit :</h5>
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($mutasiDataFilter['jumlah_unit_penyertaan'] ?? 0, 0, ',', '.' )}}</h5>
+                            <h5 class="mt-0 mb-1 pt-0 pb-2" id="jumlahUnit">{{ number_format($mutasiDataFilter['jumlah_unit_penyertaan'] ?? 0, 0, ',', '.' )}}</h5>
                         </div>
                         <div class="col-4">
                             <a href="" class="bg-teal-lt" data-bs-toggle="modal" data-bs-target="#modal-yield">
                                 <div data-bs-original-title="Klik untuk info" data-bs-placement="bottom" data-bs-toggle="tooltip">
                                     <h5 class="mt-0 mb-0 pt-0 pb-2">Yield :</h5>   
-                                    <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format(($sortedHistorisData['yield'] ?? 0), 2, ',', '.') }}%</h5>
+                                    <h5 class="mt-0 mb-1 pt-0 pb-2" id="yield">{{ number_format(($sortedHistorisData['yield'] ?? 0), 2, ',', '.') }}%</h5>
                                 </div>
                             </a>
                         </div>
@@ -93,7 +93,7 @@
                             <a href="" data-bs-toggle="modal" data-bs-target="#modal-ihsg">
                                 <div data-bs-original-title="Klik untuk edit" data-bs-placement="bottom" data-bs-toggle="tooltip">
                                     <h5 class="mt-0 mb-0 pt-0 pb-2">IHSG Start </h5>
-                                    <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($sortedHistorisData['ihsg_start'] ?? 0, 0, ',', '.' )}}</h5>
+                                    <h5 class="mt-0 mb-1 pt-0 pb-2" id="ihsgStart">{{ number_format($sortedHistorisData['ihsg_start'] ?? 0, 0, ',', '.' )}}</h5>
                                 </div>
                             </a>
                         </div>
@@ -101,13 +101,13 @@
                             <a href="" data-bs-toggle="modal" data-bs-target="#modal-ihsg">
                                 <div data-bs-original-title="Klik untuk edit" data-bs-placement="bottom" data-bs-toggle="tooltip">
                                     <h5 class="mt-0 mb-0 pt-0 pb-2">IHSG End </h5>
-                                    <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format($sortedHistorisData['ihsg_end'] ?? 0, 0, ',', '.')}}</h5>
+                                    <h5 class="mt-0 mb-1 pt-0 pb-2" id="ihsgEnd">{{ number_format($sortedHistorisData['ihsg_end'] ?? 0, 0, ',', '.')}}</h5>
                                 </div>
                             </a>
                         </div>
                         <div class="col-4">
                             <h5 class="mt-0 mb-0 pt-0 pb-2">Yield IHSG :</h5>
-                            <h5 class="mt-0 mb-1 pt-0 pb-2">{{ number_format(($sortedHistorisData['yield_ihsg'] ?? 0) , 2, ',', '.') }}%</h5>
+                            <h5 class="mt-0 mb-1 pt-0 pb-2" id="yieldIhsg">{{ number_format(($sortedHistorisData['yield_ihsg'] ?? 0) , 2, ',', '.') }}%</h5>
                         </div>
                     </div>
                 </div>
@@ -550,7 +550,7 @@
                                                                                                             <label class="form-label required">Jumlah Lembar: </label>
                                                                                                             <div class="input-group">
                                                                                                                 <input type="text" id="lembaredit-{{$k['id']}}" name="lembaredit" class="form-control text-end" autocomplete="off" placeholder="0" value="{{number_format($k['volume'], 0, ',', '.')}}" required >
-                                                                                                                <input type="text" id="lembaredit1-{{$k['id']}}" name="lembaredit1" class="form-control text-end" autocomplete="off" value="{{$k['volume']}}" >
+                                                                                                                <input type="text" id="lembaredit1-{{$k['id']}}" name="lembaredit1" class="form-control text-end" autocomplete="off" value="{{$k['volume']}}" hidden>
                                                                                                             </div>
                                                                                                         </div>
                                                                                                     </div>
@@ -584,7 +584,7 @@
                                                                                                                             Rp.
                                                                                                                         </span>
                                                                                                                         <input type="text" id="jumlahedit-{{$k['id']}}" name="jumlahedit" class="form-control text-end" autocomplete="off" required placeholder="" value="{{number_format($k['harga'], 0, ',', '.')}}">
-                                                                                                                        <input type="text" id="jumlahedit1-{{$k['id']}}" name="jumlahedit1" class="form-control text-end" autocomplete="off" value="{{$k['harga']}}" >
+                                                                                                                        <input type="text" id="jumlahedit1-{{$k['id']}}" name="jumlahedit1" class="form-control text-end" autocomplete="off" value="{{$k['harga']}}" hidden>
                                                                                                                     </div>
                                                                                                                 </div>
                                                                                                             </div>
@@ -1059,6 +1059,58 @@
 	</div>
 </div>
 
+<table class="table table-bordered table-vcenter" hidden>
+    <thead>
+        <tr>
+            <th class="text-center">Saham</th>
+            <th class="text-center">Jumlah Lembar</th>
+            <th class="text-center">Harga Saat Ini</th>
+            <th class="text-center">Modal</th>
+            <th class="text-center">Valuasi</th>
+            <th class="text-center">P/L</th>
+            <th class="text-center">P/L(%)</th>
+        </tr>
+    </thead>
+    <tbody id="tablePortofolio">
+        @if($sortedData->isNotEmpty())
+        @foreach($sortedData as $key => $index)
+        @if ($loop->first)
+        <tr>
+            <td class="text-center">KAS</td>
+            <td class="text-end ">{{number_format($index['cur_price'], 0, ',', '.')}}</td>
+            <td class="text-end ">{{number_format($index['cur_price'], 0, ',', '.')}}</td>
+            <td class="text-end ">{{ number_format($index['cur_price'], 0, ',', '.')}}</td>
+            <td class="text-end ">{{ number_format($index['modal'], 0, ',', '.')}}</td>
+            <td class="text-end ">-</td>
+            <td class="text-end ">0,00%</td>
+        </tr>
+        @else
+        <tr>
+            <td style="width:6%">{{$index['aset']['nama']}}</td>
+            <td class="text-end">{{ number_format($index['volume'], 0, ',', '.')}}</td>
+            <td class="text-end">{{ number_format($index['cur_price'], 0, ',', '.')}}</td>
+            <td class="text-end">{{ number_format($index['modal'], 0, ',', '.')}}</td>
+            <td class="text-end">{{ number_format($index['valuasi'] , 0, ',', '.')}}</td>
+            <td class="text-end @if($index['p/l'] < 0) text-danger @elseif($index['p/l'] > 0) text-success @endif">{{ $index['p/l'] == 0 ? '-' : number_format($index['p/l'] , 0, ',', '.')}}</td>
+            <td class="text-end @if($index['p/l'] < 0) text-danger @elseif($index['p/l%'] > 0) text-success @endif">{{ number_format($index['p/l%'] , 2, ',', '.')}}%</td>
+        </tr>
+        @endif
+        @endforeach
+        <tr class="fw-bold">
+            <td colspan="3" class="text-center">TOTAL</td>
+            <td class="text-end">{{ number_format($sortedData->sum('modal'), 0, ',', '.') }}</td>
+            <td class="text-end">{{ number_format($sortedData->sum('valuasi'), 0, ',', '.') }}</td>
+            <td class="text-end @if($sortedData->sum('p/l') < 0) text-danger @elseif($sortedData->sum('p/l') > 0) text-success @endif">{{ $sortedData->sum('p/l') == 0 ? '-' : number_format($sortedData->sum('p/l'), 0, ',', '.') }}</td>
+            <td class="text-end @if(($sortedData->sum('p/l') / $sortedData->sum('modal')) < 0) text-danger @elseif(($sortedData->sum('p/l') / $sortedData->sum('modal')) > 0) text-success @endif">{{ number_format(($sortedData->sum('p/l') / $sortedData->sum('modal')) * 100, 2, ',', '.') }}%</td>
+        </tr>
+        @else
+        <tr>
+            <td colspan="7" class="text-center">Tidak ada data yang tersedia.</td>
+        </tr>
+        @endif
+    </tbody>
+</table>
+
 <script>
     const selectPeople = document.getElementById('select-people');
     const hargaTerkiniLink = document.getElementById('hargaTerkiniLink');
@@ -1156,11 +1208,9 @@
             });
         });
     });
-    </script>
-    
+</script>
                      
 <script src="{{url('dist/libs/tom-select/dist/js/tom-select.base.min.js?1684106062')}}" defer></script>
-
   
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -1455,7 +1505,7 @@
 </script>
 <script>
     var hargaData = {!! json_encode($sortHargaData) !!};
-    console.log(hargaData);
+    // console.log(hargaData);
 </script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -1575,62 +1625,71 @@
     });
 
 </script>
-
+  
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var modal = document.querySelectorAll('[id^="modal-price-"]');
-        var input = document.querySelectorAll('[id^="updateHarga-"]');
-            modal.addEventListener('shown.bs.modal', function () {
-                var modalId = modal.id.split('modal-price-')[1];
-                var inputId = input.id.split('updateHarga-')[1];
-                var input = document.getElementById('updateHarga-' + modalId);
-                if (input) {
-                    // Berikan sedikit delay agar browser siap memproses
-                    setTimeout(function() {
-                        input.select(); // Blok semua teks dalam input
-                    }, 100);
-                }
-            });
-    });
-
-    document.getElementById('printModalToPdf').addEventListener('click', function () {
+	document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('printModalToPdf').addEventListener('click', function () {
 
             const userName = @json($user['name']);
             const userEmail = @json($user['email']);
             const currentDate = @json($date); 
+            const selectedYear = @json($selectedYear); 
 
-            const update = document.getElementById('update').textContent.trim();
+            const hargaUnit = document.getElementById('hargaUnit').textContent.trim();
+            const jumlahUnit = document.getElementById('jumlahUnit').textContent.trim();
+            const yieldP = document.getElementById('yield').textContent.trim();
+            const ihsgStart = document.getElementById('ihsgStart').textContent.trim();
+            const ihsgEnd = document.getElementById('ihsgEnd').textContent.trim();
+            const yieldIhsg = document.getElementById('yieldIhsg').textContent.trim();
 
-            const Data = [
-                ': ' + update,
+            console.log('Harga Unit:', hargaUnit);
+            console.log('Jumlah Unit:', jumlahUnit);
+            console.log('Yield:', yieldP);          
+            console.log('ihsgStart:', ihsgStart);          
+            console.log('ihsgEnd:', ihsgEnd);          
+            console.log('Yield Ihsg:', yieldIhsg);          
+            
+            const summaryData = [
+                ': ' + hargaUnit,
+                ': ' + jumlahUnit,
+                ': ' + yieldP + '\n\n',
+                ': ' + ihsgStart,
+                ': ' + ihsgEnd,
+                ': ' + yieldIhsg + '\n\n',
             ];
             
-            const modalTableBody = document.getElementById('modalTableBody');
-            const tableRows = Array.from(modalTableBody.querySelectorAll('tr'));
+            const tableBodyPortofolio = document.getElementById('tablePortofolio');
+            const tableRowsPortofolio = Array.from(tableBodyPortofolio.querySelectorAll('tr'));
+            console.log('Table Rows Portofolio:', tableRowsPortofolio.length);
             
             const pdfTableBody = [
-                [{ text: 'No', style: 'tableHeader' }, 
-                { text: 'Emiten', style: 'tableHeader' }, 
-                { text: 'Dividen', style: 'tableHeader' }, 
-                { text: 'Cum Date', style: 'tableHeader' }, 
-                { text: 'Ex Date', style: 'tableHeader' }, 
-                { text: 'Payment Date', style: 'tableHeader' }, 
-                { text: 'Recording Date', style: 'tableHeader' },]
+                [{ text: 'Saham', style: 'tableHeader', alignment: 'center' }, 
+                { text: 'Jumlah Lembar', style: 'tableHeader', alignment: 'center' }, 
+                { text: 'Harga Saat Ini', style: 'tableHeader', alignment: 'center' }, 
+                { text: 'Modal', style: 'tableHeader', alignment: 'center' }, 
+                { text: 'Valuasi', style: 'tableHeader', alignment: 'center' }, 
+                { text: 'P/L', style: 'tableHeader', alignment: 'center' }, 
+                { text: 'P/L(%)', style: 'tableHeader', alignment: 'center' }]
             ];
-            
-            tableRows.forEach(row => {
+
+            tableRowsPortofolio.forEach(row => {
                 const cells = row.querySelectorAll('td');
-                pdfTableBody.push([
-                    { text: cells[0].textContent, alignment: 'center' }, 
-                    { text: cells[1].textContent, alignment: 'left' }, 
-                    { text: cells[2].textContent, alignment: 'right' }, 
-                    { text: cells[3].textContent, alignment: 'center' }, 
-                    { text: cells[4].textContent, alignment: 'center' }, 
-                    { text: cells[5].textContent, alignment: 'center' }, 
-                    { text: cells[6].textContent, alignment: 'center' }, 
-                ]);
-            });
-            
+                console.log('Cells:', cells.length);
+                if (cells.length === 7) {
+                    pdfTableBody.push([
+                        {text: cells[0].textContent.trim(), alignment: 'left'},
+                        {text: cells[1].textContent.trim(), alignment: 'right'},
+                        {text: cells[2].textContent.trim(), alignment: 'right'},
+                        {text: cells[3].textContent.trim(), alignment: 'right'},
+                        {text: cells[4].textContent.trim(), alignment: 'right'},
+                        {text: cells[5].textContent.trim(), alignment: 'right'},
+                        {text: cells[6].textContent.trim(), alignment: 'right'},
+                    ]);
+                } else {
+                    console.warn('Baris dilewati karena tidak sesuai format:', row);
+                }
+            });        
+                     
             const docDefinition = {
                 content: [
                     {
@@ -1648,26 +1707,42 @@
                         ]
                     },
                     {
-                        text: '\Dividen\n\n',
+                        text: [`\nPortofolio ${selectedYear}\n\n`],
                         style: 'header',
                         alignment: 'center'
                     },
                     {
-                        text: 'Terakhir Diperbarui ' + Data + ' UTC+8\n',
+                        columns: [
+                            {
+                                stack: [
+                                    {
+                                        ul: [
+                                            'Harga Unit',
+                                            'Jumlah Unit',
+                                            'Yield\n\n',
+                                            'IHSG Start',
+                                            'IHSG End',
+                                            'Yield IHSG\n',
+                                        ]
+                                    },
+                                ]
+                            },
+                            {
+                                stack: summaryData,
+                            },
+                            '',
+                            '',
+                        ]
                     },
                     {
                         style: 'tableExample',
                         table: {
                             headerRows: 1,
-                            widths: [50, '*', '*', '*', '*', '*', '*'], 
+                            widths: ['*', '*', '*', '*', '*', '*', '*'], 
                             body: pdfTableBody 
                         },
                         alignment: 'center',
-                        layout: {
-				fillColor: function (rowIndex, node, columnIndex) {
-					return (rowIndex % 2 === 0) ? '#CEEFFD' : null;
-				}
-			}
+
                     },
                 ],
                 styles: {
@@ -1685,16 +1760,19 @@
                     tableHeader: {
                         bold: true,
                         fontSize: 12,
-                        color: 'black'
+                        color: 'black',
+                        fillColor: '#CEEFFD',
                     }
                 },
                 defaultStyle: {
                     columnGap: 20
                 },
-                pageOrientation: 'landscape'  
+                pageOrientation: 'landscape',  
+
             };
             pdfMake.createPdf(docDefinition).open();
         });
+	});
 </script>
 
 @endsection
