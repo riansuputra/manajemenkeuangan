@@ -185,8 +185,6 @@
                                                     <h4>{{number_format($index['value_effect'], 0, ',', '.')}}%</h4>
                                                 </div>
                                             </div>
-                                            <h4>Riwayat Kas :</h4>
-                                            
                                         </div>
                                     </div>
                                 </div>

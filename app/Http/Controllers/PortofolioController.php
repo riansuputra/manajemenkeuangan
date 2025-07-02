@@ -134,11 +134,7 @@ class PortofolioController extends Controller
                     return $group->isNotEmpty(); // Hapus grup kosong
                 });
             });
-            
-            
-            
-
-            
+                                        
             $sortDataTranJual = $transaksiData
                 ->groupBy(function ($transaksi) {
                     return $transaksi['aset']['id'] ?? 'Unknown Aset';
@@ -161,7 +157,7 @@ class PortofolioController extends Controller
                     })->values(); // Reset array keys
                 })->filter(function ($group) {
                     return $group->isNotEmpty(); // Hapus grup kosong
-                });
+            });
 
             // dd($sortDataTranJual);
 
