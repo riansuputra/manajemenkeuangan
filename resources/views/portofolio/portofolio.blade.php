@@ -130,6 +130,7 @@
                                 <th class="text-center">No</th>
                                 <th class="text-center" colspan="2">Saham</th>
                                 <th class="text-center">Jumlah<br>Lembar</th>
+                                <th class="text-center">Harga<br>Beli</th>
                                 <th class="text-center">Current<br>Price</th>
                                 <th class="text-center">Modal</th>
                                 <th class="text-center">Valuation</th>
@@ -144,8 +145,9 @@
                             @if ($loop->first)
                             <tr>
                                 <td class="text-center"></td>
-                                <td class=" text-center" colspan="2">KAS</td>
+                                <td class="text-center" colspan="2">KAS</td>
                                 <td class="text-end " colspan="2">{{number_format($index['cur_price'], 0, ',', '.')}}</td>
+                                <td class="text-end ">{{number_format($index['cur_price'], 0, ',', '.')}}</td>
                                 <td class="text-end ">{{ number_format($index['cur_price'], 0, ',', '.')}}</td>
                                 <td class="text-end ">{{ number_format($index['modal'], 0, ',', '.')}}</td>
                                 <td class="text-end ">-</td>
@@ -206,7 +208,18 @@
                                     </a>
 
                                 </td>
+                                
                                 <td class="text-end">{{ number_format($index['modal'], 0, ',', '.')}}</td>
+                                <td class="text-end">
+                                    {{ number_format($index['cur_price'], 0, ',', '.')}}
+
+                                    <a href="" class="ms-2" data-bs-toggle="modal" data-bs-target="#modal-price-{{$index['aset']['id']}}">
+                                        <span class="avatar avatar-xs" data-bs-original-title="Klik untuk update harga" data-bs-placement="bottom" data-bs-toggle="tooltip">
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
+                                        </span>
+                                    </a>
+
+                                </td>
                                 <td class="text-end">{{ number_format($index['valuasi'] , 0, ',', '.')}}</td>
                                 <td class="text-end @if($index['p/l'] < 0) text-danger @elseif($index['p/l'] > 0) text-success @endif">{{ $index['p/l'] == 0 ? '-' : number_format($index['p/l'] , 0, ',', '.')}}</td>
                                 <td class="text-end @if($index['p/l'] < 0) text-danger @elseif($index['p/l%'] > 0) text-success @endif">{{ number_format($index['p/l%'] , 2, ',', '.')}}%</td>

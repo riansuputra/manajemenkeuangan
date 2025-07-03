@@ -39,44 +39,8 @@
 @section('content')
 <div class="container-xl">
     <div class="row row-cards">
-        <div class="col-sm-12 col-lg-12">
-            <div class="card">
-                <div class="card-body card-body-scrollable" style="max-height: 400px">
-                    <div class="row">
-                        <div class="col-6">
-                            <h4>Riwayat Tahunan</h4>
-                        </div>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-vcenter">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">Tahun</th>
-                                    <th class="text-center col-2">Yield Floating</th>
-                                    <th class="text-center col-2">Yield IHSG</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if(!empty($historisByYear->toArray()))
-                                @foreach($historisByYear as $tahun => $data)
-                                <tr>
-                                    <td style="width:5%" class="text-center">{{ $tahun }}</td>
-                                    <td class="text-center @if($data['yield'] < 0) text-red @elseif($data['yield'] > 0) text-green @endif">{{ $data['yield'] !== null ? number_format($data['yield'], 2, ',', '.') . '%' : '-' }}</td>
-                                    <td class="text-center @if($data['yield_ihsg'] < 0) text-red @elseif($data['yield_ihsg'] > 0) text-green @endif">{{ $data['yield_ihsg'] !== null ? number_format($data['yield_ihsg'], 2, ',', '.') . '%' : '-' }}</td>
-                                </tr>
-                                @endforeach
-                                @else
-                                <tr>
-                                    <td class="text-center" colspan="5">Belum ada riwayat tahunan.</td>
-                                </tr>
-                                @endif
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-12 col-lg-12">
+        
+        <div class="col-sm-12 col-lg-6">
             <div class="card">
                 <div class="card-body card-body-scrollable" style="max-height: 400px">
                     <div class="row">
@@ -105,6 +69,19 @@
                                     <td class="text-center @if($data['yield_ihsg'] < 0) text-red @elseif($data['yield_ihsg'] > 0) text-green @endif">{{ $data['yield_ihsg'] !== null ? number_format($data['yield_ihsg'], 2, ',', '.') . '%' : '-' }}</td>
                                 </tr>
                                 @endforeach
+                                {{-- Baris Total --}}
+                                <tr class="fw-bold">
+                                    <td>Total</td>
+                                    <td class="text-center">{{ number_format($totalYieldMonth, 2, ',', '.') }}%</td>
+                                    <td class="text-center">{{ number_format($totalYieldIhsgMonth, 2, ',', '.') }}%</td>
+                                </tr>
+
+                                {{-- Baris Rata-rata --}}
+                                <tr class="fw-bold">
+                                    <td>Rata-rata</td>
+                                    <td class="text-center">{{ number_format($averageYieldMonth, 2, ',', '.') }}%</td>
+                                    <td class="text-center">{{ number_format($averageYieldIhsgMonth, 2, ',', '.') }}%</td>
+                                </tr>
                                 @else
                                 <tr>
                                     <td class="text-center" colspan="5">Belum ada riwayat bulanan.</td>
@@ -116,19 +93,81 @@
                 </div>
             </div>
         </div>
-        <div class="col-12">
+        <div class="col-sm-12 col-lg-6">
             <div class="card">
                 <div class="card-body">
                      <div class="d-flex align-items-center">
-                        
+                    <h4>Grafik Bulanan</h4>
                       <div class="ms-auto lh-1 text-muted">
                         <h4>{{$selectedYear}}</h4>
                       </div>
                     </div>
-                    <div id="chart-social-referrals"></div>
+                    <div id="chart-bulanan"></div>
                 </div>
             </div>
         </div>
+        <div class="col-sm-12 col-lg-6">
+            <div class="card">
+                <div class="card-body card-body-scrollable" style="max-height: 400px">
+                    <div class="row">
+                        <div class="col-6">
+                            <h4>Riwayat Tahunan</h4>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-vcenter">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Tahun</th>
+                                    <th class="text-center col-2">Yield Floating</th>
+                                    <th class="text-center col-2">Yield IHSG</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if(!empty($historisByYear->toArray()))
+                                @foreach($historisByYear as $tahun => $data)
+                                <tr>
+                                    <td style="width:5%">{{ $tahun }}</td>
+                                    <td class="text-center @if($data['yield'] < 0) text-red @elseif($data['yield'] > 0) text-green @endif">{{ $data['yield'] !== null ? number_format($data['yield'], 2, ',', '.') . '%' : '-' }}</td>
+                                    <td class="text-center @if($data['yield_ihsg'] < 0) text-red @elseif($data['yield_ihsg'] > 0) text-green @endif">{{ $data['yield_ihsg'] !== null ? number_format($data['yield_ihsg'], 2, ',', '.') . '%' : '-' }}</td>
+                                </tr>
+                                @endforeach
+                                {{-- Baris Total --}}
+                                <tr class="fw-bold">
+                                    <td>Total</td>
+                                    <td class="text-center">{{ number_format($totalYieldYear, 2, ',', '.') }}%</td>
+                                    <td class="text-center">{{ number_format($totalYieldIhsgYear, 2, ',', '.') }}%</td>
+                                </tr>
+
+                                {{-- Baris Rata-rata --}}
+                                <tr class="fw-bold">
+                                    <td>Rata-rata</td>
+                                    <td class="text-center">{{ number_format($averageYieldYear, 2, ',', '.') }}%</td>
+                                    <td class="text-center">{{ number_format($averageYieldIhsgYear, 2, ',', '.') }}%</td>
+                                </tr>
+                                @else
+                                <tr>
+                                    <td class="text-center" colspan="5">Belum ada riwayat tahunan.</td>
+                                </tr>
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                         <h4>Grafik Tahunan</h4>
+                      
+                    </div>
+                    <div id="chart-tahunan"></div>
+                </div>
+            </div>
+        </div>
+        
     </div>
 </div>    
 
@@ -149,6 +188,19 @@
             <td class="text-center">{{ $data['yield_ihsg'] !== null ? number_format($data['yield_ihsg'], 2, ',', '.') . '%' : '-' }}</td>
         </tr>
         @endforeach
+        {{-- Baris Total --}}
+        <tr class="fw-bold">
+            <td>Total</td>
+            <td class="text-center">{{ number_format($totalYieldYear, 2, ',', '.') }}%</td>
+            <td class="text-center">{{ number_format($totalYieldIhsgYear, 2, ',', '.') }}%</td>
+        </tr>
+
+        {{-- Baris Rata-rata --}}
+        <tr class="fw-bold">
+            <td>Rata-rata</td>
+            <td class="text-center">{{ number_format($averageYieldYear, 2, ',', '.') }}%</td>
+            <td class="text-center">{{ number_format($averageYieldIhsgYear, 2, ',', '.') }}%</td>
+        </tr>
         @else
         <tr>
             <td class="text-center" colspan="3">Belum ada riwayat tahunan.</td>
@@ -174,6 +226,19 @@
             <td class="text-center">{{ $data['yield_ihsg'] !== null ? number_format($data['yield_ihsg'], 2, ',', '.') . '%' : '-' }}</td>
         </tr>
         @endforeach
+        {{-- Baris Total --}}
+        <tr class="fw-bold">
+            <td>Total</td>
+            <td class="text-center">{{ number_format($totalYieldMonth, 2, ',', '.') }}%</td>
+            <td class="text-center">{{ number_format($totalYieldIhsgMonth, 2, ',', '.') }}%</td>
+        </tr>
+
+        {{-- Baris Rata-rata --}}
+        <tr class="fw-bold">
+            <td>Rata-rata</td>
+            <td class="text-center">{{ number_format($averageYieldMonth, 2, ',', '.') }}%</td>
+            <td class="text-center">{{ number_format($averageYieldIhsgMonth, 2, ',', '.') }}%</td>
+        </tr>
         @else
         <tr>
             <td class="text-center" colspan="3">Belum ada riwayat bulanan.</td>
@@ -198,6 +263,83 @@
         });
     });
 </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const groupedByYear = @json($groupedByYear); // Ambil data dari controller
+        console.log(groupedByYear);
+
+        const seriesData = {
+            labels: [],
+            yield: [],
+            yield_ihsg: [],
+        };
+
+        for (const [year, dataArray] of Object.entries(groupedByYear)) {
+            const data = dataArray[0]; // Ambil objek pertama dari array
+
+            seriesData.labels.push(year);
+
+            const yieldValue = parseFloat(data.yield);
+            seriesData.yield.push(yieldValue);
+
+            const yieldIhsgValue = data.yield_ihsg !== null ? parseFloat(data.yield_ihsg) : null;
+            seriesData.yield_ihsg.push(yieldIhsgValue);
+        }
+
+
+        // Konfigurasi ApexCharts
+        window.ApexCharts && (new ApexCharts(document.getElementById('chart-tahunan'), {
+            chart: {
+                type: "line",
+                fontFamily: 'inherit',
+                height: 288,
+                parentHeightOffset: 0,
+                toolbar: { show: false },
+                animations: { enabled: false }
+            },
+            fill: { opacity: 1 },
+            stroke: { width: 2, lineCap: "round", curve: "straight" },
+            series: [
+                { name: "YIELD", data: seriesData.yield },
+                { name: "YIELD IHSG", data: seriesData.yield_ihsg },
+            ],
+            tooltip: { theme: 'dark' },
+            grid: {
+                padding: { top: -20, right: 0, left: -4, bottom: -4 },
+                strokeDashArray: 4,
+                xaxis: { lines: { show: true } }
+            },
+            xaxis: {
+                categories: seriesData.labels, // Tahun sebagai label X
+                labels: {
+                    padding: 4,
+                    style: { fontSize: "12px" }
+                }
+            },
+            yaxis: {
+                labels: {
+                    padding: 4,
+                    formatter: function (value) {
+                        return value !== null ? value.toFixed(2) + '%' : '-';
+                    }
+                },
+            },
+            colors: [
+                tabler.getColor("facebook"), 
+                tabler.getColor("youtube"), 
+            ],
+            legend: {
+                show: true,
+                position: 'bottom',
+                offsetY: 12,
+                markers: { width: 10, height: 10, radius: 100 },
+                itemMargin: { horizontal: 8, vertical: 8 }
+            }
+        })).render();
+    });
+</script>
+
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -228,7 +370,7 @@
     }
 
     // Konfigurasi ApexCharts
-    window.ApexCharts && (new ApexCharts(document.getElementById('chart-social-referrals'), {
+    window.ApexCharts && (new ApexCharts(document.getElementById('chart-bulanan'), {
         chart: {
             type: "line",
             fontFamily: 'inherit',

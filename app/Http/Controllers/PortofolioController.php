@@ -287,13 +287,24 @@ class PortofolioController extends Controller
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/saldo'),
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/portofolio'),
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/aset'),
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/tutup-buku'),
         ]);
         // dd($responses[0]->json() , $responses[1]->successful() , $responses[2]->successful() , $responses[3]->successful());
-        if ($responses[0]->successful() && $responses[1]->successful() && $responses[2]->successful() && $responses[3]->successful()){
+        if ($responses[0]->successful() && $responses[1]->successful() && $responses[2]->successful() && $responses[3]->successful() && $responses[4]->successful()){
             $mutasiData = $responses[0]->json()['data']['mutasi'];
             $saldoData = $responses[1]->json()['data']['saldo'];
             $portoData = $responses[2]->json()['data']['portofolio'];
             $asetData = $responses[3]->json()['data']['aset'];
+            $tutupData = $responses[4]->json()['data']['tutup_buku'];
+
+            $tutupData = collect($tutupData);
+
+            if ($tutupData->isNotEmpty()) {
+                $tahunTerakhir = (int) $tutupData->max('tahun');
+                $tahunBerikutnya = $tahunTerakhir + 1;
+            } else {
+                $tahunBerikutnya = now()->year; // fallback: tahun sekarang
+            }
             
 
             $portoData = collect($portoData);
@@ -322,7 +333,7 @@ class PortofolioController extends Controller
             $saldo = collect($saldoData)->sum('saldo');
 
             $currentYear = Carbon::now()->year;
-            $selectedYear = $filterValue ?? $currentYear;
+            $selectedYear = $filterValue ?? $tahunBerikutnya;
             $mutasiDataFilter  = collect($mutasiData)->where('tahun', $selectedYear);
             
             $mutasiDataGrup = collect($mutasiDataFilter)->groupBy('tahun')->toArray();
@@ -358,11 +369,16 @@ class PortofolioController extends Controller
                 });
             });
 
-            $uniqueYears = collect($mutasiData)
-                ->pluck('tahun')  
-                ->unique()        
-                ->sort()          
-                ->values(); 
+            $tahunTutup = collect($tutupData)
+                ->pluck('tahun')
+                ->map(fn($tahun) => (int) $tahun) // paksa jadi integer
+                ->unique()
+                ->sort()
+                ->values();
+
+            $maxTahun = $tahunTutup->max();
+
+            $uniqueYears = $tahunTutup->push($maxTahun + 1)->values();
 
             $lastMutasiDana = collect($mutasiData)->last();
             $firstMutasiDana = collect($mutasiData)
@@ -450,77 +466,89 @@ class PortofolioController extends Controller
         
         $responses = Http::pool(fn (Pool $pool) => [
             $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/historis'),
-            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/transaksi'),
+            $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/tutup-buku'),
+            // $pool->withHeaders($this->getHeaders($request))->get(env('API_URL') . '/transaksi'),
         ]);
 
         if ($responses[0]->successful() && $responses[1]->successful()){ 
             $historisData = $responses[0]->json()['data']['historis'];
-            $transaksiData = $responses[1]->json()['data']['transaksi'];
+            $tutupData = $responses[1]->json()['data']['tutup_buku'];
 
-            $transaksiData = collect($transaksiData);
-            $groupedDataTranJual = $transaksiData->groupBy(function ($transaksi) {
-                // Grup berdasarkan Tahun
-                return $transaksi['tanggal'] ? Carbon::parse($transaksi['tanggal'])->year : 'Unknown Year';
-            })->map(function ($yearGroup) {
-                return $yearGroup->groupBy(function ($transaksi) {
-                    // Grup berdasarkan Bulan
-                    return $transaksi['tanggal'] ? Carbon::parse($transaksi['tanggal'])->format('Y-m') : 'Unknown Month';
-                })->map(function ($monthGroup) {
-                    // Hitung total modal, net realisasi, profit, loss, dan yield per bulan
-                    $total_modal_terjual = $monthGroup->sum(function ($transaksi) {
-                        return $transaksi['volume'] * $transaksi['avg_price'];
-                    });
+            $tutupData = collect($tutupData);
+
+            if ($tutupData->isNotEmpty()) {
+                $tahunTerakhir = (int) $tutupData->max('tahun');
+                $tahunBerikutnya = $tahunTerakhir + 1;
+            } else {
+                $tahunBerikutnya = now()->year; // fallback: tahun sekarang
+            }
+            // dd($historisData);
+            // $transaksiData = $responses[2]->json()['data']['transaksi'];
+
+            // $transaksiData = collect($transaksiData);
+            // $groupedDataTranJual = $transaksiData->groupBy(function ($transaksi) {
+            //     // Grup berdasarkan Tahun
+            //     return $transaksi['tanggal'] ? Carbon::parse($transaksi['tanggal'])->year : 'Unknown Year';
+            // })->map(function ($yearGroup) {
+            //     return $yearGroup->groupBy(function ($transaksi) {
+            //         // Grup berdasarkan Bulan
+            //         return $transaksi['tanggal'] ? Carbon::parse($transaksi['tanggal'])->format('Y-m') : 'Unknown Month';
+            //     })->map(function ($monthGroup) {
+            //         // Hitung total modal, net realisasi, profit, loss, dan yield per bulan
+            //         $total_modal_terjual = $monthGroup->sum(function ($transaksi) {
+            //             return $transaksi['volume'] * $transaksi['avg_price'];
+            //         });
             
-                    $net_realisasi = $monthGroup->sum(function ($transaksi) {
-                        return ($transaksi['volume'] * $transaksi['harga']) - ($transaksi['volume'] * $transaksi['avg_price']);
-                    });
+            //         $net_realisasi = $monthGroup->sum(function ($transaksi) {
+            //             return ($transaksi['volume'] * $transaksi['harga']) - ($transaksi['volume'] * $transaksi['avg_price']);
+            //         });
             
-                    $total_profit_realisasi = $monthGroup->filter(function ($transaksi) {
-                        return (($transaksi['volume'] * $transaksi['harga']) - ($transaksi['volume'] * $transaksi['avg_price'])) > 0;
-                    })->sum(function ($transaksi) {
-                        return ($transaksi['volume'] * $transaksi['harga']) - ($transaksi['volume'] * $transaksi['avg_price']);
-                    });
+            //         $total_profit_realisasi = $monthGroup->filter(function ($transaksi) {
+            //             return (($transaksi['volume'] * $transaksi['harga']) - ($transaksi['volume'] * $transaksi['avg_price'])) > 0;
+            //         })->sum(function ($transaksi) {
+            //             return ($transaksi['volume'] * $transaksi['harga']) - ($transaksi['volume'] * $transaksi['avg_price']);
+            //         });
             
-                    $total_loss_realisasi = $monthGroup->filter(function ($transaksi) {
-                        return (($transaksi['volume'] * $transaksi['harga']) - ($transaksi['volume'] * $transaksi['avg_price'])) < 0;
-                    })->sum(function ($transaksi) {
-                        return ($transaksi['volume'] * $transaksi['harga']) - ($transaksi['volume'] * $transaksi['avg_price']);
-                    });
+            //         $total_loss_realisasi = $monthGroup->filter(function ($transaksi) {
+            //             return (($transaksi['volume'] * $transaksi['harga']) - ($transaksi['volume'] * $transaksi['avg_price'])) < 0;
+            //         })->sum(function ($transaksi) {
+            //             return ($transaksi['volume'] * $transaksi['harga']) - ($transaksi['volume'] * $transaksi['avg_price']);
+            //         });
             
-                    $yield_realisasi = $total_modal_terjual > 0 ? ($net_realisasi / $total_modal_terjual) * 100 : 0;
+            //         $yield_realisasi = $total_modal_terjual > 0 ? ($net_realisasi / $total_modal_terjual) * 100 : 0;
             
-                    return [
-                        'total_modal_terjual' => number_format($total_modal_terjual, 2, ',', '.'),
-                        'net_realisasi' => number_format($net_realisasi, 2, ',', '.'),
-                        'total_profit_realisasi' => number_format($total_profit_realisasi, 2, ',', '.'),
-                        'total_loss_realisasi' => number_format($total_loss_realisasi, 2, ',', '.'),
-                        'yield_realisasi' => number_format($yield_realisasi, 2, ',', '.'),
-                    ];
-                })->put('total_tahun', function ($monthData) {
-                    // Hitung total keseluruhan dalam tahun yang sama
-                    $total_modal_tahun = collect($monthData)->sum('total_modal_terjual');
-                    $net_realisasi_tahun = collect($monthData)->sum('net_realisasi');
-                    $total_profit_tahun = collect($monthData)->sum('total_profit_realisasi');
-                    $total_loss_tahun = collect($monthData)->sum('total_loss_realisasi');
-                    $yield_tahun = $total_modal_tahun > 0 ? ($net_realisasi_tahun / $total_modal_tahun) * 100 : 0;
+            //         return [
+            //             'total_modal_terjual' => number_format($total_modal_terjual, 2, ',', '.'),
+            //             'net_realisasi' => number_format($net_realisasi, 2, ',', '.'),
+            //             'total_profit_realisasi' => number_format($total_profit_realisasi, 2, ',', '.'),
+            //             'total_loss_realisasi' => number_format($total_loss_realisasi, 2, ',', '.'),
+            //             'yield_realisasi' => number_format($yield_realisasi, 2, ',', '.'),
+            //         ];
+            //     })->put('total_tahun', function ($monthData) {
+            //         // Hitung total keseluruhan dalam tahun yang sama
+            //         $total_modal_tahun = collect($monthData)->sum('total_modal_terjual');
+            //         $net_realisasi_tahun = collect($monthData)->sum('net_realisasi');
+            //         $total_profit_tahun = collect($monthData)->sum('total_profit_realisasi');
+            //         $total_loss_tahun = collect($monthData)->sum('total_loss_realisasi');
+            //         $yield_tahun = $total_modal_tahun > 0 ? ($net_realisasi_tahun / $total_modal_tahun) * 100 : 0;
             
-                    return [
-                        'total_modal_terjual' => number_format($total_modal_tahun, 2, ',', '.'),
-                        'net_realisasi' => number_format($net_realisasi_tahun, 2, ',', '.'),
-                        'total_profit_realisasi' => number_format($total_profit_tahun, 2, ',', '.'),
-                        'total_loss_realisasi' => number_format($total_loss_tahun, 2, ',', '.'),
-                        'yield_realisasi' => number_format($yield_tahun, 2, ',', '.'),
-                    ];
-                });
-            });
+            //         return [
+            //             'total_modal_terjual' => number_format($total_modal_tahun, 2, ',', '.'),
+            //             'net_realisasi' => number_format($net_realisasi_tahun, 2, ',', '.'),
+            //             'total_profit_realisasi' => number_format($total_profit_tahun, 2, ',', '.'),
+            //             'total_loss_realisasi' => number_format($total_loss_tahun, 2, ',', '.'),
+            //             'yield_realisasi' => number_format($yield_tahun, 2, ',', '.'),
+            //         ];
+            //     });
+            // });
             
 
             $currentYear = Carbon::now()->year;
-            $selectedYear = $filterValue ?? $currentYear;
+            $selectedYear = $filterValue ?? $tahunBerikutnya;
 
-            $filteredDataTranJual = $groupedDataTranJual->filter(function ($_, $year) use ($selectedYear) {
-                return $year == $selectedYear;
-            });
+            // $filteredDataTranJual = $groupedDataTranJual->filter(function ($_, $year) use ($selectedYear) {
+            //     return $year == $selectedYear;
+            // });
 
             
 
@@ -528,12 +556,54 @@ class PortofolioController extends Controller
                 return $item['tahun'] == $selectedYear;
             });
 
+
             $groupedByMonth = $filteredData->groupBy('bulan')->map(function ($items) {
                 return [
                     'yield' => $items->pluck('yield')->first() ?? '0.00',
                     'yield_ihsg' => $items->pluck('yield_ihsg')->first() ?? 0.00,
                 ];
             });
+
+            $totalYieldMonth = $groupedByMonth->sum(function ($item) {
+                return (float) $item['yield'];
+            });
+
+            $totalYieldIhsgMonth = $groupedByMonth->sum(function ($item) {
+                return (float) $item['yield_ihsg'];
+            });
+
+            $averageYieldMonth = $groupedByMonth->count() > 0 ? $totalYieldMonth / $groupedByMonth->count() : 0;
+            $averageYieldIhsgMonth = $groupedByMonth->count() > 0 ? $totalYieldIhsgMonth / $groupedByMonth->count() : 0;
+
+
+            $groupedByYear = collect($historisData)->groupBy('tahun')->map(function ($items) {
+                $items = $items->sortBy('created_at');
+
+                // Cari yield terakhir yang bukan null atau 0 (opsional)
+                $lastNonZeroYield = $items->pluck('yield')->filter(fn($y) => $y != null && $y != 0)->last();
+                $lastNonZeroIhsg = $items->pluck('yield_ihsg')->filter(fn($y) => $y != null && $y != 0)->last();
+
+                return [
+                    'yield' => $lastNonZeroYield ?? '0.00',
+                    'yield_ihsg' => $lastNonZeroIhsg ?? 0.00,
+                ];
+            });
+
+
+            $totalYieldYear = $groupedByYear->sum(function ($item) {
+                return (float) $item['yield'];
+            });
+
+            $totalYieldIhsgYear = $groupedByYear->sum(function ($item) {
+                return (float) $item['yield_ihsg'];
+            });
+
+            $averageYieldYear = $groupedByYear->count() > 0 ? $totalYieldYear / $groupedByYear->count() : 0;
+            $averageYieldIhsgYear = $groupedByYear->count() > 0 ? $totalYieldIhsgYear / $groupedByYear->count() : 0;
+
+
+            // dd($totalYieldMonth, $totalYieldIhsgMonth, $averageYieldMonth, $averageYieldIhsgMonth, 
+            //     $totalYieldYear, $totalYieldIhsgYear, $averageYieldYear, $averageYieldIhsgYear); 
 
             $resultData = [
                 'tahun' => $selectedYear,
@@ -556,20 +626,36 @@ class PortofolioController extends Controller
                 ];
             });
 
-            $uniqueYears = collect($historisData)
+           $tahunTutup = collect($tutupData)
                 ->pluck('tahun')
+                ->map(fn($tahun) => (int) $tahun) // paksa jadi integer
                 ->unique()
                 ->sort()
                 ->values();
 
-            // dd($groupedByMonth);
+            $maxTahun = $tahunTutup->max();
+
+            $uniqueYears = $tahunTutup->push($maxTahun + 1)->values();
+
+
+
+            // dd($uniqueYears);
 
             return view('portofolio.historis', [
                 'user' => $request->auth['user'],
                 'resultData' => $resultData, 
                 'uniqueYears' => $uniqueYears,
+                'totalYieldMonth' => $totalYieldMonth,
+                'totalYieldYear' => $totalYieldYear,
+                'totalYieldIhsgMonth' => $totalYieldIhsgMonth,
+                'totalYieldIhsgYear' => $totalYieldIhsgYear,
+                'averageYieldMonth' => $averageYieldMonth,
+                'averageYieldYear' => $averageYieldYear,
+                'averageYieldIhsgMonth' => $averageYieldIhsgMonth,
+                'averageYieldIhsgYear' => $averageYieldIhsgYear,
                 'selectedYear' => $selectedYear,
                 'groupedByMonth' => $groupedByMonth,
+                'groupedByYear' => $groupedByYear,
                 'historisByYear' => $historisByYear,
                 'date' => $date,
             ]);
