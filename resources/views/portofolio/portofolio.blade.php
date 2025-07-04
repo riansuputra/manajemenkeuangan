@@ -49,7 +49,7 @@
                 <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-inline me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M19 4v16h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12z" /><path d="M19 16h-12a2 2 0 0 0 -2 2" /><path d="M9 8h6" /></svg>
                     Tutup Buku
             </a>	
-            <a class="dropdown-item" id="printModalToPdf">
+            <a class="dropdown-item" href="" data-bs-toggle="modal" id="printModalToPdf">
                 <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-inline me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
                     Cetak PDF
             </a>
@@ -131,8 +131,8 @@
                                 <th class="text-center" colspan="2">Saham</th>
                                 <th class="text-center">Jumlah<br>Lembar</th>
                                 <th class="text-center">Harga<br>Beli</th>
-                                <th class="text-center">Current<br>Price</th>
                                 <th class="text-center">Modal</th>
+                                <th class="text-center">Current<br>Price</th>
                                 <th class="text-center">Valuation</th>
                                 <th class="text-center">P/L</th>
                                 <th class="text-center">P/L (%)</th>
@@ -147,9 +147,9 @@
                                 <td class="text-center"></td>
                                 <td class="text-center" colspan="2">KAS</td>
                                 <td class="text-end " colspan="2">{{number_format($index['cur_price'], 0, ',', '.')}}</td>
-                                <td class="text-end ">{{number_format($index['cur_price'], 0, ',', '.')}}</td>
-                                <td class="text-end ">{{ number_format($index['cur_price'], 0, ',', '.')}}</td>
+                                <td class="text-end ">{{number_format($index['transaksi_pertama']['harga'], 0, ',', '.')}}</td>
                                 <td class="text-end ">{{ number_format($index['modal'], 0, ',', '.')}}</td>
+                                <td class="text-end ">{{ number_format($index['cur_price'], 0, ',', '.')}}</td>
                                 <td class="text-end ">-</td>
                                 <td class="text-end ">0,00%</td>
                                 <td style="width:1%" class="text-center">
@@ -199,13 +199,7 @@
                                 <td style="width:6%">{{$index['aset']['nama']}}</td>
                                 <td class="text-end">{{ number_format($index['volume'], 0, ',', '.')}}</td>
                                 <td class="text-end">
-                                    {{ number_format($index['cur_price'], 0, ',', '.')}}
-
-                                    <a href="" class="ms-2" data-bs-toggle="modal" data-bs-target="#modal-price-{{$index['aset']['id']}}">
-                                        <span class="avatar avatar-xs" data-bs-original-title="Klik untuk update harga" data-bs-placement="bottom" data-bs-toggle="tooltip">
-                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
-                                        </span>
-                                    </a>
+                                    {{ number_format($index['transaksi_pertama']['harga'], 0, ',', '.')}}
 
                                 </td>
                                 
@@ -252,7 +246,10 @@
                                                     <div class="col-lg-12">
                                                         <div class="mb-3">
                                                             <label class="form-label required">Tanggal: </label>
-                                                            <input type="date" name="tanggal_harga" id="tanggal_harga" class="form-control" min="{{ now()->format('Y-m-d') }}"  value="{{ now()->format('Y-m-d') }}" required>
+                                                            @php
+                                                                $tanggalTutup = \Carbon\Carbon::createFromDate($tahunBerikutnya, 1, 1)->format('Y-m-d');
+                                                            @endphp
+                                                            <input type="date" name="tanggal_harga" id="tanggal_harga" class="form-control" min="{{ $tanggalTutup }}"  value="{{ $tanggalTutup }}" required>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-12">
@@ -754,9 +751,10 @@
                            <tr class="fw-bold">
                                 <td colspan="5" class="text-center">TOTAL</td>
                                 <td class="text-end">{{ number_format($sortedData->sum('modal'), 0, ',', '.') }}</td>
+                                <td class="text-end"></td>
                                 <td class="text-end">{{ number_format($sortedData->sum('valuasi'), 0, ',', '.') }}</td>
                                 <td class="text-end @if($sortedData->sum('p/l') < 0) text-danger @elseif($sortedData->sum('p/l') > 0) text-success @endif">{{ $sortedData->sum('p/l') == 0 ? '-' : number_format($sortedData->sum('p/l'), 0, ',', '.') }}</td>
-                                <td class="text-end @if(($sortedData->sum('p/l') / $sortedData->sum('modal')) < 0) text-danger @elseif(($sortedData->sum('p/l') / $sortedData->sum('modal')) > 0) text-success @endif">{{ number_format(($sortedData->sum('p/l') / $sortedData->sum('modal')) * 100, 2, ',', '.') }}%</td>
+                                <td class="text-end"></td>
                                 <td></td>
                             </tr>
                            @else
@@ -830,7 +828,10 @@
                         <div class="col-lg-4">
                             <div class="mb-3">
                                 <label class="form-label required">Tanggal: </label>
-                                <input type="date" name="tanggal" id="tanggal" class="form-control" min="{{ now()->format('Y-m-d') }}"  value="{{ now()->format('Y-m-d') }}">
+                                @php
+                                    $tanggalTutup = \Carbon\Carbon::createFromDate($tahunBerikutnya, 1, 1)->format('Y-m-d');
+                                @endphp
+                                <input type="date" name="tanggal" id="tanggal" class="form-control" min="{{ $tanggalTutup }}"  value="{{ $tanggalTutup }}">
                             </div>
                         </div>
                     </div>

@@ -54,6 +54,20 @@ class PortofolioController extends Controller
             $tutupData = collect($tutupData);
             // dd($tutupData);
             // dd($portoData);
+            // Ambil transaksi pertama dari masing-masing aset
+            $firstTransaksiPerAset = $portoData
+                ->groupBy(function ($item) {
+                    return $item['aset']['id'] ?? 'Unknown Aset';
+                })
+                ->map(function ($group) {
+                    // Ambil kinerja_portofolio tertua
+                    $first = $group->sortBy(function ($item) {
+                        return Carbon::parse($item['kinerja_portofolio']['tanggal'] ?? $item['tanggal']);
+                    })->first();
+
+                    return $first['kinerja_portofolio']['transaksi'] ?? null;
+                });
+
 
             if ($tutupData->isNotEmpty()) {
                 $tahunTerakhir = (int) $tutupData->max('tahun');
@@ -224,7 +238,7 @@ class PortofolioController extends Controller
                 $item['p/l%'] = $profitLossPercent;
     
                 return $item;
-            });
+            }); 
 
             // dd($sortData);
             // dd($selectedYear);
@@ -234,22 +248,27 @@ class PortofolioController extends Controller
             $totalModal = $sortedData->sum('modal');
             $totalValuasi = $sortedData->sum('valuasi');
 
-            $sortedData = $sortedData->map(function ($item) use ($totalModal, $totalValuasi) {
+            $sortedData = $sortedData->map(function ($item) use ($totalModal, $totalValuasi, $firstTransaksiPerAset) {
                 $modal = $item['modal'];
                 $valuasi = $item['valuasi'];
-            
-                // Fund Allocation dan Value Effect
+
                 $fundAlloc = $totalModal > 0 ? ($modal / $totalModal) * 100 : 0;
                 $valueEffect = $totalValuasi > 0 ? ($valuasi / $totalValuasi) * 100 : 0;
-            
+
                 $item['fund_alloc'] = $fundAlloc;
                 $item['value_effect'] = $valueEffect;
-            
+
+                // Tambahkan transaksi pertama dari aset yang sama
+                $asetId = $item['aset']['id'] ?? 'Unknown Aset';
+                $item['transaksi_pertama'] = $firstTransaksiPerAset[$asetId] ?? null;
+
                 return $item;
             });
 
+
             // dd($filteredData);
             // dd($sortData, $sortedData, $filteredData, $filteredDataTran, $filteredDataTranJual);
+            // dd($sortedData);
             $date = now()->format('d/m/Y');
             
 
@@ -261,6 +280,7 @@ class PortofolioController extends Controller
                 'selectedYear' => $selectedYear,
                 'currentMonth' => $currentMonth,
                 'filteredData' => $filteredData,
+                'tahunBerikutnya' => $tahunBerikutnya,
                 'sortedData' => $sortedData,
                 'filteredAsetData' => $filteredAsetData,
                 'sortedHistorisData' => $sortedHistorisData,
@@ -306,6 +326,7 @@ class PortofolioController extends Controller
                 $tahunBerikutnya = now()->year; // fallback: tahun sekarang
             }
             
+            // dd($tahunBerikutnya);
 
             $portoData = collect($portoData);
 
@@ -392,6 +413,7 @@ class PortofolioController extends Controller
                 'mutasiData' => $mutasiData,
                 'mutasiDataGrup' => $mutasiDataGrup,
                 'mutasidana' => $mutasidana,
+                'tahunBerikutnya' => $tahunBerikutnya,
                 'saldoData' => $saldoData,
                 'saldo' => $saldo,
                 'lastMutasiDana' => $lastMutasiDana,

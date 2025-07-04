@@ -249,7 +249,10 @@
                         <div class="col-lg-6">
                             <div class="mb-3">
                                 <label class="form-label required">Tanggal: </label>
-                                <input type="date" name="tanggal" id="tanggal" class="form-control" min="{{ now()->format('Y-m-d') }}" value="{{ now()->format('Y-m-d') }}" required>
+                                @php
+                                    $tanggalTutup = \Carbon\Carbon::createFromDate($tahunBerikutnya, 1, 1)->format('Y-m-d');
+                                @endphp
+                                <input type="date" name="tanggal" id="tanggal" class="form-control" min="{{ $tanggalTutup }}" value="{{ $tanggalTutup }}" required>
                             </div>
                         </div>
                     </div>
