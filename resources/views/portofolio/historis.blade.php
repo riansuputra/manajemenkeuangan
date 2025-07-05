@@ -5,9 +5,9 @@
 @section('page-title')
 <div class="col">
     <h2 class="page-title">
-        Historis
+        {{ __('history.historical') }}
     </h2>
-    <div class="text-muted mt-1">Tahun {{$selectedYear}}</div>
+    <div class="text-muted mt-1">{{ __('history.year') }} {{$selectedYear}}</div>
 </div>
 <div class="col-auto d-print-none" >
 	<form class="row"id="filterForm" action="{{ route('historis.filter') }}" method="POST">
@@ -30,7 +30,7 @@
 	<div class="btn-list">
 		<a class="btn btn-primary"  id="printModalToPdf">
             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
-          	Cetak PDF
+          	{{ __('history.print_pdf') }}
       	</a>
 	</div>
 </div>
@@ -45,7 +45,7 @@
                 <div class="card-body card-body-scrollable" style="max-height: 400px">
                     <div class="row">
                         <div class="col-6">
-                            <h4>Riwayat Bulanan</h4>
+                            <h4>{{ __('history.monthly_history') }}</h4>
                         </div>
                         <div class="col-6 text-muted text-end">
                             <h4>{{$selectedYear}}</h4>
@@ -55,9 +55,9 @@
                         <table class="table table-bordered table-vcenter">
                             <thead>
                                 <tr>
-                                    <th class="text-center">Bulan</th>
-                                    <th class="text-center col-2">Yield Floating</th>
-                                    <th class="text-center col-2">Yield IHSG</th>
+                                    <th class="text-center">{{ __('history.month') }}</th>
+                                    <th class="text-center col-2">{{ __('history.floating_yield') }}</th>
+                                    <th class="text-center col-2">{{ __('history.yield') }} IHSG</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -78,7 +78,7 @@
 
                                 {{-- Baris Rata-rata --}}
                                 <tr class="fw-bold">
-                                    <td>Rata-rata</td>
+                                    <td>{{ __('history.average') }}</td>
                                     <td class="text-center">{{ number_format($averageYieldMonth, 2, ',', '.') }}%</td>
                                     <td class="text-center">{{ number_format($averageYieldIhsgMonth, 2, ',', '.') }}%</td>
                                 </tr>
@@ -97,7 +97,7 @@
             <div class="card">
                 <div class="card-body">
                      <div class="d-flex align-items-center">
-                    <h4>Grafik Bulanan</h4>
+                    <h4>{{ __('history.monthly_chart') }}</h4>
                       <div class="ms-auto lh-1 text-muted">
                         <h4>{{$selectedYear}}</h4>
                       </div>
@@ -111,15 +111,15 @@
                 <div class="card-body card-body-scrollable" style="max-height: 400px">
                     <div class="row">
                         <div class="col-6">
-                            <h4>Riwayat Tahunan</h4>
+                            <h4>{{ __('history.yearly_history') }}</h4>
                         </div>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-bordered table-vcenter">
                             <thead>
                                 <tr>
-                                    <th class="text-center">Tahun</th>
-                                    <th class="text-center col-2">Yield Floating</th>
+                                    <th class="text-center">{{ __('history.year') }}</th>
+                                    <th class="text-center col-2">{{ __('history.floating_yield') }}</th>
                                     <th class="text-center col-2">Yield IHSG</th>
                                 </tr>
                             </thead>
@@ -141,7 +141,7 @@
 
                                 {{-- Baris Rata-rata --}}
                                 <tr class="fw-bold">
-                                    <td>Rata-rata</td>
+                                    <td>{{ __('history.average') }}</td>
                                     <td class="text-center">{{ number_format($averageYieldYear, 2, ',', '.') }}%</td>
                                     <td class="text-center">{{ number_format($averageYieldIhsgYear, 2, ',', '.') }}%</td>
                                 </tr>
@@ -160,7 +160,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex align-items-center">
-                         <h4>Grafik Tahunan</h4>
+                         <h4>{{ __('history.yearly_chart') }}</h4>
                       
                     </div>
                     <div id="chart-tahunan"></div>

@@ -585,19 +585,6 @@ class PortofolioController extends Controller
                     'yield_ihsg' => $items->pluck('yield_ihsg')->first() ?? 0.00,
                 ];
             });
-
-            $totalYieldMonth = $groupedByMonth->sum(function ($item) {
-                return (float) $item['yield'];
-            });
-
-            $totalYieldIhsgMonth = $groupedByMonth->sum(function ($item) {
-                return (float) $item['yield_ihsg'];
-            });
-
-            $averageYieldMonth = $groupedByMonth->count() > 0 ? $totalYieldMonth / $groupedByMonth->count() : 0;
-            $averageYieldIhsgMonth = $groupedByMonth->count() > 0 ? $totalYieldIhsgMonth / $groupedByMonth->count() : 0;
-
-
             $groupedByYear = collect($historisData)->groupBy('tahun')->map(function ($items) {
                 $items = $items->sortBy('created_at');
 
@@ -611,17 +598,30 @@ class PortofolioController extends Controller
                 ];
             });
 
+            // Filter hanya data yang punya nilai yield riil
+            $validYieldData = $groupedByYear->filter(fn($item) => (float) $item['yield'] != 0);
+            $validYieldIhsgData = $groupedByYear->filter(fn($item) => (float) $item['yield_ihsg'] != 0);
 
-            $totalYieldYear = $groupedByYear->sum(function ($item) {
+            $totalYieldMonth = $groupedByMonth->sum(function ($item) {
                 return (float) $item['yield'];
             });
 
-            $totalYieldIhsgYear = $groupedByYear->sum(function ($item) {
+            $totalYieldIhsgMonth = $groupedByMonth->sum(function ($item) {
                 return (float) $item['yield_ihsg'];
             });
 
-            $averageYieldYear = $groupedByYear->count() > 0 ? $totalYieldYear / $groupedByYear->count() : 0;
-            $averageYieldIhsgYear = $groupedByYear->count() > 0 ? $totalYieldIhsgYear / $groupedByYear->count() : 0;
+            $averageYieldMonth = $groupedByMonth->count() > 0 ? $totalYieldMonth / $groupedByMonth->count() : 0;
+            $averageYieldIhsgMonth = $groupedByMonth->count() > 0 ? $totalYieldIhsgMonth / $groupedByMonth->count() : 0;
+
+
+            
+
+
+            $totalYieldYear = $validYieldData->sum(fn($item) => (float) $item['yield']);
+            $averageYieldYear = $validYieldData->count() > 0 ? $totalYieldYear / $validYieldData->count() : 0;
+
+            $totalYieldIhsgYear = $validYieldIhsgData->sum(fn($item) => (float) $item['yield_ihsg']);
+            $averageYieldIhsgYear = $validYieldIhsgData->count() > 0 ? $totalYieldIhsgYear / $validYieldIhsgData->count() : 0;
 
 
             // dd($totalYieldMonth, $totalYieldIhsgMonth, $averageYieldMonth, $averageYieldIhsgMonth, 

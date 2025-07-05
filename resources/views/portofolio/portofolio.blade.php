@@ -4,8 +4,8 @@
 
 @section('page-title')
 <div class="col">
-    <h2 class="page-title">Portofolio</h2>
-    <div class="text-muted mt-1">Tahun {{$selectedYear}}</div>
+    <h2 class="page-title">{{ __('portfolio.portfolio') }}</h2>
+    <div class="text-muted mt-1">{{ __('portfolio.year') }} {{$selectedYear}}</div>
 </div>
 <div class="col-auto d-print-none" >
 	<form class="row"id="filterForm" action="{{ route('portofolio.filter') }}" method="POST">
@@ -31,7 +31,7 @@
             <a class="btn btn-success d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-portofolio">
 			    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
                 {{-- <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-lock"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6z" /><path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" /><path d="M8 11v-4a4 4 0 1 1 8 0v4" /></svg> --}}
-                Transaksi
+                {{ __('portfolio.transaction') }}
             </a>
         {{-- </div> --}}
         <a href="" class="btn btn-success d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-portofolio" aria-label="Create new report">
@@ -39,7 +39,7 @@
 		</a>
         <a href="" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown">
             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-settings"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" /><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /></svg>
-          	    Kelola
+          	    {{ __('portfolio.manage') }}
       	</a>
         <a href="" class="btn btn-secondary d-sm-none btn-icon" data-bs-toggle="dropdown" aria-label="Create new report">
             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-settings"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" /><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /></svg>
@@ -47,11 +47,11 @@
         <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
             <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#modal-tutup-buku" aria-label="Create new report">
                 <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-inline me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M19 4v16h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12z" /><path d="M19 16h-12a2 2 0 0 0 -2 2" /><path d="M9 8h6" /></svg>
-                    Tutup Buku
+                    {{ __('portfolio.close_book') }}
             </a>	
             <a class="dropdown-item" href="" data-bs-toggle="modal" id="printModalToPdf">
                 <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-inline me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
-                    Cetak PDF
+                    {{ __('portfolio.print_pdf') }}
             </a>
         </div>
     </div>
@@ -66,11 +66,11 @@
                 <div class="card-body pb-0 mb-0">
                     <div class="row">
                         <div class="col-4">
-                            <h5 class="mt-0 mb-0 pt-0 pb-2">Harga Unit :</h5>
+                            <h5 class="mt-0 mb-0 pt-0 pb-2">{{ __('portfolio.unit_price') }} :</h5>
                             <h5 class="mt-0 mb-1 pt-0 pb-2" id="hargaUnit">{{ number_format($mutasiDataFilter['harga_unit_saat_ini'] ?? 0, 0, ',', '.' )}}</h5>
                         </div>
                         <div class="col-4">
-                            <h5 class="mt-0 mb-0 pt-0 pb-2">Jumlah/Unit :</h5>
+                            <h5 class="mt-0 mb-0 pt-0 pb-2">{{ __('portfolio.unit_amount') }} :</h5>
                             <h5 class="mt-0 mb-1 pt-0 pb-2" id="jumlahUnit">{{ number_format($mutasiDataFilter['jumlah_unit_penyertaan'] ?? 0, 0, ',', '.' )}}</h5>
                         </div>
                         <div class="col-4">
@@ -128,12 +128,12 @@
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
-                                <th class="text-center" colspan="2">Saham</th>
-                                <th class="text-center">Jumlah<br>Lembar</th>
-                                <th class="text-center">Harga<br>Beli</th>
-                                <th class="text-center">Modal</th>
-                                <th class="text-center">Current<br>Price</th>
-                                <th class="text-center">Valuation</th>
+                                <th class="text-center" colspan="2">{{ __('portfolio.stock') }}</th>
+                                <th class="text-center">{{ __('portfolio.amount') }}<br>{{ __('portfolio.share') }}</th>
+                                <th class="text-center">{{ __('portfolio.price') }}<br>{{ __('portfolio.buy') }}</th>
+                                <th class="text-center">{{ __('portfolio.capital') }}</th>
+                                <th class="text-center">{{ __('portfolio.price') }}<br>{{ __('portfolio.current') }}</th>
+                                <th class="text-center">{{ __('portfolio.valuation') }}</th>
                                 <th class="text-center">P/L</th>
                                 <th class="text-center">P/L (%)</th>
                                 <th class="text-center"></th>
@@ -145,9 +145,9 @@
                             @if ($loop->first)
                             <tr>
                                 <td class="text-center"></td>
-                                <td class="text-center" colspan="2">KAS</td>
+                                <td class="text-center" colspan="2">{{ __('portfolio.cash') }}</td>
                                 <td class="text-end " colspan="2">{{number_format($index['cur_price'], 0, ',', '.')}}</td>
-                                <td class="text-end ">{{number_format($index['transaksi_pertama']['harga'], 0, ',', '.')}}</td>
+                                <td class="text-end ">{{number_format($index['cur_price'], 0, ',', '.')}}</td>
                                 <td class="text-end ">{{ number_format($index['modal'], 0, ',', '.')}}</td>
                                 <td class="text-end ">{{ number_format($index['cur_price'], 0, ',', '.')}}</td>
                                 <td class="text-end ">-</td>
@@ -172,18 +172,18 @@
                                         </div>
                                         <div class="modal-status bg-primary"></div>
                                         <div class="modal-body">
-                                            <h4 class="mb-2">Informasi Kas :</h4>
+                                            <h4 class="mb-2">{{ __('portfolio.cash_info') }} :</h4>
                                             <div class="row">
                                                 <div class="col-4">
-                                                    <p class="mb-0 text-muted">Valuation :</p>
+                                                    <p class="mb-0 text-muted">{{ __('portfolio.valuation') }} :</p>
                                                     <h4>{{number_format($index['valuasi'], 0, ',', '.')}}</h4>
                                                 </div>
                                                 <div class="col-4">
-                                                    <p class="mb-0 text-muted">Fund Alloc :</p>
+                                                    <p class="mb-0 text-muted">{{ __('portfolio.fund_alloc') }} :</p>
                                                     <h4>{{number_format($index['fund_alloc'], 0, ',', '.')}}%</h4>
                                                 </div>
                                                 <div class="col-4">
-                                                    <p class="mb-0 text-muted">Value Effect :</p>
+                                                    <p class="mb-0 text-muted">{{ __('portfolio.value_effect') }} :</p>
                                                     <h4>{{number_format($index['value_effect'], 0, ',', '.')}}%</h4>
                                                 </div>
                                             </div>
@@ -245,7 +245,7 @@
                                                 <div class="row">
                                                     <div class="col-lg-12">
                                                         <div class="mb-3">
-                                                            <label class="form-label required">Tanggal: </label>
+                                                            <label class="form-label required">{{ __('portfolio.date') }}: </label>
                                                             @php
                                                                 $tanggalTutup = \Carbon\Carbon::createFromDate($tahunBerikutnya, 1, 1)->format('Y-m-d');
                                                             @endphp
@@ -254,7 +254,7 @@
                                                     </div>
                                                     <div class="col-lg-12">
                                                         <div class="mb-3">
-                                                            <label class="form-label required">Harga: </label>
+                                                            <label class="form-label required">{{ __('portfolio.price') }}: </label>
                                                             <div class="input-group">
                                                                 <span class="input-group-text">
                                                                     Rp.
@@ -269,7 +269,7 @@
                                                     <div class="col-lg-12">
                                                         <div class="mb-3">
                                                         <a href="{{ route('portofolio.update.harga.terkini', ['id_aset' => $index['aset']['id'], 'nama_aset' => $index['aset']['nama'], 'tipe' => 'price']) }}"  class="btn btn-secondary w-100">
-                                                                Gunakan Harga Terkini
+                                                                {{ __('portfolio.use_current_price') }}
                                                             </a>
                                                         </div>
                                                     </div>
@@ -278,7 +278,7 @@
                                             <div class="modal-footer">
                                                 <button type="submit" class="btn btn-success ms-auto">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                                                    Simpan
+                                                    {{ __('portfolio.save') }}
                                                 </button>
                                             </div>
                                         </form>	
@@ -301,22 +301,22 @@
                                                 <ul class="nav nav-tabs card-header-tabs nav-fill" data-bs-toggle="tabs">
                                                     <li class="nav-item">
                                                         <a href="#floating-{{$index['aset']['id']}}" class="nav-link active" data-bs-toggle="tab">
-                                                            Floating
+                                                            {{ __('portfolio.floating') }}
                                                         </a>
                                                     </li>
                                                     <li class="nav-item">
                                                         <a href="#realisasi-{{$index['aset']['id']}}" class="nav-link" data-bs-toggle="tab">
-                                                            Realisasi
+                                                            {{ __('portfolio.realized') }}
                                                         </a>
                                                     </li>
                                                     <li class="nav-item">
                                                         <a href="#riwayat-{{$index['aset']['id']}}" class="nav-link" data-bs-toggle="tab">
-                                                            Riwayat
+                                                            {{ __('portfolio.history') }}
                                                         </a>
                                                     </li>
                                                     <li class="nav-item">
                                                         <a href="#harga-{{$index['aset']['id']}}" class="nav-link" data-bs-toggle="tab">
-                                                            Harga
+                                                            {{ __('portfolio.price') }}
                                                         </a>
                                                     </li>
                                                 </ul>
@@ -326,21 +326,21 @@
                                                     <div class="tab-pane active show" id="floating-{{$index['aset']['id']}}">
                                                         <div class="row">
                                                             <div class="col-4">
-                                                                <p class="mb-0 text-muted">Jml Lembar :</p>
+                                                                <p class="mb-0 text-muted">{{ __('portfolio.amount') }} {{ __('portfolio.share') }} :</p>
                                                                 <h4>{{number_format($index['volume'], 0, ',', '.')}}</h4>
                                                             </div>
                                                             <div class="col-4">
-                                                                <p class="mb-0 text-muted">Avg. Price :</p>
+                                                                <p class="mb-0 text-muted">{{ __('portfolio.avg_price') }} :</p>
                                                                 <h4>{{number_format($index['avg_price'], 0, ',', '.')}}</h4>
                                                             </div>
                                                             <div class="col-4">
-                                                                <p class="mb-0 text-muted">Cur. Price :</p>
+                                                                <p class="mb-0 text-muted">{{ __('portfolio.cur_price') }} :</p>
                                                                 <h4>{{number_format($index['cur_price'], 0, ',', '.')}}</h4>
                                                             </div>
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-4">
-                                                                <p class="mb-0 text-muted">Modal :</p>
+                                                                <p class="mb-0 text-muted">{{ __('portfolio.capital') }} :</p>
                                                                 <h4>{{number_format($index['modal'], 0, ',', '.')}}</h4>
                                                             </div>
                                                             <div class="col-4">
@@ -348,13 +348,13 @@
                                                                 <h4 class="@if($index['p/l'] < 0) text-danger @elseif($index['p/l'] > 0) text-success @endif">{{number_format($index['p/l'], 0, ',', '.')}}</h4>
                                                             </div>
                                                             <div class="col-4">
-                                                                <p class="mb-0 text-muted">Fund Alloc :</p>
+                                                                <p class="mb-0 text-muted">{{ __('portfolio.fund_alloc') }} :</p>
                                                                 <h4>{{number_format($index['fund_alloc'], 0, ',', '.')}}%</h4>
                                                             </div>
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-4">
-                                                                <p class="mb-0 text-muted">Valuation :</p>
+                                                                <p class="mb-0 text-muted">{{ __('portfolio.valuation') }} :</p>
                                                                 <h4>{{number_format($index['valuasi'], 0, ',', '.')}}</h4>
                                                             </div>
                                                             <div class="col-4">
@@ -363,7 +363,7 @@
                                                             </div>
                                                             
                                                             <div class="col-4">
-                                                                <p class="mb-0 text-muted">Value Effect :</p>
+                                                                <p class="mb-0 text-muted">{{ __('portfolio.value_effect') }} :</p>
                                                                 <h4>{{number_format($index['value_effect'], 0, ',', '.')}}%</h4>
                                                             </div>
                                                         </div>
@@ -383,22 +383,22 @@
                                                     
                                                         <div class="row">
                                                             <div class="col-4">
-                                                                <p class="mb-0 text-muted">Total Lembar Terjual:</p>
+                                                                <p class="mb-0 text-muted">{{ __('portfolio.total_sold_shares') }}:</p>
                                                                 <h4>{{ number_format($totalVolume, 0, ',', '.') }}</h4>
                                                             </div>
                                                             <div class="col-4">
-                                                                <p class="mb-0 text-muted">Total Modal:</p>
+                                                                <p class="mb-0 text-muted">{{ __('portfolio.total_capital') }}:</p>
                                                                 <h4>{{ number_format($totalModal, 0, ',', '.') }}</h4>
                                                             </div>
                                                             <div class="col-4">
-                                                                <p class="mb-0 text-muted">Total Hasil Penjualan:</p>
+                                                                <p class="mb-0 text-muted">{{ __('portfolio.total_sales') }}:</p>
                                                                 <h4>{{ number_format($totalHasilJual, 0, ',', '.') }}</h4>
                                                             </div>
                                                         </div>
                                                     
                                                         <div class="row">
                                                             <div class="col-4">
-                                                                <p class="mb-0 text-muted">Tanggal Jual Terakhir:</p>
+                                                                <p class="mb-0 text-muted">{{ __('portfolio.last_sell_date') }}:</p>
                                                                 <h4>{{ $tanggalJualTerakhir }}</h4>
                                                             </div>
                                                             <div class="col-4">
@@ -430,15 +430,15 @@
                                                                                 <div class="card-body">
                                                                                     <div class="row">
                                                                                         <div class="col-4">
-                                                                                            <p class="mb-0">Jenis :</p>
+                                                                                            <p class="mb-0">{{ __('portfolio.type') }} :</p>
                                                                                             <h4>{{strtoupper($k['jenis_transaksi'])}}</h4>
                                                                                         </div>
                                                                                         <div class="col-4">
-                                                                                            <p class="mb-0">Tanggal :</p>
+                                                                                            <p class="mb-0">{{ __('portfolio.date') }} :</p>
                                                                                             <h4>{{\Carbon\Carbon::parse($k['tanggal'])->format('d-m-Y')}}</h4>
                                                                                         </div>
                                                                                         <div class="col-4">
-                                                                                            <p class="mb-0">Sekuritas :</p>
+                                                                                            <p class="mb-0">{{ __('portfolio.security') }} :</p>
                                                                                             <h4>{{$k['sekuritas']['nama_sekuritas'] ?? '-'}}</h4>
                                                                                         </div>
                                                                                     </div>
@@ -448,7 +448,7 @@
                                                                                             <h4 class="mb-0">{{number_format($k['volume'], 0, ',', '.')}}</h4>
                                                                                         </div>
                                                                                         <div class="col-4">
-                                                                                            <p class="mb-0">Harga :</p>
+                                                                                            <p class="mb-0">{{ __('portfolio.price') }} :</p>
                                                                                             <h4 class="mb-0">{{number_format($k['harga'], 0, ',', '.')}}</h4>
                                                                                         </div>
                                                                                         <div class="col-4">
@@ -466,7 +466,7 @@
                                                                                                 @else btn-outline-secondary
                                                                                                 @endif w-100" data-bs-toggle="modal" data-bs-target="#modal-edit-riwayat-{{$k['id']}}" data-transaksi="{{ $k['id']}}" data-aset="{{ $index['aset']['id'] }}">
                                                                                                 <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
-                                                                                                    Edit Terakhir    
+                                                                                                    {{ __('portfolio.last_edit') }}    
                                                                                             </a>
                                                                                         </div>
                                                                                         <div class="col">
@@ -476,7 +476,7 @@
                                                                                                 @else btn-outline-secondary
                                                                                                 @endif w-100" data-bs-toggle="modal" data-bs-target="#modal-delete-riwayat-{{$k['id']}}" data-transaksi="{{ $k['id']}}" data-aset="{{ $index['aset']['id'] }}">
                                                                                                 <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
-                                                                                                    Delete Terakhir    
+                                                                                                    {{ __('portfolio.last_delete') }}    
                                                                                             </a>
                                                                                         </div>
                                                                                     </div>
@@ -499,7 +499,7 @@
                                                                                                 @else btn-outline-secondary
                                                                                                 @endif w-100" data-bs-toggle="modal" data-bs-target="#modal-delete-riwayat-{{$k['id']}}" data-transaksi="{{ $k['id']}}" data-aset="{{ $index['aset']['id'] }}">
                                                                                                 <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
-                                                                                                    Delete    
+                                                                                                    {{ __('portfolio.delete') }}    
                                                                                             </a>
                                                                                         </div>
                                                                                     </div>
@@ -513,7 +513,7 @@
                                                                                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                                                                                     <div class="modal-content">
                                                                                         <div class="modal-header">
-                                                                                            <h5 class="modal-title">Edit Transaksi {{$k['aset']['nama']}}</h5>
+                                                                                            <h5 class="modal-title">{{ __('portfolio.edit_transaction') }} {{$k['aset']['nama']}}</h5>
                                                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                                         </div>
                                                                                         <form action="{{ route('portofolio.update', $k['id']) }}" method="post" autocomplete="off">
@@ -524,26 +524,26 @@
                                                                                                 <div class="row">
                                                                                                     <div class="col-lg-12 mb-3">
                                                                                                         <span class="form-control text-strong bg-warning-lt text-warning border-warning" autocomplete="off">
-                                                                                                            <strong>Perhatian!</strong> Mengedit transaksi ini akan menghapus semua transaksi setelahnya untuk saham yang sama guna menjaga konsistensi perhitungan portofolio Anda.
+                                                                                                            {{ __('portfolio.confirm_edit_transaction') }}
                                                                                                         </span>
                                                                                                     </div>
                                                                                                 </div>
                                                                                                 <div class="row">
                                                                                                     <div class="col-lg-3">
                                                                                                         <div class="mb-3">
-                                                                                                            <label class="form-label required">Jenis Transaksi:</label>
+                                                                                                            <label class="form-label required">{{ __('portfolio.transaction_type') }}:</label>
                                                                                                             <select name="jenis_transaksi" id="jenis_transaksi" class="form-select" required>
-                                                                                                                <option value="" disabled>Pilih Jenis</option>
-                                                                                                                <option value="beli" @if ($k['jenis_transaksi'] == 'beli') selected @endif>Beli</option>
-                                                                                                                <option value="jual" @if ($k['jenis_transaksi'] == 'jual') selected @endif>Jual</option>
+                                                                                                                <option value="" disabled>{{ __('portfolio.select_type') }}</option>
+                                                                                                                <option value="beli" @if ($k['jenis_transaksi'] == 'beli') selected @endif>{{ __('portfolio.buy') }}</option>
+                                                                                                                <option value="jual" @if ($k['jenis_transaksi'] == 'jual') selected @endif>{{ __('portfolio.sell') }}</option>
                                                                                                             </select>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                     <div class="col-lg-9">
                                                                                                         <div class="mb-3">
-                                                                                                            <label class="form-label required">Pilih Saham:</label>
+                                                                                                            <label class="form-label required">{{ __('portfolio.select_stock') }}:</label>
                                                                                                             <select name="id_saham_update" type="text" class="form-select" id="select-people" disabled required>
-                                                                                                                <option value="" disabled>Pilih Saham</option>
+                                                                                                                <option value="" disabled>{{ __('portfolio.select_stock') }}</option>
                                                                                                                 @foreach ($filteredAsetData as $saham)
                                                                                                                 <option value="{{$saham['id']}}" @if($k['aset_id'] == $saham['id']) selected @endif data-custom-properties="<span class='avatar avatar-xs' style='background-image: url({{ $saham['info'] }})'></span>"> {{$saham['nama']}} - {{$saham['deskripsi']}}</option>
                                                                                                                @endforeach
@@ -553,28 +553,28 @@
                                                                                                     </div>
                                                                                                 </div>
                                                                                                 <div class="row">
-                                                                                                    <div class="col-lg-4">
+                                                                                                    <div class="col-lg-3">
                                                                                                         <div class="mb-3">
-                                                                                                            <label class="form-label required">Jumlah Lembar: </label>
+                                                                                                            <label class="form-label required">{{ __('portfolio.amount') }} {{ __('portfolio.share') }}: </label>
                                                                                                             <div class="input-group">
                                                                                                                 <input type="text" id="lembaredit-{{$k['id']}}" name="lembaredit" class="form-control text-end" autocomplete="off" placeholder="0" value="{{number_format($k['volume'], 0, ',', '.')}}" required >
                                                                                                                 <input type="text" id="lembaredit1-{{$k['id']}}" name="lembaredit1" class="form-control text-end" autocomplete="off" value="{{$k['volume']}}" hidden>
                                                                                                             </div>
                                                                                                         </div>
                                                                                                     </div>
-                                                                                                    <div class="col-lg-4">
+                                                                                                    <div class="col-lg-3">
                                                                                                         <div class="mb-3">
-                                                                                                            <label class="form-label required">Tanggal: </label>
+                                                                                                            <label class="form-label required">{{ __('portfolio.date') }}: </label>
                                                                                                             <input type="date" name="tanggal" id="tanggal" class="form-control" value="{{ $k['tanggal'] }}">
                                                                                                         </div>
                                                                                                     </div>
-                                                                                                    <div class="col-lg-4">
+                                                                                                    <div class="col-lg-6">
                                                                                                         <div class="mb-3">
-                                                                                                            <label class="form-label required">Sekuritas: </label>
+                                                                                                            <label class="form-label required">{{ __('portfolio.security') }}: </label>
                                                                                                             <select name="sekuritas" class="form-select" id="sekuritas" value="" required>
-                                                                                                                <option value="" disabled>Pilih Sekuritas</option>
+                                                                                                                <option value="" disabled>{{ __('portfolio.select_security') }}</option>
                                                                                                                 @foreach ($sekuritasData as $data)
-                                                                                                                <option value="{{$data['id']}}" @if($k['sekuritas_id'] == $data['id']) selected @endif> {{$data['nama_sekuritas']}}</option>
+                                                                                                                <option value="{{$data['id']}}" @if($k['sekuritas_id'] == $data['id']) selected @endif> {{$data['nama_sekuritas']}} (Fee Beli: {{ $data['fee_beli'] * 100 }}%, Jual: {{ $data['fee_jual'] * 100 }}%)</option>
                                                                                                                @endforeach
                                                                                                                
                                                                                                             </select>
@@ -584,7 +584,7 @@
                                                                                                 <div class="row">
                                                                                                     <div class="col-lg-6">
                                                                                                         <div class="mb-3">
-                                                                                                            <label class="form-label required">Harga: </label>
+                                                                                                            <label class="form-label required">{{ __('portfolio.price') }}: </label>
                                                                                                             <div class="row g-2">
                                                                                                                 <div class="col">
                                                                                                                     <div class="input-group">
@@ -610,10 +610,10 @@
                                                                                                 </div>
                                                                                             </div>
                                                                                             <div class="modal-footer">
-                                                                                                <button type="button" class="me-auto btn" data-bs-dismiss="modal">Batal</button>
+                                                                                                <button type="button" class="me-auto btn" data-bs-dismiss="modal">{{ __('portfolio.cancel') }}</button>
                                                                                                 <button type="submit" class="btn btn-warning ms-auto">
                                                                                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                                                                                                    Simpan
+                                                                                                    {{ __('portfolio.save') }}
                                                                                                 </button>
                                                                                             </div>
                                                                                         </form>	
@@ -630,8 +630,8 @@
                                                                                         <div class="modal-status bg-danger"></div>
                                                                                         <div class="modal-body text-center py-4">
                                                                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.24 3.957l-8.422 14.06a1.989 1.989 0 0 0 1.7 2.983h16.845a1.989 1.989 0 0 0 1.7 -2.983l-8.423 -14.06a1.989 1.989 0 0 0 -3.4 0z" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
-                                                                                            <h3>Anda yakin ingin menghapus transaksi ini?</h3>
-                                                                                            <div class="">Semua transaksi setelah transaksi ini untuk saham yang sama juga akan ikut dihapus untuk menjaga konsistensi data portofolio Anda.</div>
+                                                                                            <h3>{{ __('portfolio.confirm_delete_transaction') }}</h3>
+                                                                                            <div class="">{{ __('portfolio.confirm_delete') }}</div>
                                                                                         </div>
                                                                                         <div class="modal-footer">
                                                                                             <div class="w-100">
@@ -705,7 +705,7 @@
                                                         </div>
                                                         <div id="chart-harga-{{$index['aset']['id']}}" class="chart-lg mb-2 trigger-modal" style="height: 130px;"></div>
                                                         <hr>
-                                                            <h4>Riwayat Perubahan Harga :</h4>
+                                                            <h4>{{ __('portfolio.price_history') }} :</h4>
                                                             <div class="divide-y">
                                                                 @foreach($sortHargaData as $hargaData)
                                                                 @foreach($hargaData as $harga)
@@ -729,13 +729,13 @@
                                             <div class="col">
                                                     <a href="" type="submit" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#modal-portofolio" data-jenis="beli" data-aset="{{ $index['aset']['id'] }}">
                                                         <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-arrow-big-up"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.586 3l-6.586 6.586a2 2 0 0 0 -.434 2.18l.068 .145a2 2 0 0 0 1.78 1.089h2.586v7a2 2 0 0 0 2 2h4l.15 -.005a2 2 0 0 0 1.85 -1.995l-.001 -7h2.587a2 2 0 0 0 1.414 -3.414l-6.586 -6.586a2 2 0 0 0 -2.828 0z" /></svg>
-                                                            Beli {{$index['aset']['nama']}}
+                                                            {{ __('portfolio.buy') }} {{$index['aset']['nama']}}
                                                     </a>
                                             </div>
                                             <div class="col">
                                                     <a href="" type="submit" class="btn btn-danger w-100 ms-auto" data-bs-toggle="modal" data-bs-target="#modal-portofolio" data-jenis="jual" data-aset="{{ $index['aset']['id'] }}">
                                                         <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-arrow-big-down"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 2l-.15 .005a2 2 0 0 0 -1.85 1.995v6.999l-2.586 .001a2 2 0 0 0 -1.414 3.414l6.586 6.586a2 2 0 0 0 2.828 0l6.586 -6.586a2 2 0 0 0 .434 -2.18l-.068 -.145a2 2 0 0 0 -1.78 -1.089l-2.586 -.001v-6.999a2 2 0 0 0 -2 -2h-4z" /></svg>
-                                                            Jual {{$index['aset']['nama']}}
+                                                            {{ __('portfolio.sell') }} {{$index['aset']['nama']}}
                                                     </a>
                                             </div>
                                         </div>
@@ -759,7 +759,7 @@
                             </tr>
                            @else
                             <tr>
-                                <td colspan="12" class="text-center">Tidak ada data yang tersedia.</td>
+                                <td colspan="12" class="text-center">{{ __('portfolio.no_data_available') }}</td>
                             </tr>
                         @endif
                         </tbody>
@@ -773,7 +773,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Tambah Transaksi</h5>
+                <h5 class="modal-title">{{ __('portfolio.add_transaction') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="{{ route('portofolio.store') }}" method="post" autocomplete="off">
@@ -783,19 +783,19 @@
                     <div class="row">
                         <div class="col-lg-3">
                             <div class="mb-3">
-                                <label class="form-label required">Jenis Transaksi:</label>
+                                <label class="form-label required">{{ __('portfolio.transaction_type') }}:</label>
                                 <select name="jenis_transaksi" id="jenis_transaksi" class="form-select" required>
-                                    <option value="" selected >Pilih Jenis</option>
-                                    <option value="beli">Beli</option>
-                                    <option value="jual">Jual</option>
+                                    <option value="" selected >{{ __('portfolio.select_type') }}</option>
+                                    <option value="beli">{{ __('portfolio.buy') }}</option>
+                                    <option value="jual">{{ __('portfolio.sell') }}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-9">
                             <div class="mb-3">
-                                <label class="form-label required">Pilih Saham:</label>
+                                <label class="form-label required">{{ __('portfolio.select_stock') }}:</label>
                                 <select name="id_saham" type="text" class="form-select" id="select-people" value="" required>
-                                    <option value="" selected>Pilih Saham</option>
+                                    <option value="" selected>{{ __('portfolio.select_stock') }}</option>
                                     @foreach ($filteredAsetData as $saham)
                                     <option value="{{$saham['id']}}" data-custom-properties="<span class='avatar avatar-xs' style='background-image: url({{ $saham['info'] }})'></span>"> {{$saham['nama']}} - {{$saham['deskripsi']}}</option>
                                    @endforeach
@@ -805,29 +805,29 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <div class="mb-3">
-                                <label class="form-label required">Jumlah Lembar: </label>
+                                <label class="form-label required">{{ __('portfolio.amount') }} {{ __('portfolio.share') }}: </label>
                                 <div class="input-group">
                                     <input type="text" id="jumlahlembar" name="jumlahlembar" class="form-control text-end" autocomplete="off" placeholder="0" required >
                                     <input type="text" id="jumlahlembar1" name="jumlahlembar1" class="form-control text-end" autocomplete="off" hidden>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-6">
                             <div class="mb-3">
-                                <label class="form-label required">Sekuritas: </label>
+                                <label class="form-label required">{{ __('portfolio.security') }}: </label>
                                 <select name="sekuritas" class="form-select" id="sekuritas" value="" required>
-                                    <option value="" selected disabled>Pilih Sekuritas</option>
+                                    <option value="" selected disabled>{{ __('portfolio.select_security') }}</option>
                                     @foreach ($sekuritasData as $data)
-                                    <option value="{{$data['id']}}"> {{$data['nama_sekuritas']}}</option>
+                                    <option value="{{$data['id']}}"> {{$data['nama_sekuritas']}} (Fee Beli: {{ $data['fee_beli'] * 100 }}%, Jual: {{ $data['fee_jual'] * 100 }}%)</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <div class="mb-3">
-                                <label class="form-label required">Tanggal: </label>
+                                <label class="form-label required">{{ __('portfolio.date') }}: </label>
                                 @php
                                     $tanggalTutup = \Carbon\Carbon::createFromDate($tahunBerikutnya, 1, 1)->format('Y-m-d');
                                 @endphp
@@ -838,7 +838,7 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="mb-3">
-                                <label class="form-label required">Harga: </label>
+                                <label class="form-label required">{{ __('portfolio.price') }}: </label>
                                 <div class="row g-2">
                                     <div class="col">
                                         <div class="input-group">
@@ -871,10 +871,10 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="me-auto btn" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="me-auto btn" data-bs-dismiss="modal">{{ __('portfolio.cancel') }}</button>
                     <button type="submit" class="btn btn-success ms-auto">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                        Simpan
+                        {{ __('portfolio.save') }}
                     </button>
                 </div>
             </form>	
@@ -886,7 +886,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Kelola IHSG {{ \Carbon\Carbon::create(null, $currentMonth, 1)->locale('id')->translatedFormat('F') }} {{$selectedYear}}</h5>
+                <h5 class="modal-title">{{ __('portfolio.manage') }} IHSG {{ \Carbon\Carbon::create(null, $currentMonth, 1)->locale('id')->translatedFormat('F') }} {{$selectedYear}}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="{{ route('historis.store') }}" method="post" autocomplete="off">
@@ -910,9 +910,9 @@
                     <div class="row">
                         <div class="col-lg-3">
                             <div class="mb-3">
-                                <label class="form-label required">Bulan: </label>
+                                <label class="form-label required">{{ __('portfolio.select_month') }}: </label>
                                 <select name="bulan" id="bulan" class="form-select" required>
-                                    <option value="" disabled selected>Pilih Bulan</option>
+                                    <option value="" disabled selected>{{ __('portfolio.select_month') }}</option>
                                     @foreach (range(1, 12) as $month)
                                         <option value="{{ $month }}" {{ $month == $currentMonth ? 'selected' : '' }}>
                                             {{ \Carbon\Carbon::createFromFormat('!m', $month)->locale('id')->translatedFormat('F') }}
@@ -948,17 +948,17 @@
                             <div class="mb-3">
                                 <label class="form-label">&nbsp </label>
                                 <a href="{{ route('portofolio.update.harga.terkini', ['id_aset' => '0', 'nama_aset' => 'COMPOSITE', 'tipe' => 'ihsg']) }}"   class="btn btn-secondary w-100">
-                                    Harga Terkini
+                                    {{ __('portfolio.cur_price') }}
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="me-auto btn" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="me-auto btn" data-bs-dismiss="modal">{{ __('portfolio.cancel') }}</button>
                     <button type="submit" class="btn btn-success ms-auto">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                        Simpan
+                        {{ __('portfolio.save') }}
                     </button>
                 </div>
             </form>	
@@ -977,7 +977,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-6">
-                        <p class="mb-0 text-muted">Total Profit Realisasi :</p>
+                        <p class="mb-0 text-muted">{{ __('portfolio.total_realized_profit') }} :</p>
                         <h4>
                             @if($filteredDataTranJual->isNotEmpty())
                                 {{ number_format(($filteredDataTranJual->flatten(1)->where('p/l', '>', 0)->sum('p/l')), 0, ',', '.') }}
@@ -987,7 +987,7 @@
                         </h4>
                     </div>
                     <div class="col-6">
-                        <p class="mb-0 text-muted">Yield Realisasi :</p>
+                        <p class="mb-0 text-muted">{{ __('portfolio.realized_yield') }} :</p>
                         <h4>
                             @if($filteredDataTranJual->isNotEmpty())
                                 {{ number_format(($filteredDataTranJual->flatten(1)->sum('p/l') / ($filteredDataTranJual->flatten(1)->sum('modal'))) * 100, 2, ',', '.') }}%
@@ -999,7 +999,7 @@
                 </div>
                 <div class="row">
                     <div class="col-6">
-                        <p class="mb-0 text-muted">Total Loss Realisasi :</p>
+                        <p class="mb-0 text-muted">{{ __('portfolio.total_realized_loss') }} :</p>
                         <h4>
                             @if($filteredDataTranJual->isNotEmpty())
                                 {{ number_format(($filteredDataTranJual->flatten(1)->where('p/l', '<', 0)->sum('p/l')), 0, ',', '.') }}
@@ -1021,7 +1021,7 @@
                 </div>
                 <div class="row">
                     <div class="col-6">
-                        <p class="mb-0 text-muted">Net Realisasi :</p>
+                        <p class="mb-0 text-muted">{{ __('portfolio.net_realized') }} :</p>
                         <h4>
                             @if($filteredDataTranJual->isNotEmpty())
                                     {{ number_format(($filteredDataTranJual->flatten(1)->sum('p/l')), 0, ',', '.') }}
@@ -1044,8 +1044,8 @@
 			<div class="modal-status bg-danger"></div>
 			<div class="modal-body text-center py-4">
 				<svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.24 3.957l-8.422 14.06a1.989 1.989 0 0 0 1.7 2.983h16.845a1.989 1.989 0 0 0 1.7 -2.983l-8.423 -14.06a1.989 1.989 0 0 0 -3.4 0z" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
-				<h3>Konfirmasi Tutup Buku</h3>
-				<div class="">Apakah Anda yakin ingin menutup buku? Proses ini tidak dapat dibatalkan.</div>
+				<h3>{{ __('portfolio.confirm_close_book') }}</h3>
+				<div class="">{{ __('portfolio.confirm_close_book_msg') }}</div>
 			</div>
 			<div class="modal-footer">
 				<div class="w-100">
@@ -1060,7 +1060,7 @@
 								@csrf
                                 <input type="text" id="tahun" name="tahun" class="form-control text-end" autocomplete="off" value="{{$selectedYear}}" hidden>
 								<button type="submit" class="btn btn-danger w-100" data-bs-dismiss="modal">
-									Yakin
+									{{ __('portfolio.sure') }}
 								</button>
 							</form>
 						</div>

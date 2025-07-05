@@ -5,9 +5,9 @@
 @section('page-title')
 <div class="col">
     <h2 class="page-title">
-        Mutasi Dana
+        {{ __('mutation.fund_mutation') }}
     </h2>
-    <div class="text-muted mt-1">Tahun {{$selectedYear}}</div>
+    <div class="text-muted mt-1">{{ __('mutation.year') }} {{$selectedYear}}</div>
 </div>
 <div class="col-auto d-print-none" >
 	<form class="row"id="filterForm" action="{{ route('mutasi.filter') }}" method="POST">
@@ -30,14 +30,14 @@
 	<div class="btn-list">
         <a href="" class="btn btn-success d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-saldo">
         	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-            Kelola Dana
+            {{ __('mutation.manage_funds') }}
 		</a>
         <a href="" class="btn btn-success d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-saldo">
         	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
 		</a>
         <a class="btn btn-primary" id="printModalToPdf">
             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
-          	Cetak PDF
+          	{{ __('mutation.print_pdf') }}
         </a>
 	</div>
 </div>
@@ -51,15 +51,15 @@
                 <div class="card-body pb-0 mb-0">
                     <div class="row">
                         <div class="col-4">
-                            <h5 class="mt-0 mb-0 pt-0 pb-2">Valuasi Awal</h5>
+                            <h5 class="mt-0 mb-0 pt-0 pb-2">{{ __('mutation.initial_valuation') }}</h5>
                             <h5 id="valuasi_awal" class="mt-0 mb-1 pt-0 pb-2">{{ number_format($firstMutasiDana['modal'] ?? 0, 0, ',', '.') }}</h5>
                         </div>
                         <div class="col-4">
-                            <h5 class="mt-0 mb-0 pt-0 pb-2">Harga Unit Awal</h5>
+                            <h5 class="mt-0 mb-0 pt-0 pb-2">{{ __('mutation.initial_unit_price') }}</h5>
                             <h5 id="unit_awal" class="mt-0 mb-1 pt-0 pb-2">{{ number_format($firstMutasiDana['harga_unit'] ?? 0, 0, ',', '.') }}</h5>
                         </div>
                         <div class="col-4">
-                            <h5 class="mt-0 mb-0 pt-0 pb-2">Jumlah Unit Awal</h5>
+                            <h5 class="mt-0 mb-0 pt-0 pb-2">{{ __('mutation.initial_unit_amount') }}</h5>
                             <h5 id="jumlah_awal" class="mt-0 mb-1 pt-0 pb-2">{{ number_format($firstMutasiDana['jumlah_unit_penyertaan'] ?? 0, 0, ',', '.') }}</h5>
                         </div>
                     </div>
@@ -71,15 +71,15 @@
                 <div class="card-body pb-0 mb-0">
                     <div class="row">
                         <div class="col-4">
-                            <h5 class="mt-0 mb-0 pt-0 pb-2">Valuasi Saat Ini</h5>
+                            <h5 class="mt-0 mb-0 pt-0 pb-2">{{ __('mutation.current_valuation') }}</h5>
                             <h5 id="valuasi_saatini" class="mt-0 mb-1 pt-0 pb-2">{{ number_format($saldo ?? 0, 0, ',', '.') }}</h5>
                         </div>
                         <div class="col-4">
-                            <h5 class="mt-0 mb-0 pt-0 pb-2">Harga Unit Saat Ini</h5>
+                            <h5 class="mt-0 mb-0 pt-0 pb-2">{{ __('mutation.current_unit_price') }}</h5>
                             <h5 id="unit_saatini" class="mt-0 mb-1 pt-0 pb-2">{{ number_format($lastMutasiDana['harga_unit_saat_ini'] ?? 0, 0, ',', '.') }}</h5>
                         </div>
                         <div class="col-4">
-                            <h5 class="mt-0 mb-0 pt-0 pb-2">Jumlah Unit Saat Ini</h5>
+                            <h5 class="mt-0 mb-0 pt-0 pb-2">{{ __('mutation.current_unit_amount') }}</h5>
                             <h5 id="jumlah_saatini" class="mt-0 mb-1 pt-0 pb-2">{{ number_format($lastMutasiDana['jumlah_unit_penyertaan'] ?? 0, 0, ',', '.') }}</h5>
                         </div>
                     </div>
@@ -92,7 +92,7 @@
             <div class="card-body card-body-scrollable" style="max-height: 400px">
                 <div class="row">
                     <div class="col-6">
-                        <h4>Mutasi Dana</h4>
+                        <h4>{{ __('mutation.fund_mutation') }}</h4>
                     </div>
                     <div class="col-6 text-muted text-end">
                         <h4>{{$selectedYear}}</h4>
@@ -104,11 +104,11 @@
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
-                                <th class="text-center">Bulan</th>
-                                <th class="text-center">Alur Dana</th>
-                                <th class="text-center">Jumlah</th>
-                                <th class="text-center">Harga Unit</th>
-                                <th class="text-center">Jumlah Unit</th>
+                                <th class="text-center">{{ __('mutation.month') }}</th>
+                                <th class="text-center">{{ __('mutation.fund_flow') }}</th>
+                                <th class="text-center">{{ __('mutation.amount') }}</th>
+                                <th class="text-center">{{ __('mutation.unit_price') }}</th>
+                                <th class="text-center">{{ __('mutation.initial_unit_amount') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -129,15 +129,15 @@
                                                 <td class="text-center" style="width:5%">
                                                     @if($item['alur_dana'] > 0)
                                                         <a class="btn btn-sm btn-success btn-pill ms-auto">
-                                                            Masuk
+                                                            {{ __('mutation.in') }}
                                                         </a>
                                                     @elseif ($item['alur_dana'] < 0)
                                                         <a class="btn btn-sm btn-danger btn-pill ms-auto">
-                                                            Keluar
+                                                            {{ __('mutation.out') }}
                                                         </a>
                                                     @else
                                                         <a class="btn btn-sm btn-primary btn-pill ms-auto">
-                                                            Dividen
+                                                            {{ __('mutation.dividend') }}
                                                         </a>
                                                     @endif
                                                 </td>
@@ -150,7 +150,7 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td class="text-center" colspan="7">Belum ada mutasi dana.</td>
+                                    <td class="text-center" colspan="7">{{ __('mutation.no_fund_mutation') }}</td>
                                 </tr>
                             @endif
                         </tbody>
@@ -164,7 +164,7 @@
             <div class="card-body card-body-scrollable" style="max-height: 400px">
                 <div class="row">
                     <div class="col-6">
-                        <h4>Riwayat Dana</h4>
+                        <h4>{{ __('mutation.fund_history') }}</h4>
                     </div>
                     <div class="col-6 text-muted text-end">
                         <h4>Total : <span class="text-black">Rp. {{ number_format($saldo, 0, ',', '.') }}</span> </h4>
@@ -175,9 +175,9 @@
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
-                                <th class="text-center">Tanggal</th>
-                                <th class="text-center">Jenis</th>
-                                <th class="text-center">Jumlah</th>
+                                <th class="text-center">{{ __('mutation.date') }}</th>
+                                <th class="text-center">{{ __('mutation.type') }}</th>
+                                <th class="text-center">{{ __('mutation.amount') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -198,11 +198,11 @@
                                             @endif
                                             <td class="text-center" style="width:5%">
                                                 @if ($data['saldo'] > 0)
-                                                    <a class="btn btn-sm btn-success btn-pill ms-auto">Masuk</a>
+                                                    <a class="btn btn-sm btn-success btn-pill ms-auto">{{ __('mutation.in') }}</a>
                                                 @elseif ($data['saldo'] < 0)
-                                                    <a class="btn btn-sm btn-danger btn-pill ms-auto">Keluar</a>
+                                                    <a class="btn btn-sm btn-danger btn-pill ms-auto">{{ __('mutation.out') }}</a>
                                                 @else
-                                                    <a class="btn btn-sm btn-primary btn-pill ms-auto">Dividen</a>
+                                                    <a class="btn btn-sm btn-primary btn-pill ms-auto">{{ __('mutation.dividend') }}</a>
                                                 @endif
                                             </td>
                                             <td class="text-end">{{ number_format($data['saldo'], 0, ',', '.') }}</td>
@@ -211,7 +211,7 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td class="text-center" colspan="5">Belum ada riwayat dana.</td>
+                                    <td class="text-center" colspan="5">{{ __('mutation.no_fund_mutation') }}</td>
                                 </tr>
                             @endif
                         </tbody>
@@ -227,7 +227,7 @@
     <div class="modal-dialog modal-md modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Kelola Dana</h5>
+                <h5 class="modal-title">{{ __('mutation.manage_funds') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="{{ route('saldo.store') }}" method="post" autocomplete="off">
@@ -237,18 +237,18 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="mb-3">
-                                <label class="form-label required">Pilih Jenis:</label>
+                                <label class="form-label required">{{ __('mutation.select_type') }}:</label>
                                 <select class="form-select" value="" name="tipe_saldo" id="tipe_saldo" required>
-                                    <option class="text-muted" value="" selected>Pilih Jenis</option>
-                                    <option value="masuk">Top Up</option>
-                                    <option value="dividen">Top Up Dividen</option>
-                                    <option value="keluar">Withdraw</option>
+                                    <option class="text-muted" value="" selected>{{ __('mutation.select_type') }}</option>
+                                    <option value="masuk">{{ __('mutation.top_up') }}</option>
+                                    <option value="dividen">{{ __('mutation.top_up_dividend') }}</option>
+                                    <option value="keluar">{{ __('mutation.withdraw') }}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="mb-3">
-                                <label class="form-label required">Tanggal: </label>
+                                <label class="form-label required">{{ __('mutation.date') }}: </label>
                                 @php
                                     $tanggalTutup = \Carbon\Carbon::createFromDate($tahunBerikutnya, 1, 1)->format('Y-m-d');
                                 @endphp
@@ -259,9 +259,9 @@
                     <div class="row">
                         <div class="col-lg-6" id="saham-field" style="display: none;">
                             <div class="mb-3">
-                                <label class="form-label required">Pilih Saham:</label>
+                                <label class="form-label required">{{ __('mutation.select_stock') }}:</label>
                                 <select name="id_saham" class="form-select" id="select-people" required>
-                                    <option value="" selected disabled>Pilih Saham</option>
+                                    <option value="" selected disabled>{{ __('mutation.select_stock') }}</option>
                                     @if($sortData->isNotEmpty())
                                         @foreach($sortData as $key => $index)
                                             @foreach($index as $dex)
@@ -272,14 +272,14 @@
                                             @endforeach
                                         @endforeach
                                     @else
-                                    <option value="" disabled>Belum terdapat data saham</option>
+                                    <option value="" disabled>{{ __('mutation.no_stock_data') }}</option>
                                     @endif
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-12" id="jumlah-field">
                             <div class="mb-3">
-                                <label class="form-label required">Jumlah </label>
+                                <label class="form-label required">{{ __('mutation.amount') }} </label>
                                 <div class="input-group">
                                     <span class="input-group-text">
                                         Rp.
@@ -293,10 +293,10 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="me-auto btn" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="me-auto btn" data-bs-dismiss="modal">{{ __('mutation.cancel') }}</button>
                     <button type="submit" class="btn btn-success ms-auto">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                        Simpan
+                        {{ __('mutation.save') }}
                     </button>
                 </div>
             </form>	
