@@ -73,4 +73,8 @@ return [
     'example' => '(Contoh: Pakaian)',
     'select_category_type' => 'Pilih Tipe Kategori',
     'select_category_scope' => 'Pilih Cakupan Kategori',
+    'language' => 'Bahasa',
+    'theme' => 'Tema',
+    'dark' => 'Gelap',
+    'light' => 'Terang',
 ];

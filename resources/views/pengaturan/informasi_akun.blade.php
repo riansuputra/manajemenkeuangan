@@ -53,6 +53,24 @@
 								</div>
 							</div>
 							<div class="col-auto">
+								<h3 class="card-title mt-4">{{ __('settings.language') }}</h3>
+								<div class="btn-group w-100" role="group">
+									<input type="radio" class="btn-check" name="btn-radio-basic" id="btn-radio-basic-1" autocomplete="off" checked="">
+									<label for="btn-radio-basic-1" type="button" class="btn">1 min</label>
+									<input type="radio" class="btn-check" name="btn-radio-basic" id="btn-radio-basic-2" autocomplete="off">
+									<label for="btn-radio-basic-2" type="button" class="btn">5 min</label>
+                              	</div>
+							</div>
+							<div class="col-auto">
+								<h3 class="card-title mt-4">{{ __('settings.theme') }}</h3>
+								<div class="btn-group w-100" role="group">
+									<input type="radio" class="btn-check" name="btn-radio-basic" id="btn-radio-basic-1" autocomplete="off" checked="">
+									<label for="btn-radio-basic-1" type="button" class="btn">1 min</label>
+									<input type="radio" class="btn-check" name="btn-radio-basic" id="btn-radio-basic-2" autocomplete="off">
+									<label for="btn-radio-basic-2" type="button" class="btn">5 min</label>
+                              	</div>
+							</div>
+							<div class="col-auto">
 								<h3 class="card-title mt-4">{{ __('settings.help_support') }}</h3>
 								<div>
 									<a href="mailto:smartfinance.ta.com" class="btn bg-secondary text-white">

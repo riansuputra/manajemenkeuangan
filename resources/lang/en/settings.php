@@ -73,6 +73,9 @@ return [
     'example' => '(Example: Clothing)',
     'select_category_type' => 'Select Category Type',
     'select_category_scope' => 'Select Category Scope',
-
+    'language' => 'Language',
+    'theme' => 'Theme',
+    'dark' => 'Dark',
+    'light' => 'Light',
     
 ];
