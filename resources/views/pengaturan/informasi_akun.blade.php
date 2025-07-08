@@ -43,37 +43,49 @@
 							</div>
 						</div>
 						<div class="row g-2">
-							<div class="col-auto">
+							<div class="col-md">
 								<h3 class="card-title mt-4">{{ __('settings.category') }}</h3>
 								<div>
-									<a href="{{route('permintaan.kategori')}}" class="btn bg-primary text-white">
+									<a href="{{route('permintaan.kategori')}}" class="btn w-100 bg-primary text-white">
 										<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
 										{{ __('settings.category_request') }}
 									</a>
 								</div>
 							</div>
-							<div class="col-auto">
+							<div class="col-md">
 								<h3 class="card-title mt-4">{{ __('settings.language') }}</h3>
 								<div class="btn-group w-100" role="group">
-									<input type="radio" class="btn-check" name="btn-radio-basic" id="btn-radio-basic-1" autocomplete="off" checked="">
-									<label for="btn-radio-basic-1" type="button" class="btn">1 min</label>
-									<input type="radio" class="btn-check" name="btn-radio-basic" id="btn-radio-basic-2" autocomplete="off">
-									<label for="btn-radio-basic-2" type="button" class="btn">5 min</label>
+									
+									<a class="btn" href="{{ route('bahasa.en') }}">
+										<span class="flag flag-country-gb"></span>
+									&nbsp English
+									</a>
+									<a class="btn" href="{{ route('bahasa.id') }}">
+									
+											<span class="flag flag-country-id"></span>
+									&nbsp Indonesia
+									</a>
                               	</div>
 							</div>
-							<div class="col-auto">
+							<div class="col-md">
 								<h3 class="card-title mt-4">{{ __('settings.theme') }}</h3>
 								<div class="btn-group w-100" role="group">
-									<input type="radio" class="btn-check" name="btn-radio-basic" id="btn-radio-basic-1" autocomplete="off" checked="">
-									<label for="btn-radio-basic-1" type="button" class="btn">1 min</label>
-									<input type="radio" class="btn-check" name="btn-radio-basic" id="btn-radio-basic-2" autocomplete="off">
-									<label for="btn-radio-basic-2" type="button" class="btn">5 min</label>
+										<a class="btn" href="{{ url()->current() }}?theme=dark">
+										<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon text-yellow"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 1.992a10 10 0 1 0 9.236 13.838c.341 -.82 -.476 -1.644 -1.298 -1.31a6.5 6.5 0 0 1 -6.864 -10.787l.077 -.08c.551 -.63 .113 -1.653 -.758 -1.653h-.266l-.068 -.006l-.06 -.002z" /></svg>
+									&nbsp {{ __('layout.dark') }}
+									</a>
+									<a class="btn" href="{{ url()->current() }}?theme=light">
+									
+										<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon text-warning"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 19a1 1 0 0 1 .993 .883l.007 .117v1a1 1 0 0 1 -1.993 .117l-.007 -.117v-1a1 1 0 0 1 1 -1z" /><path d="M18.313 16.91l.094 .083l.7 .7a1 1 0 0 1 -1.32 1.497l-.094 -.083l-.7 -.7a1 1 0 0 1 1.218 -1.567l.102 .07z" /><path d="M7.007 16.993a1 1 0 0 1 .083 1.32l-.083 .094l-.7 .7a1 1 0 0 1 -1.497 -1.32l.083 -.094l.7 -.7a1 1 0 0 1 1.414 0z" /><path d="M4 11a1 1 0 0 1 .117 1.993l-.117 .007h-1a1 1 0 0 1 -.117 -1.993l.117 -.007h1z" /><path d="M21 11a1 1 0 0 1 .117 1.993l-.117 .007h-1a1 1 0 0 1 -.117 -1.993l.117 -.007h1z" /><path d="M6.213 4.81l.094 .083l.7 .7a1 1 0 0 1 -1.32 1.497l-.094 -.083l-.7 -.7a1 1 0 0 1 1.217 -1.567l.102 .07z" /><path d="M19.107 4.893a1 1 0 0 1 .083 1.32l-.083 .094l-.7 .7a1 1 0 0 1 -1.497 -1.32l.083 -.094l.7 -.7a1 1 0 0 1 1.414 0z" /><path d="M12 2a1 1 0 0 1 .993 .883l.007 .117v1a1 1 0 0 1 -1.993 .117l-.007 -.117v-1a1 1 0 0 1 1 -1z" /><path d="M12 7a5 5 0 1 1 -4.995 5.217l-.005 -.217l.005 -.217a5 5 0 0 1 4.995 -4.783z" /></svg>
+
+									&nbsp {{ __('layout.light') }}
+									</a>
                               	</div>
 							</div>
-							<div class="col-auto">
+							<div class="col-md">
 								<h3 class="card-title mt-4">{{ __('settings.help_support') }}</h3>
 								<div>
-									<a href="mailto:smartfinance.ta.com" class="btn bg-secondary text-white">
+									<a href="mailto:smartfinance.ta.com" class="btn w-100 bg-secondary text-white">
 										<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-mail"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg>
 										{{ __('settings.send_message') }}
 									</a>
@@ -83,20 +95,20 @@
 						
 						<h3 class="card-title mt-4">{{ __('settings.personal_data') }}</h3>
 						<div class="row g-2">
-							<div class="col-auto">
-								<a href="" class="btn bg-danger text-white" data-bs-toggle="modal" data-bs-target="#modal-hapus-keuangan">
+							<div class="col-sm-12 col-lg-4">
+								<a href="" class="btn w-100 bg-danger text-white" data-bs-toggle="modal" data-bs-target="#modal-hapus-keuangan">
 									<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
 									{{ __('settings.delete_financial_budget_records') }}
 								</a>
 							</div>
-							<div class="col-auto">
-								<a href="" class="btn bg-danger text-white" data-bs-toggle="modal" data-bs-target="#modal-hapus-catatan">
+							<div class="col-sm-12 col-lg-4">
+								<a href="" class="btn w-100 bg-danger text-white" data-bs-toggle="modal" data-bs-target="#modal-hapus-catatan">
 									<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
 									{{ __('settings.delete_general_notes') }}
 								</a>
 							</div>
-							<div class="col-auto" >
-								<a href="" class="btn bg-danger text-white" data-bs-toggle="modal" data-bs-target="#modal-hapus-portofolio">
+							<div class="col-sm-12 col-lg-4" >
+								<a href="" class="btn w-100 bg-danger text-white" data-bs-toggle="modal" data-bs-target="#modal-hapus-portofolio">
 									<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
 									{{ __('settings.delete_portfolio_data') }}
 								</a>
